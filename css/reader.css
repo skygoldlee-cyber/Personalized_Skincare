@@ -1,4 +1,4 @@
-/* @spec TR-15~18,UX-SCR-01~03,UX-FORM-01 */
+/* @spec TR-15~18,TR-21,TR-22,UX-SCR-01~03,UX-FORM-01,UX-NAV-09 */
 @import url('./reader-mermaid.css');
 
 /* ============================================================
@@ -1232,32 +1232,72 @@ body.reader-focus-mode .reader-readable-width {
     .reader-toolbar-toggle {
         display: inline-flex;
     }
-    /* 모바일 본문 영역 확보 — 상단 크롬 높이 축소 */
+    /* TR-22 몰입형 크롬 (UX-NAV-09): 크롬을 본문 위 absolute 오버레이로 전환 —
+       인플로우 배치는 본문 높이를 영구 잠식하고, transform만 적용한 숨김은
+       공간을 회수하지 못하므로, 크롬 자체를 레이아웃에서 빼낸다. */
     #textbook-reader-view {
+        position: relative;
         padding: 0.5rem 0.75rem;
     }
     .reader-progress-bar {
         margin-bottom: var(--space-2);
     }
+    .reader-chrome {
+        position: absolute;
+        top: calc(4px + var(--space-2)); /* 진행바 바로 아래 */
+        left: 0.75rem;
+        right: 0.75rem;
+        z-index: var(--z-sticky);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: var(--space-2) var(--space-3);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    /* 스크롤 다운 시 크롬 자동 숨김 — 오버레이라 본문 높이는 그대로 유지됨 */
+    .reader-chrome.reader-chrome-hidden {
+        transform: translateY(calc(-100% - 16px));
+        opacity: 0;
+        pointer-events: none;
+    }
+    /* 본문 첫 줄이 크롬 바 아래 묻지 않도록 상단 패딩 — 스크롤과 함께 밀려남 */
+    .textbook-reader-content {
+        padding-top: 68px;
+    }
+    /* 섹션 표시줄은 크롬 바 아래에 배치, 크롬 숨김 시 상단으로 이동 */
+    .reader-sticky-heading {
+        top: calc(60px + var(--space-2));
+    }
+    .reader-chrome.reader-chrome-hidden ~ .reader-layout .reader-sticky-heading {
+        top: 4px;
+    }
     .reader-toolbar {
         flex-wrap: nowrap;
         overflow: hidden;
-        padding: 0.4rem 0.75rem;
         gap: var(--space-3);
-        margin-bottom: var(--space-3);
+        /* 크롬 카드 안의 패널 — 자체 카드 스타일·sticky는 오버레이와 중복 */
+        position: static;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: var(--space-2) 0 0;
+        margin-bottom: 0;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
     }
-    /* M: 모바일에서 토글 버튼은 한 행 독차지, inner는 다음 행 */
+    /* TR-21: 접힌 툴바는 빈 셸(토글·목차 버튼이 통합 바로 이동) — 통째로 숨김 */
+    .reader-toolbar.collapsed {
+        display: none;
+    }
+    /* 펼친 도구 패널은 크롬 카드 안에서 펼쳐짐 — 본문을 밀지 않고 오버레이로 덮음.
+       비대해지지 않도록 상한 + 내부 스크롤 */
     .reader-toolbar:not(.collapsed) {
         flex-wrap: wrap;
         overflow: visible;
-        /* 펼친 툴바가 flex 잔여 배분을 잠식해 본문 컬럼이 0으로 붕괴하는 것 방지 —
-           내부 스크롤로 상한 적용 */
         max-height: 38vh;
         overflow-y: auto;
-    }
-    .reader-toolbar:not(.collapsed) .reader-toolbar-toggle {
-        width: 100%;
-        margin-bottom: 0.25rem;
     }
     .reader-toolbar:not(.collapsed) .reader-toolbar-inner {
         width: 100%;

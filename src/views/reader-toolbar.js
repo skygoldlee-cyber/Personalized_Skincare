@@ -1,5 +1,5 @@
 // views/reader-toolbar.js — 교재 리더 툴바·독서 설정·스크롤 이벤트 (textbook-reader.js에서 분리)
-// @spec TR-15,TR-16,TR-16a,TR-18,UX-SCR-01
+// @spec TR-15,TR-16,TR-16a,TR-18,TR-21,TR-22,UX-SCR-01
 // 역할: 북마크 토글, 폰트 스케일·줄간격·테마 클래스 적용, 스크롤 스파이(rAF 디바운스),
 //       툴바 버튼 바인딩, 표 전체화면 모달. 렌더링 로직은 textbook-reader.js에 남음.
 import { safeGetItem, safeSetItem } from '../state.js';
@@ -86,11 +86,20 @@ export function bindReaderScrollEvents() {
                 progressFill.style.width = pct + '%';
             }
             // Toolbar auto-hide: 아래로 스크롤 시 숨기고 위로 올리면 표시 (몰입형 독서)
+            // TR-22: 모바일에서는 크롬 전체(controls+toolbar+audio)가 오버레이로 숨어
+            // 공간을 회수한다. 크롬 숨김 CSS는 모바일 미디어쿼리 안에 있으므로 데스크톱은
+            // 기존 toolbar-auto-hidden(transform)만 실질 적용.
+            const chromeEl = document.getElementById('reader-chrome');
             const toolbarEl = document.getElementById('reader-toolbar');
             const curY = container.scrollTop;
-            if (toolbarEl) {
-                if (curY > lastScrollY + 6 && curY > 140) toolbarEl.classList.add('toolbar-auto-hidden');
-                else if (curY < lastScrollY - 6 || curY <= 140) toolbarEl.classList.remove('toolbar-auto-hidden');
+            const hiding = curY > lastScrollY + 6 && curY > 140;
+            const showing = curY < lastScrollY - 6 || curY <= 140;
+            if (hiding) {
+                if (chromeEl) chromeEl.classList.add('reader-chrome-hidden');
+                if (toolbarEl) toolbarEl.classList.add('toolbar-auto-hidden');
+            } else if (showing) {
+                if (chromeEl) chromeEl.classList.remove('reader-chrome-hidden');
+                if (toolbarEl) toolbarEl.classList.remove('toolbar-auto-hidden');
             }
             lastScrollY = curY;
             // Back to top visibility

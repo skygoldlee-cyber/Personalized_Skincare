@@ -177,6 +177,8 @@
 | TR-18 | 스크롤 스파이 (현재 섹션 TOC/브레드크럼 자동 하이라이트, `requestAnimationFrame` 스로틀링) | ✅ |
 | TR-19 | 이야기형 모드 전환 시 읽기 위치 보존 — 재렌더 전 현재 보이는 `reader-section-N` 앵커와 섹션 내 오프셋을 `getBoundingClientRect()` 기준으로 기억, 재렌더 후 같은 섹션 인덱스로 복원 (`offsetTop`은 offsetParent 기준이라 컨테이너 미스매치로 어긋남) | ✅ |
 | TR-20 | 본문 이미지 라이트박스 — `.reader-img` 탭/확대 버튼 → 배율 단계·맞춤·드래그 스크롤 전체화면 모달 (`image-zoom.js`, reader-table-modal 셸·mermaid 툴바 재사용, Esc/백드롭 닫기) | ✅ |
+| TR-21 | **모바일 통합 크롬 바** (≤768px·가로 저높이): 목차·과목 선택·이야기형 토글·툴바 접기를 `.reader-mode-buttons` 단일 행으로 통합 — '과목 선택' 라벨은 셀렉트 값 자체가 과목명이라 생략, 접힌 도구 패널은 0px (`.reader-toolbar.collapsed` 모바일 display:none) | ✅ |
+| TR-22 | **몰입형 크롬 오버레이** (모바일): `#reader-chrome`(컨트롤+툴바 래퍼)을 `.reader-layout` 위 absolute 오버레이로 전환 + 본문 스크롤 다운 시 `.reader-chrome-hidden` 자동 숨김·업 시 복귀 — 본문이 항상 잔여 높이 전체 차지(실측 ~89% vh), 상시 노출은 진행바 4px만. 섹션 표시줄은 크롬 표시 상태에 따라 top 위치 연동 (UX-NAV-09 규칙 적용) | ✅ |
 
 ### 3.6 교재 리더 — 학습 보조 도구
 
@@ -541,6 +543,7 @@
 | UX-NAV-06 | **통합 검색 팔레트 (Ctrl/Cmd+K)**: `src/command-palette.js` — 뷰/교재 섹션/카드/퀴즈/성분/문제집을 한 검색창에서 찾아 실행. `↑↓` 이동·`Enter` 실행·`ESC`/배경 클릭 닫기, 헤더 돋보기 버튼(모바일 진입점) | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 |
 | UX-NAV-07 | **뷰 전환 스크롤 규칙**: 내비/복귀는 `scrollTop` 복원, **액션 딥링크는 맨 위 오픈** — `switchView(target, { scrollTop: true })` | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 |
 | UX-NAV-08 | **뷰 해시 라우팅**: 뷰 전환 시 `#/슬러그`를 `pushState`, `initViewHashRouting()`이 초기 해시 딥링크 해석 + `hashchange` 구독. 훈련소 서브패널은 `#/trainer/<slug>` 깊이 해시(`src/views/trainer.js` — 열림 시 push, `#/trainer` 복귀 시 메뉴 복귀). 모달 뒤로가기는 `src/modal-back.js`가 `is-hidden` 토글을 감시해 동일 URL 마커(`{modalBack}`)를 쌓고 `popstate`로 최상위 모달을 닫음 — 매뉴얼·문제집 뷰어의 자체 마커(`manualOverlay`/`examOverlay`)와는 `history.state`로 구분해 공존 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 |
+| UX-NAV-09 | **콘텐츠 중심 뷰의 상단 크롬은 오버레이 + 방향 자동 숨김**: 읽기·뷰어처럼 본문이 목적인 화면에서 툴바·필터 등 크롬은 인플로우 배치 금지 → `position:absolute` 오버레이로 올리고, 스크롤 다운 시 `translateY+opacity`로 숨겨 본문이 뷰포트를 전부 차지하게 한다. 복귀는 스크롤 업 — 제스처 없이도 발견 가능. 진행바 등 수px 상태 표시만 상시 노출 | 인플로우 크롬은 본문 높이를 영구 잠식하고, transform만 적용한 숨김은 공간을 회수하지 못함(실측: 본문 63%→89% vh). 오버레이 시 콘텐츠 스크롤 컨테이너에 `padding-top`=크롬 높이를 줘 첫 화면이 크롬 아래 묻히지 않게 함 — 패딩은 스크롤과 함께 밀려나므로 읽는 중 잠식 0. 크롬 아래를 지나는 다른 오버레이(섹션 표시줄 등)는 `~` 시빌링 셀렉터로 숨김 상태와 위치를 연동할 것 |
 
 #### 4.8.2 스크롤바 전략
 

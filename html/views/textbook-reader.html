@@ -1,12 +1,23 @@
-            <!-- @spec TR-01 -->
+            <!-- @spec TR-01,TR-21,TR-22 -->
             <section id="textbook-reader-view" class="view-section">
                 <!-- Reading Progress Bar (fixed at top of view) -->
                 <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
                     <span id="reader-section-progress" class="reader-section-progress"></span>
                 </div>
+                <!-- Reader Chrome (TR-21/TR-22): 컨트롤+툴바+오디오를 하나의 래퍼로 묶어
+                     모바일에서는 본문 위 absolute 오버레이 바로 전환하고 스크롤 방향으로
+                     자동 숨김한다. 데스크톱에서는 평범한 인플로우 래퍼. -->
+                <div id="reader-chrome" class="reader-chrome">
                 <div class="textbook-reader-controls mb-5">
                     <div class="reader-mode-buttons">
+                        <!-- 모바일 통합 바 — 툴바 토글·목차 버튼이 이 행에 함께 표시됨 (데스크톱은 CSS 숨김) -->
+                        <button class="reader-toolbar-toggle" id="reader-toolbar-toggle" title="툴바 접기/펼치기" aria-label="툴바 접기/펼치기" aria-expanded="true">
+                            <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+                        </button>
+                        <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
+                            <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
+                        </button>
                         <div class="filter-group">
                             <label for="reader-subject-select">과목 선택</label>
                             <select id="reader-subject-select" class="form-select reader-mode-btn">
@@ -20,15 +31,8 @@
                     </div>
                 </div>
 
-                <!-- Reading Convenience Toolbar -->
+                <!-- Reading Convenience Toolbar — 펼침 도구 패널 (토글/목차는 통합 바로 이동) -->
                 <div id="reader-toolbar" class="reader-toolbar is-hidden">
-                    <button class="reader-toolbar-toggle" id="reader-toolbar-toggle" title="툴바 접기/펼치기" aria-label="툴바 접기/펼치기" aria-expanded="true">
-                        <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
-                    </button>
-                    <!-- 목차 버튼은 inner 밖에 둬서 모바일 접힘 상태에서도 TOC 접근 유지 -->
-                    <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
-                        <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
-                    </button>
                     <div class="reader-toolbar-inner" id="reader-toolbar-inner">
                     <div class="reader-toolbar-group">
                         <span class="reader-toolbar-label"><i class="fa-solid fa-text-height" aria-hidden="true"></i> 글자 크기</span>
@@ -77,8 +81,9 @@
                     </div><!-- /.reader-toolbar-inner -->
                 </div>
 
-                <!-- 오디오 플레이어 영역 (툴바 아래, 동적 생성) -->
+                <!-- 오디오 플레이어 영역 (크롬 안에 둬서 자동 숨김에 함께 반응, 동적 생성) -->
                 <div id="reader-audio-player-area" class="reader-audio-player-area is-hidden"></div>
+                </div><!-- /#reader-chrome -->
 
                 <!-- Reader Layout: TOC sidebar + Content -->
                 <div id="reader-layout" class="reader-layout">

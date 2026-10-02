@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-02 교재리더 몰입형 크롬 (TR-21/TR-22) — 모바일 본문 652px 상시 확보
+
+- **요구사양**: SPEC.md §3.5 TR-21(모바일 통합 크롬 바)·TR-22(몰입형 크롬 오버레이) + §4.8.1 UX-NAV-09(콘텐츠 중심 뷰 크롬 규칙) 신규 정의
+- **설계**: 인플로우 크롬은 본문 높이를 영구 잠식하고 transform 숨김은 공간을 회수하지 못함 → 크롬을 `.reader-layout` 위 **absolute 오버레이**로 전환. 스크롤 다운 시 `.reader-chrome-hidden`(translateY+opacity)으로 숨기고 업 시 복귀 — 기존 `toolbar-auto-hidden` 방향 감지 로직 확장
+- **HTML** (`textbook-reader.html`): `#reader-chrome` 래퍼 신설 — 컨트롤+툴바+오디오 영역을 한 박스로. 툴바 토글·목차 버튼을 `.reader-mode-buttons` 행으로 이동(데스크톱은 CSS 숨김 — 통합 바)
+- **CSS** (`reader.css` 모바일 블록): `.reader-chrome` absolute 카드(backdrop blur), `.reader-toolbar` 패널화(자체 카드 스타일·sticky 제거), `collapsed` 시 display:none, 본문 `padding-top:68px`(크롬 아래 묻힘 방지 — 스크롤 시 밀려남), 섹션 표시줄 top을 크롬 상태와 `~` 시빌링으로 연동
+- **효과** (Pixel 7 실측): 본문 527→652px 상시(뷰포트 78%), 스크롤 중 크롬 0px — 읽기 영역 ~89% vh. 도구 펼침은 오버레이 패널로 본문을 덮되 밀지 않음(높이 불변)
+- 테스트: `toc-sidebar.spec.js` 강화 — 모바일 본문 ≥70% vh + 스크롤 후 높이 불변 + `.reader-chrome-hidden` 적용 검증
+
 ## 2026-10-02 교재리더 모바일 본문 영역 확대
 
 - **증상**: 모바일에서 교재 본문 가시 영역이 ~350px(뷰포트의 ~40%)에 불과 — 실사용 가독 높이 부족
