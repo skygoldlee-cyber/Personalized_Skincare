@@ -6,6 +6,17 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-02 교재리더 콘텐츠 밖 스크롤 시 뷰 밀림 수정 (TR-23)
+
+- **증상**: 데스크톱에서 본문 컬럼 이외(TOC·여백·크롬 카드 위)를 상하 스크롤하면 교재 뷰 전체가 위로 밀려 올라감
+- **원인**: absolute 오버레이(`.reader-chrome`·`.reader-sticky-heading`)가 `.reader-layout` 하단을 넘치면 그 오버플로가 스크롤 조상 `.main-content`의 `scrollHeight`로 전파되어 페이지 스크롤 범위가 생성 — 휠 입력이 `.main-content`를 스크롤해 뷰 전체 이동. 크롬이 레이아웃보다 길어지는 조건: 좁은 창의 툴바 래핑·오디오 패널 표시·짧은 뷰포트
+- **수정** (`css/reader.css`):
+  - `.reader-layout { overflow: hidden }` — 오버레이 오버플로를 레이아웃 경계에서 차단해 상위 스크롤러로의 전파 근원 제거 (내부 스크롤은 TOC aside·본문 컬럼이 각각 담당)
+  - `.main-content:has(> #textbook-reader-view.active) { overflow: hidden }` — 리더 활성 시 페이지 스크롤 불가 불변식 명시 (리더는 flex 정합 채움 구조라 페이지 스크롤이 존재해선 안 됨)
+  - `.reader-chrome { max-height: calc(100% - space-2); overflow-y: auto; overscroll-behavior: contain }` — 크롬이 레이아웃을 넘는 극단 케이스에서도 카드 내부 스크롤로 도구 접근 유지 + 체이닝 차단
+- **SPEC**: TR-23 설명에 "오버레이 오버플로 전파 금지" 조건 명시
+- 테스트: `toc-sidebar.spec.js` 신규 회귀 — 오버레이를 레이아웃 밖으로 강제 이동해도 `.main-content`가 스크롤되지 않고(overflow:hidden + scrollTop 시도 0) 뷰 위치 불변 검증, 기존 테스트에 `mcCanScroll===false` 단언 추가
+
 ## 2026-10-02 교재리더 데스크톱 크롬 오버레이 확장 (TR-23/R-10)
 
 - **요구사양**: SPEC.md §3.5 TR-23(데스크톱 통합 크롬 오버레이) + §4.6 R-10(본문 가시 영역 ≥60% vh 게이트) 신규 정의

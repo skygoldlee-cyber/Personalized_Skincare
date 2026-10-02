@@ -228,6 +228,15 @@
     min-height: 0;
 }
 
+/* 리더 활성 시 .main-content의 페이지 스크롤 차단 (TR-22/23, UX-NAV-09) —
+   뷰가 잔여 높이를 정확히 채우고 본문 컬럼이 자체 스크롤러라 페이지 스크롤 범위가
+   존재하면 안 된다. absolute 오버레이 크롬이 짧은 뷰포트·툴바 래핑으로 레이아웃
+   하단을 넘칠 때 그 오버플로가 .main-content의 scrollHeight로 전파되어,
+   콘텐츠 밖(TOC·여백·크롬 카드) 휠 입력에 뷰 전체가 위로 밀리는 것을 차단한다. */
+.main-content:has(> #textbook-reader-view.active) {
+    overflow: hidden;
+}
+
 /* Reader layout: TOC + content */
 .reader-layout {
     display: flex;
@@ -237,6 +246,10 @@
     min-height: 0;
     /* .reader-sticky-heading 오버레이의 containing block */
     position: relative;
+    /* absolute 오버레이(크롬·섹션 표시줄)가 하단을 넘치면 오버플로가 스크롤 조상
+       .main-content의 scrollHeight로 전파돼 페이지 스크롤 범위를 만든다 — 경계에서
+       차단 (TR-23). 내부 스크롤러는 TOC aside·본문 컬럼이 각각 담당한다 */
+    overflow: hidden;
 }
 
 /* 데스크톱(TOC 사이드바 노출 폭) — 섹션 표시줄을 본문 컬럼 위에만 오버레이 */
@@ -267,6 +280,11 @@
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     transition: transform 0.25s ease, opacity 0.25s ease;
+    /* 레이아웃(containing block) 높이 상한 — 초과 시 카드 내부 스크롤.
+       바깥으로 넘치는 오버플로는 .main-content의 스크롤 범위를 만든다 (TR-23) */
+    max-height: calc(100% - var(--space-2));
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 .reader-chrome .textbook-reader-controls {
     margin-bottom: 0; /* 크롬 카드가 간격을 담당 */

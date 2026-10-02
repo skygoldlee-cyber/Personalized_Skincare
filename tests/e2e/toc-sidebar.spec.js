@@ -52,6 +52,9 @@ test.describe('교재리더 TOC 사이드바', () => {
         // TOC aside와 본문 컬럼 모두 뷰포트 안에 완전히 들어와야 함
         expect(m.tocBottom).toBeLessThanOrEqual(m.vh);
         expect(m.contentBottom).toBeLessThanOrEqual(m.vh);
+        // TR-22/23: 리더 활성 시 페이지 스크롤러(.main-content)에 스크롤 범위가
+        // 없어야 함 — 범위가 있으면 콘텐츠 밖 휠 입력에 뷰 전체가 밀린다
+        expect(m.mcCanScroll).toBe(false);
         // 스크롤바를 끝까지 내린 상태에서 마지막 목차 항목이 보여야 함
         expect(m.lastItemBottom).toBeLessThanOrEqual(m.vh + 1);
         // TR-22/23 + R-10: 크롬이 오버레이로 전환되어 본문이 잔여 높이 전체 차지 —
@@ -76,5 +79,51 @@ test.describe('교재리더 TOC 사이드바', () => {
             document.getElementById('reader-chrome')?.classList.contains('reader-chrome-hidden')
         );
         expect(chromeHidden).toBe(true);
+    });
+
+    // TR-23: absolute 오버레이 요소가 .reader-layout 하단을 넘치면 그 오버플로가
+    // 스크롤 조상(.main-content)의 scrollHeight로 전파되어 페이지 스크롤 범위를
+    // 만든다 → 콘텐츠 밖 휠 입력에 뷰 전체가 위로 밀리는 버그의 회귀 검증.
+    test('오버레이가 레이아웃을 넘쳐도 페이지 스크롤 범위가 생기지 않고 뷰가 밀리지 않는다', async ({ page }) => {
+        test.setTimeout(60_000);
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.evaluate(() => {
+            document.querySelectorAll('#app-confirm-overlay, #onboarding-overlay').forEach(el => el.remove());
+            location.hash = '/reader';
+        });
+        await page.locator('#reader-subject-select').selectOption({ index: 1 });
+        await expect(page.locator('#reader-toc-list .reader-toc-item').first()).toBeVisible({ timeout: 30_000 });
+
+        // 오버레이 요소(섹션 표시줄)를 레이아웃 하단 밖으로 강제 — 크롬 툴바 래핑·
+        // 오디오 패널로 크롬이 넘치는 상황과 동등한 오버플로 상태 재현
+        await page.evaluate(() => {
+            const h = document.getElementById('reader-sticky-heading');
+            h.classList.remove('is-hidden');
+            h.style.top = '150vh';
+        });
+        const m = await page.evaluate(() => {
+            const mc = document.querySelector('.main-content');
+            // overflow:hidden 상태에선 scrollHeight가 오버플로를 포함해도 스크롤 불가 —
+            // 실제 scrollTop 이동 시도로 스크롤 가능 여부를 판정한다
+            mc.scrollTop = 9999;
+            return {
+                scrollTop: mc.scrollTop,
+                overflowY: getComputedStyle(mc).overflowY,
+            };
+        });
+        expect(m.overflowY).toBe('hidden');
+        expect(m.scrollTop).toBe(0);
+
+        // 콘텐츠 밖(뷰 가장자리)에서 휠 — 레이아웃 위치가 불변이어야 함
+        const topBefore = await page.evaluate(() =>
+            document.getElementById('reader-layout').getBoundingClientRect().top
+        );
+        await page.mouse.move(10, 400);
+        for (let i = 0; i < 4; i++) { await page.mouse.wheel(0, 300); await page.waitForTimeout(50); }
+        const topAfter = await page.evaluate(() =>
+            document.getElementById('reader-layout').getBoundingClientRect().top
+        );
+        expect(topAfter).toBe(topBefore);
     });
 });
