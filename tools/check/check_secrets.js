@@ -25,7 +25,7 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const PATTERNS = [
   { re: /-{5}BEGIN (?:RSA |EC |OPENSSH |PGP )?PRIVATE KEY/, label: '개인키 블록' },
   { re: /\bsb_secret_[A-Za-z0-9_-]+/, label: 'Supabase Secret key' },
-  { re: /\bservice_role["'\s]*[:=]/i, label: 'service_role 대입' },
+  { re: /\bservice_role["'\s]*[:=]\s*['"]?[A-Za-z0-9._-]{15,}/i, label: 'service_role 키 대입' },
   { re: /\bAKIA[0-9A-Z]{16}\b/, label: 'AWS Access Key' },
   { re: /\bAIza[0-9A-Za-z_-]{35}\b/, label: 'GCP API Key' },
   { re: /\bghp_[0-9A-Za-z]{36}\b|\bgithub_pat_[0-9A-Za-z_]{22,}\b|\bgho_[0-9A-Za-z]{36}\b/, label: 'GitHub 토큰' },

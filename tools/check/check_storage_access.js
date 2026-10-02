@@ -49,7 +49,7 @@ for (const file of walk(SRC)) {
   if (ALLOWED_FILES.has(base)) continue;
   const rel = path.relative(ROOT, file).replace(/\\/g, '/');
   fs.readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
-    if (/localStorage\.\w/.test(line)) {
+    if (/localStorage\s*[.\[]/.test(line)) {
       issues.push(`${rel}:${i + 1} — localStorage 직접 접근 (storage.js 경유 필요)`);
     }
   });
