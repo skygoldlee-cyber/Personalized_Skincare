@@ -323,6 +323,12 @@
         color: var(--color-primary);
     }
 
+    /* A-03 — 라벨 텍스트는 본문색 유지(라이트 테마에서 accent색 대비 부족).
+       활성 상태는 아이콘 색으로 전달, 텍스트는 WCAG AA 충족 */
+    .mobile-tab-item > span {
+        color: var(--color-text-main);
+    }
+
     .mobile-tab-item:active {
         transform: scale(0.92);
     }
@@ -333,6 +339,8 @@
         background: var(--secondary-tint-12);
         border-radius: var(--radius-md);
     }
+
+    /* A-03 — 위 span 규칙이 텍스트 대비를 담당하므로 아이콘만 violet 유지 */
 
     .mobile-tab-item.mobile-tab-formula.active {
         color: var(--color-secondary);

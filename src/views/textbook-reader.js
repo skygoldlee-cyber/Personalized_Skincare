@@ -331,6 +331,9 @@ export function renderTextbookReader() {
                 }
             }
             textbookReaderState.storyMode = (/** @type {HTMLInputElement} */ (e.target)).checked;
+            // TR-14: storyMode는 readerLastPosition 안에만 영속화되므로 토글 즉시 저장 —
+            // 저장이 다음 스크롤/과목 변경으로 밀리면 "토글만 하고 종료" 시 모드가 유실된다
+            saveReaderPosition();
             // Re-render current chapter if one is selected
             if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {
                 Promise.resolve(renderChapterContent(textbookReaderState.selectedSubject, parseInt(textbookReaderState.selectedChapter))).then(() => {
@@ -370,18 +373,18 @@ function renderChapterContent(subjId, chapterIdx) {
     const isStory = textbookReaderState.storyMode;
     if (isStory) {
         return _loadStoryChapter(subjId, chapterIdx, originalChapter).then(chapter => {
-            _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, true);
+            return _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, true);
         }).catch(err => {
             console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
             showAudioToast('이야기형 파일을 불러올 수 없어 기본 모드로 표시합니다.');
             const filteredChapter = _filterMetaSections(originalChapter);
-            _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
+            return _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
         });
-    } else {
-        const filteredChapter = _filterMetaSections(originalChapter);
-        _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
-        return Promise.resolve();
     }
+    const filteredChapter = _filterMetaSections(originalChapter);
+    // TR-12: Promise는 렌더 완료까지 기다려야 한다 — _renderChapterContentInternal은 async라
+    // 미반환 시 호출자의 rAF 복원이 렌더 말미의 scrollTop=0 리셋에 덮여 읽기 위치 복원이 실패한다
+    return _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
 }
 
 async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {

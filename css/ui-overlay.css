@@ -3,7 +3,7 @@
  * 요소는 JS로 동적 생성되지만 CSS는 정적 로드 시점에 이미 사용 가능.
  */
 
-/* @spec UX-FB-01~04,UX-SET-01~05,A-05 */
+/* @spec UX-FB-01~04,UX-SET-01~05,A-03,A-05 */
 
 /* 스피너 애니메이션 (ui-utils.js에서 inline <style>로 주입하던 것을 중앙화) */
 @keyframes spin {
@@ -675,6 +675,17 @@
 .pro-badge:hover {
   border-color: var(--color-secondary, #8b5cf6);
   background: var(--secondary-tint-20, rgba(139, 92, 246, 0.2));
+}
+
+/* A-03: #8b5cf6은 라이트 배경에서 2.77:1 — 라이트는 어두운 보라로 */
+.light-theme .pro-badge {
+  color: #6d28d9;
+  border-color: rgba(109, 40, 217, 0.4);
+  background: rgba(109, 40, 217, 0.08);
+}
+.light-theme .pro-badge:hover {
+  border-color: #6d28d9;
+  background: rgba(109, 40, 217, 0.16);
 }
 
 /* ── 내 사용 통계 (usage-stats.js) ── */

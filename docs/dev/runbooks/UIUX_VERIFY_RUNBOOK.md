@@ -39,9 +39,12 @@ npm.cmd run check:types     # tsc --noEmit
   const h = await page.evaluate(() => el.getBoundingClientRect().height);
   expect(h).toBeGreaterThan(vh * 0.6);  // toBeVisible만으로는 미충족
   ```
-- [ ] chromium + mobile 양 프로젝트 통과 (`npm.cmd run test:e2e -- tests/e2e/<파일>`)
+- [ ] chromium + mobile + tablet 3개 프로젝트 통과 (`npm.cmd run test:e2e -- tests/e2e/<파일>`)
+  - 뷰포트 대역: chromium=1280×720 데스크톱 / tablet=834×1112(769–900 상단 바 대역) / mobile=Pixel 7(≤768 하단 탭 바)
+  - 반응형 경계(900px TOC 드로어 전환 등)를 건드린 변경은 3개 모두 필수
+- [ ] 접근성 변경(색·대비·포커스·라벨) → `tests/e2e/a11y.spec.js`에 대상 추가 — axe 스캔은 워커 실행 시 전 프로젝트 자동 적용
 - [ ] DOM/단위는 로직·존재만 검증 — 기하 단언은 e2e에만 둔다 (jsdom 측정값은 전부 0)
-- [ ] 회귀: `npm.cmd run check:specrefs` → "UI/UX E2E 갭"이 기준선(61) 초과 시 실패. 신규 UI/UX ID는 e2e @spec과 함께 들어와야 통과
+- [ ] 회귀: `npm.cmd run check:specrefs` → "UI/UX E2E 갭"이 기준선(43) 초과 시 실패. 신규 UI/UX ID는 e2e @spec과 함께 들어와야 통과
 
 ### V4. 시각 실측 + 기록 — UX-VFY-04
 
@@ -67,6 +70,23 @@ npm.cmd run deploy          # 가드 → 스탬프 → vercel --prod → 프로�
 - [ ] 배포 스모크 통과 (`CACHE_VERSION`/`APP_VERSION` 200)
 - [ ] **실기기 육안 확인** — UX-PWA-03(Cache First) 특성상 재실행 1~2회 후 반영됨을 안내
 - [ ] 모바일은 safe-area·탭 바 겹침, 데스크톱은 창 크기 변동 시 재확인
+
+## 자동화 불가 영역 — 수동 검증 면제 목록
+
+E2E로 신뢰성 있게 자동화할 수 없는 요구사항은 아래 표로 관리한다. 면제는 "검증 생략"이 아니라 **V6의 수동 확인으로 이관**하는 것이며, 각 항목은 증거와 재평가 시점을 가진다.
+
+| 요구사항 | 자동화 불가 사유 | 수동 확인 절차 | 기록할 증거 | 재평가 |
+|----------|------------------|----------------|-------------|--------|
+| PWA 설치 프롬프트 (UX-PWA-01/02) | `beforeinstallprompt`는 실제 설치 조건(사용자 인게이지먼트·HTTPS·미설치 상태)에서만 발화 — Playwright context로 합성 불가 | 실기기/데스크톱 Chrome에서 설치 배너 표시 → 설치 → 스탠드얼론 기동 | 기기·OS·브라우저 버전 + 스크린샷 | 브라우저가 `BeforeInstallPromptEvent` 프로그래밍 발화를 지원하면 e2e 전환 검토 |
+| SW Cache First 갱신 타이밍 (UX-PWA-03) | 재실행·캐시 경쟁 조건이 타이밍 의존 — e2e에서 결정론적 재현 불가 | 배포 후 프로덕션 재실행 1~2회로 신버전 반영 확인 (`CACHE_VERSION` 스모크는 자동) | 배포 해시 + 반영 확인 시각 | — |
+| 실기기 safe-area·주소창 (R-05 등) | `env(safe-area-inset-*)`·동적 뷰포트는 실기기에서만 실측 — 에뮬레이터는 inset 0 | iOS Safari·Android Chrome 실기기에서 하단 탭 바·노치 겹침 확인 | 기기 모델 + 스크린샷 | — |
+| 시각적 품질(겹침·비율·여백 미학) | DOM 단언은 위치만 증명 — "보기 좋다"는 판정 불가 | V4 스크린샷 육안 검토 | 전후 스크린샷 (CHANGES.md 첨부) | — |
+
+면제 항목 운영 규칙:
+
+- 면제는 위 표에 **ID·사유·수동 절차·증거 요건**을 갖춰 등록한 것만 유효 — 주석이나 구두 합의는 인정하지 않는다
+- 면제 항목도 `check:specrefs` 갭 집계에는 포함된다 — 기준선 안에서 관리되며, 자동화 수단이 생기면 즉시 e2e로 전환하고 기준선을 하향 갱신한다
+- 배포 시 V6 실기기 확인은 면제 항목 포함 전 영역에 적용된다
 
 ## 회귀 규칙
 

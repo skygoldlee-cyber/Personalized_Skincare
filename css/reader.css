@@ -237,6 +237,20 @@
     overflow: hidden;
 }
 
+/* 태블릿 대역(769–900px) — app-responsive가 .app-container를 height:auto 페이지-스크롤
+   구조로 전환해 flex 잔여-높이 체인(app-container→main-content→view→reader-layout)이
+   끊긴다. 리더 활성 시 높이 경계를 복원해 내부 스크롤러를 되살린다 (TR-22/23, UX-NAV-09) */
+@media (min-width: 769px) and (max-width: 900px) {
+    .app-container:has(> .main-content > #textbook-reader-view.active) {
+        height: var(--app-height, 100dvh);
+        min-height: 0;
+        overflow: hidden;
+    }
+    .app-container:has(> .main-content > #textbook-reader-view.active) > .main-content {
+        min-height: 0;
+    }
+}
+
 /* Reader layout: TOC + content */
 .reader-layout {
     display: flex;

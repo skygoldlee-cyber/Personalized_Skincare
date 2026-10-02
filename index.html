@@ -133,7 +133,7 @@
                         <i class="fa-solid fa-moon" aria-hidden="true"></i>
                     </button>
                     <!-- PWA 설치 버튼 (beforeinstallprompt 이벤트 발생 시 표시) -->
-                    <button id="pwa-install-btn" class="btn btn-primary">
+                    <button id="pwa-install-btn" class="btn btn-primary" aria-label="앱 설치">
                         <i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text">앱 설치</span>
                     </button>
                     <!-- 설정 메뉴: 백업/복원·초기화·시험 전환 등 관리 기능 통합 -->
@@ -536,7 +536,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="card-definition-container">
+                                    <div class="card-definition-container" tabindex="0" role="region" aria-label="카드 정의">
                                         <p id="card-back-definition">여기에 상세한 정의나 설명글이 나타납니다. 여러 줄이 들어와도 가독성 있게 잘 정렬됩니다.</p>
                                     </div>
                                 </div>

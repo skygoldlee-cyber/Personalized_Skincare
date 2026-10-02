@@ -16,6 +16,9 @@ export default defineConfig({
     projects: [
         { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
         { name: 'mobile', use: { ...devices['Pixel 7'] } },
+        // 태블릿 대역 (769–900px 상단 바 네비) — R-*/UX-NAV-01 적응형 경계 커버.
+        // Chromium 유지 — WebKit 의존(iPad 프리셋)은 로컬 미설치로 제외
+        { name: 'tablet', use: { ...devices['Desktop Chrome'], viewport: { width: 834, height: 1112 } } },
     ],
     webServer: {
         command: 'node serve.js 3000',

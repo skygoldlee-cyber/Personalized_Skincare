@@ -1,10 +1,16 @@
 // tests/e2e/app.spec.js — 실브라우저 스모크 (jsdom 불가 영역)
-// @spec none (인프라 — 부트스트랩·SW·PWA 경로는 요구사항 조합 검증)
+// @spec UX-NAV-01,UX-NAV-08,UX-SET-01,P-01,P-02,P-10,P-11
 // 앱 초기화 부팅, 콘솔 오류 부재, 뷰 전환, SW 등록, PWA 자산 응답을 고정한다.
 
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(({ page }) => {
+    // 첫 방문 분기(시험 선택 뷰 + 온보딩 오버레이)가 클릭을 가로막지 않도록 시드
+    page.addInitScript(() => {
+        localStorage.setItem('current_exam', 'cosmetic');
+        localStorage.setItem('onboarding_seen_v1', '1');
+        localStorage.setItem('cosmetic:onboarding_seen_v1', '1');
+    });
     // 페이지 레벨 오류는 모든 테스트에서 감지 — 나중에 배열로 확인
     page._errors = [];
     page.on('pageerror', err => page._errors.push(String(err)));
@@ -32,6 +38,8 @@ test.describe('앱 부트스트랩', () => {
         const visibleNav = page.locator('.nav-item[data-target="flashcard-view"]:visible, .mobile-tab-item[data-target="flashcard-view"]:visible');
         await visibleNav.first().click();
         await expect(page.locator('#flashcard-view')).toBeVisible();
+        // UX-NAV-08: 뷰 전환 시 #/슬러그 pushState — 딥링크·뒤로가기의 기반
+        await expect(page).toHaveURL(/#\/cards$/);
     });
 });
 

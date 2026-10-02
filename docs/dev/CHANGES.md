@@ -6,6 +6,19 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-02 UI/UX E2E 커버리지 확장 + 태블릿 대역 리더 결함 수정
+
+- **범위**: UX-VFY-03 절차에 따른 e2e 보강 — 기존 파일 @spec 정정(app.spec.js: UX-NAV-01/08·UX-SET-01·P-01/02/10/11, flows.spec.js: Q-02/07·O-01/05·MV-01/02·TH-06), tablet 뷰포트 프로젝트(834×1112 Chromium — 769–900px 상단 바 대역), axe-core 스캔(`a11y.spec.js`), 테마(`theme.spec.js`), 리더 본체(`reader-flow.spec.js`)
+- **수정된 실제 결함** (e2e 확장이 발견):
+  - `fadeIn ... forwards` 잔류 transform이 `.view-section`을 containing block화 → ≤900px 고정 TOC 드로어의 뷰포트 기준이 깨져 rect 86k px로 팽창 (`css/base.css` forwards 제거)
+  - 태블릿 대역 `.app-container{height:auto}`가 flex 잔여-높이 체인을 끊어 리더 내부 스크롤러 전멸 → 리더 활성 시 `height:var(--app-height)`+`overflow:hidden`로 경계 복원 (`css/reader.css`, TR-22/23)
+  - `renderChapterContent`의 Promise가 async `_renderChapterContentInternal` 완료를 기다리지 않아 복원 rAF가 렌더 말미 `scrollTop=0`에 덮임 — 읽기 위치 복원이 타이밍 레이스로 실패하던 것을 return 체인 수정으로 해결 (`textbook-reader.js`, TR-12)
+  - 라이트 테마 대비 실위반: 모바일 탭 라벨 cyan 1.76:1·violet 2.72:1 → 라벨은 본문색·아이콘만 accent 유지, `.feedback-new` 배지 #06b6d4(2.42:1)→#0e7490(≈5.4:1), `#pwa-install-btn` 소형 화면 텍스트 숨김 시 접근명 소실 → `aria-label` (A-03)
+  - 이야기형 토글이 `saveReaderPosition()` 미호출로 영속화 누락 (TR-14)
+- **게이트**: `UIUX_E2E_GAP_BASELINE` 61→43 — 실제 e2e 추가분만큼 하향 (18개 ID가 E2E 연결 획득). axe 오탐(native `<select>` 표시값 오계측)은 대상별 좁은 예외 목록으로 문서화
+- **런북**: `UIUX_VERIFY_RUNBOOK.md` — 3프로젝트 뷰포트 표 + "자동화 불가 영역" 수동 면제 표(ID·사유·수동 절차·증거·재평가 규칙) 신설
+- 검증: e2e 90테스트 3프로젝트 — 82 pass / 8 skip(more-sheet 모바일 전용) / 0 fail
+
 ## 2026-10-02 UI/UX TRACE 검증 체계 신설 (UX-VFY-01~05)
 
 - **배경**: UI/UX 요구사항은 단위·DOM 테스트로 검증 불가능한 영역 존재 — jsdom은 레이아웃을 계산하지 않아 기하 단언 불가. "어떤 검증으로 증명됐는가"를 TRACE_MATRIX가 구분하지 못했음 (UI/UX 계열 75개 중 e2e 연결 7개뿐이라는 실측이 있었으나 게이트 없음)

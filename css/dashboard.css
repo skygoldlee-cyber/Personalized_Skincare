@@ -1,6 +1,6 @@
 /* Dashboard: Stats Grid */
 
-/* @spec D-09,R-05 */
+/* @spec D-09,R-05,A-03 */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -608,6 +608,11 @@
     border-radius: var(--radius-lg);
     font-weight: var(--font-weight-bold);
     font-size: var(--text-base);
+}
+
+/* A-03: #f59e0b는 라이트 배경에서 1.58:1 — 라이트는 어두운 앰버로 */
+.light-theme .streak-badge {
+    color: #92400e;
 }
 
 /* 스트릭 복구권 배지 + 주간 목표 칩 (SC-04) */

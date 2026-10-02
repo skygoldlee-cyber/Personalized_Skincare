@@ -9,6 +9,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(({ page }) => {
     page.addInitScript(() => {
+        localStorage.setItem('current_exam', 'cosmetic');
         localStorage.setItem('onboarding_seen_v1', '1');
         localStorage.setItem('cosmetic:onboarding_seen_v1', '1');
         localStorage.setItem('cosmetic:quiz_results', '[]');
@@ -29,6 +30,15 @@ test.describe('교재리더 TOC 사이드바', () => {
         const select = page.locator('#reader-subject-select');
         await select.selectOption({ index: 1 });
         await expect(page.locator('#reader-toc-list .reader-toc-item').first()).toBeVisible({ timeout: 30_000 });
+
+        // ≤900px(태블릿·모바일)에서는 TOC가 translateX(-100%) 오프캔버스 드로어 — 열어서 측정
+        const isDrawer = await page.evaluate(() =>
+            getComputedStyle(document.getElementById('reader-toc')).position === 'fixed');
+        if (isDrawer) {
+            const btn = page.locator('#reader-toc-mobile-btn');
+            if (await btn.isVisible()) await btn.click();
+            await expect(page.locator('#reader-toc')).toHaveClass(/mobile-open/);
+        }
 
         const m = await page.evaluate(() => {
             const toc = document.getElementById('reader-toc');

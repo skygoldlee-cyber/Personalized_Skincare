@@ -1,11 +1,17 @@
 // tests/e2e/flows.spec.js — 핵심 학습 플로우·오프라인 동작·CSP 하 Mermaid 렌더 (실브라우저)
-// @spec none (인프라 — UI 조합 플로우 검증)
+// @spec Q-02,Q-07,O-01,O-05,MV-01,MV-02,TH-06
 // serve.js가 vercel.json 헤더를 미러링하므로 이 테스트들은 실제 프로덕션
 // CSP(script-src 'self' — unsafe-eval 없음) 하에서 실행된다.
 
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(({ page }) => {
+    // 첫 방문 분기(시험 선택 뷰 + 온보딩 오버레이)가 클릭을 가로막지 않도록 시드
+    page.addInitScript(() => {
+        localStorage.setItem('current_exam', 'cosmetic');
+        localStorage.setItem('onboarding_seen_v1', '1');
+        localStorage.setItem('cosmetic:onboarding_seen_v1', '1');
+    });
     page._errors = [];
     page.on('pageerror', err => page._errors.push(String(err)));
 });
