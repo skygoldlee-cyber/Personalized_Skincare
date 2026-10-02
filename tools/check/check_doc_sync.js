@@ -12,8 +12,9 @@
  *   node tools/check/check_doc_sync.js --ref origin/main  # ref 대비 브랜치 변경 검사 (pre-push/CI)
  *
  * 우회:
- *   - 커밋 메시지에 [no-docs] 포함 (--ref 모드에서 인식)
- *   - 환경변수 SKIP_DOCSYNC=1
+ *   - 커밋 메시지 행 끝에 [no-docs] 기재 — --ref 모드 전용, 그 커밋의 파일만 면제
+ *     (pre-commit은 메시지가 아직 없어 불가 — SKIP_DOCSYNC=1 사용)
+ *   - 환경변수 SKIP_DOCSYNC=1 (모든 모드)
  *   - pre-commit: git commit --no-verify
  *
  * 예외:
@@ -108,7 +109,28 @@ function listStaged() {
     return git('diff --cached --name-only').split('\n').filter(Boolean);
 }
 function listRange(ref) {
-    return git(`diff --name-only ${ref}...HEAD`).split('\n').filter(Boolean);
+    // 커밋 단위 수집 — [no-docs]는 그 커밋의 파일만 면제한다 (범위 내 다른
+    // 커밋까지 면제되던 부작용 방지). 문서 페어링은 범위 전체 합산 유지.
+    const commits = git(`log --format=%H ${ref}..HEAD`).split('\n').filter(Boolean);
+    const files = new Set();
+    const exempted = [];
+    for (const sha of commits) {
+        const subject = git(`log -1 --format=%B ${sha}`);
+        // 행 끝의 마크만 면제로 인정 — "… [no-docs]" 트레일러·독립 라인 허용,
+        // 본문 한가운데 문법 설명으로 언급된 경우("[no-docs]는 …")는 오면제 방지
+        if (/\[no-docs\]\s*$/m.test(subject)) {
+            exempted.push(`${sha.slice(0, 7)} ${subject.split('\n')[0]}`);
+            continue;
+        }
+        // diff-tree는 머지 커밋에서 빈 목록 반환 — 본 저장소는 선형 이력이 표준
+        for (const f of git(`diff-tree --no-commit-id --name-only -r ${sha}`).split('\n').filter(Boolean)) {
+            files.add(f);
+        }
+    }
+    if (exempted.length) {
+        console.log(`◇ ${BYPASS_MARK} 면제 커밋 ${exempted.length}개: ${exempted.join(' · ')}`);
+    }
+    return [...files];
 }
 /** git status --porcelain 한 줄에서 파일 경로를 추출한다.
  * 상태 열은 1~2글자+공백 — 출력 trim으로 첫 줄 선행 공백이 제거될 수 있어 slice(3) 부정확. */
@@ -121,14 +143,6 @@ function listWorkingTree() {
     // porcelain으로 신규(untracked) 파일도 포착 — diff HEAD는 미추적 파일을 놓침
     return git('status --porcelain').split('\n').filter(Boolean).map(parseStatusLine);
 }
-function refSubjects(ref) {
-    try {
-        return git(`log --format=%B ${ref}..HEAD`);
-    } catch {
-        return '';
-    }
-}
-
 function run(mode, ref) {
     let files;
     if (mode === 'staged') {
@@ -141,10 +155,6 @@ function run(mode, ref) {
             files = listWorkingTree();
         }
         if (!files) files = listRange(ref);
-        if (refSubjects(ref).includes(BYPASS_MARK)) {
-            console.log(`✅ 문서 동기화 게이트 우회 — 커밋 메시지에 ${BYPASS_MARK} 표시`);
-            return 0;
-        }
     } else {
         files = listWorkingTree();
     }
