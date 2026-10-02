@@ -426,11 +426,13 @@ passory/
 │   │       ├── exams.plugin.js
 │   │       └── knowledge.plugin.js     #   범용 지식DB 소스 로딩 (knowledge/<key>.json → <key>_data.<hash>.js + emitMd 표 재생성)
 │   ├── config/                 #   도구 설정 데이터 (citation_fingerprints·docs_paths_allowlist)
-│   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
-│   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
-│   ├── check_imports.js        #   ES 모듈 import/export 교차 검증
-│   ├── verify_shell_assets.js  #   프리캐시 파일 존재 CI 검증
-│   ├── audit_card_quality.js  #   카드 품질 자동 감사 (npm run audit:cards)
+│   ├── check/                  #   검증·감사 스크립트 전체 (check_*·audit_*·verify_shell_assets)
+│   │   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
+│   │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
+│   │   ├── check_imports.js        #   ES 모듈 import/export 교차 검증
+│   │   ├── check_inventory.js      #   문서 디렉토리 트리 ↔ 실제 파일시스템 정합 (check:inventory)
+│   │   ├── verify_shell_assets.js  #   프리캐시 파일 존재 CI 검증
+│   │   └── audit_card_quality.js   #   카드 품질 자동 감사 (npm run audit:cards)
 │   ├── sync_citation_lines.js  #   문제은행 인용 라인번호 동기화 (build:data에 통합)
 │   └── _archive/               #   일회성 마이그레이션·수동 수정 스크립트 보관
 │       #   (audit_citation_links·audit_hyperlinks·check_pdf_to_md_mapping·
@@ -451,8 +453,7 @@ passory/
 │   │                           #     state · storage · store(batch/customer/material/formula) ·
 │   │                           #     sync · exam-context · questions · statement-tracker 등
 │   └── dom/                    #   DOM 테스트 (Vitest + jsdom)
-│       ├── helpers.js          #     공통 DOM 셋업·모킹 헬퍼
-│       ├── supabase.js         #     Supabase 모킹
+│       ├── helpers.js          #     공통 DOM 셋업·모킹 헬퍼 (Supabase 모킹 포함)
 │       ├── common-*.dom.test.js    # 공통 시나리오 (a11y/auth/offline/theme/uimode/sync…)
 │       ├── formula-*.dom.test.js   # Formula OS 시나리오
 │       ├── study-*.dom.test.js     # 학습 뷰 시나리오

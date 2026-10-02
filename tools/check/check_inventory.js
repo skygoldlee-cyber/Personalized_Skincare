@@ -9,6 +9,9 @@
  *   - 디렉토리 주석의 `N개` 개수 표기 ↔ 직속 자식 파일 수
  *   - `<id>`·`{…}`·`*` 등 플레이스홀더 토큰은 존재 검증에서 제외
  *
+ * ARCHITECTURE.md의 box-drawing 트리(`├──`/`└──`)도 별도 문법으로 파싱해
+ * 나열 항목의 실존성을 검증한다 (큐레이션 목록이라 순방향 존재 검증만).
+ *
  * 사용법:
  *   npm.cmd run check:inventory          # 단독 실행
  *   npm.cmd run check:docs               # 경로·ID 검증과 연쇄 (본 검사 포함)
@@ -28,6 +31,9 @@ const INLINE_DIRS = ['css/'];
 
 const PLACEHOLDER_RE = /[<{}*]|…/;
 const FILE_TOKEN_RE = /^[\w가-힣.-]+\.[a-z0-9]+$/i;
+
+// box-drawing 트리를 추가로 검증할 문서 (루트 `name/` 앵커가 있는 fenced 블록)
+const BOX_TREE_DOCS = ['docs/dev/ARCHITECTURE.md'];
 
 const lines = fs.readFileSync(DOC, 'utf8').split(/\r?\n/);
 
@@ -128,6 +134,63 @@ for (const d of listedDirs.filter((d) => d.countClaim !== null && exists(d.path)
     issues.push(`AGENTS.md:${d.line} — ${d.path} 개수 표기 ${d.countClaim}개 ≠ 실제 파일 ${n}개`);
   }
 }
+
+// ── box-drawing 트리 검증 (ARCHITECTURE.md 등 — ├──/└── 문법, 존재성만) ──
+function* fencedBlocks(docLines) {
+  let cur = null;
+  for (let i = 0; i < docLines.length; i++) {
+    if (/^```/.test(docLines[i])) {
+      if (cur) { yield cur; cur = null; } else cur = [];
+      continue;
+    }
+    if (cur) cur.push({ text: docLines[i], line: i + 1 });
+  }
+}
+
+function checkBoxTree(docRel) {
+  const abs = path.join(ROOT, docRel);
+  if (!fs.existsSync(abs)) return;
+  const docLines = fs.readFileSync(abs, 'utf8').split(/\r?\n/);
+  for (const blockLines of fencedBlocks(docLines)) {
+    // 루트 앵커: 코드블록 첫 실질 라인이 `name/` 단독 토큰인 블록만 트리로 간주
+    const first = blockLines.find((l) => l.text.trim() !== '');
+    if (!first || !/^[\w가-힣.-]+\/\s*(#.*)?$/.test(first.text.trim())) continue;
+    if (!blockLines.some((l) => /[├└]──/.test(l.text))) continue;
+
+    const stack = [{ depth: -1, dir: '' }]; // depth = ── 기호 컬럼 / 4
+    for (const { text, line } of blockLines) {
+      const m = text.match(/[├└]──\s+/);
+      if (!m) continue;
+      const depth = m.index / 4;
+      let name = text.slice(m.index + m[0].length);
+      const cut = name.search(/\s{2,}|#/);      // 이름 뒤 공백 2+ 또는 # 주석
+      const comment = cut >= 0 ? name.slice(cut) : '';
+      name = (cut >= 0 ? name.slice(0, cut) : name).trim();
+      if (!name) continue;
+
+      while (stack.length > 1 && stack[stack.length - 1].depth >= depth) stack.pop();
+      const parent = stack[stack.length - 1].dir;
+
+      for (const tok of name.split(/\s+\/\s+|·/)) { // `.gitignore / .vercelignore`, `a.py · b.py` 병기
+        const t = tok.trim();
+        if (!t) continue;
+        const p = parent + t;
+        // 확장자 없는 비디렉토리 토큰(`charts` 등 축약 표기)은 검증 불가 — 플레이스홀더 취급
+        if (!t.endsWith('/') && !FILE_TOKEN_RE.test(t)) continue;
+        if (t.endsWith('/')) {
+          stack.push({ depth, dir: p });
+          if (!PLACEHOLDER_RE.test(p) && !/비어 있음|gitignore|없을 수 있음/.test(comment) && !exists(p.slice(0, -1))) {
+            issues.push(`${docRel}:${line} — 나열됐지만 실제 없음: ${p}`);
+          }
+        } else if (!PLACEHOLDER_RE.test(p) && !/비어 있음|gitignore|없을 수 있음/.test(comment) && !exists(p)) {
+          issues.push(`${docRel}:${line} — 나열됐지만 실제 없음: ${p}`);
+        }
+      }
+    }
+  }
+}
+
+for (const d of BOX_TREE_DOCS) checkBoxTree(d);
 
 if (!issues.length) {
   console.log(`✅ 디렉토리 구조 정합 — 나열 ${listedFiles.length}개 파일·${listedDirs.length}개 디렉토리 ↔ 실제 일치`);
