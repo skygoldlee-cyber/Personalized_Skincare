@@ -1,4 +1,5 @@
 // src/image-zoom.js — 교재 본문 이미지(.reader-img) 라이트박스 확대 모달.
+// @spec TR-20
 // reader-table-modal 셸 + mermaid-zoom 툴바 CSS를 재사용한다 (mermaid-render.js의
 // 다이어그램 확대 모달과 동일한 UX: 배율 단계·맞춤·드래그 스크롤·Esc/백드롭 닫기).
 // 모달은 role="dialog"이므로 modal-back.js가 뒤로가기 닫기를 자동 감지한다.

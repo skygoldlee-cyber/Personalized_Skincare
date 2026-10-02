@@ -1,4 +1,5 @@
 // tests/e2e/more-sheet.spec.js — 모바일 더보기 시트 회귀
+// @spec UX-NAV-01, UX-NAV-08
 // modal-back.js의 마커 소비 history.back()가 같은 클릭 안의 data-click
 // 네비게이션(시험전환)과 레이스를 일으켜 사용자를 이전 뷰로 되돌리던 버그:
 // 시트 닫기 → observer 마이크로태스크 → back() 큐잉 → 위임 핸들러의

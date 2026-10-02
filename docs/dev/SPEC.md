@@ -176,6 +176,7 @@
 | TR-17 | 브레드크럼 (과목 > 단원 > 현재 섹션, 스크롤 스파이 연동) | ✅ |
 | TR-18 | 스크롤 스파이 (현재 섹션 TOC/브레드크럼 자동 하이라이트, `requestAnimationFrame` 스로틀링) | ✅ |
 | TR-19 | 이야기형 모드 전환 시 읽기 위치 보존 — 재렌더 전 현재 보이는 `reader-section-N` 앵커와 섹션 내 오프셋을 `getBoundingClientRect()` 기준으로 기억, 재렌더 후 같은 섹션 인덱스로 복원 (`offsetTop`은 offsetParent 기준이라 컨테이너 미스매치로 어긋남) | ✅ |
+| TR-20 | 본문 이미지 라이트박스 — `.reader-img` 탭/확대 버튼 → 배율 단계·맞춤·드래그 스크롤 전체화면 모달 (`image-zoom.js`, reader-table-modal 셸·mermaid 툴바 재사용, Esc/백드롭 닫기) | ✅ |
 
 ### 3.6 교재 리더 — 학습 보조 도구
 
@@ -567,6 +568,7 @@
 | UX-FB-02 | **`alert()`/`confirm()` 금지 → 커스텀 모달**: `showConfirm`(확인/취소), `showAlert`(확인만), `showToast`(비차단) | 네이티브 대화상자는 PWA 설치 흐름을 깨고 스타일 제어 불가. 커스텀 모달은 포커스 트랩 + Escape + 배경 클릭 닫기 포함 |
 | UX-FB-03 | **숨겨진 기능은 최초 1회 펄스로 알림**: 발견하기 어려운 핸들(엣지 탭 등)에 첫 표시 시 펄스 애니메이션 + `localStorage` 플래그로 1회 제한 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 |
 | UX-FB-04 | **로딩은 오버레이로 통일**: 데이터 fetch 구간은 `showGlobalLoading()` 전체화면 오버레이 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 |
+| UX-FB-05 | **첫 방문 시작 안내 모달**: 학습 데이터가 없는 최초 방문에서 1회 표시, 설정 메뉴 "시작 안내"로 재열람 (`onboarding.js`, `onboarding_seen_v1` 플래그) | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 |
 
 #### 4.8.5 PWA 고유 UX
 

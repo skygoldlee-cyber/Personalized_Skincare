@@ -23,6 +23,8 @@
  *
  * 검증 결과:
  *   - 코드가 참조하지만 SPEC에 없는 ID → 스테일 참조 (exit 1)
+ *   - src/css/html/tests/tools/ 파일에 @spec 태그가 아예 없음 → 누락 (exit 1)
+ *     ※ tools/_archive·ref-pipeline 제외, `@spec none`으로 의도적 미커버 명시 가능
  *   - SPEC에 있지만 어떤 코드도 참조하지 않는 ID → 커버리지 공백 (경고)
  *     ※ SPEC 상태가 '미구현'/'보류'인 ID는 로드맵 항목으로 공백에서 제외 —
  *        구현 시작 시 상태를 바꾸면 자동으로 커버리지 추적 대상이 된다
@@ -38,6 +40,12 @@ const ROOT = T.ROOT;
 // 테스트 @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
 const TEST_GAP_BASELINE = 0;
 
+// @spec 태그 강제 디렉터리 — 이 아래 모든 스캔 대상 파일에 최소 1개 @spec 태그 필요
+// (`@spec none`으로 의도적 미커버 명시 가능). tools/_archive·ref-pipeline은
+// 일회성·보조 스크립트라 강제 제외.
+const SPEC_TAG_REQUIRED_PREFIXES = ['src/', 'css/', 'html/', 'tests/', 'tools/'];
+const SPEC_TAG_EXEMPT_PREFIXES = ['tools/_archive/'];
+
 /** 라인 번호가 필요해 직접 순회 — ID 확장·오류 규격은 lib/expandIds 공용 */
 function collectCodeRefs(specIds) {
   const refs = new Map();     // id → [{file, line}] (전체)
@@ -52,9 +60,11 @@ function collectCodeRefs(specIds) {
   for (const file of files) {
     const rel = path.relative(ROOT, file).replace(/\\/g, '/');
     const isTest = rel.startsWith('tests/');
+    let tagged = false;
     const lines = fs.readFileSync(file, 'utf8').split('\n');
     lines.forEach((text, i) => {
       for (const m of text.matchAll(T.SPEC_TAG_RE)) {
+        tagged = true;
         for (const id of T.expandIds(m[1], specIds, errors, `${rel}:${i + 1}`)) {
           if (!refs.has(id)) refs.set(id, []);
           refs.get(id).push({ file: rel, line: i + 1 });
@@ -62,6 +72,11 @@ function collectCodeRefs(specIds) {
         }
       }
     });
+    const required = SPEC_TAG_REQUIRED_PREFIXES.some((p) => rel.startsWith(p))
+      || T.SCAN_FILES.includes(rel);
+    if (!tagged && required && !SPEC_TAG_EXEMPT_PREFIXES.some((p) => rel.startsWith(p))) {
+      errors.push(`${rel} — @spec 태그 없음 (모듈 헤더에 \`// @spec XX-NN\` 또는 \`// @spec none\` 추가 필요)`);
+    }
   }
   return { refs, testRefs, srcRefs, errors };
 }
