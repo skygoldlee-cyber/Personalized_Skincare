@@ -71,7 +71,8 @@ const DOC_HINTS = [
 ];
 
 function git(args) {
-    return execSync(`git ${args}`, { encoding: 'utf8' }).trim();
+    // -c core.quotepath=false — 비ASCII(한글) 경로의 옥탈 이스케이프·인용 방지
+    return execSync(`git -c core.quotepath=false ${args}`, { encoding: 'utf8' }).trim();
 }
 
 function isExempt(file) {

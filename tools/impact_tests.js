@@ -18,18 +18,19 @@ const path = require('path');
 const { execSync, spawnSync } = require('child_process');
 const T = require('./lib/trace_scan');
 
-const REF_RE = /^(?!-)[A-Za-z0-9][A-Za-z0-9._/-]*$/; // git ref 형식 — 플래그·셸 인젝션 차단
+const REF_RE = /^(?!-)[A-Za-z0-9][A-Za-z0-9._~/-]*$/; // git ref 형식 — 플래그·셸 인젝션 차단 (^는 cmd 이스케이프 충돌로 제외, HEAD~N 지원)
 
 function gitChanged(ref) {
   try {
+    // -c core.quotepath=false — 비ASCII(한글) 경로의 옥탈 이스케이프·인용 방지
     if (ref) {
       if (!REF_RE.test(ref)) { console.error(`유효하지 않은 ref: ${ref}`); process.exit(2); }
-      return execSync(`git diff --name-only ${ref}...HEAD`, { cwd: T.ROOT, encoding: 'utf8' })
+      return execSync(`git -c core.quotepath=false diff --name-only ${ref}...HEAD`, { cwd: T.ROOT, encoding: 'utf8' })
         .split('\n').map(s => s.trim()).filter(Boolean);
     }
-    const a = execSync('git diff --name-only', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
-    const b = execSync('git diff --name-only --cached', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
-    const c = execSync('git ls-files --others --exclude-standard', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
+    const a = execSync('git -c core.quotepath=false diff --name-only', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
+    const b = execSync('git -c core.quotepath=false diff --name-only --cached', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
+    const c = execSync('git -c core.quotepath=false ls-files --others --exclude-standard', { cwd: T.ROOT, encoding: 'utf8' }).split('\n');
     return [...new Set([...a, ...b, ...c].map(s => s.trim()).filter(Boolean))];
   } catch {
     return [];
