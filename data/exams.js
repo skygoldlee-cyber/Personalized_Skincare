@@ -26,7 +26,6 @@ var EXAMS_LIST = {
         "calcPractice": true,
         "ingredients": true,
         "audiobook": false,
-        "refDocs": true,
         "appendixDocs": true,
         "pomodoro": true,
         "formula": true,
@@ -54,7 +53,6 @@ var EXAMS_LIST = {
       "registryBundle": "data/exams/food/registry.js",
       "registryGlobal": "DATA_REGISTRY_FOOD",
       "features": {
-        "refDocs": true,
         "dictionary": true
       }
     }

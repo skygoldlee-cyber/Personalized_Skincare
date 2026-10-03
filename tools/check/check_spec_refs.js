@@ -45,7 +45,7 @@ const TEST_GAP_BASELINE = 0;
 // 기존 백로그(규약·리뷰형 다수)를 승계하되, 신규 UI/UX 요구사항이 갭을 늘리면 실패한다.
 // e2e @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
 const UIUX_PREFIX_RE = /^(?:UX-|TR-|R-|TH-|A-)/;
-const UIUX_E2E_GAP_BASELINE = 20;
+const UIUX_E2E_GAP_BASELINE = 14;
 
 // @spec 태그 강제 디렉터리 — 이 아래 모든 스캔 대상 파일에 최소 1개 @spec 태그 필요
 // (`@spec none`으로 의도적 미커버 명시 가능). tools/_archive·ref-pipeline은

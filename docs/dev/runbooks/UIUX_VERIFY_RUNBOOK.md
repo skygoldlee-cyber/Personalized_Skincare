@@ -2,7 +2,7 @@
 
 > **목적**: UI/UX 변경(크기·배치·가시성·인터랙션)을 TRACE MATRIX 체계 안에서 단계별로 검증하는 표준 절차. SPEC 선행 → @spec 추적 → 정적 게이트 → 자동 테스트 → 시각 실측 → 추적 갱신 → 배포 확인까지 누락 없이 진행하기 위한 운영 문서.
 > **관련 문서**: [SPEC.md](../SPEC.md) §4.8.8 (UX-VFY-01~05 — 본 절차의 요구사양 원천) · §4.10 (기기별 배치 계약 — 검증 대상 정의) · [VERIFY_DEPLOY_PIPELINE.md](VERIFY_DEPLOY_PIPELINE.md) (전체 게이트 파이프라인) · [TESTING.md](../reference/TESTING.md)
-> **최종 업데이트**: 2026-10-02
+> **최종 업데이트**: 2026-10-03
 > **문서 ID**: DOC-RBK-11
 > **관련 SPEC ID**: `UX-VFY-01~05`
 
@@ -44,7 +44,7 @@ npm.cmd run check:types     # tsc --noEmit
   - 반응형 경계(900px TOC 드로어 전환 등)를 건드린 변경은 3개 모두 필수
 - [ ] 접근성 변경(색·대비·포커스·라벨) → `tests/e2e/a11y.spec.js`에 대상 추가 — axe 스캔은 워커 실행 시 전 프로젝트 자동 적용
 - [ ] DOM/단위는 로직·존재만 검증 — 기하 단언은 e2e에만 둔다 (jsdom 측정값은 전부 0)
-- [ ] 회귀: `npm.cmd run check:specrefs` → "UI/UX E2E 갭"이 기준선(43) 초과 시 실패. 신규 UI/UX ID는 e2e @spec과 함께 들어와야 통과
+- [ ] 회귀: `npm.cmd run check:specrefs` → "UI/UX E2E 갭"이 기준선(`UIUX_E2E_GAP_BASELINE`, 현재 20) 초과 시 실패. 신규 UI/UX ID는 e2e @spec과 함께 들어와야 통과
 
 ### V4. 시각 실측 + 기록 — UX-VFY-04
 
@@ -69,6 +69,7 @@ npm.cmd run deploy          # 가드 → 스탬프 → vercel --prod → 프로�
 
 - [ ] 배포 스모크 통과 (`CACHE_VERSION`/`APP_VERSION` 200)
 - [ ] **실기기 육안 확인** — UX-PWA-03(Cache First) 특성상 재실행 1~2회 후 반영됨을 안내
+- [ ] 실기기 대표 조합: **iOS Safari**(노치/Dynamic Island 기기 — safe-area·standalone·주소창) + **Android Chrome**(제스처 내비 기기 — 설치 프롬프트·탭 바 겹침·SW 토스트), 각 기기 모델·OS·브라우저 버전을 증거에 기재
 - [ ] 모바일은 safe-area·탭 바 겹침, 데스크톱은 창 크기 변동 시 재확인
 
 ## 자동화 불가 영역 — 수동 검증 면제 목록
@@ -81,6 +82,7 @@ E2E로 신뢰성 있게 자동화할 수 없는 요구사항은 아래 표로 �
 | SW Cache First 갱신 타이밍 (UX-PWA-03) | 재실행·캐시 경쟁 조건이 타이밍 의존 — e2e에서 결정론적 재현 불가 | 배포 후 프로덕션 재실행 1~2회로 신버전 반영 확인 (`CACHE_VERSION` 스모크는 자동) | 배포 해시 + 반영 확인 시각 | — |
 | 실기기 safe-area·주소창 (R-05 등) | `env(safe-area-inset-*)`·동적 뷰포트는 실기기에서만 실측 — 에뮬레이터는 inset 0 | iOS Safari·Android Chrome 실기기에서 하단 탭 바·노치 겹침 확인 | 기기 모델 + 스크린샷 | — |
 | 시각적 품질(겹침·비율·여백 미학) | DOM 단언은 위치만 증명 — "보기 좋다"는 판정 불가 | V4 스크린샷 육안 검토 | 전후 스크린샷 (CHANGES.md 첨부) | — |
+| 스크린리더 실동작 (A-01~05 관련) | axe는 정적 마크업만 검사 — 실제 낭독 흐름·포커스 이동은 스크린리더 실행 필요 | iOS VoiceOver로 핵심 시나리오 수행: 뷰 이동·플래시카드 뒤집기·모달 열기/닫기(설정·컨펌) | 시나리오 체크리스트 + 녹화 또는 메모 | — |
 
 면제 항목 운영 규칙:
 

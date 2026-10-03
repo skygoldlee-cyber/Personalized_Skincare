@@ -19,13 +19,13 @@ const EXAMS = {
             title: 'Passmula — 맞춤형화장품 조제관리사',
             logoMain: 'Pass', logoSub: 'mula', icon: 'fa-solid fa-wand-magic-sparkles',
             year: '2027', default: true,
-            features: { formula: true, dictionary: true, userManual: true, refDocs: true },
+            features: { formula: true, dictionary: true, userManual: true, calcPractice: true },
         },
         {
             id: 'food', name: '식품기사', appName: '식품기사', title: '식품기사',
             logoMain: '식품', logoSub: '기사', icon: 'fa-solid fa-bowl-food',
             year: '2027',
-            features: { refDocs: true, dictionary: true },
+            features: { pomodoro: true, dictionary: true },
         },
     ],
 };
@@ -47,7 +47,7 @@ describe('멀티시험 전환 — 비기본 시험 활성화', () => {
         expect(hasFeature('formula')).toBe(false);
         expect(hasFeature('userManual')).toBe(false);
         // food 보유 기능 활성
-        expect(hasFeature('refDocs')).toBe(true);
+        expect(hasFeature('pomodoro')).toBe(true);
         expect(hasFeature('dictionary')).toBe(true);
         expect(getExamAppName()).toBe('식품기사');
     });

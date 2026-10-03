@@ -8,7 +8,8 @@
 // [멀티시험] content/exams.json의 모든 시험을 순회해 {contentRoot}/references.json
 //   기준으로 시험별 인덱스를 생성한다. 출력 src/keyword-index.js는
 //   _EXAM_GLOSSARY_INDEX[examId] 맵이며 런타임 접근은 getGlossaryIndex()로 한다.
-//   참조자료 기능 자체는 시험 features.refDocs 플래그로 게이트된다.
+//   참조자료가 없는 시험은 인덱스가 비어 런타임에서 자연 비활성화된다
+//   (features.refDocs 게이트는 2026-10 폐기 — 인라인 참조 링크는 콘텐츠 존재로 발화).
 
 import fs from 'fs';
 import path from 'path';

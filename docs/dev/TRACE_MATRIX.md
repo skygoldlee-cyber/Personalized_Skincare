@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: c8c3ff2ac6b0f3ee
-> 생성: 2026-10-02 · 원천: SPEC.md(388개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: ee82a8ff0a70794e
+> 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 388개 — 문서 연결 252 · 소스 연결 362 · 테스트 연결 377 · 보고서 연결 109
+**커버리지 요약**: 요구사항 389개 — 문서 연결 252 · 소스 연결 362 · 테스트 연결 377 · 보고서 연결 109
 
 ---
 
@@ -105,7 +105,7 @@
 | TR-01 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-03<br>DOC-REF-04<br>…외 1개 | html/views/textbook-reader.html<br>index.html<br>src/markdown-parser.js<br>src/reader-format.js<br>…외 2개 | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js<br>tests/unit/markdown-parser-general.test.js<br>tests/unit/reader-format-general.test.js<br>…외 1개 | — | — |
 | TR-02 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | TR-03 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
-| TR-04 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-04 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | TR-05 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-06 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/mermaid-zoom.dom.test.js<br>tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-advanced.spec.js<br>tests/unit/mermaid-parser.test.js<br>…외 5개 | — | — |
 | TR-07 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
@@ -121,7 +121,7 @@
 | TR-16a | ✅ | E2E 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/reader-toolbar.js | tests/e2e/reader-advanced.spec.js<br>tests/unit/content-engineering.test.js | — | — |
 | TR-17 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | TR-18 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
-| TR-19 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/unit/reader-analysis-gates.test.js | — | — |
+| TR-19 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/e2e/reader-flow.spec.js<br>tests/unit/reader-analysis-gates.test.js | — | — |
 | TR-20 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/image-zoom.js | tests/dom/onboarding-zoom.dom.test.js<br>tests/e2e/reader-advanced.spec.js | — | — |
 | TR-21 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
 | TR-22 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
@@ -430,6 +430,7 @@
 | PF-14 | ✅ | 테스트 | — | css/base.css | tests/unit/perf-invariants.test.js | — | — |
 | PF-15 | ✅ | 테스트 | — | ref-pipeline/convert.py | tests/unit/perf-invariants.test.js | — | — |
 | PF-16 | ✅ | 테스트 | — | src/mermaid-render.js | tests/unit/perf-invariants.test.js | — | — |
+| PF-17 | ✅ (목표 확정) | — | — | — | — | — | — |
 
 ## 4.5 접근성
 
@@ -448,7 +449,7 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | R-01 | ✅ | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
-| R-02 | ✅ | 테스트 | DOC-DSN-01 | css/base.css | tests/dom/common-navigation.dom.test.js | — | — |
+| R-02 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css | tests/dom/common-navigation.dom.test.js<br>tests/e2e/responsive-flow.spec.js | — | — |
 | R-03 | ✅ | 테스트 | DOC-DSN-01 | css/base.css | tests/dom/common-navigation.dom.test.js | — | — |
 | R-04 | ✅ | E2E 테스트 | DOC-DSN-01 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js<br>tests/e2e/responsive-flow.spec.js | — | — |
 | R-05 | ✅ | E2E 테스트 | DOC-DSN-01 | css/dashboard.css | tests/dom/common-navigation.dom.test.js<br>tests/e2e/responsive-flow.spec.js | — | — |
@@ -476,7 +477,7 @@
 | UX-FB-01 | `@media (max-width: 768px) { #app-toast { top:auto; bottom: calc(80px + safe-area) } }` — 하단 탭 바 위 | E2E 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/e2e/a11y-interaction.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-02 | 네이티브 대화상자는 PWA 설치 흐름을 깨고 스타일 제어 불가. 커스텀 모달은 포커스 트랩 + Escape + 배경 클릭 닫기 포함 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-03 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
-| UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
+| UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | E2E 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | E2E 테스트 | DOC-DSN-11 | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js<br>tests/e2e/a11y-interaction.spec.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | E2E 테스트 | — | css/reader.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | E2E 테스트 | — | css/base.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
@@ -498,8 +499,8 @@
 | UX-SCR-02 | `*` 또는 개별 컨테이너에 지정 | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SCR-03 | 하드코딩 색상은 다크/라이트 한쪽에서 묻힘 (실제로 미정의 변수 폴백으로 라이트 배경에 흰 카드가 되는 사고 있었음 — `.comp-item` 사례) | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-01 | 헤더에 아이콘 버튼을 늘리면 모바일에서 제목과 경쟁. 자주 쓰지 않는 토글(가로/세로 보기 등)은 설정 안으로 이동 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
-| UX-SET-02 | 항목이 늘어나도 뷰포트를 넘지 않음. 없으면 소형 기기에서 하단 항목이 잘림 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
-| UX-SET-03 | Apple HIG/Google Material 최소 터치 영역 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
+| UX-SET-02 | 항목이 늘어나도 뷰포트를 넘지 않음. 없으면 소형 기기에서 하단 항목이 잘림 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
+| UX-SET-03 | Apple HIG/Google Material 최소 터치 영역 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-04 | 사용자가 "몇 버전인지" 문의할 때 유일한 확인 경로. SW 등록 스크립트 URL에서 버전 자동 추출 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-05 | 일관된 드롭다운 UX | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-VFY-01 | 요구사양 없는 UI 변경은 추적·리뷰 불가 — TR-21~23처럼 선 정의 후 구현하는 관행을 규약화 | 문서 검토 | DOC-RBK-11 | — | — | — | — |

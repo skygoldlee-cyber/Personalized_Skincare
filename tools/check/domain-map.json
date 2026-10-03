@@ -169,7 +169,7 @@
     },
     {
       "layer": "feature:refDocs",
-      "flag": "refDocs",
+      "gate": "콘텐츠 게이트 — 참조자료(ref_md·pdf registry·keyword index) 존재 시 발화. 런타임 features.refDocs 플래그는 2026-10 폐기",
       "note": "참조자료 뷰어·레지스트리",
       "patterns": [
         "src/views/reader-ref-links.js"
@@ -177,7 +177,7 @@
     },
     {
       "layer": "feature:refDocs",
-      "flag": "refDocs",
+      "gate": "콘텐츠 게이트 — 참조자료(ref_md·pdf registry·keyword index) 존재 시 발화. 런타임 features.refDocs 플래그는 2026-10 폐기",
       "generatedBy": "npm run build:pdf-registry",
       "patterns": [
         "src/pdf-registry.js",
@@ -186,7 +186,7 @@
     },
     {
       "layer": "feature:refDocs",
-      "flag": "refDocs",
+      "gate": "콘텐츠 게이트 — 참조자료(ref_md·pdf registry·keyword index) 존재 시 발화. 런타임 features.refDocs 플래그는 2026-10 폐기",
       "generatedBy": "npm run build:keyword-index",
       "patterns": [
         "src/keyword-index.js"
@@ -231,7 +231,7 @@
     },
     {
       "layer": "feature:refDocs",
-      "flag": "refDocs",
+      "gate": "콘텐츠 게이트 — 참조자료(ref_md·pdf registry·keyword index) 존재 시 발화. 런타임 features.refDocs 플래그는 2026-10 폐기",
       "note": "참조자료 링크/레지스트리 테스트",
       "patterns": [
         "tests/unit/pdf-registry.test.js",

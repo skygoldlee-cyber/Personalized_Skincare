@@ -234,8 +234,8 @@ export function renderTextbookReader() {
         textbookReaderState.selectedSubject = previousValue;
     }
 
-    // 1. 교재 읽기 이어하기 — 저장된 위치 복원
-    const savedPos = (!previousValue && !textbookReaderState.selectedSubject) ? loadReaderPosition() : null;
+    // 1. 교재 읽기 이어하기 — 저장된 위치 복원 (TR-04: 세션 내 뷰 복귀에서도 복원)
+    const savedPos = loadReaderPosition();
 
     // Restore previous selections
     if (savedPos && savedPos.subject) {

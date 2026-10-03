@@ -1,5 +1,5 @@
 // tests/e2e/responsive-flow.spec.js — 반응형·내비·폼·PWA 게이팅 실측
-// @spec R-04,R-05,R-08,UX-NAV-06,UX-NAV-07,UX-SCR-01,UX-FORM-01,UX-FORM-02,UX-PWA-01,UX-PWA-02,UX-PWA-05
+// @spec R-02,R-04,R-05,R-08,UX-NAV-06,UX-NAV-07,UX-SCR-01,UX-FORM-01,UX-FORM-02,UX-PWA-01,UX-PWA-02,UX-PWA-05
 // 스크롤 복원·그리드 종열·회전·커맨드 팔레트·스크롤바 이원화·입력 폰트·
 // 터치 피드백·standalone 게이팅·--app-height 실측 — 모두 레이아웃/입력 의존이라 e2e만 유효.
 
@@ -173,6 +173,22 @@ test.describe('반응형·내비게이션 실측', () => {
         await page.locator('.app-confirm-ok').click();
         // 탭 컨텍스트에서는 window.close()가 차단 → 600ms 후 안내 화면
         await expect(page.locator('.app-exit-screen')).toBeVisible({ timeout: 3_000 });
+    });
+
+    test('뷰포트 높이 변동 시 --app-height가 실시간 추적한다 (R-02)', async ({ page }) => {
+        await boot(page);
+        const before = await page.evaluate(() => ({
+            appH: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-height')),
+            vh: window.innerHeight,
+        }));
+        expect(Math.abs(before.appH - before.vh)).toBeLessThanOrEqual(2);
+        // 주소창 표시/숨김에 해당하는 동적 높이 변동 시뮬레이션 — resize 계열 이벤트로 갱신돼야 한다
+        const cur = await page.viewportSize();
+        await page.setViewportSize({ width: cur.width, height: Math.max(400, cur.height - 120) });
+        await page.waitForFunction(() => {
+            const appH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-height'));
+            return Math.abs(appH - window.innerHeight) <= 2;
+        }, null, { timeout: 5_000 });
     });
 
     test('--app-height가 실측 뷰포트와 일치한다 (UX-PWA-05)', async ({ page }) => {

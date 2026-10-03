@@ -1,5 +1,5 @@
 // tests/e2e/app.spec.js — 실브라우저 스모크 (jsdom 불가 영역)
-// @spec UX-NAV-01,UX-NAV-08,UX-SET-01,P-01,P-02,P-10,P-11
+// @spec UX-NAV-01,UX-NAV-08,UX-SET-01,UX-SET-02,UX-SET-03,UX-FB-04,P-01,P-02,P-10,P-11
 // 앱 초기화 부팅, 콘솔 오류 부재, 뷰 전환, SW 등록, PWA 자산 응답을 고정한다.
 
 import { test, expect } from '@playwright/test';
@@ -93,5 +93,67 @@ test.describe('UI 골격', () => {
         await expect(panel).toHaveClass(/is-hidden/);
         await page.locator('#settings-toggle-btn').click();
         await expect(panel).not.toHaveClass(/is-hidden/);
+    });
+
+    test('설정 패널은 뷰포트 한계 내에서 내부 스크롤한다 (UX-SET-02)', async ({ page }) => {
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.locator('#settings-toggle-btn').click();
+        const panel = page.locator('#settings-panel');
+        await expect(panel).not.toHaveClass(/is-hidden/);
+        const m = await page.evaluate(() => {
+            const el = document.getElementById('settings-panel');
+            const cs = getComputedStyle(el);
+            return {
+                overflowY: cs.overflowY,
+                maxH: parseFloat(cs.maxHeight),
+                h: el.getBoundingClientRect().height,
+                vh: window.innerHeight,
+            };
+        });
+        expect(m.overflowY).toBe('auto');
+        // max-height: calc(100dvh - 5rem) — 뷰포트를 넘지 않는 상한
+        expect(Math.abs(m.maxH - (m.vh - 80))).toBeLessThanOrEqual(2);
+        expect(m.h).toBeLessThanOrEqual(m.maxH);
+    });
+
+    test('설정 항목의 터치 타겟이 44px 이상이다 (UX-SET-03)', async ({ page }) => {
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.locator('#settings-toggle-btn').click();
+        await expect(page.locator('#settings-panel')).not.toHaveClass(/is-hidden/);
+        const heights = await page.evaluate(() =>
+            [...document.querySelectorAll('#settings-panel .settings-item')]
+                .filter(el => el.offsetParent !== null)   // is-hidden 항목 제외
+                .map(el => el.getBoundingClientRect().height));
+        expect(heights.length).toBeGreaterThan(0);
+        for (const h of heights) expect(h).toBeGreaterThanOrEqual(43.5);
+    });
+
+    test('전역 로딩 오버레이가 뷰포트 전체를 덮는다 (UX-FB-04)', async ({ page }) => {
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.evaluate(async () => {
+            const m = await import('./src/ui-utils.js');
+            m.showGlobalLoading('테스트 로딩');
+        });
+        const overlay = page.locator('#global-loading-overlay');
+        await expect(overlay).toHaveClass(/is-visible/);
+        const g = await page.evaluate(() => {
+            const el = document.getElementById('global-loading-overlay');
+            const r = el.getBoundingClientRect();
+            const cs = getComputedStyle(el);
+            return {
+                pos: cs.position, w: r.width, h: r.height,
+                z: parseInt(cs.zIndex, 10), vw: innerWidth, vh: innerHeight,
+            };
+        });
+        expect(g.pos).toBe('fixed');
+        expect(g.w).toBeGreaterThanOrEqual(g.vw);
+        expect(g.h).toBeGreaterThanOrEqual(g.vh);
+        expect(g.z).toBeGreaterThanOrEqual(9000);   // --z-loading — 최상위 레이어
+        await page.evaluate(async () => {
+            (await import('./src/ui-utils.js')).hideGlobalLoading();
+        });
     });
 });

@@ -1,5 +1,5 @@
 // tests/e2e/reader-flow.spec.js — 교재리더 본체 동작 회귀 (실브라우저)
-// @spec TR-01,TR-02,TR-03,TR-11,TR-12,TR-14,TR-17,TR-18,SA-01,RR-07
+// @spec TR-01,TR-02,TR-03,TR-04,TR-11,TR-12,TR-14,TR-17,TR-18,TR-19,SA-01,RR-07
 // 렌더·TOC·단원 이동·읽기 위치 영속/복원·이야기형 토글·섹션 표시줄을 실측한다.
 // jsdom은 레이아웃·스크롤을 계산하지 않으므로 이 검증은 e2e에서만 유효하다.
 
@@ -132,6 +132,77 @@ test.describe('교재리더 본체', () => {
             JSON.parse(localStorage.getItem('cosmetic:readerLastPosition') || localStorage.getItem('readerLastPosition') || '{}'));
         expect(saved.storyMode).toBe(true);
         expect(page._errors.filter(e => !/favicon|manifest/i.test(e))).toEqual([]);
+    });
+
+    test('뷰 이탈 후 복귀 시 읽기 스크롤이 복원된다 (TR-04)', async ({ page }) => {
+        test.setTimeout(90_000);
+        await openReader(page);
+        await page.evaluate(() => {
+            const c = document.getElementById('textbook-reader-container');
+            c.scrollTop = Math.min(700, c.scrollHeight - c.clientHeight);
+            c.dispatchEvent(new Event('scroll'));
+        });
+        // 스크롤 디바운스(1s) 저장 대기
+        await page.waitForFunction(() => {
+            const p = JSON.parse(localStorage.getItem('cosmetic:readerLastPosition') || 'null');
+            return p && p.scrollTop > 0;
+        }, null, { timeout: 5_000 });
+        const saved = await page.evaluate(() =>
+            document.getElementById('textbook-reader-container').scrollTop);
+        expect(saved).toBeGreaterThan(0);
+
+        // 다른 뷰로 이동 후 리더 복귀 — 뷰 렌더러가 savedPos.scrollTop으로 복원
+        await page.evaluate(() => { location.hash = '/dashboard'; });
+        await expect(page.locator('#dashboard-view')).toHaveClass(/active/);
+        await page.evaluate(() => { location.hash = '/reader'; });
+        await page.waitForFunction(() =>
+            document.querySelectorAll('#textbook-reader-container .reader-section-card').length > 0,
+            null, { timeout: 30_000 });
+        await page.waitForFunction((s) =>
+            Math.abs(document.getElementById('textbook-reader-container').scrollTop - s) < 15,
+            saved, { timeout: 10_000 });
+    });
+
+    test('이야기형 전환 시 현재 섹션 앵커가 보존된다 (TR-19)', async ({ page }) => {
+        test.setTimeout(90_000);
+        await openReader(page);
+        // 중간 섹션으로 스크롤 — 섹션 내부 오프셋(30px)을 둬 앵커 정밀도 검증
+        const anchor = await page.evaluate(() => {
+            const c = document.getElementById('textbook-reader-container');
+            const secs = [...c.querySelectorAll('[id^="reader-section-"]')];
+            if (secs.length < 3) return -1;
+            const target = secs[Math.min(2, secs.length - 1)];
+            c.scrollTop = target.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop + 30;
+            c.dispatchEvent(new Event('scroll'));
+            return parseInt(target.id.replace('reader-section-', ''), 10);
+        });
+        if (anchor < 0) { test.skip(true, '섹션 수 부족'); return; }
+        const toggle = page.locator('#reader-story-mode-toggle');
+        if (!(await toggle.count())) { test.skip(true, '이야기형 토글 없음'); return; }
+
+        // 스크롤 다운으로 크롬이 자동 숨김(TR-22)돼 토글이 포인터 이벤트를 받지 못하므로
+        // change 이벤트를 직접 dispatch한다. 재렌더 감지는 기존 섹션 카드 노드의 detach로 판정.
+        await page.evaluate(() => {
+            window.__readerCardBefore = document.querySelector('#textbook-reader-container .reader-section-card');
+            const t = document.getElementById('reader-story-mode-toggle');
+            t.checked = true;
+            t.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        await page.waitForFunction(() => !window.__readerCardBefore.isConnected,
+            null, { timeout: 20_000 });
+        // 재렌더 후 같은 섹션이 최상단 가시 섹션이어야 한다 (scrollTop=0 리셋이면 실패)
+        await page.waitForFunction((idx) => {
+            const c = document.getElementById('textbook-reader-container');
+            if (!c || c.scrollTop <= 0) return false;
+            const cTop = c.getBoundingClientRect().top;
+            let last = -1;
+            for (const s of c.querySelectorAll('[id^="reader-section-"]')) {
+                if (s.getBoundingClientRect().top - cTop <= 40) {
+                    last = parseInt(s.id.replace('reader-section-', ''), 10);
+                } else break;
+            }
+            return last === idx;
+        }, anchor, { timeout: 10_000 });
     });
 
     test('스크롤 시 섹션 표시줄이 현재 섹션을 보여준다 (TR-17/18)', async ({ page }) => {

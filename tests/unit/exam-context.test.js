@@ -12,7 +12,7 @@ import {
 
 const EXAMS = {
     exams: [
-        { id: 'alpha', name: '알파시험', contentRoot: 'content/exams/alpha', dataRoot: 'data/exams/alpha', features: { refDocs: true } },
+        { id: 'alpha', name: '알파시험', contentRoot: 'content/exams/alpha', dataRoot: 'data/exams/alpha', features: { audiobook: true } },
         { id: 'cosmetic', name: '조제관리사', contentRoot: 'content/exams/cosmetic', dataRoot: 'data/exams/cosmetic', default: true, features: { dictionary: true } },
     ]
 };
@@ -94,9 +94,9 @@ test('contentPath/dataPath: 활성 시험 루트 기준', () => {
 
 test('hasFeature: 시험별 플래그 게이트', () => {
     assert.equal(hasFeature('dictionary'), true);   // cosmetic
-    assert.equal(hasFeature('refDocs'), false);
+    assert.equal(hasFeature('audiobook'), false);
     mockStorage.setItem('current_exam', 'alpha');
-    assert.equal(hasFeature('refDocs'), true);
+    assert.equal(hasFeature('audiobook'), true);
     assert.equal(hasFeature('dictionary'), false);
 });
 

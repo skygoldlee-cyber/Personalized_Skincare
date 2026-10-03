@@ -6,6 +6,31 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 수주사 질의 E-1~6 회신 확정분 문서 반영
+
+- **SPEC §2.1**: 지원 브라우저 하한 명시 — iOS Safari 15.4+ · Chrome/Edge 105+ · Samsung Internet 20+ (`:has()`·`dvh` 지원 시작점이 실질 하한, `backdrop-filter`·safe-area는 폴백 처리로 제외)
+- **SPEC §4.4 PF-17 신규**: Core Web Vitals 목표·측정 조건 확정 — LCP ≤2.5s·INP ≤200ms·CLS ≤0.1, Lighthouse 모바일 프리셋(CPU 4x·Slow 4G) 랩 측정, 대시보드 초기 로드·리더 챕터 오픈 2화면 × 3회 중앙값 (필드 데이터는 수집 수단 없어 제외)
+- **SPEC §4.5**: 접근성 검수 범위 주석 — WCAG 2.1 AA, axe 대표 뷰×양 테마 critical/serious 0 게이트, 스크린리더는 수동 면제
+- **UIUX_VERIFY_RUNBOOK**: V6에 실기기 대표 조합(iOS 노치 기기 + Android 제스처 내비 기기) 명시, 면제 표에 스크린리더 수동 검수(iOS VoiceOver 핵심 시나리오) 행 추가
+- **외주 패키지 v1.0→v1.1**: §10.4 "검수 운영 기준" 신설 — 지원 환경 하한·실기기 기종/주체·PF-01 측정 조건·접근성 범위·산출물 승인 절차(영업일 3일)·검수/재검수 및 S 등급 사유서 4요소 확정 회신 반영
+
+## 2026-10-03 수주사 질의 검토에서 발견한 문서 불일치 5건 정정
+
+- **SPEC ES-02**: 시험 전환 진입점을 "사이드바 푸터 + 모바일 탭 바" → 실구현과 일치하는 "설정 패널 + 모바일 더보기 시트"로 정정 (사이드바 푸터에 버튼 없음 — `index.template.html` 설정 항목·more-sheet 그리드만 존재)
+- **SPEC §4.10.2**: 배치 매트릭스 "관련 ID" 열의 절 참조 오기 — 오답/복습 §3.5→§3.20, 모의고사 §3.6→§3.4, 계산 연습장 §3.7→§3.11
+- **USER_FLOW §8**: 3곳 실구현 불일치 정정 — 로그인 방식이 매직링크/OTP만 기재됐으나 실제는 이메일+비밀번호·로그인 메일 병용(AU-02), "미설정 시 메뉴 없음"은 실제로는 안내 문구 대체 표시(AU-08·템플릿 주석), "로그인 성공→동기화 활성"은 Pro 게이트(`canCloudSync` — ROAD-P4) 누락으로 분기 추가
+- **SCREEN_MAP §2**: 비뷰 오버레이 인벤토리 10종 → 26종으로 보강 (더보기 시트·auth/pwa-install/feedback/whats-new/pro-upgrade 모달·daily-challenge·goal-settings·usage-stats·exam/html-ref 뷰어·mermaid 확대·오프라인/용량/고시 배너·SW 업데이트/앱 토스트·ESM 폴백), 요소 ID를 실구현 id로 정정 (`#command-palette`→`#cmdk-overlay`, 라이트박스·매뉴얼 뷰어 id 명시). §3 Formula OS 행을 "탭 5개" → FO-15 기술(허브 6메뉴+서브내비 칩)로 정정
+- **리더 본문 비율 실측치 정합**: TR-22 "~89% vh"·R-10 "모바일 ~78%"가 상충 — 실브라우저 재측정으로 통일: 모바일 412×915 **~80%** · 태블릿 834×1112 ~68% · 데스크톱 720p ~69% · 900p ~76% (`#textbook-reader-container` clientHeight 기준, 게이트 60% 유지)
+
+## 2026-10-03 UI/UX E2E 갭 소진 — 리더 스크롤 복원 실결함 수정 포함
+
+- **범위**: `UIUX_E2E_GAP_BASELINE` 20→14 하향 — `reader-flow.spec.js`(TR-04 뷰 복귀 스크롤 복원·TR-19 이야기형 전환 앵커 보존), `app.spec.js`(UX-SET-02 설정 패널 max-height+내부 스크롤·UX-SET-03 항목 44px·UX-FB-04 로딩 오버레이 뷰포트 커버), `responsive-flow.spec.js`(R-02 `--app-height` 리사이즈 추적)
+- **수정된 실제 결함** (e2e 확장이 발견): `renderTextbookReader`의 `savedPos`가 `selectedSubject` 메모리 잔존 시 null로 계산돼 세션 내 뷰 이탈→복귀 시 스크롤 복원 분기가 도달 불가 — TR-04가 ✅ 표기였으나 재시작 경로(TR-12)만 동작하던 것을 `loadReaderPosition()` 무조건 조회로 수정 (`textbook-reader.js`)
+- **테스트 설계 참고**: TR-19는 스크롤 다운 시 크롬 자동숨김(TR-22)으로 토글이 포인터 이벤트를 받지 못해 `check()` 대신 `change` 이벤트 직접 dispatch + 재렌더 판정은 기존 섹션 카드 노드 detach로 수행
+- **문서 정합 정리**: USER_FLOW Mermaid의 집중모드 잔존·TESTING.md의 삭제된 테스트 기술·RUNBOOK 기준선 수치(43→상수명+20)·SCREEN_MAP의 exam-view SPEC 매핑(§3.14→§3.4·§3.14) 및 `#global-loading`→`#global-loading-overlay`·외주 패키지 검수 뷰포트 320×568 추가
+- **기타**: `features.refDocs` 플래그 폐기 — 툴바 참조자료 드롭다운 제거로 유일 소비처가 사라진 선언 정리 (exams.json×2, domain-map은 flag→gate 설명 전환)
+- 검증: e2e 3프로젝트(app·reader-flow·responsive-flow) — 신규 6개 ID 연결 후 전체 통과
+
 ## 2026-10-03 교재리더 툴바 버튼 제거 (기출만 보기·원본·참조자료·집중 모드·모두 접기/펼치기)
 
 - **범위**: 제품 판정으로 리더 툴바에서 기출만 보기(SA-01)·원본 MD·참조자료 드롭다운(RR-07)·집중 모드·모두 접기/모두 펼치기 제거 — 정적 그룹은 글자 크기·줄 간격·본문 검색만 남고, 챕터 액션 그룹은 오디오 버튼만 유지(미보유 시험은 그룹+분리선 숨김). 섹션 카드 개별 접기(헤더 클릭)·TOC 계층 접기(TR-15)·툴바 접기(TR-21)는 유지

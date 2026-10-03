@@ -301,7 +301,7 @@ for (const [eid, t] of Object.entries(_EXAM_TABLES)) {
 
 /**
  * 활성 시험의 참조자료 테이블 묶음.
- * 활성 시험에 테이블이 없으면 기본 시험으로 폴백 (refDocs 기능 없는 시험은 빈 테이블 반환 가능).
+ * 활성 시험에 테이블이 없으면 기본 시험으로 폴백 (참조자료 없는 시험은 빈 테이블 반환 가능).
  * @returns {{contentRoot?: string, SUBJECT_DIR_MAP?: Object, REF_DIRS?: Object,
  *   SOURCE_REF_MAP?: Array, KEYWORD_REF_MAP?: Array, REFERENCE_FILES?: Object,
  *   REFERENCE_COMMON?: Array, REFERENCE_INGREDIENTS?: Array, REFERENCE_LAW?: Array,
