@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-e1e572e",
+    "date": "2026-10-03",
+    "notes": [
+      "사전 DB 전체 CSV 내보내기 — DI-10"
+    ]
+  },
+  {
     "version": "v20261003-b05ece8",
     "date": "2026-10-03",
     "notes": [
@@ -138,16 +145,6 @@
     "date": "2026-10-03",
     "notes": [
       "[리팩터링] extract practice-workspace feature registry (practice-registry.js)"
-    ]
-  },
-  {
-    "version": "v20261003-3e79e5d",
-    "date": "2026-10-03",
-    "notes": [
-      "[리팩터링] extract formula customer/stability fields into formula-fields.js",
-      "[리팩터링] extract reader TOC helpers into src/reader-toc.js",
-      "[리팩터링] share LRU session cache via doc-overlay in html-viewer",
-      "[수정] unify date bucket keys to local time + consolidate shared utils"
     ]
   }
 ]
