@@ -2,7 +2,7 @@
 // @spec T-03
 import { state, safeSetItem } from '../state.js';
 import { showToast } from '../ui-utils.js';
-import { todayKey } from '../utils.js';
+import { todayKey, fmtMMSS } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 
@@ -135,14 +135,12 @@ export function resetPomodoro() {
 
 export function updatePomodoroUI() {
     const pomoState = state.trainer.pomodoro;
-    const min = Math.floor(pomoState.timeLeft / 60);
-    const sec = pomoState.timeLeft % 60;
 
     const pomoTimeEl = document.getElementById('pomo-time');
     const pomoTotalEl = document.getElementById('pomo-total-time');
     const pomoSessionEl = document.getElementById('pomo-session-count');
 
-    if (pomoTimeEl) pomoTimeEl.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    if (pomoTimeEl) pomoTimeEl.textContent = fmtMMSS(pomoState.timeLeft);
     if (pomoTotalEl) pomoTotalEl.textContent = `${pomoState.totalTimeToday}분`;
     if (pomoSessionEl) pomoSessionEl.textContent = String(pomoState.sessionCount);
 }

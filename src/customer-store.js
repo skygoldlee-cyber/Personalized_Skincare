@@ -20,6 +20,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import {
   loadItems, saveItems, newId, clampStr, numOrNull, pickEnum, clampDate,
 } from './store-utils.js';
+import { todayKey } from './utils.js';
 import { CUSTOMER_OPTIONS } from './formula-store.js';
 
 // Free 플랜 저장 한도
@@ -185,11 +186,7 @@ export function addConsultLog(id, text, date) {
   if (!clean) return { ok: false, error: '상담 내용을 입력하세요.' };
 
   let d = clampDate(date);
-  if (!d) {
-    const now = new Date();
-    const pad = n => String(n).padStart(2, '0');
-    d = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-  }
+  if (!d) d = todayKey();
 
   const log = [...(all[idx].consultLog || []), { date: d, text: clean }].slice(-MAX_LOGS);
   all[idx] = { ...all[idx], consultLog: log, updatedAt: Date.now() };

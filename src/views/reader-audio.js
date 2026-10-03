@@ -6,6 +6,7 @@ import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
 import { getActiveExamId, getExamAppName } from '../exam-context.js';
 import { refreshProBadges, proFeatureNotice } from '../pro-upgrade.js';
+import { fmtClock } from '../utils.js';
 
 // --- 오디오북 플레이어 상태 ---
 /** @type {{audio: HTMLAudioElement|null, currentSrc: string, subjId: string, chapterIdx: number, chapterTitle: string, wasPlayingBeforeHidden: boolean, sectionBoundaries: {start:number,end:number}[], lastSectionIdx: number, autoScroll: boolean}} */
@@ -81,16 +82,7 @@ export function showAudioToast(msg) {
 }
 
 /** 초를 "mm:ss" (1시간 이상이면 "h:mm:ss") 형식으로 변환 */
-function formatAudioTime(sec) {
-    if (!isFinite(sec) || sec < 0) return '0:00';
-    sec = Math.floor(sec);
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    const s = sec % 60;
-    const mm = h > 0 ? String(m).padStart(2, '0') : String(m);
-    const ss = String(s).padStart(2, '0');
-    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
-}
+const formatAudioTime = fmtClock;
 
 /** 이어보기 위치를 localStorage에서 읽기 */
 function getSavedAudioPos(src) {

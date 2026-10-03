@@ -32,6 +32,7 @@ import {
   loadItems, saveItems, newId, clampStr, numOrNull, pickEnum,
   clampDate, clampDateTime,
 } from './store-utils.js';
+import { todayKey } from './utils.js';
 
 // Free 플랜 저장 한도 (기록 보존 업무 특성상 포뮬러보다 넉넉하게)
 // keep-export — pro-upgrade.js가 플랜 비교 모달에서 지연 import로 참조
@@ -185,9 +186,7 @@ export function nextBatchNo(dateStr) {
 }
 
 function localToday() {
-  const d = new Date();
-  const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  return todayKey();
 }
 
 /**

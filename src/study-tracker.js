@@ -3,6 +3,7 @@
 // 학습 활동을 날짜별로 기록하고, 목표 달성률을 계산합니다.
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
+import { localDateKey } from './utils.js';
 
 /* =======================================================
    📅 학습 캘린더 (날짜별 학습 기록)
@@ -12,9 +13,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
  * 로컬 날짜 문자열 반환 (YYYY-MM-DD)
  */
 function _localDateStr(d) {
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${d.getFullYear()}-${m}-${day}`;
+    return localDateKey(d);
 }
 
 /**

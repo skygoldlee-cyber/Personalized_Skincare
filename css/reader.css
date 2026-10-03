@@ -535,11 +535,6 @@
     min-width: 0;
 }
 
-/* D: 브레드크럼 — 제거됨 (TOC 하이라이트 + sticky heading으로 대체), 레거시 호환 */
-.reader-breadcrumb {
-    display: none;
-}
-
 /* C: 모바일 TOC 드로어 */
 .reader-toc-backdrop {
     position: fixed;
@@ -860,11 +855,6 @@
     user-select: none;
 }
 
-/* Chapter header card — 제거됨 (툴바로 통합), 레거시 호환용 유지 */
-.reader-chapter-header-card {
-    display: none;
-}
-
 /* 오디오 플레이어 영역 (툴바 아래) */
 .reader-audio-player-area {
     margin: 0.5rem 0 1rem 0;
@@ -876,11 +866,6 @@
     color: var(--color-text-muted);
 }
 
-/* Prev / Next chapter navigation — 제거됨 (1과목당 1챕터 구조), 레거시 호환 */
-.reader-chapter-nav,
-.reader-nav-btn {
-    display: none;
-}
 
 /* Back to top button */
 .reader-back-to-top {

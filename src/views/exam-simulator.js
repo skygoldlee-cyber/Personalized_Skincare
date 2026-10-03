@@ -8,7 +8,7 @@ import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, vibrate, HAPTIC } from '../ui-utils.js';
-import { shuffle, todayKey } from '../utils.js';
+import { shuffle, todayKey, fmtMMSS } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { simState } from './exam-sim-state.js';
@@ -329,14 +329,12 @@ export function checkExamDraft() {
     if (saved) {
         try {
             const draft = JSON.parse(saved);
-            const minutes = Math.floor(draft.timeLeft / 60);
-            const seconds = draft.timeLeft % 60;
 
             const titleEl = document.getElementById('draft-banner-title');
             const descEl = document.getElementById('draft-banner-desc');
 
             if (titleEl) titleEl.textContent = `📝 진행 중인 모의고사: ${draft.examTitle}`;
-            if (descEl) descEl.textContent = `이전 진행 상태 복구 가능 (남은 시간: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}, 풀이한 문항: ${Object.keys(draft.userAnswers).length}/${draft.questions.length})`;
+            if (descEl) descEl.textContent = `이전 진행 상태 복구 가능 (남은 시간: ${fmtMMSS(draft.timeLeft)}, 풀이한 문항: ${Object.keys(draft.userAnswers).length}/${draft.questions.length})`;
 
             banner.classList.remove('is-hidden');
         } catch(e) {
@@ -454,11 +452,8 @@ function tickSimTimer() {
         return;
     }
 
-    const minutes = Math.floor(simState.timeLeft / 60);
-    const seconds = simState.timeLeft % 60;
     const timeEl = document.getElementById('sim-time-left');
-    if (timeEl) timeEl.textContent =
-        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    if (timeEl) timeEl.textContent = fmtMMSS(simState.timeLeft);
 
     // 임박 단계 시각화 — 잔여 10분 이하 경고(주황), 5분 이하 위험(빨강+펄스)
     const timerBox = timeEl ? timeEl.closest('.sim-timer') : null;

@@ -5,6 +5,7 @@
 // 어떤 정규식/분기/트림도 결과를 바꾸지 않도록 원본 로직을 그대로 유지한다.
 import { stableId } from './sha256.js';
 import { contentPath } from './exam-context.js';
+import { escapeRegExp } from './utils.js';
 
 const cleanText = (text) => {
     if (!text) return '';
@@ -18,10 +19,6 @@ const cleanText = (text) => {
         .replace(/★\s*필수/g, '')
         .trim();
 };
-
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
 
 const GENERIC_SUFFIXES = [
     '기능','기준','방법','절차','조건','사항','내용','순서','단계',

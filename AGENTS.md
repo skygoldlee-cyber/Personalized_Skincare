@@ -173,7 +173,7 @@ src/                    # ES Modules
   keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시
-  utils.js              # 공통 유틸리티 (shuffle·todayKey·getChosung 등)
+  utils.js              # 공통 유틸리티 (shuffle·todayKey/localDateKey·getChosung·escapeRegExp·debounce·fmtClock/fmtMMSS)
   types.js              # 중앙 JSDoc 타입 정의 모듈 (@spec none)
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)

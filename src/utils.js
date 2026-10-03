@@ -13,9 +13,54 @@ export function shuffle(arr) {
     return a;
 }
 
+/**
+ * 로컬 날짜를 'YYYY-MM-DD' 키로 반환 — 저장소 날짜 버킷의 표준 형식.
+ * toISOString().slice(0,10)은 UTC라 KST 00~09시에 하루 전으로
+ * 버킷되는 오류가 있으므로 로컬 성분으로 조립한다.
+ */
+export function localDateKey(d) {
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 /** 오늘 날짜를 'YYYY-MM-DD' 키로 반환 (진도/스트릭/백업 파일명 공용) */
 export function todayKey(date) {
-    return (date || new Date()).toISOString().split('T')[0];
+    return localDateKey(date || new Date());
+}
+
+/** 정규식 특수문자 이스케이프 — 동적 RegExp 생성 시 필수 */
+export function escapeRegExp(string) {
+    return String(string).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** 디바운스 — 마지막 호출 후 delay(ms) 경과 시 1회 실행. .cancel()로 대기 취소 */
+export function debounce(func, delay = 150) {
+    let timer;
+    const wrapped = function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+    wrapped.cancel = () => clearTimeout(timer);
+    return wrapped;
+}
+
+/** 초 → 'mm:ss' 고정폭 (타이머 표시용 — 분은 항상 2자리, 60분 초과도 누적) */
+export function fmtMMSS(sec) {
+    const s = Math.floor(Number(sec));
+    if (!isFinite(s) || s < 0) return '00:00';
+    const mm = String(Math.floor(s / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    return `${mm}:${ss}`;
+}
+
+/** 초 → 'm:ss' (1시간 이상 'h:mm:ss') — 오디오·재생 위치 표시용 */
+export function fmtClock(sec) {
+    const s = Math.floor(Number(sec));
+    if (!isFinite(s) || s < 0) return '0:00';
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const ss = String(s % 60).padStart(2, '0');
+    return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`;
 }
 
 export function getChosung(str) {

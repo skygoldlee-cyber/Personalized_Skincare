@@ -16,14 +16,7 @@ import { switchView } from './navigation.js';
 import { showReleaseNotesModal, releaseNotes } from '../whats-new.js';
 import { showOnboardingModal } from '../onboarding.js';
 import { showFeedbackModal, dismissFeedbackHint, dismissFeedbackDot } from '../feedback.js';
-
-function debounce(func, delay = 150) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), delay);
-    };
-}
+import { debounce } from '../utils.js';
 
 export function setupEventListeners(enhanceDataClickAccessibility) {
     // 1. 진도 초기화 버튼

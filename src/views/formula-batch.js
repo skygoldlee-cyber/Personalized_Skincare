@@ -30,7 +30,7 @@ import {
 } from './formula-print.js';
 
 import { toCsv, downloadCsv } from '../csv-utils.js';
-import { todayKey } from '../utils.js';
+import { todayKey, localDateKey } from '../utils.js';
 
 // 폼 상태 — editingId가 있으면 보정 모드(identity 필드 읽기 전용)
 const draft = { editingId: null };
@@ -380,7 +380,7 @@ function updateExpiryHint(formula) {
   const base = madeEl && madeEl.value ? new Date(madeEl.value) : new Date();
   if (Number.isNaN(base.getTime())) return;
   const d = new Date(base.getTime() + days * 86400000);
-  expEl.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  expEl.value = localDateKey(d);
 }
 
 /** 처방 선택 시 총량·단위·고객 기본값 채우기 (입력된 값은 덮어쓰지 않음) */

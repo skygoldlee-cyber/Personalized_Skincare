@@ -97,7 +97,7 @@ test('PF-09: 검색 디바운스가 250ms 상수로 관리된다', () => {
   const m = timing.match(/SEARCH_DEBOUNCE_MS\s*:\s*(\d+)/);
   assert.ok(m, '디바운스 상수');
   assert.equal(Number(m[1]), 250);
-  assert.ok(/clearTimeout/.test(read('src/views/textbook-search.js')), '디바운스 적용');
+  assert.ok(/debounce\(/.test(read('src/views/textbook-search.js')), '디바운스 적용 (utils.debounce — 내부 clearTimeout)');
 });
 
 // ---------- PF-10: console.log → console.debug ----------

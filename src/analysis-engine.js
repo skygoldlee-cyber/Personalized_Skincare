@@ -15,6 +15,7 @@
 
 import { parseWeakSimId, subjectKeyFromItemId, WEAK_QUIZ_PREFIX } from './weak-items.js';
 import { resolveLegacySubjectKey } from './exam-context.js';
+import { localDateKey } from './utils.js';
 import { WEAK_GRADUATE_STREAK } from './statement-tracker.js';
 import { getWrongCauseLabels } from './recommendations.js';
 
@@ -153,7 +154,7 @@ function _rangeStats(calendar, fromOffset, toOffset) {
     for (let i = fromOffset; i <= toOffset; i++) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        const key = localDateKey(d);
         const e = calendar[key];
         if (!e) continue;
         if (e.cards > 0 || e.quizzes > 0) days++;

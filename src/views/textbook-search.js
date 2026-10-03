@@ -8,13 +8,18 @@ import { TIMING } from '../config/timing.js';
 import { DataLoader } from '../data-loader.js';
 import { hasFeature } from '../exam-context.js';
 import { PATHS } from '../paths.js';
+import { escapeRegExp, debounce } from '../utils.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
     filter: 'all',
     searchQuery: '',
-    debounceTimer: /** @type {number|undefined} */ (undefined)
 };
+
+const _runSearch = debounce((value) => {
+    textbookState.searchQuery = value;
+    performTextbookSearch();
+}, TIMING.SEARCH_DEBOUNCE_MS);
 
 let _searchIndex = null;
 let _searchIndexKeys = null;
@@ -160,7 +165,7 @@ function _getSearchIndex() {
 function _buildInvertedIndex() {
     _invertedIndex = new Map();
     _invertedIndexKeys = _searchIndexKeys;
-    
+
     _searchIndex.forEach((entry, idx) => {
         const text = entry._searchText;
         // 공백 기준 토큰화
@@ -181,34 +186,30 @@ function _buildInvertedIndex() {
 
 export function renderTextbookSearch() {
     const searchInput = /** @type {HTMLInputElement} */ (document.getElementById('textbook-search-input'));
-    
+
     // Bind search input events only once
     if (searchInput && !searchInput.dataset.bound) {
         searchInput.dataset.bound = 'true';
-        
+
         searchInput.addEventListener('input', (e) => {
-            clearTimeout(textbookState.debounceTimer);
-            textbookState.debounceTimer = setTimeout(() => {
-                textbookState.searchQuery = (e.target instanceof HTMLInputElement ? e.target.value : '').trim();
-                performTextbookSearch();
-            }, TIMING.SEARCH_DEBOUNCE_MS);
+            _runSearch(e.target instanceof HTMLInputElement ? e.target.value.trim() : '');
         });
-        
+
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                clearTimeout(textbookState.debounceTimer);
+                _runSearch.cancel();
                 textbookState.searchQuery = (e.target instanceof HTMLInputElement ? e.target.value : '').trim();
                 performTextbookSearch();
             }
         });
     }
-    
+
     performTextbookSearch();
 }
 
 export function setTextbookFilter(filterVal) {
     textbookState.filter = filterVal;
-    
+
     // Update active filter class
     const buttons = document.querySelectorAll('.textbook-filter-buttons .btn');
     buttons.forEach(btn => {
@@ -218,7 +219,7 @@ export function setTextbookFilter(filterVal) {
             btn.classList.remove('active-filter');
         }
     });
-    
+
     performTextbookSearch();
 }
 
@@ -243,7 +244,7 @@ function performTextbookSearch() {
     const container = document.getElementById('textbook-results-container');
     const summary = document.getElementById('textbook-search-summary');
     if (!container || !summary) return;
-    
+
     const query = textbookState.searchQuery.toLowerCase().trim();
     if (!query) {
         // Show empty state
@@ -257,7 +258,7 @@ function performTextbookSearch() {
         `;
         return;
     }
-    
+
     const terms = query.split(/\s+/).filter(t => t.length > 0);
     // TS-10 — 서사 인덱스 최초 1회 지연 로드; 완료 시 같은 검색어로 재실행
     // (resolved promise 재사용 시 재실행 루프가 되므로 트리거는 로드 시작 1회에 한정)
@@ -270,7 +271,7 @@ function performTextbookSearch() {
     }
     const index = _getSearchIndex();
     const results = [];
-    
+
     // 3. 역색인 활용 — 각 검색어에 대해 후보 섹션 집합을 구하고 교집합 계산
     let candidateIndices = null;
     for (const term of terms) {
@@ -294,12 +295,12 @@ function performTextbookSearch() {
         }
         if (candidateIndices.size === 0) break;
     }
-    
+
     // 역색인 결과가 있으면 해당 섹션만 검사, 없으면 전체 검사 (fallback)
     const searchEntries = (candidateIndices && candidateIndices.size > 0)
         ? [...candidateIndices].map(i => ({ entry: index[i], originalIdx: i }))
         : index.map((entry, i) => ({ entry, originalIdx: i }));
-    
+
     for (const { entry } of searchEntries) {
         if (textbookState.filter !== 'all' && textbookState.filter !== entry.subjId) continue;
         const isMatch = terms.every(term => entry._searchText.includes(term));
@@ -315,10 +316,10 @@ function performTextbookSearch() {
             });
         }
     }
-    
+
     // Update summary text
     summary.innerHTML = `총 <strong style="color: var(--color-primary);">${results.length}</strong>건의 관련 내용을 찾았습니다.`;
-    
+
     if (results.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
@@ -329,7 +330,7 @@ function performTextbookSearch() {
         `;
         return;
     }
-    
+
     // Render results
     container.innerHTML = '';
     results.forEach((item, idx) => {
@@ -340,7 +341,7 @@ function performTextbookSearch() {
             badgeColors[sub.key] = colors[idx % colors.length];
         });
         const badgeColor = badgeColors[item.subjId] || 'badge-gray';
-        
+
         const isLong = item.content.length > 300;
         const bodyClass = isLong ? 'textbook-card-body collapsed' : 'textbook-card-body';
         const formattedContent = formatSectionContent(item.content, terms);
@@ -385,7 +386,7 @@ export function toggleTextbookCard(cardId) {
     const body = document.getElementById(`${cardId}-body`);
     const btn = document.getElementById(`${cardId}-toggle-btn`);
     if (!body || !btn) return;
-    
+
     if (body.classList.contains('collapsed')) {
         body.classList.remove('collapsed');
         body.style.maxHeight = 'none';
@@ -439,14 +440,10 @@ function highlightTextOutsideTags(html, term) {
     const regex = new RegExp(`([^<]*)(<[^>]+>)?`, 'g');
     const escapedTerm = escapeRegExp(term);
     const termRegex = new RegExp(`(${escapedTerm})`, 'gi');
-    
+
     return html.replace(regex, (match, text, tag) => {
         const highlightedText = text.replace(termRegex, '<mark class="txt-highlight">$1</mark>');
         return highlightedText + (tag || '');
     });
-}
-
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 

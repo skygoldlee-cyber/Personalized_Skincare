@@ -28,6 +28,7 @@ import {
 } from './formula-recommend.js';
 import { listCustomers, getCustomer, createCustomer } from '../customer-store.js';
 import { findMaterialByName, materialStatus, daysUntilExpiry } from '../material-ledger.js';
+import { localDateTimeNow } from '../store-utils.js';
 // 추천·맞춤 규칙 액션은 formula-recommend.js 구현 — app.js 디스패치 호환을 위해 재수출
 export {
   formulaRecAdd, formulaRecAddBase, formulaLoadBase,
@@ -999,7 +1000,7 @@ export function formulaCalcSave() {
     const same = prev && prev.method === data.stability.method
       && prev.result === data.stability.result && prev.note === data.stability.note;
     data.stability.recordedAt = same ? (prev.recordedAt || '')
-      : new Date().toISOString().slice(0, 16);
+      : localDateTimeNow();
   }
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 

@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: d50d6c5d961f37b5
+> 입력 해시: 4c769a9bf2cabd9d
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -63,7 +63,7 @@
 | F-02 | ✅ | 테스트 | DOC-REF-03 | css/study.css<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-03 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-04 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
-| F-05 | ✅ | 테스트 | DOC-REF-03 | src/utils.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js<br>tests/unit/utils.test.js | DOC-ARC-05 | — |
+| F-05 | ✅ | 테스트 | DOC-REF-03 | src/utils.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-06 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-07 | ✅ | 테스트 | DOC-REF-03 | src/spaced-repetition.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-08 | ✅ | 테스트 | DOC-REF-03 | src/spaced-repetition.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
@@ -78,7 +78,7 @@
 | Q-02 | ✅ | E2E 테스트 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/e2e/flows.spec.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-03 | ✅ | 테스트 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-04 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
-| Q-05 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/utils.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/unit/utils.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
+| Q-05 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/utils.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-06 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/daily-challenge.js<br>src/views/quiz.js | tests/dom/study-challenge.dom.test.js<br>tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-07 | ✅ | E2E 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/e2e/flows.spec.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-08 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js<br>src/weak-items.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
@@ -206,7 +206,7 @@
 |----|------|-----------|------|------|--------|--------|------|
 | T-01 | ✅ | 테스트 | — | html/views/trainer.html<br>index.html<br>src/trainer-calc.js<br>src/views/trainer-calc-practice.js<br>…외 1개 | tests/dom/study-trainer.dom.test.js<br>tests/unit/trainer-calc.test.js | DOC-ARC-05 | — |
 | T-02 | ✅ | 테스트 | — | src/utils.js<br>src/views/trainer-ingredients.js<br>src/views/trainer.js | tests/dom/study-trainer.dom.test.js | DOC-ARC-05 | — |
-| T-03 | ✅ | 테스트 | — | src/views/pomodoro.js<br>src/views/trainer.js | tests/dom/study-pomodoro.dom.test.js<br>tests/dom/study-trainer.dom.test.js | DOC-ARC-05 | — |
+| T-03 | ✅ | 테스트 | — | src/views/pomodoro.js<br>src/views/trainer.js | tests/dom/study-pomodoro.dom.test.js<br>tests/dom/study-trainer.dom.test.js<br>tests/unit/utils.test.js | DOC-ARC-05 | — |
 | T-04 | ✅ | 테스트 | — | css/trainer.css<br>src/scratchpad.js<br>src/views/trainer.js | tests/dom/common-scratchpad.dom.test.js<br>tests/dom/study-trainer.dom.test.js | DOC-ARC-05 | — |
 | T-05 | ✅ | 테스트 | — | css/trainer.css<br>src/views/trainer-calc-practice.js<br>src/views/trainer.js | tests/dom/study-trainer.dom.test.js | DOC-ARC-05 | — |
 
@@ -330,7 +330,7 @@
 | RV-01 | ✅ | 테스트 | — | html/views/review.html<br>index.html<br>src/views/quiz.js<br>src/views/trainer.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 | SC-01 | ✅ | 테스트 | — | css/study-calendar.css<br>html/views/calendar.html<br>index.html<br>src/views/study-calendar.js | tests/dom/study-calendar.dom.test.js | DOC-ARC-05 | — |
 | SC-02 | ✅ | 테스트 | — | src/views/study-calendar.js | tests/dom/study-calendar.dom.test.js | DOC-ARC-05 | — |
-| SC-03 | ✅ | 테스트 | — | src/study-tracker.js | tests/unit/study-tracker.test.js | DOC-ARC-05 | — |
+| SC-03 | ✅ | 테스트 | — | src/study-tracker.js | tests/unit/study-tracker.test.js<br>tests/unit/utils.test.js | DOC-ARC-05 | — |
 | SC-04 | ✅ | 테스트 | — | html/views/dashboard.html<br>index.html<br>src/views/daily-challenge.js<br>src/views/dashboard.js | tests/dom/study-challenge.dom.test.js | — | — |
 
 ## 3.21 UI 모드 전환

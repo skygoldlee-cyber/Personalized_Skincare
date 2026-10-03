@@ -1,6 +1,7 @@
 // src/views/study-calendar.js — 학습 캘린더/목표 뷰
 // @spec SC-01,SC-02
 import { getStudyCalendar, getStudyGoals, setStudyGoals, getTodayGoalProgress, getWeeklyGoalProgress, getMonthlyStudyDays, getTodayStr, getExamDate, setExamDate, getDDay } from '../study-tracker.js';
+import { localDateKey } from '../utils.js';
 import { showToast } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { safeGetItem } from '../state.js';
@@ -140,7 +141,7 @@ function _renderCalendarDays() {
 
     // 날짜
     for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = `${_currentYear}-${String(_currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const dateStr = localDateKey(new Date(_currentYear, _currentMonth, d));
         const entry = cal[dateStr] || {};
         const studied = (entry.cards > 0 || entry.quizzes > 0);
         const isToday = dateStr === today;

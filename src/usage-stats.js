@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { safeGetItem, safeSetItem } from './state.js';
 import { esc } from './sanitize.js';
 import { trapFocus } from './ui-utils.js';
+import { todayKey } from './utils.js';
 
 const DAYS_KEEP = 90; // days 맵 상한 — 저장량 제한
 
@@ -40,7 +41,7 @@ const VALUE_ACTIONS = new Set([
     'diagnostic_quiz', 'story_textbook', 'personal_analysis', 'analysis_report', 'actual_exam_report',
 ]);
 
-function _todayStr() { return new Date().toISOString().slice(0, 10); }
+function _todayStr() { return todayKey(); }
 
 function _load() {
     try {

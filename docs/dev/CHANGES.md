@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 날짜 버킷 UTC→로컬 통일 + 공용 유틸 정리
+
+- **`todayKey` UTC 결함 수정** (`utils.js`) — 기존 `toISOString().split('T')[0]`는 UTC 날짜라 **KST 00~09시에 하루 전으로 버킷**되는 결함. 진도(state)·SM-2 복습·스트릭·데일리 챌린지·CSV/백업 파일명 등 ~20곳이 이 키를 공유하므로 한 곳 수정으로 전부 로컬 날짜로 통일. 저장된 과거 키는 라벨이므로 마이그레이션 불필요
+- **동일 결함 개별 수정**: `usage-stats.js`(`_todayStr`→`todayKey`), `formula.js` 안정성 확인 `recordedAt`(UTC slice→`localDateTimeNow()` — 화면 표시용 기록 시각)
+- **유틸 통합** (`utils.js`에 추가): `localDateKey`(pad 패턴 8곳 대체 — batch-store·customer-store·analysis-engine·study-tracker·study-calendar·formula-batch), `fmtMMSS`(exam-simulator 2곳·pomodoro), `fmtClock`(reader-audio `formatAudioTime` 대체), `escapeRegExp`(textbook-parser·textbook-search 중복 제거), `debounce`+`.cancel()`(event-listeners 내부 함수 승격 — textbook-search 수동 타이머 교체)
+- **사망 CSS 스텁 제거**: `.reader-breadcrumb`·`.reader-chapter-header-card`·`.reader-chapter-nav/.reader-nav-btn` (`display:none`만 남은 레거시 스텁, 사용처 0건)
+- **테스트**: `tests/unit/utils.test.js` 7건 — 날짜 키 로컬 조립·시간 포맷·이스케이프·디바운스 계약 고정
+
 ## 2026-10-03 MD 뷰어 공용 베이스 추출 + expiringMaterials 연결 (중복 제거)
 
 - **`src/doc-overlay.js` 신설** — exam-viewer·manual-viewer 병렬 구현에서 공통부 추출:
