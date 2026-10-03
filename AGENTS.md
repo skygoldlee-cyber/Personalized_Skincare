@@ -155,6 +155,7 @@ src/                    # ES Modules
   exam-viewer.js        # 문제집/참조자료 MD 뷰어
   combo-doc.js          # 복수정답형 드릴 → 문제집 MD 런타임 직렬화 (과목N_복수정답형.md 산출물 대체)
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
+  doc-overlay.js        # MD 문서 오버레이 공용 베이스 — 세션 캐시·번들 주입·TOC·셸 수명주기 (exam/manual 뷰어 공용)
   modal-back.js         # 모달/오버레이 뒤로가기 닫기 — is-hidden 토글 감시 + 동일 URL 마커 pushState/popstate
   charts.js             # SVG 레이더/꺾은선 차트
   pdf-registry.js       # 참조자료 경로 매핑 (생성물 — 시험별 테이블, getRefTables())

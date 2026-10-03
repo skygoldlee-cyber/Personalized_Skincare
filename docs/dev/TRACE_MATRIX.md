@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 714712ef711a79f2
+> 입력 해시: d50d6c5d961f37b5
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -234,23 +234,23 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| EV-01 | ✅ | 테스트 | DOC-REF-04 | src/combo-doc.js<br>src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-02 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-03 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-04 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-05 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-06 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-07 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
-| EV-08 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-01 | ✅ | 테스트 | DOC-REF-04 | src/combo-doc.js<br>src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-02 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-03 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-04 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-05 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-06 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-07 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-08 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/exam-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-examviewer.dom.test.js | — | — |
 
 ## 3.15 학습안내서/사용자매뉴얼 뷰어
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| MV-01 | ✅ | E2E 테스트 | DOC-REF-04 | src/manual-viewer.js | tests/dom/study-manual.dom.test.js<br>tests/e2e/flows.spec.js | — | — |
-| MV-02 | ✅ | E2E 테스트 | DOC-REF-04 | src/manual-viewer.js<br>src/mermaid-render.js | tests/dom/study-manual.dom.test.js<br>tests/e2e/flows.spec.js | — | — |
-| MV-03 | ✅ | 테스트 | DOC-REF-04 | src/manual-viewer.js | tests/dom/study-manual.dom.test.js | — | — |
-| MV-04 | ✅ | 테스트 | DOC-REF-04 | src/manual-viewer.js<br>tools/build/build_doc_bundles.js | tests/dom/study-manual.dom.test.js | — | — |
+| MV-01 | ✅ | E2E 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/manual-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-manual.dom.test.js<br>tests/e2e/flows.spec.js | — | — |
+| MV-02 | ✅ | E2E 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/manual-viewer.js<br>src/mermaid-render.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-manual.dom.test.js<br>tests/e2e/flows.spec.js | — | — |
+| MV-03 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/manual-viewer.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-manual.dom.test.js | — | — |
+| MV-04 | ✅ | 테스트 | DOC-REF-04 | src/doc-overlay.js<br>src/manual-viewer.js<br>tools/build/build_doc_bundles.js | tests/dom/doc-overlay.dom.test.js<br>tests/dom/study-manual.dom.test.js | — | — |
 
 ## 3.16 차트 및 시각화
 

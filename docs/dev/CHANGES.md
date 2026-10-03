@@ -6,6 +6,18 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 MD 뷰어 공용 베이스 추출 + expiringMaterials 연결 (중복 제거)
+
+- **`src/doc-overlay.js` 신설** — exam-viewer·manual-viewer 병렬 구현에서 공통부 추출:
+  - `makeSessionCache` (sessionStorage TTL 캐시 + 프리픽스 클리어)
+  - `injectBundleScript` (클래식 `<script>` 재사용 주입 — file:// 번들 경로)
+  - `fetchMd` (라이브 fetch), `buildTocHtml`+`mountToc` (목차 생성·점프)
+  - `createDocOverlay` (셸 수명주기 — 스타일 주입·open/close·Escape·popstate·히스토리 마커)
+- **manual-viewer.js** 501→353줄, **exam-viewer.js** 729→595줄 — 뷰어별 고유 기능(매뉴얼: doc:/subj: 링크·소스 레지스트리 / 문제집: nav 스택·이어보기 칩·PDF·LNN 인용 인터셉트·combo: 경로)은 유지, 동작 불변
+- **html-viewer.js는 대상에서 제외** — 검색 UI·LRU 캐시·인쇄 창 등 상호작용 모델이 달라 강제 통합 시 과추상화 (파일 헤더에 명기)
+- **formula-material.js**: 기한 임박 필터 인라인 구현을 `expiringMaterials()` 헬퍼 호출로 교체 (소규모 중복 해소)
+- **테스트**: `tests/dom/doc-overlay.dom.test.js` 신설 16건 — 캐시 TTL·스크립트 재사용·TOC 점프·셸 수명주기 계약 고정 + 기존 뷰어 테스트 14건 회귀 통과
+
 ## 2026-10-03 사망 CSS 정리 — 사용처 0건 규칙 제거 (전수 감사)
 
 - **base.css 유틸리티**: 사용처 전수 스캔(html/views·src·tests·data)으로 0건 확인된 클래스만 제거 — `.is-flex` `.is-grid` `.flex-end` `.items-center` `.justify-between` `.text-center` `.text-success` `.text-danger` `.text-secondary` `.font-bold` `.font-semibold` `.mt-2` `.mt-4` `.mb-2` `.mb-3` `.mb-8` `.gap-6` `.cursor-pointer` `.cursor-crosshair`. 사용 중인 `.is-hidden`·`.text-muted`·`.mb-6` 등은 유지

@@ -18,7 +18,8 @@
 //     - file:// : tools/build/build_exam_bundles.js 가 구운 data/exams_md/<stem>.js 번들 사용
 //                 (클래식 <script> 는 file:// 에서도 로드되므로 동작)
 //   번들이 없으면 `node tools/build/build_exam_bundles.js` 를 실행하라는 안내를 띄웁니다.
-
+//   오버레이 셸·캐시·TOC·번들 주입은 src/doc-overlay.js 공용 베이스 사용
+//
 import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { resolveRefPath } from './pdf-registry.js';
@@ -30,48 +31,14 @@ import { proFeatureNotice } from './pro-upgrade.js';
 import { renderMermaidIn } from './mermaid-render.js';
 import { DataLoader } from './data-loader.js';
 import { buildComboSubjectMd } from './combo-doc.js';
+import { makeSessionCache, injectBundleScript, fetchMd, buildTocHtml, mountToc, createDocOverlay } from './doc-overlay.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경: v7 — allowMermaid 활성화 (참조자료 md의 ```mermaid 블록 렌더링)
-    const CACHE_PREFIX = 'exam_md_cache_v7_';
-    const CACHE_TTL = CACHE.EXAM_CACHE_TTL_MS; // 24시간
+    const _cache = makeSessionCache('exam_md_cache_v7_', CACHE.EXAM_CACHE_TTL_MS); // 24시간
 
     // 네비게이션 히스토리 스택 (인용 링크 이동 후 뒤로가기용)
     const _navStack = []; // [{ mdPath, lineNum, scrollPos }]
-
-    /* =========================================================
-       캐시 (sessionStorage, TTL 24h) — 본문 HTML만 저장
-       ========================================================= */
-    function _cacheKey(mdPath) {
-        return CACHE_PREFIX + mdPath.replace(/[^a-zA-Z0-9]/g, '_');
-    }
-
-    function _getCached(mdPath) {
-        try {
-            const raw = sessionStorage.getItem(_cacheKey(mdPath));
-            if (!raw) return null;
-            const entry = JSON.parse(raw);
-            if (Date.now() - entry.timestamp > CACHE_TTL) {
-                sessionStorage.removeItem(_cacheKey(mdPath));
-                return null;
-            }
-            return entry; // { html, mdText } 반환
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function _setCached(mdPath, html, mdText) {
-        try {
-            sessionStorage.setItem(_cacheKey(mdPath), JSON.stringify({
-                timestamp: Date.now(),
-                html: html,
-                mdText: mdText || null
-            }));
-        } catch (e) {
-            // QuotaExceededError 등은 무시 (다음에 재변환)
-        }
-    }
 
     /* =========================================================
        마크다운 → HTML 변환 (기존 로직 그대로 — 정상 동작 확인됨)
@@ -105,19 +72,13 @@ export const ExamViewer = (() => {
     /* =========================================================
        앱 내부 전체화면 오버레이 (팝업/새창 미사용)
        ========================================================= */
-    let _overlayEl = null;
-    let _historyPushed = false;
     let _currentMdPath = null;
 
-    function _injectStylesOnce() {
-        if (document.getElementById('exam-overlay-style')) return;
-        const style = document.createElement('style');
-        style.id = 'exam-overlay-style';
-        // 앱의 실제 테마 토큰(--bg-app / --bg-card / --color-text-main / --color-text-muted)을
-        // 사용해 글로벌 다크/라이트 테마를 자동으로 따라갑니다.
-        // (이전에는 존재하지 않는 --bg-color/--text-color/--card-bg/--text-muted 를 참조해
-        //  항상 라이트 폰트 기본값으로 떨어져 전역 테마가 적용되지 않던 문제 수정)
-        style.textContent = `
+    // 앱의 실제 테마 토큰(--bg-app / --bg-card / --color-text-main / --color-text-muted)을
+    // 사용해 글로벌 다크/라이트 테마를 자동으로 따라갑니다.
+    // (이전에는 존재하지 않는 --bg-color/--text-color/--card-bg/--text-muted 를 참조해
+    //  항상 라이트 폰트 기본값으로 떨어져 전역 테마가 적용되지 않던 문제 수정)
+    const OVERLAY_CSS = `
 #exam-overlay{position:fixed;inset:0;z-index:var(--z-modal-overlay);display:none;flex-direction:column;
   background:var(--bg-app);color:var(--color-text-main);}
 #exam-overlay.open{display:flex;}
@@ -201,18 +162,15 @@ body.exam-open{overflow:hidden;}
   #exam-overlay .exam-ov-bar,#exam-overlay .exam-ov-toc,#exam-overlay .exam-resume-chip{display:none !important;}
   #exam-overlay .exam-ov-scroll{overflow:visible !important;padding:0 !important;}
 }`;
-        document.head.appendChild(style);
-    }
 
-    function _ensureOverlay() {
-        if (_overlayEl) return _overlayEl;
-        _injectStylesOnce();
-        const el = document.createElement('div');
-        el.id = 'exam-overlay';
-        el.setAttribute('role', 'dialog');
-        el.setAttribute('aria-modal', 'true');
-        el.setAttribute('aria-label', '문제집 뷰어');
-        el.innerHTML = `
+    const _overlay = createDocOverlay({
+        id: 'exam-overlay',
+        styleId: 'exam-overlay-style',
+        css: OVERLAY_CSS,
+        ariaLabel: '문제집 뷰어',
+        bodyClass: 'exam-open',
+        historyMarker: 'examOverlay',
+        innerHTML: `
             <div class="exam-ov-bar">
                 <button type="button" class="exam-ov-btn" data-exam-close aria-label="닫기">
                     <i class="fa-solid fa-xmark"></i> 닫기
@@ -231,25 +189,35 @@ body.exam-open{overflow:hidden;}
             <div id="exam-resume-chip" class="exam-resume-chip is-hidden">
                 <button type="button" id="exam-resume-go" class="exam-resume-go"></button>
                 <button type="button" id="exam-resume-dismiss" class="exam-resume-x" aria-label="이어보기 닫기"><i class="fa-solid fa-xmark"></i></button>
-            </div>`;
-        document.body.appendChild(el);
-
-        el.querySelector('[data-exam-close]')?.addEventListener('click', () => close());
-        el.querySelector('[data-exam-back]')?.addEventListener('click', () => _goBack());
-        el.querySelector('[data-exam-print]')?.addEventListener('click', () => window.print());
-        el.querySelector('#exam-resume-go')?.addEventListener('click', () => {
-            const chip = el.querySelector('#exam-resume-chip');
+            </div>`,
+        wire(el) {
+            el.querySelector('[data-exam-close]')?.addEventListener('click', () => close());
+            el.querySelector('[data-exam-back]')?.addEventListener('click', () => _goBack());
+            el.querySelector('[data-exam-print]')?.addEventListener('click', () => window.print());
+            el.querySelector('#exam-resume-go')?.addEventListener('click', () => {
+                const chip = el.querySelector('#exam-resume-chip');
+                const scroll = el.querySelector('.exam-ov-scroll');
+                const pos = parseInt((chip && /** @type {HTMLElement} */ (chip).dataset.pos) || '0', 10);
+                if (scroll && pos > 0) scroll.scrollTo({ top: pos, behavior: 'smooth' });
+                if (chip) chip.classList.add('is-hidden');
+            });
+            el.querySelector('#exam-resume-dismiss')?.addEventListener('click', () => {
+                el.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
+            });
+        },
+        onClose(el) {
+            // 이어보기 위치 저장 — 300px 이상 읽은 문서만 기록 (상단이면 기록 삭제)
             const scroll = el.querySelector('.exam-ov-scroll');
-            const pos = parseInt((chip && /** @type {HTMLElement} */ (chip).dataset.pos) || '0', 10);
-            if (scroll && pos > 0) scroll.scrollTo({ top: pos, behavior: 'smooth' });
-            if (chip) chip.classList.add('is-hidden');
-        });
-        el.querySelector('#exam-resume-dismiss')?.addEventListener('click', () => {
-            el.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
-        });
-        _overlayEl = el;
-        return el;
-    }
+            if (_currentMdPath && scroll) _savePos(_currentMdPath, scroll.scrollTop);
+            _hideResumeChip();
+            _navStack.length = 0; // 히스토리 초기화
+            _currentMdPath = null;
+        }
+    });
+    const _ensureOverlay = _overlay.ensure;
+    const _open = _overlay.open;
+    const close = _overlay.close;
+    const isOpen = _overlay.isOpen;
 
     /* ---- 이어보기: 문서별 마지막 스크롤 위치 (시험 스코프 진도 키, 세션 간 유지) ---- */
     const POS_MIN = 300; // 상단 근처(300px 미만)는 이어보기 대상이 아님
@@ -269,14 +237,15 @@ body.exam-open{overflow:hidden;}
 
     function _hideResumeChip() {
         if (_resumeTimer) { clearTimeout(_resumeTimer); _resumeTimer = null; }
-        _overlayEl?.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
+        _overlay.el()?.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
     }
 
     // 저장된 위치가 있으면 우하단 '이어보기' 칩 표시 — 클릭 시 해당 지점으로 스크롤
     function _maybeShowResumeChip(mdPath) {
-        const chip = _overlayEl && _overlayEl.querySelector('#exam-resume-chip');
-        const scroll = _overlayEl && _overlayEl.querySelector('.exam-ov-scroll');
-        const go = _overlayEl && _overlayEl.querySelector('#exam-resume-go');
+        const overlayEl = _overlay.el();
+        const chip = overlayEl && overlayEl.querySelector('#exam-resume-chip');
+        const scroll = overlayEl && overlayEl.querySelector('.exam-ov-scroll');
+        const go = overlayEl && overlayEl.querySelector('#exam-resume-go');
         if (!chip || !scroll || !go) return;
         const pos = _readPosMap()[mdPath] || 0;
         const denom = scroll.scrollHeight - scroll.clientHeight;
@@ -286,19 +255,6 @@ body.exam-open{overflow:hidden;}
         go.innerHTML = `<i class="fa-solid fa-bookmark"></i> 이어보기 · ${pct}% 지점`;
         chip.classList.remove('is-hidden');
         _resumeTimer = setTimeout(() => chip.classList.add('is-hidden'), 8000);
-    }
-
-    function _buildToc(article) {
-        const headings = article.querySelectorAll('h2, h3');
-        if (headings.length === 0) return '';
-        let items = '';
-        headings.forEach((h, idx) => {
-            if (!h.id) h.id = 'exam-h-' + idx;
-            const depth = h.tagName === 'H3' ? 'depth-3' : 'depth-2';
-            const label = h.textContent.replace(/🔖기출|📌중요/g, '').trim();
-            items += `<a href="#${h.id}" class="${depth}" data-exam-jump="${h.id}">${escapeHTML(label)}</a>`;
-        });
-        return `<details class="exam-ov-toc"><summary><i class="fa-solid fa-list"></i> 목차</summary>${items}</details>`;
     }
 
     function _renderBody(title, bodyHtml, mdPath) {
@@ -324,23 +280,9 @@ body.exam-open{overflow:hidden;}
 
         // 목차를 본문 앞에 삽입 (오버레이 스크롤 컨테이너 안쪽 상단)
         const scroll = el.querySelector('.exam-ov-scroll');
-        const oldToc = scroll.querySelector('.exam-ov-toc');
-        if (oldToc) oldToc.remove();
-        const tocHtml = _buildToc(article);
-        if (tocHtml) {
-            const wrap = document.createElement('div');
-            wrap.innerHTML = tocHtml;
-            const toc = wrap.firstElementChild;
-            if (toc) scroll.insertBefore(toc, article);
-            toc?.addEventListener('click', (e) => {
-                const a = e.target instanceof Element ? e.target.closest('[data-exam-jump]') : null;
-                if (!a) return;
-                e.preventDefault();
-                const jumpId = a.getAttribute('data-exam-jump');
-                const target = jumpId ? document.getElementById(jumpId) : null;
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
+        mountToc(scroll, article, buildTocHtml(article, {
+            idPrefix: 'exam-h-', jumpAttr: 'exam-jump', tocClass: 'exam-ov-toc'
+        }), { tocClass: 'exam-ov-toc', jumpAttr: 'exam-jump' });
         // PDF 참조 링크 인터셉트: .pdf 링크를 대응하는 .md 경로로 변환하여 오버레이에서 열기
         article.querySelectorAll('a[href]').forEach(a => {
             const href = a.getAttribute('href') || '';
@@ -408,46 +350,6 @@ body.exam-open{overflow:hidden;}
         _open();
     }
 
-    function _onKeydown(e) { if (e.key === 'Escape') close(); }
-    function _onPopstate() { if (isOpen()) close(true); }
-
-    function _open() {
-        const el = _ensureOverlay();
-        if (!el.classList.contains('open')) {
-            el.classList.add('open');
-            document.body.classList.add('exam-open');
-            document.addEventListener('keydown', _onKeydown);
-            window.addEventListener('popstate', _onPopstate);
-            // 안드로이드 뒤로가기 / 스와이프로 닫히도록 히스토리 상태 추가
-            try { history.pushState({ examOverlay: true }, ''); _historyPushed = true; }
-            catch (e) { _historyPushed = false; }
-        }
-    }
-
-    function isOpen() {
-        return !!(_overlayEl && _overlayEl.classList.contains('open'));
-    }
-
-    function close(fromPopstate) {
-        if (!_overlayEl) return;
-        // 이어보기 위치 저장 — 300px 이상 읽은 문서만 기록 (상단이면 기록 삭제)
-        const scroll = _overlayEl.querySelector('.exam-ov-scroll');
-        if (_currentMdPath && scroll) _savePos(_currentMdPath, scroll.scrollTop);
-        _hideResumeChip();
-        _overlayEl.classList.remove('open');
-        document.body.classList.remove('exam-open');
-        document.removeEventListener('keydown', _onKeydown);
-        window.removeEventListener('popstate', _onPopstate);
-        _navStack.length = 0; // 히스토리 초기화
-        _currentMdPath = null;
-        if (_historyPushed && !fromPopstate) {
-            _historyPushed = false;
-            try { history.back(); } catch (e) { /* noop */ }
-        } else {
-            _historyPushed = false;
-        }
-    }
-
     /* =========================================================
        마크다운 로드 소스 (프로토콜별)
        ========================================================= */
@@ -458,35 +360,13 @@ body.exam-open{overflow:hidden;}
         return dataPath('exams_md/') + stem + '.js';
     }
 
-    // 클래식 <script> 동적 주입 (file:// 에서도 동작). 재사용/캐시 처리 포함.
-    function _injectScript(src) {
-        return /** @type {Promise<void>} */ (new Promise((resolve, reject) => {
-            const existing = /** @type {HTMLElement|null} */ (document.querySelector(`script[data-exam-bundle="${src}"]`));
-            if (existing) {
-                if (existing.dataset.loaded === 'true') { resolve(); return; }
-                if (existing.dataset.loaded === 'error') { reject(new Error('bundle load error: ' + src)); return; }
-                existing.addEventListener('load', () => resolve());
-                existing.addEventListener('error', () => reject(new Error('bundle load error: ' + src)));
-                return;
-            }
-            const s = document.createElement('script');
-            s.src = src;
-            s.async = true;
-            s.dataset.examBundle = src;
-            s.dataset.loaded = 'false';
-            s.addEventListener('load', () => { s.dataset.loaded = 'true'; resolve(); });
-            s.addEventListener('error', () => { s.dataset.loaded = 'error'; reject(new Error('bundle load error: ' + src)); });
-            document.head.appendChild(s);
-        }));
-    }
-
     // 번들(전역 __EXAM_MD__)에서 마크다운 조회 — 없으면 해당 번들 스크립트를 주입 후 재조회
     async function _loadFromBundle(mdPath) {
         if (window.__EXAM_MD__ && typeof window.__EXAM_MD__[mdPath] === 'string') {
             return window.__EXAM_MD__[mdPath];
         }
         try {
-            await _injectScript(_bundlePathFor(mdPath));
+            await injectBundleScript(_bundlePathFor(mdPath), 'data-exam-bundle');
         } catch (e) {
             throw new Error('문제집 번들을 찾을 수 없습니다. 터미널에서 `node tools/build/build_exam_bundles.js` 를 실행해 번들을 생성하세요.');
         }
@@ -494,13 +374,6 @@ body.exam-open{overflow:hidden;}
             return window.__EXAM_MD__[mdPath];
         }
         throw new Error('문제집 번들에 해당 문항이 없습니다. `node tools/build/build_exam_bundles.js` 로 다시 빌드하세요.');
-    }
-
-    // http(s) 라이브 fetch
-    async function _fetchMd(mdPath) {
-        const res = await fetch(mdPath, { cache: 'no-cache' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-        return res.text();
     }
 
     // 프로토콜에 맞춰 마크다운 원문 확보
@@ -522,7 +395,7 @@ body.exam-open{overflow:hidden;}
         }
         // http(s): 라이브 .md 우선(항상 최신), 실패하면 번들로 폴백
         try {
-            return await _fetchMd(mdPath);
+            return await fetchMd(mdPath);
         } catch (err) {
             try {
                 return await _loadFromBundle(mdPath);
@@ -536,8 +409,9 @@ body.exam-open{overflow:hidden;}
        메인 엔트리
        ========================================================= */
     function _updateBackButton() {
-        if (!_overlayEl) return;
-        const backBtn = _overlayEl.querySelector('[data-exam-back]');
+        const overlayEl = _overlay.el();
+        if (!overlayEl) return;
+        const backBtn = overlayEl.querySelector('[data-exam-back]');
         if (backBtn) {
             backBtn.classList.toggle('is-hidden', _navStack.length === 0);
         }
@@ -553,18 +427,18 @@ body.exam-open{overflow:hidden;}
     async function _openExamInternal(mdPath, lineNum, restoreScrollPos) {
         const title = _titleFromPath(mdPath);
 
-        const cached = _getCached(mdPath);
+        const cached = _cache.get(mdPath);
         if (cached) {
             _renderBody(title, cached.html, mdPath);
             _open();
             // 오버레이 표시 후 렌더 — mermaid 측정이 display:none 상태에서 부정확할 수 있음
-            renderMermaidIn(_overlayEl.querySelector('#exam-article'), '[exam]');
+            renderMermaidIn(_overlay.el().querySelector('#exam-article'), '[exam]');
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, cached.mdText);
                 _hideResumeChip();
             } else if (restoreScrollPos != null) {
-                const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+                const scroll = _overlay.el().querySelector('.exam-ov-scroll');
                 if (scroll) scroll.scrollTop = restoreScrollPos;
                 _hideResumeChip();
             } else {
@@ -578,15 +452,15 @@ body.exam-open{overflow:hidden;}
         try {
             const mdText = await _loadMd(mdPath);
             const bodyHtml = _mdToHtml(mdText, mdPath);
-            _setCached(mdPath, bodyHtml, mdText);
+            _cache.set(mdPath, { html: bodyHtml, mdText: mdText || null });
             _renderBody(title, bodyHtml, mdPath);
-            renderMermaidIn(_overlayEl.querySelector('#exam-article'), '[exam]');
+            renderMermaidIn(_overlay.el().querySelector('#exam-article'), '[exam]');
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, mdText);
                 _hideResumeChip();
             } else if (restoreScrollPos != null) {
-                const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+                const scroll = _overlay.el().querySelector('.exam-ov-scroll');
                 if (scroll) scroll.scrollTop = restoreScrollPos;
                 _hideResumeChip();
             } else {
@@ -602,7 +476,7 @@ body.exam-open{overflow:hidden;}
         // 이미 열려있는 상태에서 다른 파일을 여는 경우 (인용 링크 클릭)
         // 현재 문서를 히스토리에 저장
         if (isOpen() && _currentMdPath && _currentMdPath !== mdPath) {
-            const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+            const scroll = _overlay.el().querySelector('.exam-ov-scroll');
             const pos = scroll ? scroll.scrollTop : 0;
             _savePos(_currentMdPath, pos); // 나가는 문서도 이어보기 위치 기록
             _navStack.push({
@@ -628,7 +502,7 @@ body.exam-open{overflow:hidden;}
        라인 스크롤 헬퍼 (LNN 링크용) — data-md-line 기반
        ========================================================= */
     function _scrollToLine(lineNum, mdText) {
-        const el = _overlayEl;
+        const el = _overlay.el();
         if (!el) return;
         const scroll = el.querySelector('.exam-ov-scroll');
         if (!scroll) return;
@@ -714,14 +588,7 @@ body.exam-open{overflow:hidden;}
         close,
         isOpen,
         _mdToHtml,  // 테스트용 노출
-        _clearCache: () => {
-            const keys = [];
-            for (let i = 0; i < sessionStorage.length; i++) {
-                const k = sessionStorage.key(i);
-                if (k && k.startsWith(CACHE_PREFIX)) keys.push(k);
-            }
-            keys.forEach(k => sessionStorage.removeItem(k));
-        }
+        _clearCache: _cache.clear
     };
 })();
 

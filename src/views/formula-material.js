@@ -12,7 +12,7 @@ import { showPanel, formulaSubNav } from './formula.js';
 import {
   listMaterials, getMaterial, getMaterialUsage,
   createMaterial, updateMaterial, deleteMaterial, importMaterials,
-  materialStatus, daysUntilExpiry, STORAGE_OPTIONS,
+  materialStatus, daysUntilExpiry, expiringMaterials, STORAGE_OPTIONS,
 } from '../material-ledger.js';
 import {
   parseCsv, csvToObjects, readCsvFile, toCsv, downloadCsv,
@@ -53,7 +53,7 @@ export function openMaterialPanel() {
   const usageEl = document.getElementById('material-list-usage');
   if (usageEl) usageEl.textContent = `${usage.count}/${usage.limit} 등록`;
 
-  const expiring = listMaterials().filter(m => ['soon', 'expired'].includes(materialStatus(m)));
+  const expiring = expiringMaterials();
   const alertEl = document.getElementById('material-expiry-alert');
   if (alertEl) {
     alertEl.classList.toggle('is-hidden', !expiring.length);

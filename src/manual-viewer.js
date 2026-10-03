@@ -7,7 +7,8 @@
 //   - 별도 HTML 파일 생성이 불필요하여 user_manual.md 업데이트 시 자동 동기화
 //   - file:// 프로토콜에서는 fetch가 차단되므로 번들 방식 폰트 폴로백
 //   - 전역 테마(--bg-app, --color-text-main 등)를 자동으로 따라감
-
+//   - 오버레이 셸·캐시·TOC·번들 주입은 src/doc-overlay.js 공용 베이스 사용
+//
 import { escapeHTML } from './sanitize.js';
 import { renderMermaidIn } from './mermaid-render.js';
 import { parseMarkdown } from './markdown-parser.js';
@@ -15,6 +16,7 @@ import { openSubjectChapter } from './views/textbook-reader.js';
 import { PATHS } from './paths.js';
 import { dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
+import { makeSessionCache, injectBundleScript, fetchMd, buildTocHtml, mountToc, createDocOverlay } from './doc-overlay.js';
 
 export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
@@ -24,49 +26,9 @@ export const ManualViewer = (() => {
         'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' },
         'mnemonic_guide': { path: PATHS.MNEMONIC_GUIDE, title: '두음법·숫자 암기 총정리' }
     };
-    const CACHE_PREFIX = 'manual_md_cache_v3_';
-    const CACHE_TTL = CACHE.MANUAL_CACHE_TTL_MS; // 24시간
+    const _cache = makeSessionCache('manual_md_cache_v3_', CACHE.MANUAL_CACHE_TTL_MS); // 24시간
     let _currentTitle = '';
     let _currentBodyHtml = '';
-
-    /* =========================================================
-       캐시 (sessionStorage, TTL 24h) — 본문 HTML만 저장
-       ========================================================= */
-    function _cacheKey(sourceKey) {
-        const src = MD_SOURCES[sourceKey];
-        if (!src) return null;
-        return CACHE_PREFIX + src.path.replace(/[^a-zA-Z0-9]/g, '_');
-    }
-
-    function _getCached(sourceKey) {
-        const key = _cacheKey(sourceKey);
-        if (!key) return null;
-        try {
-            const raw = sessionStorage.getItem(key);
-            if (!raw) return null;
-            const entry = JSON.parse(raw);
-            if (Date.now() - entry.timestamp > CACHE_TTL) {
-                sessionStorage.removeItem(key);
-                return null;
-            }
-            return entry.html;
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function _setCached(sourceKey, html) {
-        const key = _cacheKey(sourceKey);
-        if (!key) return;
-        try {
-            sessionStorage.setItem(key, JSON.stringify({
-                timestamp: Date.now(),
-                html: html
-            }));
-        } catch (e) {
-            // QuotaExceededError 등은 무시 (다음에 재변환)
-        }
-    }
 
     /* =========================================================
        마크다운 → HTML 변환 (exam-viewer.js와 동일한 로직)
@@ -78,17 +40,9 @@ export const ManualViewer = (() => {
     /* =========================================================
        앱 남부 전체화면 오버레이 (팝업/새창 미사용)
        ========================================================= */
-    let _overlayEl = null;
-    let _historyPushed = false;
-    let _openTimestamp = 0;
-
-    function _injectStylesOnce() {
-        if (document.getElementById('manual-overlay-style')) return;
-        const style = document.createElement('style');
-        style.id = 'manual-overlay-style';
-        // 앱의 실제 테마 토큰(--bg-app / --bg-card / --color-text-main / --color-text-muted)을
-        // 사용해 글로벌 다크/라이트 테마를 자동으로 따라갑니다.
-        style.textContent = `
+    // 앱의 실제 테마 토큰(--bg-app / --bg-card / --color-text-main / --color-text-muted)을
+    // 사용해 글로벌 다크/라이트 테마를 자동으로 따라갑니다.
+    const OVERLAY_CSS = `
 #manual-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;
   background:var(--bg-app);color:var(--color-text-main);}
 #manual-overlay.open{display:flex;}
@@ -174,17 +128,15 @@ body.manual-open{overflow:hidden;}
   #manual-overlay .manual-ov-bar,#manual-overlay .manual-ov-toc{display:none !important;}
   #manual-overlay .manual-ov-scroll{overflow:visible !important;padding:0 !important;}
 }`;
-        document.head.appendChild(style);
-    }
 
-    function _ensureOverlay() {
-        if (_overlayEl) return _overlayEl;
-        _injectStylesOnce();
-        const el = document.createElement('div');
-        el.id = 'manual-overlay';
-        el.setAttribute('role', 'dialog');
-        el.setAttribute('aria-modal', 'true');
-        el.innerHTML = `
+    const _overlay = createDocOverlay({
+        id: 'manual-overlay',
+        styleId: 'manual-overlay-style',
+        css: OVERLAY_CSS,
+        bodyClass: 'manual-open',
+        historyMarker: 'manualOverlay',
+        popstateGuardMs: 300,
+        innerHTML: `
             <div class="manual-ov-bar">
                 <button type="button" class="manual-ov-btn" data-manual-close>
                     <i class="fa-solid fa-arrow-left"></i> 닫기
@@ -196,27 +148,20 @@ body.manual-open{overflow:hidden;}
             </div>
             <div class="manual-ov-scroll">
                 <article id="manual-article" class="study-section"></article>
-            </div>`;
-        document.body.appendChild(el);
-
-        el.querySelector('[data-manual-close]')?.addEventListener('click', close);
-        el.querySelector('[data-manual-print]')?.addEventListener('click', () => window.print());
-        _overlayEl = el;
-        return el;
-    }
-
-    function _buildToc(article) {
-        const headings = article.querySelectorAll('h2, h3');
-        if (headings.length === 0) return '';
-        let items = '';
-        headings.forEach((h, idx) => {
-            if (!h.id) h.id = 'manual-h-' + idx;
-            const depth = h.tagName === 'H3' ? 'depth-3' : 'depth-2';
-            const label = h.textContent.replace(/🔖기출|📌중요/g, '').trim();
-            items += `<a href="#${h.id}" class="${depth}" data-manual-jump="${h.id}">${escapeHTML(label)}</a>`;
-        });
-        return `<details class="manual-ov-toc"><summary><i class="fa-solid fa-list"></i> 목차</summary>${items}</details>`;
-    }
+            </div>`,
+        wire(el) {
+            el.querySelector('[data-manual-close]')?.addEventListener('click', close);
+            el.querySelector('[data-manual-print]')?.addEventListener('click', () => window.print());
+        },
+        onClose() {
+            _currentTitle = '';
+            _currentBodyHtml = '';
+        }
+    });
+    const _ensureOverlay = _overlay.ensure;
+    const _open = _overlay.open;
+    const close = _overlay.close;
+    const isOpen = _overlay.isOpen;
 
     // mermaid(3.3MB)는 index.html 에서 즉시 로드하지 않고, 매뉴얼에 실제 다이어그램이
     // 있을 때만 mermaid-render.js에서 온디맨드로 1회 주입한다.
@@ -234,23 +179,9 @@ body.manual-open{overflow:hidden;}
 
         // 목차를 본문 앞에 삽입 (오버레이 스크롤 컨테이너 안쪽 상단)
         const scroll = el.querySelector('.manual-ov-scroll');
-        const oldToc = scroll.querySelector('.manual-ov-toc');
-        if (oldToc) oldToc.remove();
-        const tocHtml = _buildToc(article);
-        if (tocHtml) {
-            const wrap = document.createElement('div');
-            wrap.innerHTML = tocHtml;
-            const toc = wrap.firstElementChild;
-            if (toc) scroll.insertBefore(toc, article);
-            toc?.addEventListener('click', (e) => {
-                const a = e.target instanceof Element ? e.target.closest('[data-manual-jump]') : null;
-                if (!a) return;
-                e.preventDefault();
-                const jumpId = a.getAttribute('data-manual-jump');
-                const target = jumpId ? document.getElementById(jumpId) : null;
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
+        mountToc(scroll, article, buildTocHtml(article, {
+            idPrefix: 'manual-h-', jumpAttr: 'manual-jump', tocClass: 'manual-ov-toc'
+        }), { tocClass: 'manual-ov-toc', jumpAttr: 'manual-jump' });
         scroll.scrollTop = 0;
 
         // 외부 링크(http, /docs 등) 클릭 시 새 창으로 열기
@@ -304,60 +235,9 @@ body.manual-open{overflow:hidden;}
         _open();
     }
 
-    function _onKeydown(e) { if (e.key === 'Escape') close(); }
-    function _onPopstate() {
-        if (!isOpen()) return;
-        // _open() 직후 발생하는 popstate(잔류 해시 변경 등) 무시
-        if (Date.now() - _openTimestamp < 300) return;
-        close(true);
-    }
-
-    function _open() {
-        const el = _ensureOverlay();
-        if (!el.classList.contains('open')) {
-            el.classList.add('open');
-            document.body.classList.add('manual-open');
-            document.addEventListener('keydown', _onKeydown);
-            window.addEventListener('popstate', _onPopstate);
-            _openTimestamp = Date.now();
-            // 안드로이드 뒤로가기 / 스와이프로 닫히도록 히스토리 상태 추가
-            try { history.pushState({ manualOverlay: true }, ''); _historyPushed = true; }
-            catch (e) { _historyPushed = false; }
-        }
-    }
-
-    function isOpen() {
-        return !!(_overlayEl && _overlayEl.classList.contains('open'));
-    }
-
-    function close(fromPopstate) {
-        if (!_overlayEl) return;
-        _overlayEl.classList.remove('open');
-        document.body.classList.remove('manual-open');
-        document.removeEventListener('keydown', _onKeydown);
-        window.removeEventListener('popstate', _onPopstate);
-        _currentTitle = '';
-        _currentBodyHtml = '';
-        if (_historyPushed && !fromPopstate) {
-            _historyPushed = false;
-            try { history.back(); } catch (e) { /* noop */ }
-        } else {
-            _historyPushed = false;
-        }
-    }
-
     /* =========================================================
        마크다운 로드 (프로토콜별)
        ========================================================= */
-
-    // http(s) 라이브 fetch
-    async function _fetchMd(sourceKey) {
-        const src = MD_SOURCES[sourceKey];
-        if (!src) throw new Error('알 수 없는 문서 소스: ' + sourceKey);
-        const res = await fetch(src.path, { cache: 'no-cache' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-        return res.text();
-    }
 
     /* ---------------------------------------------------------
        file:// 지원용 번들 로더 (tools/build/build_doc_bundles.js 가 구은
@@ -374,28 +254,6 @@ body.manual-open{overflow:hidden;}
         return (base ? `${base}/docs_md/` : dataPath('docs_md/')) + stem + '.js';
     }
 
-    // 클래식 <script> 동적 주입 (file:// 에서도 동작). 재사용/캐시 처리 포함.
-    function _injectScript(src) {
-        return /** @type {Promise<void>} */ (new Promise((resolve, reject) => {
-            const existing = /** @type {HTMLElement|null} */ (document.querySelector(`script[data-doc-bundle="${src}"]`));
-            if (existing) {
-                if (existing.dataset.loaded === 'true') { resolve(); return; }
-                if (existing.dataset.loaded === 'error') { reject(new Error('bundle load error: ' + src)); return; }
-                existing.addEventListener('load', () => resolve());
-                existing.addEventListener('error', () => reject(new Error('bundle load error: ' + src)));
-                return;
-            }
-            const s = document.createElement('script');
-            s.src = src;
-            s.async = true;
-            s.dataset.docBundle = src;
-            s.dataset.loaded = 'false';
-            s.addEventListener('load', () => { s.dataset.loaded = 'true'; resolve(); });
-            s.addEventListener('error', () => { s.dataset.loaded = 'error'; reject(new Error('bundle load error: ' + src)); });
-            document.head.appendChild(s);
-        }));
-    }
-
     // 번들(전역 __DOC_MD__)에서 마크다운 조회 — 없으면 해당 번들 스크립트를 주입 후 재조회
     async function _loadFromBundle(sourceKey) {
         const src = MD_SOURCES[sourceKey];
@@ -404,7 +262,7 @@ body.manual-open{overflow:hidden;}
             return window.__DOC_MD__[src.path];
         }
         try {
-            await _injectScript(_bundlePathFor(sourceKey));
+            await injectBundleScript(/** @type {string} */ (_bundlePathFor(sourceKey)), 'data-doc-bundle');
         } catch (e) {
             throw new Error('문서 번들을 찾을 수 없습니다. 터미널에서 `node tools/build/build_doc_bundles.js` 를 실행해 번들을 생성하세요.');
         }
@@ -424,7 +282,7 @@ body.manual-open{overflow:hidden;}
         }
         // http(s): 라이브 .md 우선(항상 최신), 실패하면 번들로 폰트 폴로백
         try {
-            return await _fetchMd(sourceKey);
+            return await fetchMd(src.path);
         } catch (err) {
             try {
                 return await _loadFromBundle(sourceKey);
@@ -445,15 +303,15 @@ body.manual-open{overflow:hidden;}
         }
         const title = src.title;
 
-        const cached = _getCached(sourceKey);
-        if (cached) { _renderBody(title, cached); _open(); return; }
+        const cached = _cache.get(src.path);
+        if (cached) { _renderBody(title, cached.html); _open(); return; }
 
         _showLoading(title);
 
         try {
             const mdText = await _loadMd(sourceKey);
             const bodyHtml = _mdToHtml(mdText);
-            _setCached(sourceKey, bodyHtml);
+            _cache.set(src.path, { html: bodyHtml });
             _renderBody(title, bodyHtml);
         } catch (err) {
             console.error('Document load failed:', err);
@@ -486,14 +344,7 @@ body.manual-open{overflow:hidden;}
         close,
         isOpen,
         _mdToHtml,  // 테스트용 노출
-        _clearCache: () => {
-            const keys = [];
-            for (let i = 0; i < sessionStorage.length; i++) {
-                const k = sessionStorage.key(i);
-                if (k && k.startsWith(CACHE_PREFIX)) keys.push(k);
-            }
-            keys.forEach(k => sessionStorage.removeItem(k));
-        }
+        _clearCache: _cache.clear
     };
 })();
 

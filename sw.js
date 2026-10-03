@@ -71,6 +71,7 @@ const SHELL_ASSETS = [
   './src/reader-format.js',
   './src/exam-viewer.js',
   './src/manual-viewer.js',
+  './src/doc-overlay.js',
   './src/markdown-parser.js',
   './src/data-loader.js',
   './src/sha256.js',
