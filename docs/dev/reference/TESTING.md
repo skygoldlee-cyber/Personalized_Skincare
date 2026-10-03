@@ -29,7 +29,7 @@
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 842 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 543 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 69 |
-| **합계** | | | | **1456** |
+| **합계** | | | | **1457** |
 
 ### 설계 원칙
 
@@ -288,7 +288,7 @@ npm run hooks:install
 | 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | GLOBAL usage_stats 누적·owner 익명 ID·초기화·손상 복구·모달 라벨/합계 렌더·Pro 후보 액션만 판정 합산(20회)·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
 | 44 | `dictionary-custom.dom.test.js` | 7 | 자가 등록 성분 사전 병합 (DI-06·08) | customKey 스키마 게이트, 커스텀 병합·'사용자 등록' 배지·필터·'성분 추가' 버튼, '공식 등록됨' superseded, 카드 수정 액션, '+자가 N' 카운트 | 2026-10-18 추가 |
 | 45 | `formula-sales.dom.test.js` | 13 | 사업 유형·표시사항·광고 점검 (FO-33~36) | 유형 칩·카드/서브내비 게이트·단계 배지 재번호, 체크리스트 세트 분리, 표시사항 체크·전성분 가져오기·인쇄, 린트 실행·지우기 | 2026-10-18 추가 |
-| | **합계** | **434** | | |
+| | **합계** | **435** | | |
 
 ---
 
