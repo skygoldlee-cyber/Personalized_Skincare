@@ -22,6 +22,8 @@ const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
 const formula = {
     viewId: 'formula-view',
     slug: 'formula',
+    // 랜딩 우선순위 — 복수 실무 피처가 유효한 시험에서 작은 값이 랜딩된다 (미지정=0)
+    priority: 0,
     title: 'Formula OS',
     subtitle: '원료 조회 · 배합 계산 · My 포뮬러 저장·검증',
     loadingText: 'Formula OS 데이터를 불러오는 중입니다...',
@@ -148,12 +150,15 @@ export function getEnabledPracticeFeatures() {
 }
 
 /**
- * 실무 모드 랜딩 뷰 — 첫 번째 유효 피처의 뷰.
- * 복수 실무 피처가 활성인 시험은 레지스트리 선언 순서가 랜딩 우선순위다.
+ * 실무 모드 랜딩 뷰 — 유효 피처 중 `priority`가 가장 작은 뷰.
+ * priority 미지정은 0으로 간주하고, 동률은 레지스트리 선언 순서가 이긴다
+ * (안정 정렬). 복수 실무 피처를 보유한 시험에서도 랜딩을 선언으로 제어할 수 있다.
  */
 export function getPracticeLanding() {
     const enabled = getEnabledPracticeFeatures();
-    return enabled.length ? enabled[0].viewId : 'dashboard-view';
+    if (!enabled.length) return 'dashboard-view';
+    return [...enabled]
+        .sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0))[0].viewId;
 }
 
 /** router 타이틀 맵용 — 선언된 모든 실무 뷰의 {title, subtitle} */

@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 1814b6d9d26548c5
+> 입력 해시: 92e401921bad7d44
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -61,8 +61,8 @@
 |----|------|-----------|------|------|--------|--------|------|
 | F-01 | ✅ | 테스트 | DOC-REF-03 | css/study.css<br>html/views/flashcard.html<br>index.html<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-02 | ✅ | 테스트 | DOC-REF-03 | css/study.css<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
-| F-03 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
-| F-04 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
+| F-03 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js<br>src/views/listeners-flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
+| F-04 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js<br>src/views/listeners-flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-05 | ✅ | 테스트 | DOC-REF-03 | src/utils.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-06 | ✅ | 테스트 | DOC-REF-03 | src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
 | F-07 | ✅ | 테스트 | DOC-REF-03 | src/spaced-repetition.js<br>src/views/flashcard.js | tests/dom/study-flashcard.dom.test.js | DOC-ARC-05 | — |
@@ -75,9 +75,9 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | Q-01 | ✅ | 테스트 | DOC-REF-01 | html/views/quiz.html<br>index.html<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
-| Q-02 | ✅ | E2E 테스트 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/e2e/flows.spec.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
+| Q-02 | ✅ | E2E 테스트 | DOC-REF-01 | src/views/listeners-quiz.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/e2e/flows.spec.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-03 | ✅ | 테스트 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
-| Q-04 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
+| Q-04 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/listeners-quiz.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-05 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/utils.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-06 | ✅ | 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/daily-challenge.js<br>src/views/quiz.js | tests/dom/study-challenge.dom.test.js<br>tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
 | Q-07 | ✅ | E2E 테스트 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/e2e/flows.spec.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 | — |
@@ -90,7 +90,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| E-01 | ✅ | 테스트 | — | css/exam.css<br>html/views/exam.html<br>index.html<br>src/views/exam-simulator.js | tests/dom/study-simulator.dom.test.js | DOC-ARC-05<br>DOC-ARC-10<br>DOC-ARC-11 | 조제관리사 국가시험 형식 — 4과목 OMR·시간 제한 (한국산업인력공단 시행 규정) |
+| E-01 | ✅ | 테스트 | — | css/exam.css<br>html/views/exam.html<br>index.html<br>src/views/exam-simulator.js<br>…외 1개 | tests/dom/study-simulator.dom.test.js | DOC-ARC-05<br>DOC-ARC-10<br>DOC-ARC-11 | 조제관리사 국가시험 형식 — 4과목 OMR·시간 제한 (한국산업인력공단 시행 규정) |
 | E-02 | ✅ | 테스트 | — | src/views/exam-simulator.js | tests/dom/study-simulator.dom.test.js | DOC-ARC-05<br>DOC-ARC-10<br>DOC-ARC-11 | — |
 | E-03 | ✅ | 테스트 | — | src/views/exam-sim-state.js<br>src/views/exam-simulator.js | tests/dom/study-simulator.dom.test.js | DOC-ARC-05<br>DOC-ARC-10<br>DOC-ARC-11 | — |
 | E-04 | ✅ | 테스트 | — | src/views/exam-sim-review.js<br>src/views/exam-sim-weak.js<br>src/views/exam-simulator.js | tests/dom/study-simulator.dom.test.js | DOC-ARC-05<br>DOC-ARC-10<br>DOC-ARC-11 | — |
@@ -195,7 +195,7 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | DI-01 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js<br>tools/build/plugins/knowledge.plugin.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
-| DI-02 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
+| DI-02 | ✅ | 테스트 | — | src/views/dictionary.js<br>src/views/listeners-dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-04 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 | DI-05 | ✅ | 테스트 | DOC-DEV-05 | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
@@ -402,8 +402,8 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | S-01 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | index.html<br>tools/build/build_html.js | tests/unit/security.test.js | — | — |
-| S-02 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
-| S-03 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
+| S-02 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js<br>src/views/listeners-delegation.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
+| S-03 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js<br>src/views/listeners-delegation.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
 | S-04 | ✅ | 테스트 | — | — | tests/unit/delegation-guard.test.js | — | — |
 | S-05 | ✅ | 테스트 | — | src/sanitize.js | tests/unit/sanitize.test.js | — | — |
 | S-06 | ✅ | 테스트 | — | src/storage-keys.js<br>src/views/backup.js | tests/dom/backup.dom.test.js | — | — |
@@ -502,7 +502,7 @@
 | UX-SET-02 | 항목이 늘어나도 뷰포트를 넘지 않음. 없으면 소형 기기에서 하단 항목이 잘림 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-03 | Apple HIG/Google Material 최소 터치 영역 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-04 | 사용자가 "몇 버전인지" 문의할 때 유일한 확인 경로. SW 등록 스크립트 URL에서 버전 자동 추출 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
-| UX-SET-05 | 일관된 드롭다운 UX | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
+| UX-SET-05 | 일관된 드롭다운 UX | 테스트 | — | css/ui-overlay.css<br>src/views/listeners-app.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-VFY-01 | 요구사양 없는 UI 변경은 추적·리뷰 불가 — TR-21~23처럼 선 정의 후 구현하는 관행을 규약화 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
 | UX-VFY-02 | jsdom은 레이아웃을 계산하지 않으므로 DOM/단위 테스트로는 기하 요구사항을 검증할 수 없음 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
 | UX-VFY-03 | 신규 UI/UX 요구사항은 E2E와 함께 진입 — 기존 백로그(규약형 다수)는 기준선 승계 후 점진 축소 | 문서 검토 | DOC-RBK-11 | — | — | — | — |

@@ -6,13 +6,20 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 잔여 구조 항목 정리 — 리스너 분할 + 랜딩 우선순위 + 정정
+
+- **event-listeners.js 분할** — 단일 함수 601줄을 도메인 단위 6개 `listeners-*.js`로 분리 (app·flashcard·quiz·simulator·dictionary·delegation). 원본은 바인딩 호출 순서만 소유하는 20줄 진입점으로 축소 — 도메인별 위치 파악·리뷰 범위 축소
+- **실무 랜딩 우선순위** — `practice-registry` 엔트리에 `priority` 필드(기본 0) 추가, `getPracticeLanding()`이 유효 피처 중 최솟값을 선택 (동률은 선언 순서). 복수 실무 피처 시험에서 랜딩을 선언으로 제어
+- **정정** — 이전 항목의 "formula 스토어 3종 pro-upgrade 정적 import 잔류" 기술은 오진단: `pro-upgrade.js`는 `hasFeature('formula')` 게이트 아래 **지연** import. formula 스토어·도메인 모듈 전부 부트 그래프에 없음 (sw.js·ARCHITECTURE 주석 정정)
+- **MD_ASSETS 정책 명문화** — 콘텐츠 문서 프리캐시는 전 시험 공유 유지 (시험 간 소용량 텍스트 + 오프라인 최초 열람 보장 우선). 자산 격리는 코드에만 적용 — ARCHITECTURE.md에 정책 기록
+
 ## 2026-10-03 실무 피처 자산 격리 — 지연 마크업 + 프리캐시 슬림화
 
 - **뷰 마크업 지연 주입** — `index.template.html`의 `formula.html` include(649줄)를 빈 `<section id="formula-view" data-lazy-view="html/views/formula.html">` 스텁으로 교체. `practice-registry.ensureViewMarkup`이 진입 시 파셜 fetch → outerHTML 교체 (파셜이 자체 `<section>`을 포함하는 자기완결 구조 유지). 시험별 실무 피처 마크업이 셸을 비대화시키는 것을 방지
 - **프리캐시 슬림화** — formula 전용 모듈 16개(`views/formula*.js` 7 + `formula-check/rules/stability/store` + `store-utils` + `usage-guide`)를 SHELL_ASSETS에서 제외. `/src/` 규칙(cacheFirst)으로 지연 import 시 런타임 캐시되며, **`warmPracticeFeatures()`(신규)**가 app.js 부팅 후 유휴 시점(`requestIdleCallback`)에 유효 피처의 로더·마크업을 미리 요청해 캐시 적재 — 오프라인 진입·첫 진입 즉시성 보장. 비활성 시험은 피처 자산을 받지 않음
 - **notice-check 지연화** — `checkMfdsNoticeNow`·`dismissMfdsNotice`·`viewMfdsNoticeStatus`를 app.js 정적 import → 레지스트리 `notice` 로더+핸들러로 이관 (버튼이 formula 마크업 내부에만 존재). enter()는 마크업 주입 → `checkMfdsNotice` 순서 (배너 요소 의존)
-- **잔여 결합**: formula 스토어 3종(batch/customer/material-ledger)은 `pro-upgrade.js` 정적 import로 부트 그래프에 잔류 — 소형 모듈, 도메인 분리는 별도 과제
 - **도구·테스트**: `build_html.js`가 `data-lazy-view` 참조를 고아 파셜에서 제외, `tests/dom/helpers.js`가 지연 파셜을 파일에서 즉시 주입(기존 DOM 테스트 무변경), delegation-guard·security 테스트가 `html/views/*.html`을 스캔 범위에 추가 (배포 마크업 커버리지 유지)
+- *(정정)* formula 스토어는 부트 그래프에 없음 — `pro-upgrade.js`도 `hasFeature('formula')` 게이트 아래 지연 import (정적 import 오진단 정정, 2026-10-03 후속 커밋)
 
 ## 2026-10-03 실무작업실 피처 레지스트리 — src/practice-registry.js (B안)
 

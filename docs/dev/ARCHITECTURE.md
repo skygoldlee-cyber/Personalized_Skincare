@@ -1093,7 +1093,8 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **빌드 타임 자동 치환**: `tools/build/stamp_sw_version.js`가 빌드 완료 시 `CACHE_VERSION`을 `v${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요. 날짜는 **HEAD 커밋 날짜**(`%cd`) 기준 — 배포 머신 시각이 아니므로 이력과 일치 (git 미가용 시 로컬 시각 폴백)
 - **버전 3계층**: 기계 ID(`v20261016-fd06122` — 캐시 키·버전 비교) / 표시용(`v2026.10.16 · fd06122` — `src/app-version.js`의 `formatAppVersion`, 사이드바·설정·변경이력 모달) / 콘텐츠(원료 DB `2026.09.6` CalVer). `package.json`의 `version`은 배포 스탬프가 `YYYY.M.D`로 자동 동기화
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
-- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨 — 단 실무 피처 뷰 모듈(`src/views/formula*.js` 등)은 제외. 활성 시험만 사용하므로 시험 간 프리캐시 비대화를 막기 위해 지연 import + `warmPracticeFeatures()` 유휴 예열로 런타임 캐시(cacheFirst)에 적재한다 (잔여 결합: formula 스토어 3종은 `pro-upgrade.js` 정적 import로 부트 그래프에 잔류)
+- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨 — 단 실무 피처 모듈(`src/views/formula*.js`, `formula-store` 등)은 제외. 활성 시험만 사용하므로 시험 간 프리캐시 비대화를 막기 위해 지연 import + `warmPracticeFeatures()` 유휴 예열로 런타임 캐시(cacheFirst)에 적재한다 (formula 스토어는 `pro-upgrade.js`도 `hasFeature` 게이트 아래 지연 import하므로 부트 그래프에 없음)
+- 콘텐츠 문서(`MD_ASSETS`)는 코드와 달리 전 시험 공유 프리캐시가 정책 — 원본 MD는 시험 간 소용량 텍스트이고 오프라인 최초 열람 보장이 우선이다 (시험별 격리는 코드 자산에만 적용)
 - `data/exams/cosmetic/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
 ### 캐시 스큐 방지 설계 (v39, 2026-08-26)

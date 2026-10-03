@@ -210,7 +210,7 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러 (36개)
+  views/                # 뷰 컨트롤러 (42개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-ref-links.js # 참조자료 링크 생성·프리뷰·클릭 위임 (textbook-reader.js에서 분리)
@@ -236,7 +236,13 @@ src/                    # ES Modules
     dictionary.js       # 지식DB 사전 (스키마 드리븐 — manifest.knowledge → registry.knowledge)
     study-calendar.js    # 학습 캘린더/목표 뷰
     glossary-renderer.js # 용어집 렌더링
-    event-listeners.js  # 이벤트 리스너 일괄 바인딩
+    event-listeners.js  # 이벤트 리스너 진입점 — 도메인 바인딩 합성 (listeners-*.js)
+    listeners-app.js    #   앱 셸 공통 (진도 초기화·설정 메뉴·접이식)
+    listeners-flashcard.js # 플래시카드 (플립·스와이프·단축키)
+    listeners-quiz.js   #   퀴즈·훈련소 (제출·숫자/OX 단축키)
+    listeners-simulator.js # 모의고사 (OMR 이동·제출·단축키)
+    listeners-dictionary.js # 성분 사전 검색 디바운스
+    listeners-delegation.js # data-click/data-input 위임 (CSP 대응)
     formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
     formula-recommend.js # 추천 베이스·원료 패널 + 맞춤 규칙 UI (formula.js에서 분리)
     formula-fields.js   # 처방 작업대 고객·안정성 필드 블록 (formula.js에서 분리)

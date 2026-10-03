@@ -115,7 +115,7 @@ const SHELL_ASSETS = [
   // 실무 피처(formula) 모듈은 프리캐시 제외 — 활성 시험만 쓰는 자산이므로
   // 시험 간 프리캐시 비대화를 막는다. 지연 import 시 /src/ 규칙(cacheFirst)으로
   // 런타임 캐시되고, warmPracticeFeatures()의 유휴 예열이 오프라인 진입을 보장.
-  // (잔여: formula 스토어 3종은 pro-upgrade.js 정적 import로 부트 그래프에 잔류)
+  // (formula 스토어·도메인 모듈은 전부 지연 그래프 — pro-upgrade도 hasFeature 게이트 아래 지연 import)
   './src/csv-utils.js',
   './src/study-tracker.js',
   './src/spaced-repetition.js',
@@ -138,6 +138,12 @@ const SHELL_ASSETS = [
   './src/views/exam-sim-review.js',
   './src/views/offline-detection.js',
   './src/views/event-listeners.js',
+  './src/views/listeners-app.js',
+  './src/views/listeners-flashcard.js',
+  './src/views/listeners-quiz.js',
+  './src/views/listeners-simulator.js',
+  './src/views/listeners-dictionary.js',
+  './src/views/listeners-delegation.js',
   './src/views/navigation.js',
   './src/views/exam-select.js',
   './src/html-viewer.js',

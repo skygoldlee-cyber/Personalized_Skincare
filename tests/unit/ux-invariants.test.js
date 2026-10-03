@@ -21,7 +21,10 @@ const uiUtils = read('src/ui-utils.js');
 const pwaInstall = read('src/pwa-install.js');
 const capture = read('src/pwa-install-capture.js');
 const readerJs = ['src/views/textbook-reader.js', 'src/views/reader-toolbar.js', 'src/views/reader-ref-links.js'].map(read).join('\n');
-const listeners = read('src/views/event-listeners.js');
+const listeners = ['src/views/event-listeners.js',
+  ...readdirSync(join(ROOT, 'src/views'))
+    .filter(f => f.startsWith('listeners-') && f.endsWith('.js'))
+    .map(f => `src/views/${f}`)].map(read).join('\n');
 
 // ---------- UX-SCR: 스크롤바 전략 ----------
 
