@@ -396,7 +396,7 @@
 | UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`). **실무 피처 미보유 시험에서는 practice를 study로 강제 간주** (`isPracticeMode`가 `practice-registry.js`의 `isPracticeCapable()`로 판정 — 실무 피처 = exams.json `features` 키 ↔ 레지스트리 엔트리 1:1. 전역 키 잔존으로 인한 학습 nav 전멸 방지), 토글 버튼은 `data-feature="practiceMode"` 가상 키로 비노출 (실무 피처가 formula가 아닌 시험도 커버) | ✅ |
 | UM-02 | 항목 표시 제어 — `nav-study-only`(실무 모드에서 숨김) / `nav-practice-only`(학습 모드에서 숨김) 클래스 | ✅ |
 | UM-03 | 학습 도구 접이식 — 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침, `aria-expanded` + 영속 | ✅ |
-| UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 실무 랜딩 뷰(`getPracticeLanding()` — 유효 실무 피처 첫 번째)로 리다이렉트 | ✅ |
+| UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 실무 랜딩 뷰(`getPracticeLanding()` — 유효 실무 피처 중 `priority` 최솟값, 미지정=0·동률은 선언 순서)로 리다이렉트 | ✅ |
 | UM-05 | 설정 메뉴에도 모드 전환 항목 — 사이드바 숨겨진 모바일에서 접근 보장 | ✅ |
 
 ### 3.22 시험 선택·전환 (멀티시험)

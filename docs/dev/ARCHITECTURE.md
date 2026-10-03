@@ -956,8 +956,16 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 - **키**: `ui_mode` = `'study' | 'practice'` (GLOBAL_KEYS — 시험 무관 기기 설정)
 - **게이팅**: `body.ui-mode-practice` 클래스 + `.nav-study-only`(실무에서 숨김) / `.nav-practice-only`(학습에서 숨김) 클래스로 CSS 제어
-- **실무 피처 레지스트리**: [`src/practice-registry.js`](../../src/practice-registry.js)가 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러·enter 훅·마크업 파셜)를 선언한다. `isPracticeCapable()`(실무 피처 ≥1개)가 실무 모드 존재 조건, `getPracticeLanding()`이 랜딩 뷰(유효 피처 첫 번째). 신규 실무 피처는 레지스트리 엔트리 + exams.json 키 선언으로 추가 — ui-mode·router·app 코어 수정 불필요
+- **실무 피처 레지스트리**: [`src/practice-registry.js`](../../src/practice-registry.js)가 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러·enter 훅·마크업 파셜)를 선언한다. `isPracticeCapable()`(실무 피처 ≥1개)가 실무 모드 존재 조건, `getPracticeLanding()`이 랜딩 뷰(유효 피처 중 `priority` 최솟값 — 미지정=0, 동률은 선언 순서). **신규 실무 피처는 ui-mode·router·app 코어 수정 없이** 아래 선언 접점만으로 추가된다
 - **피처 자산 격리**: 실무 뷰 마크업은 셸에 빈 `<section data-lazy-view>` 스텁만 두고 엔트리의 `markup` 파셜을 진입 시 fetch+주입. 뷰 모듈은 SHELL_ASSETS 프리캐시에 두지 않고 `warmPracticeFeatures()`(app.js 유휴 예열)가 유효 피처의 모듈·마크업을 미리 요청해 SW 캐시에 적재 — 비활성 시험은 피처 자산을 다운로드하지 않는다
+- **신규 실무 피처 추가 체크리스트** (예: food 시험의 `foodLab`):
+  1. `content/exams.json` — 해당 시험에 `features.<키>` 선언 (check:featflags가 미선언 키 사용을 차단)
+  2. `src/practice-registry.js` — 엔트리 추가 (viewId·slug·title·`markup` 파셜·`loaders` 지연 import·`handlers`·`enter`·필요 시 `priority`)
+  3. `html/views/<피처>.html` — 자체 `<section id>`를 포함하는 자기완결 파셜 + `index.template.html`에 `<section id data-lazy-view>` 스텁 + nav 버튼(`data-feature="<키>"`) → `build:html` 재생성
+  4. 피처 뷰 모듈 — `loaders`의 지연 import 경로로만 참조 (SHELL_ASSETS 프리캐시·app.js 정적 import 모두 금지 — 자산 격리 정책)
+  5. `storage-keys.js` — 피처 저장 키 + BACKUP/RESET 등록 (스코프 키라 시험별 자동 격리)
+  6. `tools/check/domain-map.json` — `feature:<피처>` 레이어 + 파일 글로브 선언 (check:domainmap이 미등록 파일을 차단)
+  7. 테스트 — testfirst 게이트가 로직 변경의 테스트 동반을 강제
 - **랜딩**: 실무 모드 초기화 시 `getPracticeLanding()` 뷰로 랜딩 (cosmetic = `formula-view`)
 - **토글 게이트**: `data-feature="practiceMode"` 가상 키 — `applyFeatureFlags`가 `isPracticeCapable()`로 판정 (실무 피처가 formula가 아닌 시험에서도 토글 노출)
 - **학습 도구 접이식**: 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침 — `ui_study_tools_open` 키 영속 + `aria-expanded` 동기화

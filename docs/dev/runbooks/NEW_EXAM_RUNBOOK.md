@@ -88,6 +88,8 @@ cosmetic의 모든 파일을 복사할 필요는 없다 — food가 최소 구�
 
 문서가 없는 기능은 플래그를 선언하지 않는다. `docs/*.md`는 **존재 자체가 선언** — 번들 대상은 디렉터리 스캔으로 자동 결정된다.
 
+**실무작업실 피처**(실습 도구 — cosmetic의 `formula`가 유일 사례): `features` 키 선언 외에 `src/practice-registry.js` 엔트리·뷰 파셜·storage 키 등 선언 접점이 필요하다 — 절차는 `docs/dev/ARCHITECTURE.md` "신규 실무 피처 추가 체크리스트" 참조 (ui-mode·router·app 코어 수정 불필요).
+
 ### UI 텍스트 (`manifest.uiText`)
 
 - 플랫폼 마크업의 `data-uitext` 키를 시험별 문구로 치환
