@@ -27,7 +27,7 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 842 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 543 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 546 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 69 |
 | **합계** | | | | **1457** |
 
@@ -262,7 +262,7 @@ npm run hooks:install
 | 17 | `study-simulator.dom.test.js` | 14 | 모의고사 | 아레나·OMR, 답안·문항 이동, 제출 채점·오답 카드 등록, 리뷰, 드래프트 이어하기, 시간 만료 자동 제출, 오답 모의고사(startWeakExam — 카드/퀴즈/combo 재조립·과목 필터) | 2026-09-23 추가 |
 | 18 | `study-reader.dom.test.js` | 27 | 교재 리더 | 과목 옵션·본문/TOC 렌더, 읽기 위치 이어하기, 북마크 영속, 빈 상태 + 툴바(글자/줄간격·툴바 접기)·본문 검색 하이라이트·모바일 TOC 드로어·표 확장 모달·이미지 라이트박스(클릭 확대·배율·닫기)·TOC 클릭 스크롤·테마 동기화 + 이야기형 서사 태깅(명시 마커·sr-only 구간 라벨 포함)(명시 마커 📖┈이야기┈~┈본문┈� + �📖 장면·💭 에필로그·프롤로그 폴백) | 2026-09-23 추가 |
 | 19 | `study-search.dom.test.js` | 7 | 교재 검색 | 역색인 검색·하이라이트·건수, AND 교집합, 과목 필터, 결과 없음, 더보기 토글, 초기화 | 2026-09-23 추가 |
-| 20 | `study-dictionary.dom.test.js` | 12 | 성분 사전 | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글 | 2026-09-23 추가 |
+| 20 | `study-dictionary.dom.test.js` | 14 | 성분 사전 + 전체 CSV (DI-10) | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글, 필터 결과 CSV보내기·전체 CSV보내기 | 2026-10-18 갱신 |
 | 21 | `study-manual.dom.test.js` | 6 | 매뉴얼 뷰어 | 오버레이·MD 렌더·TOC, doc: 링크 문서 전환, sessionStorage 캐시, mermaid 마크업, 미등록 소스 오류, 닫기 | 2026-09-23 추가 |
 | 22 | `study-examviewer.dom.test.js` | 7 | 문제집 뷰어 | 오버레이·MD 렌더·TOC, 인쇄 버튼→window.print, 캐시 재사용, 미존재 문서 오류, 닫기 | 2026-09-23 추가 |
 | 23 | `study-examselect.dom.test.js` | 4 | 시험 선택 | 카드 렌더·현재 시험 배지, 다른 시험→저장·리로드, 같은 시험→대시보드 복귀, 빈 목록 | 2026-09-23 추가 |
@@ -286,7 +286,7 @@ npm run hooks:install
 | 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
 | 42 | `pro-plan.dom.test.js` | 9 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵·cloud_sync 행 반영·canCloudSync entitlement 게이트(3 상태) | fetch 스텁, 2026-10-14 추가 |
 | 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | GLOBAL usage_stats 누적·owner 익명 ID·초기화·손상 복구·모달 라벨/합계 렌더·Pro 후보 액션만 판정 합산(20회)·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
-| 44 | `dictionary-custom.dom.test.js` | 7 | 자가 등록 성분 사전 병합 (DI-06·08) | customKey 스키마 게이트, 커스텀 병합·'사용자 등록' 배지·필터·'성분 추가' 버튼, '공식 등록됨' superseded, 카드 수정 액션, '+자가 N' 카운트 | 2026-10-18 추가 |
+| 44 | `dictionary-custom.dom.test.js` | 8 | 자가 등록 성분 사전 병합 (DI-06·08) | customKey 스키마 게이트, 커스텀 병합·'사용자 등록' 배지·필터·'성분 추가' 버튼, '공식 등록됨' superseded, 카드 수정 액션, '+자가 N' 카운트 | 2026-10-18 추가 |
 | 45 | `formula-sales.dom.test.js` | 13 | 사업 유형·표시사항·광고 점검 (FO-33~36) | 유형 칩·카드/서브내비 게이트·단계 배지 재번호, 체크리스트 세트 분리, 표시사항 체크·전성분 가져오기·인쇄, 린트 실행·지우기 | 2026-10-18 추가 |
 | | **합계** | **435** | | |
 
