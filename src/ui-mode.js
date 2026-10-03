@@ -28,7 +28,9 @@ export function getUiMode() {
 }
 
 export function isPracticeMode() {
-    return getUiMode() === 'practice';
+    // formula 미보유 시험에서는 실무 모드를 study로 강제 간주 — ui_mode는 전역 키라
+    // 시험 간 잔존하며, 게이트 없이 적용하면 학습 nav만 숨겨지는 반쪽 상태가 된다.
+    return getUiMode() === 'practice' && hasFeature('formula');
 }
 
 /** body 클래스·토글 라벨·aria 상태를 저장된 모드와 동기화한다. */
@@ -53,18 +55,17 @@ export function applyUiMode() {
 /** 앱 초기화 시 호출 — 모드 반영 후 실무 모드면 실무 작업실로 랜딩한다. */
 export function initUiMode() {
     applyUiMode();
-    if (isPracticeMode() && hasFeature('formula')) {
+    if (isPracticeMode()) {
         switchView(PRACTICE_LANDING, { scrollTop: true });
     }
 }
 
 export function toggleUiMode() {
+    if (!hasFeature('formula')) return; // 토글 버튼은 data-feature로 숨김 — 직접 호출 방어
     const next = isPracticeMode() ? 'study' : 'practice';
     safeSetItem(STORAGE_KEYS.UI_MODE, next);
     applyUiMode();
-    if (next === 'practice'
-        && STUDY_ONLY_VIEWS.has(state.currentView)
-        && hasFeature('formula')) {
+    if (next === 'practice' && STUDY_ONLY_VIEWS.has(state.currentView)) {
         switchView(PRACTICE_LANDING, { scrollTop: true });
     }
     showToast(next === 'practice'

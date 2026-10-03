@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 실결함 — formula 미보유 시험에서 실무 모드 반쪽 상태 수정 (UM-01)
+
+- **증상**: `ui_mode`(GLOBAL_KEYS)는 시험 간 잔존하는데 랜딩만 `hasFeature('formula')`로 게이트 — formula 미보유 시험에서 실무 모드 진입/잔존 시 학습 nav 전부 숨겨지고 실무 항목은 피처 게이트로 비표시 → 사전·더보기만 남는 반쪽 상태. 토글 버튼 자체도 무방어
+- **수정** (`src/ui-mode.js`): `isPracticeMode()`가 `hasFeature('formula')`를 포함해 판정 — 미보유 시험에서는 저장값과 무관하게 study로 강제 간주 (시험 복귀 시 practice 자연 복원). `toggleUiMode()` 직접 호출 방어 early-return 추가
+- **마크업**: 사이드바 푸터·설정 패널의 토글 버튼 2곳에 `data-feature="formula"` 부여 — 미보유 시험에서 진입 경로 자체 비노출 (`index.template.html` → `build:html` 재생성)
+- **문서**: SPEC UM-01에 강제 간주 규칙 명시, USER_FLOW §1에 시험 선택(ES-01)·formula 게이트 분기 추가 + §7 토글 진입점에 대역 조건·피처 게이트 표기
+- **테스트**: `common-uimode.dom.test.js`에 formula 미보유 시험 describe 신설 — 잔존 practice 강제 간주·토글 방어·data-feature 게이트 검증 (9/9 통과)
+
 ## 2026-10-03 수주사 질의 E-1~6 회신 확정분 문서 반영
 
 - **SPEC §2.1**: 지원 브라우저 하한 명시 — iOS Safari 15.4+ · Chrome/Edge 105+ · Samsung Internet 20+ (`:has()`·`dvh` 지원 시작점이 실질 하한, `backdrop-filter`·safe-area는 폴백 처리로 제외)

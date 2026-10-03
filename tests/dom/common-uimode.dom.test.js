@@ -146,3 +146,40 @@ describe('UI 모드 — 학습/실무 전환', () => {
         expect(lastToast()[0]).toContain('학습 모드');
     });
 });
+
+describe('UI 모드 — formula 미보유 시험', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        document.head.querySelectorAll('style').forEach(s => s.remove());
+        injectCssFile('css/base.css');
+        loadIndexHtml();
+        // formula 피처 없는 시험 — ui_mode는 전역 키라 이전 시험의 'practice'가 잔존할 수 있음
+        window.EXAMS_LIST = {
+            exams: [{ id: 'food', name: '식품기사', default: true, features: {} }],
+        };
+        localStorage.setItem('current_exam', 'food');
+        document.body.classList.remove('ui-mode-practice', 'study-tools-open');
+        state.currentView = 'dashboard-view';
+        vi.clearAllMocks();
+    });
+
+    it('잔존 ui_mode=practice라도 formula 미보유 시험에서는 학습 모드로 강제 간주 (H/P)', () => {
+        localStorage.setItem('ui_mode', 'practice');
+        expect(isPracticeMode()).toBe(false);
+        initUiMode();
+        // 학습 nav가 숨겨지는 반쪽 상태 방지 — practice 클래스 미적용·랜딩 미발화
+        expect(document.body.classList.contains('ui-mode-practice')).toBe(false);
+        expect(switchView).not.toHaveBeenCalled();
+        STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
+    });
+
+    it('실무 토글 직접 호출 방어 + 버튼 마크업이 feature:formula로 게이트됨 (H)', () => {
+        toggleUiMode();
+        expect(localStorage.getItem('ui_mode')).not.toBe('practice');
+        expect(isPracticeMode()).toBe(false);
+        // 사이드바 푸터·설정 패널 토글 2곳 모두 formula 미보유 시험에서 비노출 대상
+        document.querySelectorAll('[data-click="toggleUiMode"]').forEach(b => {
+            expect(b.dataset.feature).toBe('formula');
+        });
+    });
+});

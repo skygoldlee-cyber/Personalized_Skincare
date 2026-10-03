@@ -392,7 +392,7 @@
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`) | ✅ |
+| UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`). **`features.formula` 미보유 시험에서는 practice를 study로 강제 간주** (`isPracticeMode`가 피처 포함 판정 — 전역 키 잔존으로 인한 학습 nav 전멸 방지), 토글 버튼도 `data-feature="formula"`로 비노출 | ✅ |
 | UM-02 | 항목 표시 제어 — `nav-study-only`(실무 모드에서 숨김) / `nav-practice-only`(학습 모드에서 숨김) 클래스 | ✅ |
 | UM-03 | 학습 도구 접이식 — 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침, `aria-expanded` + 영속 | ✅ |
 | UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 formula-view로 리다이렉트 | ✅ |

@@ -13,17 +13,22 @@
 ```mermaid
 flowchart TD
     A["앱 로드 (index.html)"] --> B["bootstrap: exams.json 로드<br/>→ 활성 시험 해석 (scoped localStorage)"]
-    B --> C{"ui_mode"}
-    C -->|"study"| D["dashboard-view 랜딩"]
-    C -->|"practice"| E["formula-view 랜딩<br/>(feature:formula 필요)"]
-    D --> F{"첫 방문?<br/>(학습 키 존재 여부)"}
-    F -->|"신규"| G["시작 안내 모달<br/>(onboarding_seen_v1, 1회)"]
-    F -->|"재방문"| H["조용히 통과"]
+    B --> C{"current_exam 미설정<br/>+ 등록 시험 ≥2개?"}
+    C -->|"예"| X["exam-select-view (ES-01)<br/>시험 카드 선택"]
+    C -->|"아니오"| D{"ui_mode"}
+    D -->|"study"| E["dashboard-view 랜딩"]
+    D -->|"practice + features.formula"| F["formula-view 랜딩"]
+    D -->|"practice + formula 미보유"| E
+    E --> G{"첫 방문?<br/>(학습 키 존재 여부)"}
+    G -->|"신규"| H["시작 안내 모달<br/>(onboarding_seen_v1, 1회)"]
+    G -->|"재방문"| I["조용히 통과"]
 ```
 
 | 항목 | 규약 |
 |------|------|
 | 초기 뷰 | 해시(`#/slug`) 딥링크 우선 → 없으면 모드별 랜딩 (UX-NAV-08) |
+| 시험 선택 분기 | `current_exam` 미설정 + 등록 시험 ≥2개 → exam-select-view 우선 (단일 시험 시 피커 생략, ES-01) |
+| 실무 모드 발화 조건 | `ui_mode=practice` **+ 현재 시험 `features.formula`** — formula 미보유 시험에서는 study로 강제 간주 (`isPracticeMode`, UM-01) |
 | 첫 방문 판정 | `quiz_results`/`fc_memorized`/`study_streak`/`sim_results_history` 중 하나라도 존재 → 재방문 (`src/onboarding.js`) |
 | 온보딩 | 3단계 안내(문제집·모의고사·복습 루프) — 확인/ESC/백드롭 닫기, 설정 메뉴로 재열람 가능 |
 
@@ -120,7 +125,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["모드 토글 (사이드바 푸터 / 설정 패널)"] --> B{"ui_mode"}
+    A["모드 토글 (사이드바 푸터 >900px /<br/>설정 패널 전 대역 — feature:formula 게이트)"] --> B{"ui_mode"}
     B -->|"practice"| C["학습 전용 nav 숨김"]
     C --> D{"현재 뷰가 학습 전용?"}
     D -->|"예"| E["formula-view 자동 랜딩"]
