@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-423cf88",
+    "date": "2026-10-03",
+    "notes": [
+      "실무 피처 추가 절차 문서 완비 — 체크리스트·priority 반영"
+    ]
+  },
+  {
     "version": "v20261003-792afe0",
     "date": "2026-10-03",
     "notes": [
@@ -145,13 +152,6 @@
     "date": "2026-10-02",
     "notes": [
       "[content·textbook] 1과목 표지 삽화 재교체 및 webp 재생성"
-    ]
-  },
-  {
-    "version": "v20261002-a86f60b",
-    "date": "2026-10-02",
-    "notes": [
-      "[content·textbook] 전 과목 표지 삽화 교체 및 webp 재생성"
     ]
   }
 ]
