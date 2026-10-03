@@ -88,7 +88,23 @@ cosmetic의 모든 파일을 복사할 필요는 없다 — food가 최소 구�
 
 문서가 없는 기능은 플래그를 선언하지 않는다. `docs/*.md`는 **존재 자체가 선언** — 번들 대상은 디렉터리 스캔으로 자동 결정된다.
 
-**실무작업실 피처**(실습 도구 — cosmetic의 `formula`가 유일 사례): `features` 키 선언 외에 `src/practice-registry.js` 엔트리·뷰 파셜·storage 키 등 선언 접점이 필요하다 — 절차는 `docs/dev/ARCHITECTURE.md` "신규 실무 피처 추가 체크리스트" 참조 (ui-mode·router·app 코어 수정 불필요).
+**실무작업실 피처**(실습 도구 — cosmetic의 `formula`가 유일 사례): `features` 키 선언 외에 `src/practice-registry.js` 엔트리·뷰 파셜·storage 키 등 선언 접점이 필요하다 — 절차는 `docs/dev/ARCHITECTURE.md` "신규 실무 피처 추가 체크리스트" 참조 (ui-mode·router·app 코어 수정 불필요). **기존 피처를 새 시험에서 재사용하는 경우는 아래 "도메인 자산 규약"만 따르면 된다** — 플랫폼 코드 수정 없이 규약 경로에 파일을 배치하면 활성 시험 id로 자동 해석된다.
+
+### 도메인 자산 규약 (`exams/<id>/`)
+
+시험 전용 코드·마크업·스타일·테스트는 **활성 시험 id 아래 시험 무관 동일 상대 경로**에 둔다. 플랫폼 레지스트리는 `./exams/${getActiveExamId()}/…` 템플릿으로 해석하므로 시험 id가 플랫폼 코드에 남지 않는다:
+
+| 자산 | 규약 경로 | 예시 (cosmetic) |
+|---|---|---|
+| 도메인 모듈·스토어 | `src/exams/<id>/` | `src/exams/cosmetic/formula-store.js` |
+| 실무 뷰 모듈 | `src/exams/<id>/views/` | `src/exams/cosmetic/views/formula.js` |
+| 뷰 마크업 파셜 (지연 주입) | `html/exams/<id>/` | `html/exams/cosmetic/formula.html` |
+| 도메인 스타일 | `css/exams/<id>/` + `style.css` @import | `css/exams/cosmetic/formula.css` |
+| 도메인 테스트 | `tests/{unit,dom}/exams/<id>/` | `tests/unit/exams/cosmetic/formula-os.test.js` |
+
+- **기존 피처 재사용** (예: 새 시험에서 `formula` 활성화): 위 경로에 같은 파일명으로 자산을 배치하고 `features.formula`를 선언하면 끝 — `_domainImport`/`_domainMarkup`이 활성 시험으로 해석하고, 유닛 테스트(`practice-registry.test.js` 규약 검증)가 feature 선언 시험마다 파일 실존을 강제한다
+- **신규 피처 추가**: `practice-registry.js`에 엔트리 1건(시험 무관 상대 경로만 선언) + 규약 경로에 자산 배치 — 상세는 ARCHITECTURE "신규 실무 피처 추가 체크리스트"
+- **회귀 게이트**: `check:domainmap`이 platform 파일의 `exams/<id>/` 경로 리터럴을 오류로 차단 — 하드코딩 대신 `_domainImport`/`_domainMarkup`·`getActiveExamId()` 사용
 
 ### UI 텍스트 (`manifest.uiText`)
 
@@ -132,5 +148,6 @@ npm.cmd run check:all                  # lint·types·imports·html·docs·domai
 - [ ] `manifest.json` 실제 과목·문항으로 교체
 - [ ] `features` 플래그 = 보유 기능만 선언 (문서 불변식 충족)
 - [ ] `manifest.uiText` 시험명·과목 라벨 채움
+- [ ] 실무 피처 재사용 시 — `src/exams/<id>/`·`html/exams/<id>/`·`css/exams/<id>/` 규약 경로에 자산 배치 + `features` 선언 (플랫폼 코드 수정 없음)
 - [ ] `check:all` 통과 — domainmap·uitext·docbundles 오류 0
 - [ ] DOM 시험 전환 테스트에서 새 시험 케이스 추가 검토 (`tests/dom/exam-switching.dom.test.js`)
