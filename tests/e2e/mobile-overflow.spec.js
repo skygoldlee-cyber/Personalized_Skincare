@@ -1,5 +1,5 @@
 // tests/e2e/mobile-overflow.spec.js — 뷰포트 오버플로·클릭 차단 스윕 (잘림 게이트)
-// @spec UX-NAV-05,UX-NAV-10,UX-NAV-11,UX-FB-06
+// @spec UX-NAV-05,UX-NAV-10,UX-NAV-11,UX-FB-06,UX-SET-03
 // 수평 오버플로·스크롤 불가 내부 클립·모달 액션 버튼 잘림·오버레이 가림은
 // 실제 레이아웃 계산이 필요해 jsdom 불가 — 실브라우저 계측으로만 검증한다 (UX-VFY-02).
 //
@@ -7,6 +7,7 @@
 // chromium(1280) + mobile(Pixel 7) + tablet(834) 프로젝트별로 전 뷰를 순회한다.
 
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
 test.beforeEach(({ page }) => {
     page.addInitScript(() => {
@@ -273,5 +274,68 @@ test.describe('모바일 오버플로 스윕', () => {
             }
         }
         expect(failures, `가려진 상호작용 요소:\n${failures.join('\n')}`).toEqual([]);
+    });
+
+    // 기존 소형 요소는 tests/e2e/baselines/touch-targets.json에 "뷰|라벨" 다중집합으로
+    // 등록돼 있고 그 개수까지 허용 — **신규 위반만 실패**. 라벨은 `tag#id.첫클래스`.
+    // 인라인 링크(a)와 네이티브 체크박스/라디오(라벨이 탭 타깃)는 면제.
+    test('터치 타깃 44px 미만 신규 요소가 없다 (UX-SET-03 확장)', async ({ page }) => {
+        test.setTimeout(180_000);
+        await boot(page);
+        const vw = await page.evaluate(() => innerWidth);
+        if (vw > 768) { test.skip(true, '터치 타깃 스윕은 모바일 대역(≤768px) 전용'); return; }
+
+        const baseline = JSON.parse(readFileSync('tests/e2e/baselines/touch-targets.json', 'utf8'));
+        const quota = new Map();
+        for (const k of baseline) quota.set(k, (quota.get(k) || 0) + 1);
+
+        const views = await page.evaluate(() =>
+            Array.from(document.querySelectorAll('.view-section')).map(el => el.id));
+        const fresh = [];
+        for (const v of views) {
+            await page.evaluate(async id => {
+                const nav = await import('./src/views/navigation.js');
+                nav.switchView(id, { scrollTop: true });
+            }, v);
+            await page.waitForTimeout(700);
+            await dismissOverlays(page);
+            const offenders = await page.evaluate((viewId) => {
+                const view = document.getElementById(viewId);
+                const out = [];
+                const seen = new Set();
+                view?.querySelectorAll('button, a[href], input, select, textarea, [data-click]').forEach(el => {
+                    if (seen.has(el)) return;
+                    seen.add(el);
+                    if (el.tagName === 'A') return;                    // 인라인 링크 면제
+                    if (el.matches('input[type="checkbox"], input[type="radio"]')) return;
+                    if (!el.getClientRects().length) return;
+                    if (el.closest('details:not([open])')) return;
+                    for (let n = el.parentElement; n && n !== view; n = n.parentElement) {
+                        const s = getComputedStyle(n);
+                        if (s.display === 'none' || s.visibility === 'hidden') return;
+                    }
+                    const s = getComputedStyle(el);
+                    if (s.display === 'none' || s.visibility === 'hidden' || +s.opacity === 0) return;
+                    const r = el.getBoundingClientRect();
+                    if (r.right <= 0 || r.bottom <= 0) return;
+                    if (Math.min(r.width, r.height) >= 44) return;
+                    const cls = String(el.className?.baseVal ?? el.className ?? '')
+                        .trim().split(/\s+/)[0] || '';
+                    out.push(`${viewId}|${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''}.${cls} ${Math.round(r.width)}x${Math.round(r.height)}`);
+                });
+                return out;
+            }, v);
+            for (const k of offenders) {
+                const key = k.replace(/ \d+x\d+$/, '');
+                const left = quota.get(key) || 0;
+                if (left > 0) quota.set(key, left - 1);
+                else fresh.push(k);
+            }
+        }
+        expect(fresh, [
+            '터치 타깃 44px 미만 신규 요소 감지 — 의도된 소형 컨트롤이면',
+            'tests/e2e/baselines/touch-targets.json에 "뷰|라벨"을 등록하고, 아니면 ≥44px로 확대',
+            ...fresh,
+        ].join('\n')).toEqual([]);
     });
 });

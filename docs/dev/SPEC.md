@@ -585,7 +585,7 @@
 |----|---------|------------------|
 | UX-SET-01 | **관리 기능은 설정 패널로 통합**: 헤더의 ⚙ 버튼 아래 드롭다운. 그룹 라벨(계정/데이터/보기·도구/앱) + 구분선으로 항목 증가에 대비 | 헤더에 아이콘 버튼을 늘리면 모바일에서 제목과 경쟁. 자주 쓰지 않는 토글(가로/세로 보기 등)은 설정 안으로 이동 |
 | UX-SET-02 | **`max-height` + 내부 스크롤 필수**: `max-height: calc(100dvh - 5rem); overflow-y: auto` | 항목이 늘어나도 뷰포트를 넘지 않음. 없으면 소형 기기에서 하단 항목이 잘림 |
-| UX-SET-03 | **항목 터치 타겟 44px**: `.settings-item { min-height: 44px }` | Apple HIG/Google Material 최소 터치 영역 |
+| UX-SET-03 | **항목 터치 타겟 44px**: `.settings-item { min-height: 44px }`. 전 뷰 확장은 기준선 스윕으로 관리 — `tests/e2e/mobile-overflow.spec.js`가 모바일 대역에서 상호작용 요소의 `boundingBox`를 실측하고, `tests/e2e/baselines/touch-targets.json`에 등록된 기존 소형 요소(다중집합)를 초과하는 **신규 위반만 실패** | Apple HIG/Google Material 최소 터치 영역. 인라인 링크·네이티브 체크박스/라디오(라벨이 타깃)는 면제 — 기준선 축소로 점진 개선 |
 | UX-SET-04 | **버전 표기는 설정 패널에**: 사이드바 푸터는 모바일에서 숨겨지므로 버전/카피라이트는 설정 하단에도 표시 | 사용자가 "몇 버전인지" 문의할 때 유일한 확인 경로. SW 등록 스크립트 URL에서 버전 자동 추출 |
 | UX-SET-05 | **외부 클릭/Escape/항목 선택 시 닫힘**: 패널 클릭 핸들러에서 `.settings-item` 클릭 시 `closeSettings()` | 일관된 드롭다운 UX |
 
@@ -598,7 +598,7 @@
 | UX-FB-03 | **숨겨진 기능은 최초 1회 펄스로 알림**: 발견하기 어려운 핸들(엣지 탭 등)에 첫 표시 시 펄스 애니메이션 + `localStorage` 플래그로 1회 제한 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 |
 | UX-FB-04 | **로딩은 오버레이로 통일**: 데이터 fetch 구간은 `showGlobalLoading()` 전체화면 오버레이 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 |
 | UX-FB-05 | **첫 방문 시작 안내 모달**: 학습 데이터가 없는 최초 방문에서 1회 표시, 설정 메뉴 "시작 안내"로 재열람 (`onboarding.js`, `onboarding_seen_v1` 플래그) | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 |
-| UX-FB-06 | **모달 카드는 뷰포트 상한 + 내부 스크롤 필수**: `role="dialog"`의 카드는 `max-height: ≤90dvh` + `overflow-y:auto` (또는 본문 스크롤 영역 + 헤더·푸터 `flex-shrink:0` 고정) — 내용이 뷰포트를 넘어도 액션 버튼이 화면 안에 남아야 함 | 자가 등록 모달(`.cing-*`)이 필드 5개로 `90dvh`를 넘겨 등록·취소 버튼이 잘린 실사례. 공용 `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공유)와 `.auth-modal-card`·`.f-weigh-card`에 적용 — UX-SET-02(설정 패널)의 다이얼로그 일반화. E2E가 세로·가로 뷰포트에서 푸터 버튼 위치를 실측 |
+| UX-FB-06 | **모달 카드는 뷰포트 상한 + 내부 스크롤 필수**: `role="dialog"`의 카드는 `max-height: ≤90dvh` + `overflow-y:auto` (또는 본문 스크롤 영역 + 헤더·푸터 `flex-shrink:0` 고정) — 내용이 뷰포트를 넘어도 액션 버튼이 화면 안에 남아야 함 | 자가 등록 모달(`.cing-*`)이 필드 5개로 `90dvh`를 넘겨 등록·취소 버튼이 잘린 실사례. 공용 `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공유)와 `.auth-modal-card`·`.f-weigh-card`에 적용 — UX-SET-02(설정 패널)의 다이얼로그 일반화. E2E가 세로·가로 뷰포트에서 푸터 버튼 위치를 실측. 신규 카드는 공용 규약 클래스 `.dialog-card`(css/base.css — 90dvh 상한+스크롤) 사용, `check:mobilesafe`가 `role="dialog"` 마크업에 클래스 부재를 정적 검사 |
 
 #### 4.8.5 PWA 고유 UX
 
@@ -638,6 +638,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 | UX-VFY-03 | **UI/UX E2E 커버리지 회귀 금지**: `UX-*`·`TR-*`·`R-*`·`TH-*`·`A-*` 접두사 ID 중 소스 연결 있으나 `tests/e2e/` 미연결인 수가 기준선을 넘으면 `check:specrefs` 실패 | 신규 UI/UX 요구사항은 E2E와 함께 진입 — 기존 백로그(규약형 다수)는 기준선 승계 후 점진 축소 |
 | UX-VFY-04 | **시각 실측 수치 기록**: 픽셀·비율 변화를 수반하는 변경은 Playwright 실측(chromium+mobile 양 프로젝트) 수치를 CHANGES.md 항목에 기록한다 | 선언이 아닌 계측으로 증명 — 리더 개선(349→527→652px)처럼 전후 수치를 이력에 남김 |
 | UX-VFY-05 | **배포 후 실기기 확인**: UI/UX 변경 배포는 프로덕션 스모크 통과 + 실기기 육안 확인으로 완료된다 | SW Cache First로 즉시 반영되지 않고(UX-PWA-03), 기기별 뷰포트·safe-area는 로컬 에뮬레이션과 다를 수 있음 |
+| UX-VFY-06 | **모바일 잘림 규약은 정적 체커로 강제**: `npm run check:mobilesafe`가 ① `role="dialog"`/alertdialog 카드 마크업의 `.dialog-card` 규약 클래스 부재와 ② 버튼 2+ 나열 nowrap 행(`flex-row`/`flex-center` 계열, `flex-wrap`·`btn-row`·예외 클래스 부재)을 커밋 전 검출 — `check:ci`·ci.yml 게이트 편입 | E2E 스윕이 런타임 실측이라면 체커는 패턴 기반 조기 차단 — 마크업만 봐도 새 다이얼로그·버튼 행의 잘림 위험을 알 수 있음. 자체 스크롤 계약(more-sheet·리더 표 모달 등)은 예외 목록에 사유와 함께 선언, 의도된 nowrap은 `data-msafe-ok`로 명시적 면제 |
 
 ### 4.9 디자인 토큰·상태 규약
 

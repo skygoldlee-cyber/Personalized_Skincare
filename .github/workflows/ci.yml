@@ -57,6 +57,9 @@ jobs:
       - name: UI text coverage
         run: npm run check:uitext
 
+      - name: Mobile safety convention (다이얼로그·버튼 행 규약)
+        run: npm run check:mobilesafe
+
       - name: Doc sync gate (소스 변경 시 문서 갱신 강제)
         run: node tools/check/check_doc_sync.js --ref origin/main
 

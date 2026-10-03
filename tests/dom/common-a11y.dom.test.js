@@ -1,5 +1,5 @@
 // tests/dom/common-a11y.dom.test.js — 접근성(a11y) 공통 시나리오
-// @spec A-01~07
+// @spec A-01~07,UX-FB-06,UX-VFY-06
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.3 (Phase 5)
 // 검증: 토스트 role=status/aria-live(H) · confirm 모달 포커스 트랩·Escape(X)
 //       · trapFocus Tab 순환(H) · 아이콘 버튼 aria-label 전수(H)
@@ -46,6 +46,8 @@ describe('a11y — 토스트·포커스 트랩·라벨', () => {
         const overlay = el('app-confirm-overlay');
         expect(overlay).not.toBeNull();
         expect(overlay.textContent).toContain('삭제할까요?');
+        // UX-FB-06 규약 클래스 — 모달 카드는 .dialog-card(90dvh 상한+스크롤)를 가져야 함
+        expect(overlay.querySelector('.app-confirm-dialog').classList.contains('dialog-card')).toBe(true);
 
         overlay.querySelector('.app-confirm-ok').click();
         expect(await p).toBe(true);

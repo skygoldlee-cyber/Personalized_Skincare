@@ -179,7 +179,7 @@ function _buildDom() {
     overlay.id = 'cmdk-overlay';
     overlay.className = 'cmdk-overlay is-hidden';
     overlay.innerHTML = `
-        <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="통합 검색">
+        <div class="cmdk-panel dialog-card" role="dialog" aria-modal="true" aria-label="통합 검색">
             <div class="cmdk-input-row">
                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 <input id="cmdk-input" type="text" autocomplete="off" spellcheck="false"

@@ -686,7 +686,7 @@ function cingOverlay() {
   ov.setAttribute('aria-modal', 'true');
   ov.setAttribute('aria-label', '자가 성분 등록');
   ov.innerHTML = `
-    <div class="f-weigh-card cing-card">
+    <div class="f-weigh-card cing-card dialog-card">
       <div class="f-weigh-head">
         <span id="cing-title" class="f-weigh-pos">자가 성분 등록</span>
         <button type="button" class="f-weigh-close" data-click="customIngClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>

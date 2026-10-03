@@ -98,7 +98,7 @@ export function proFeatureNotice(featureKey, featureName) {
     safeSetItem(STORAGE_KEYS.PRO_NOTICE_SEEN, JSON.stringify(seen));
 
     const { overlay, close } = _showDialog(`
-        <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-notice-title">
+        <div class="app-confirm-dialog dialog-card pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-notice-title">
             <h3 id="pro-notice-title">💎 Pro 기능 안내</h3>
             <p><strong>${esc(featureName)}</strong>은(는) Pro 버전에서 제공되는 기능입니다.<br>현재는 무료 체험 기간으로 누구나 이용할 수 있습니다.</p>
             <div class="pro-upgrade-benefits">
@@ -210,7 +210,7 @@ export async function showPlanCompare() {
                 <ul>${proBenefits.join('')}</ul>`;
 
     _showDialog(`
-        <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="plan-compare-title">
+        <div class="app-confirm-dialog dialog-card pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="plan-compare-title">
             <h3 id="plan-compare-title">💎 Free / Pro 안내</h3>
             <p>현재는 <strong>무료 체험 기간</strong>으로 Pro 표시 기능도 무료로 이용할 수 있습니다.</p>
             <div class="pro-upgrade-benefits">
@@ -235,7 +235,7 @@ export async function showPlanCompare() {
 export function showUpgradeNotice(featureLabel, limitMessage) {
     const benefitItems = [`<li>${esc(featureLabel)} 저장 한도 무제한</li>`, ..._proBenefitItems()];
     const { overlay, close } = _showDialog(`
-        <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-upgrade-title">
+        <div class="app-confirm-dialog dialog-card pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-upgrade-title">
             <h3 id="pro-upgrade-title">💎 무료 한도 도달</h3>
             <p>${esc(limitMessage || `${featureLabel}의 무료 플랜 한도에 도달했습니다.`)}</p>
             <div class="pro-upgrade-benefits">

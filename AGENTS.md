@@ -85,6 +85,7 @@ npm.cmd run check:secrets               # 추적 파일 시크릿 패턴 스캔 
 npm.cmd run check:notes                 # release-notes.json 스키마·버전 해시→커밋 해석·최신 항목↔APP_VERSION 정합
 npm.cmd run check:domainmap             # 파일 계층 분류 강제 — src/css/html/data/content/tests 전 파일이 domain-map.json에 선언 필수 (분류 규약: ARCHITECTURE.md "파일 계층 분류")
 npm.cmd run check:uitext                # UI 텍스트 커버리지 — data-uitext↔manifest.uiText 양방향 + platform HTML 시험명 잔존 검사
+npm.cmd run check:mobilesafe            # 모바일 잘림 규약 — role="dialog" 카드의 .dialog-card + 버튼 2+ 나열 행 줄바꿈 정적 검사 (check:ci·CI 게이트, UX-VFY-06)
 npm.cmd run scaffold:exam -- <id> --name "시험명"  # 새 시험 스캐폴딩 — exams.json 등록 + manifest/references 골격 + 샘플 교재·문제은행·docs/ 생성 (--dry-run=미리보기, <id> --remove=제거)
 npm.cmd run lint                        # ESLint — 에러 0 필수 (기존 경고는 점진 정리 대상)
 npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSDoc 타입 진단)

@@ -49,7 +49,7 @@ export function showOnboardingModal() {
     const overlay = document.createElement('div');
     overlay.id = 'onboarding-overlay';
     overlay.innerHTML = `
-        <div class="app-confirm-dialog onboarding-dialog" role="dialog" aria-modal="true" aria-label="시작 안내">
+        <div class="app-confirm-dialog dialog-card onboarding-dialog" role="dialog" aria-modal="true" aria-label="시작 안내">
             <h3><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${esc(getExamAppName())} 시작 안내</h3>
             <ol class="onboarding-steps">${items}</ol>
             <p class="onboarding-foot">진도는 이 기기에 자동 저장되며 오프라인에서도 학습할 수 있습니다.</p>

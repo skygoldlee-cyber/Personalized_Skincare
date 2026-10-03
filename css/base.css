@@ -407,6 +407,20 @@ body.no-scroll {
 .flex-center { display: flex; align-items: center; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 .flex-wrap { flex-wrap: wrap; }
+
+/* ── 모바일 안전 규약 (UX-FB-06, UX-NAV-10, UX-VFY-06) ──
+   신규 다이얼로그 카드는 .dialog-card, 버튼이 나열된 행은 .btn-row 사용.
+   check:mobilesafe가 role="dialog" 카드의 클래스·nowrap 버튼 행을 정적 검사한다. */
+.dialog-card {
+    /* 내용이 뷰포트를 넘어도 카드 내부가 스크롤되어 액션 버튼이 잘리지 않음 */
+    max-height: 90dvh;
+    overflow-y: auto;
+}
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
 .flex-1 { flex: 1; }
 .justify-center { justify-content: center; }
 .justify-end { justify-content: flex-end; }

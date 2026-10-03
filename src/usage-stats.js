@@ -138,7 +138,7 @@ export async function showUsageStats() {
     overlay.id = 'usage-stats-overlay';
     overlay.className = 'app-confirm-overlay';
     overlay.innerHTML = `
-        <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="usage-stats-title">
+        <div class="app-confirm-dialog dialog-card pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="usage-stats-title">
             <h3 id="usage-stats-title">📊 내 사용 통계</h3>
             <div class="pro-upgrade-benefits">
                 <ul>

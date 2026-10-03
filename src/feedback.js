@@ -211,7 +211,7 @@ export function showFeedbackModal(currentView) {
     const overlay = document.createElement('div');
     overlay.id = 'feedback-overlay';
     overlay.innerHTML = `
-        <div class="app-confirm-dialog feedback-dialog" role="dialog" aria-modal="true" aria-label="의견 보내기">
+        <div class="app-confirm-dialog dialog-card feedback-dialog" role="dialog" aria-modal="true" aria-label="의견 보내기">
             <h3><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> 의견 보내기</h3>
             <div class="feedback-body">
                 <div class="feedback-kinds" role="radiogroup" aria-label="의견 유형">

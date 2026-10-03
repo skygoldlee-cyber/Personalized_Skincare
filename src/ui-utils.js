@@ -202,7 +202,7 @@ export function showConfirm(message, title = '확인') {
         const overlay = document.createElement('div');
         overlay.id = 'app-confirm-overlay';
         overlay.innerHTML = `
-            <div class="app-confirm-dialog">
+            <div class="app-confirm-dialog dialog-card">
                 <h3>${escapeHTML(title)}</h3>
                 <p>${escapeHTML(message)}</p>
                 <div class="app-confirm-actions">
@@ -251,7 +251,7 @@ export function showAlert(message, title = '알림') {
         const overlay = document.createElement('div');
         overlay.id = 'app-confirm-overlay';
         overlay.innerHTML = `
-            <div class="app-confirm-dialog">
+            <div class="app-confirm-dialog dialog-card">
                 <h3>${escapeHTML(title)}</h3>
                 <p>${escapeHTML(message)}</p>
                 <div class="app-confirm-actions">

@@ -562,10 +562,7 @@
     flex-wrap: wrap;
 }
 
-/* 오답노트 액션 행 — 버튼 3개(긴 라벨)가 모바일에서 잘리지 않도록 줄바꿈 */
-.review-actions-group {
-    flex-wrap: wrap;
-}
+/* 오답노트 액션 행 — .btn-row(공용 규약)로 줄바꿈 적용 */
 
 .dictionary-grid {
     display: grid;

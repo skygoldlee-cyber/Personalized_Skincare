@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-18 모바일 안전장치 3종 — 규약 클래스·정적 체커·터치 기준선 (UX-VFY-06·UX-SET-03)
+
+- **CSS 규약 클래스** (`css/base.css`): `.dialog-card`(90dvh 상한+스크롤 — 신규 `role="dialog"` 카드의 필수 클래스)와 `.btn-row`(flex+wrap — 버튼 2+ 나열 행 기본). 공용 다이얼로그 6종·자가 등록·계량·표 모달·인증·PWA 모달·formula 다이얼로그에 `.dialog-card` 일괄 적용, 오답노트 액션 행 `.btn-row` 전환
+- **정적 체커 `check:mobilesafe`** (`tools/check/check_mobile_safe.js`): ① role="dialog" 카드의 `.dialog-card` 부재 ② 버튼 2+ 나열 nowrap 행 검출 — 자체 스크롤 계약은 예외 목록, 의도된 nowrap은 `data-msafe-ok` 면제. `check:ci` + ci.yml 게이트 편입 (SPEC UX-VFY-06). 적용 즉시 실제 위반 2곳 검출·수정: 대시보드 드래프트 배너 버튼 행·계산 연습장 버튼 행에 `flex-wrap`
+- **터치 타깃 기준선 스윕**: mobile-overflow.spec.js에 UX-SET-03 전 뷰 확장 — 44px 미만 상호작용 요소 실측, `tests/e2e/baselines/touch-targets.json`(기존 11건: dday 버튼·시험 카드 버튼·리더 툴바·DB 버전 배지·참조 링크·캘린더 버튼) 초과분만 실패. 인라인 링크·체크박스/라디오 면제 — E2E 73→74
+- 런북 `UIUX_VERIFY_RUNBOOK.md` V2에 모바일 안전 규약 체크리스트 추가
+
 ## 2026-10-18 E2E 스윕 확장 — 탭 바 겹침·클릭 차단 (UX-NAV-05·UX-NAV-11)
 
 - 탭 바 겹침 실측: ≤768px에서 스크롤 끝 콘텐츠가 탭 바 위에 있는지 전 뷰 검증

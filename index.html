@@ -212,7 +212,7 @@
                             <p class="draft-banner-desc" id="draft-banner-desc">남은 시간: --:--</p>
                         </div>
                     </div>
-                    <div class="flex-row gap-2">
+                    <div class="flex-row flex-wrap gap-2">
                         <button class="btn btn-warning badge-pill" data-click="resumeSimDraft"><i class="fa-solid fa-play" aria-hidden="true"></i> 이어서 풀기</button>
                         <button class="btn btn-secondary badge-pill" data-click="clearSimDraft" title="진행 중인 모의고사 기록을 버리고 새로 시작"><i class="fa-solid fa-trash" aria-hidden="true"></i> 새로 시작</button>
                     </div>
@@ -661,7 +661,7 @@
                     <div class="review-stats">
                         <span class="badge"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 헷갈린 카드: <strong id="review-card-count">0</strong></span>
                     </div>
-                    <div class="review-actions-group flex-row gap-4">
+                    <div class="review-actions-group btn-row">
                         <button id="start-weak-quiz-btn" class="btn btn-warning is-hidden" >
                             <i class="fa-solid fa-bolt" aria-hidden="true"></i> 헷갈린 카드 집중 퀴즈 시작
                         </button>
@@ -1009,7 +1009,7 @@
                                     <div id="calc-scratchpad-container" class="is-hidden calc-scratchpad">
                                         <div class="calc-scratchpad-header">
                                             <span class="calc-scratchpad-label"><i class="fa-solid fa-palette" aria-hidden="true"></i> 계산 연습장</span>
-                                            <div class="flex-row gap-2">
+                                            <div class="flex-row flex-wrap gap-2">
                                                 <button class="btn calc-scratchpad-btn" data-click="clearScratchpad">모두 지우기</button>
                                                 <button class="btn calc-scratchpad-btn calc-scratchpad-btn-clear" id="scratchpad-eraser-btn" data-click="toggleScratchpadEraser">지우개</button>
                                             </div>
@@ -1385,7 +1385,7 @@
                 <!-- Table fullscreen modal -->
                 <div id="reader-table-modal" class="reader-table-modal is-hidden">
                     <div class="reader-table-modal-backdrop"></div>
-                    <div class="reader-table-modal-content">
+                    <div class="reader-table-modal-content dialog-card">
                         <button class="reader-table-modal-close" id="reader-table-modal-close" aria-label="표 모달 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                         <div id="reader-table-modal-body" class="reader-table-modal-body"></div>
                     </div>
@@ -1564,7 +1564,7 @@
     <!-- 계정/로그인 모달 (Supabase Auth — Phase 1: 인증만, 동기화는 Phase 2) -->
     <div id="auth-modal" class="auth-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
         <div class="auth-modal-backdrop" data-click="closeAuthModal"></div>
-        <div class="auth-modal-card">
+        <div class="auth-modal-card dialog-card">
             <div class="auth-modal-header">
                 <h3 id="auth-modal-title"><i class="fa-solid fa-user" aria-hidden="true"></i> 계정</h3>
                 <button type="button" class="auth-modal-close" data-click="closeAuthModal" aria-label="닫기">
@@ -1617,7 +1617,7 @@
     <!-- PWA 설치 안내 모달 (iOS/Android 분기) -->
     <div id="pwa-install-modal" class="pwa-install-modal is-hidden"  role="dialog" aria-modal="true" aria-labelledby="pwa-modal-title">
         <div class="pwa-modal-backdrop" id="pwa-modal-backdrop"></div>
-        <div class="pwa-modal-card">
+        <div class="pwa-modal-card dialog-card">
             <div class="pwa-modal-header">
                 <h3 id="pwa-modal-title"><i class="fa-solid fa-download" aria-hidden="true"></i> 앱 설치하기</h3>
                 <button type="button" class="pwa-modal-close" id="pwa-modal-close" aria-label="닫기">

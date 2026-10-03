@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 17fe123adee2bc3e
-> 생성: 2026-10-03 · 원천: SPEC.md(410개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 2564626ec3033eea
+> 생성: 2026-10-03 · 원천: SPEC.md(411개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 410개 — 문서 연결 256 · 소스 연결 378 · 테스트 연결 398 · 보고서 연결 109
+**커버리지 요약**: 요구사항 411개 — 문서 연결 256 · 소스 연결 379 · 테스트 연결 399 · 보고서 연결 109
 
 ---
 
@@ -495,7 +495,7 @@
 | UX-FB-03 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | E2E 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | E2E 테스트 | DOC-DSN-11 | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js<br>tests/e2e/a11y-interaction.spec.js | — | — |
-| UX-FB-06 | 자가 등록 모달(`.cing-*`)이 필드 5개로 `90dvh`를 넘겨 등록·취소 버튼이 잘린 실사례. 공용 `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공유)와 `.auth-modal-card`·`.f-weigh-card`에 적용 — UX-SET-02(설정 패널)의 다이얼로그 일반화. E2E가 세로·가로 뷰포트에서 푸터 버튼 위치를 실측 | E2E 테스트 | — | — | tests/e2e/mobile-overflow.spec.js | — | — |
+| UX-FB-06 | 자가 등록 모달(`.cing-*`)이 필드 5개로 `90dvh`를 넘겨 등록·취소 버튼이 잘린 실사례. 공용 `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공유)와 `.auth-modal-card`·`.f-weigh-card`에 적용 — UX-SET-02(설정 패널)의 다이얼로그 일반화. E2E가 세로·가로 뷰포트에서 푸터 버튼 위치를 실측. 신규 카드는 공용 규약 클래스 `.dialog-card`(css/base.css — 90dvh 상한+스크롤) 사용, `check:mobilesafe`가 `role="dialog"` 마크업에 클래스 부재를 정적 검사 | E2E 테스트 | — | — | tests/dom/common-a11y.dom.test.js<br>tests/e2e/mobile-overflow.spec.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | E2E 테스트 | — | css/reader.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | E2E 테스트 | — | css/base.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | E2E 테스트 | DOC-DSN-01<br>DOC-REF-09 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/app.spec.js<br>…외 1개 | — | — |
@@ -520,7 +520,7 @@
 | UX-SCR-03 | 하드코딩 색상은 다크/라이트 한쪽에서 묻힘 (실제로 미정의 변수 폴백으로 라이트 배경에 흰 카드가 되는 사고 있었음 — `.comp-item` 사례) | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-01 | 헤더에 아이콘 버튼을 늘리면 모바일에서 제목과 경쟁. 자주 쓰지 않는 토글(가로/세로 보기 등)은 설정 안으로 이동 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-02 | 항목이 늘어나도 뷰포트를 넘지 않음. 없으면 소형 기기에서 하단 항목이 잘림 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
-| UX-SET-03 | Apple HIG/Google Material 최소 터치 영역 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
+| UX-SET-03 | Apple HIG/Google Material 최소 터치 영역. 인라인 링크·네이티브 체크박스/라디오(라벨이 타깃)는 면제 — 기준선 축소로 점진 개선 | E2E 테스트 | — | css/ui-overlay.css | tests/e2e/app.spec.js<br>tests/e2e/mobile-overflow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-04 | 사용자가 "몇 버전인지" 문의할 때 유일한 확인 경로. SW 등록 스크립트 URL에서 버전 자동 추출 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-05 | 일관된 드롭다운 UX | 테스트 | — | css/ui-overlay.css<br>src/views/listeners-app.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-VFY-01 | 요구사양 없는 UI 변경은 추적·리뷰 불가 — TR-21~23처럼 선 정의 후 구현하는 관행을 규약화 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
@@ -528,6 +528,7 @@
 | UX-VFY-03 | 신규 UI/UX 요구사항은 E2E와 함께 진입 — 기존 백로그(규약형 다수)는 기준선 승계 후 점진 축소 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
 | UX-VFY-04 | 선언이 아닌 계측으로 증명 — 리더 개선(349→527→652px)처럼 전후 수치를 이력에 남김 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
 | UX-VFY-05 | SW Cache First로 즉시 반영되지 않고(UX-PWA-03), 기기별 뷰포트·safe-area는 로컬 에뮬레이션과 다를 수 있음 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
+| UX-VFY-06 | E2E 스윕이 런타임 실측이라면 체커는 패턴 기반 조기 차단 — 마크업만 봐도 새 다이얼로그·버튼 행의 잘림 위험을 알 수 있음. 자체 스크롤 계약(more-sheet·리더 표 모달 등)은 예외 목록에 사유와 함께 선언, 의도된 nowrap은 `data-msafe-ok`로 명시적 면제 | 테스트 | — | tools/check/check_mobile_safe.js | tests/dom/common-a11y.dom.test.js | — | — |
 
 ## 5.1 데이터 아키텍처
 

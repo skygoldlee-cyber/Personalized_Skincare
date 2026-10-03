@@ -30,7 +30,23 @@ UI/UX 요구사양은 단위·DOM 테스트로 검증 불가능한 영역이 있
 ```powershell
 npm.cmd run lint            # ESLint 에러 0
 npm.cmd run check:types     # tsc --noEmit
+npm.cmd run check:mobilesafe # 다이얼로그·버튼 행 잘림 규약 (UX-VFY-06)
 ```
+
+#### 모바일 안전 규약 체크리스트 (다이얼로그·버튼 행 신규 작성 시)
+
+- [ ] **다이얼로그 카드**: `role="dialog"`/`alertdialog` 카드에 `.dialog-card` 부기 —
+  `css/base.css` 공용 규약이 `max-height: 90dvh` + `overflow-y: auto`를 제공.
+  자체 스크롤 계약(본문 스크롤 영역 + 헤더·푸터 `flex-shrink:0` 고정)이 있으면
+  `check_mobile_safe.js`의 `DIALOG_EXEMPT_CLASSES`에 사유와 함께 등록
+- [ ] **버튼 행**: 버튼 2+ 나열 행은 `.btn-row`(flex + wrap 기본) 또는 `flex-wrap` —
+  의도된 nowrap은 `data-msafe-ok`로 명시적 면제
+- [ ] **flex 자식**: 텍스트·입력이 들어가는 flex 자식에 `min-width: 0` — 내용물이
+  행을 밀어내는 고전적 가로 잘림 원인 차단
+- [ ] **폭**: `100vw` 대신 `100%` (UX-NAV-04 — 스크롤바 폭만큼 가로 넘침 방지)
+- [ ] **하단 고정 요소**: 모바일 탭 바 위 + `safe-area-inset` 반영 (UX-NAV-05)
+- [ ] **터치 타깃**: 상호작용 요소 ≥44px (UX-SET-03) — 의도된 소형 컨트롤은
+  `tests/e2e/baselines/touch-targets.json`에 "뷰|tag#id.클래스" 등록
 
 ### V3. 자동 동작 검증 — UX-VFY-02/03
 

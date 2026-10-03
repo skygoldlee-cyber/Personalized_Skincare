@@ -79,10 +79,11 @@
     "check:content": "node tools/check/check_content.js",
     "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content",
     "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content -- --quick",
-    "check:ci": "npm run check:hooks && npm run check:secrets && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && node tools/check/check_doc_sync.js --ref origin/main && node tools/check/check_test_first.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser && npm run check:perf",
+    "check:ci": "npm run check:hooks && npm run check:secrets && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:mobilesafe && node tools/check/check_doc_sync.js --ref origin/main && node tools/check/check_test_first.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser && npm run check:perf",
     "deploy": "node tools/deploy/deploy.js",
     "audit:combo": "node tools/check/audit_combo.js",
     "check:uitext": "node tools/check/check_uitext.js",
+    "check:mobilesafe": "node tools/check/check_mobile_safe.js",
     "scaffold:exam": "node tools/build/scaffold_exam.js",
     "mutate": "stryker run"
   },

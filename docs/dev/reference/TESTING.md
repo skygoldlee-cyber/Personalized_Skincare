@@ -28,8 +28,8 @@
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 842 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 546 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 73 |
-| **합계** | | | | **1461** |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 74 |
+| **합계** | | | | **1462** |
 
 ### 설계 원칙
 
@@ -624,7 +624,7 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
   발견했고, `practice-registry.js`가 주입 후 `active`를 보존하도록 수정됨 — 전체
   지연 뷰 딥링크의 회귀 가드 역할을 겸한다.
 
-**mobile-overflow.spec.js — 뷰포트 오버플로 스윕 (UX-NAV-10, UX-FB-06, 2026-10-18 추가)**
+**mobile-overflow.spec.js — 뷰포트 오버플로·터치 스윕 (UX-NAV-05/10/11, UX-FB-06, UX-SET-03)**
 
 - **전 뷰 수평 오버플로 실측**: `.view-section` 전체를 `switchView`로 순회하며
   `scrollWidth > clientWidth` 페이지 넘침과 스크롤 불가 내부 클립을 수집 —
@@ -638,6 +638,10 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
   `elementFromPoint`로 히트 테스트 — 탭 바·고정 오버레이·이웃 카드에 덮인
   "보이는데 못 누르는" 요소를 검출. 접힘 details·overflow 클립·소멸성
   오버레이(토스트·오프라인 배너)는 의도된 상태라 제외.
+- **터치 타깃 기준선 스윕 (UX-SET-03 확장)**: 모바일 대역에서 전 뷰의 상호작용
+  요소 `boundingBox`를 실측해 44px 미만을 수집 — `tests/e2e/baselines/
+  touch-targets.json`의 기존 소형 요소(다중집합)까지는 허용하고 **신규 위반만
+  실패**. 인라인 링크·네이티브 체크박스/라디오는 면제.
 - **실결함 회귀 가드**: 성분사전 '성분 추가' 버튼 nowrap 잘림과 자가 등록 모달
   등록 버튼 잘림이라는 두 실사례에서 비롯 — 수정을 되돌리는 변이로 실패 확인.
 

@@ -62,7 +62,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
     const overlay = document.createElement('div');
     overlay.id = 'whats-new-overlay';
     overlay.innerHTML = `
-        <div class="app-confirm-dialog whats-new-dialog" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+        <div class="app-confirm-dialog dialog-card whats-new-dialog" role="dialog" aria-modal="true" aria-label="${esc(title)}">
             <h3><i class="fa-solid fa-sparkles" aria-hidden="true"></i> ${esc(title)}</h3>
             <div class="whats-new-body">${sections}</div>
             <div class="app-confirm-actions">

@@ -1,0 +1,14 @@
+[
+  "dashboard-view|button.dday-set-btn",
+  "exam-view|button#integrated-exam-btn.exam-btn-sim",
+  "exam-view|button.exam-btn-sim",
+  "exam-view|button.exam-btn-sim",
+  "exam-view|button.exam-btn-sim",
+  "exam-view|button.exam-btn-sim",
+  "textbook-reader-view|button#reader-toolbar-toggle.reader-toolbar-toggle",
+  "textbook-reader-view|button#reader-toc-mobile-btn.reader-tool-btn",
+  "dictionary-view|button#dict-db-version.dict-db-version",
+  "formula-view|button.comp-ref-link",
+  "calendar-view|button.btn",
+  "calendar-view|button.btn"
+]
