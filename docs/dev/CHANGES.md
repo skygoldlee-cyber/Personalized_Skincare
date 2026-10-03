@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 교재리더 TOC 하단 잘림 (이야기형) — absolute 탈출 + sticky 오프셋 제거
+
+- **결함**: 2~4과목 **이야기형**에서 TOC 스크롤을 끝까지 내려도 마지막 항목이 레이아웃 밖으로 잘려 도달 불가 (표준형 정상)
+- **원인 연쇄**: 이야기형 본문의 `position:absolute` 요소(`.story-sr-label`·`*-expand-btn`)가 `position:static`인 `.textbook-reader-content`를 건너뛰고 `.reader-layout`(relative)을 containing block으로 삼아, 깊은 static 위치(~156,000px)가 레이아웃 `scrollHeight`를 팽창 → 레이아웃이 실제 스크롤러가 되자 `.reader-toc`의 `position:sticky; top:90px`가 발동해 카드가 +90px 밀림 → `max-height:100%` 유지로 하단이 `overflow:hidden`에 90px 잘림
+- **수정**: ① `.textbook-reader-content`에 `position:relative` — absolute 후손을 본문 스크롤러에 귀속 (레이아웃 scrollHeight 팽창 차단 + 탈출 요소가 스크롤과 분리되어 떠다니는 잠재 결함 해소) ② `.reader-toc`의 `sticky`·`top:90px` 제거 — 레이아웃은 비스크롤 설계(TR-23)라 dead mechanism이었고 동일 회귀 경로 차단
+- **회귀**: `tests/e2e/toc-sidebar.spec.js`에 이야기형 TOC 하단 검증 추가 (마지막 과목+이야기형, tocBottom·lastItem ≤ 레이아웃/뷰포트 하단 + layoutScrollH 무성장)
+
 ## 2026-10-03 잔여 구조 항목 정리 — 리스너 분할 + 랜딩 우선순위 + 정정
 
 - **event-listeners.js 분할** — 단일 함수 601줄을 도메인 단위 6개 `listeners-*.js`로 분리 (app·flashcard·quiz·simulator·dictionary·delegation). 원본은 바인딩 호출 순서만 소유하는 20줄 진입점으로 축소 — 도메인별 위치 파악·리뷰 범위 축소

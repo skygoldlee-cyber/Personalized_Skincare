@@ -94,6 +94,72 @@ test.describe('교재리더 TOC 사이드바', () => {
     // TR-23: absolute 오버레이 요소가 .reader-layout 하단을 넘치면 그 오버플로가
     // 스크롤 조상(.main-content)의 scrollHeight로 전파되어 페이지 스크롤 범위를
     // 만든다 → 콘텐츠 밖 휠 입력에 뷰 전체가 위로 밀리는 버그의 회귀 검증.
+    // 이야기형 회귀: 본문의 absolute 요소(.story-sr-label 등)가 position:static인
+    // 본문 컬럼을 건너뛰고 .reader-layout(relative)을 containing block으로 삼아
+    // scrollHeight를 팽창 → 레이아웃이 스크롤러가 되어 sticky top:90px가 발동,
+    // TOC가 +90px 밀려 하단이 overflow:hidden에 잘렸던 결함 (2~4과목 이야기형).
+    test('이야기형 모드에서도 TOC 하단이 레이아웃 안에 들어온다', async ({ page }) => {
+        test.setTimeout(60_000);
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.evaluate(() => {
+            document.querySelectorAll('#app-confirm-overlay, #onboarding-overlay').forEach(el => el.remove());
+            location.hash = '/reader';
+        });
+        await expect(page.locator('#reader-subject-select')).toBeVisible({ timeout: 15_000 });
+
+        // 마지막 과목(긴 TOC) 선택 후 이야기형 토글 — 재렌더 대기
+        await page.evaluate(() => {
+            const s = /** @type {HTMLSelectElement} */ (document.getElementById('reader-subject-select'));
+            s.selectedIndex = s.options.length - 1;
+            s.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        await expect(page.locator('#reader-toc-list .reader-toc-item').first()).toBeVisible({ timeout: 30_000 });
+        await page.evaluate(() => {
+            const cb = /** @type {HTMLInputElement|null} */ (document.getElementById('reader-story-mode-toggle'));
+            if (cb && !cb.checked) cb.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        await page.waitForTimeout(1200);
+        await expect(page.locator('#reader-toc-list .reader-toc-item').first()).toBeVisible({ timeout: 30_000 });
+
+        const isDrawer = await page.evaluate(() =>
+            getComputedStyle(document.getElementById('reader-toc')).position === 'fixed');
+        if (isDrawer) {
+            const btn = page.locator('#reader-toc-mobile-btn');
+            if (await btn.isVisible()) await btn.click();
+            await expect(page.locator('#reader-toc')).toHaveClass(/mobile-open/);
+        }
+
+        const m = await page.evaluate(() => {
+            const toc = document.getElementById('reader-toc');
+            const layout = document.getElementById('reader-layout');
+            toc.scrollTop = toc.scrollHeight;
+            const tr = toc.getBoundingClientRect();
+            const lr = layout.getBoundingClientRect();
+            const items = toc.querySelectorAll('.reader-toc-item, .reader-toc-sub-item');
+            const last = items[items.length - 1].getBoundingClientRect();
+            return {
+                vh: window.innerHeight,
+                tocBottom: tr.bottom, layoutBottom: lr.bottom,
+                lastItemBottom: last.bottom, layoutScrollH: layout.scrollHeight,
+                layoutClientH: layout.clientHeight,
+            };
+        });
+        if (isDrawer) {
+            // ≤900px 드로어는 position:fixed·bottom:0 — 뷰포트 끝이 정상 범위
+            expect(m.tocBottom).toBeLessThanOrEqual(m.vh + 1);
+            expect(m.lastItemBottom).toBeLessThanOrEqual(m.vh + 1);
+        } else {
+            // 회귀 지점: 사이드바 카드 하단이 레이아웃 하단을 넘지 않아야 함
+            // (+90 sticky 오프셋 발동 시 레이아웃 밖으로 밀려 잘림)
+            expect(m.tocBottom).toBeLessThanOrEqual(m.layoutBottom + 1);
+            // 본문 absolute 요소 탈출로 레이아웃이 스크롤러가 되어서는 안 됨
+            expect(m.layoutScrollH).toBeLessThanOrEqual(m.layoutClientH + 2);
+            // 스크롤 끝에서 마지막 목차 항목이 레이아웃 안에 보여야 함
+            expect(m.lastItemBottom).toBeLessThanOrEqual(m.layoutBottom + 1);
+        }
+    });
+
     test('오버레이가 레이아웃을 넘쳐도 페이지 스크롤 범위가 생기지 않고 뷰가 밀리지 않는다', async ({ page }) => {
         test.setTimeout(60_000);
         await page.goto('/index.html');
