@@ -1164,6 +1164,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     gap: 1rem;
     max-height: 90dvh;
+    /* 가로 모드 등 극단적 높이 부족 시 카드 자체가 스크롤 — 내용 잘림 방지 */
+    overflow-y: auto;
 }
 .f-weigh-head {
     display: flex;

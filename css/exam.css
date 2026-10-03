@@ -248,6 +248,7 @@
 /* Custom buttons and layouts for Mock Exam Grid */
 .flex-btns {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--space-3);
 }
 .flex-btns a, .flex-btns button {

@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-18 모바일 잘림 유사 케이스 전수 점검 — 다이얼로그·버튼 행 4곳 보강
+
+- `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공용)에 `max-height:90dvh`+내부 스크롤 — 기존엔 usage-stats만 개별 처리
+- `.auth-modal-card` 동일 처리 — 필드+안내 문구가 길어 가로 모드에서 잘릴 수 있던 문제
+- `.f-weigh-card`(계량 모드) 카드 레벨 `overflow-y:auto` 안전망
+- `.flex-btns`(시험 카드)·`.review-actions-group`(오답노트 버튼 3개)·교재 검색 행에 `flex-wrap` — 버튼 잘림 방지
+
 ## 2026-10-18 자가 등록 모달 모바일 스크롤 — 화면 초과 잘림 수정
 
 - `.cing-body`에 `overflow-y:auto` + 헤더·푸터 `flex-shrink:0` — 모바일에서 필드 5개+푸터가 90dvh를 넘을 때 본문만 스크롤, 등록·취소 버튼은 항상 노출
