@@ -37,7 +37,7 @@ import {
   getCustomIngredient, annotateCustomItems,
   createCustomIngredient, updateCustomIngredient, deleteCustomIngredient,
 } from '../custom-ingredient-store.js';
-import { getBizType, setBizType, bizVisible, BIZ_TYPES } from '../biz-profile.js';
+import { getBizType, setBizType, bizVisible, BIZ_TYPES, BIZ_GUIDE } from '../biz-profile.js';
 import { renderDictionary } from '../../../views/dictionary.js';
 // 추천·맞춤 규칙 액션은 formula-recommend.js 구현 — app.js 디스패치 호환을 위해 재수출
 export {
@@ -151,6 +151,15 @@ function applyBizProfile() {
     const allow = (/** @type {HTMLElement} */(card).dataset.biz || '').split(/\s+/);
     card.classList.toggle('is-hidden', !allow.includes(biz));
   });
+  // 단계 배지 재번호 — 숨겨진 카드로 번호가 건너뛰지 않게, 노출 카드 기준 1부터.
+  // '상시'·'제10조' 등 is-continuous 배지는 순번이 아니므로 유지한다.
+  let step = 1;
+  document.querySelectorAll('#formula-menu-panel .trainer-menu-card:not(.is-hidden)').forEach(card => {
+    const badge = card.querySelector('.trainer-step-badge:not(.is-continuous)');
+    if (badge) badge.textContent = String(step++);
+  });
+  const guide = document.getElementById('formula-biz-guide');
+  if (guide) guide.textContent = BIZ_GUIDE[biz] || BIZ_GUIDE.custom;
 }
 
 /** 사업 유형 변경 — 허브 재렌더 + 서브패널이면 메뉴로 복귀 (FO-33) */

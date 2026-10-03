@@ -76,6 +76,26 @@ describe('Formula OS — 사업 유형 프로파일 (FO-33)', () => {
         expect(visible).toContain('openAdLintPanel');
     });
 
+    it('단계 배지 재번호 — 유형별 노출 카드 기준 1부터 연속 (FO-33)', () => {
+        initFormulaView();
+        const numericBadges = () => hubCards()
+            .map(c => c.querySelector('.trainer-step-badge:not(.is-continuous)'))
+            .filter(Boolean)
+            .map(b => b.textContent);
+        expect(numericBadges()).toEqual(['1', '2', '3', '4', '5']);
+
+        formulaSetBizType('mfg'); // 고객(1번) 숨김 → 2번 시작이던 것을 1부터 재번호
+        expect(numericBadges()).toEqual(['1', '2', '3', '4']);
+        expect(el('formula-biz-guide').textContent).toContain('제조·기록');
+
+        formulaSetBizType('sales'); // 계산기·조제 숨김 → 고객·포뮬러만 순번
+        expect(numericBadges()).toEqual(['1', '2']);
+        expect(el('formula-biz-guide').textContent).toContain('표시·광고');
+
+        formulaSetBizType('custom'); // 복귀 시 원래 순번
+        expect(numericBadges()).toEqual(['1', '2', '3', '4', '5']);
+    });
+
     it('서브내비도 유형별 게이트 — sales는 표시사항·광고 칩, 제조 칩 없음 (FO-33)', () => {
         setBizType('sales');
         const nav = formulaSubNav('label');
