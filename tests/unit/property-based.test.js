@@ -157,6 +157,7 @@ test('PBT SM-2: 연속 정답 시 repetition 단조 증가·interval≥1·nextRe
   Object.defineProperty(globalThis, 'localStorage', { value: localStorageStub(store), configurable: true });
   try {
     const { updateCardSchedule } = await import('../../src/spaced-repetition.js');
+    const { todayKey } = await import('../../src/utils.js');
     fc.assert(fc.property(
       fc.array(fc.boolean(), { minLength: 1, maxLength: 10 }),
       fc.integer({ min: 1, max: 99 }),
@@ -164,7 +165,7 @@ test('PBT SM-2: 연속 정답 시 repetition 단조 증가·interval≥1·nextRe
         store.clear(); // 케이스 간 스케줄 상태 격리 — 카드 이력이 다음 케이스로 새지 않게
         const cardId = `pbt_card_${cardNum}`;
         let prevRep = 0;
-        const today = new Date().toISOString().slice(0, 10);
+        const today = todayKey(); // 로컬 날짜 — updateCardSchedule과 같은 키(UTC는 KST 00~09시에 어긋남)
         for (const knew of answers) {
           const s = updateCardSchedule(cardId, knew);
           assert.ok(s.repetition >= 0, 'repetition 음수');

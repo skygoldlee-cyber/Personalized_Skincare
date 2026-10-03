@@ -23,6 +23,7 @@ import {
 import { state, loadProgress, safeSetItem } from '../../src/state.js';
 import { togglePomodoro, resetPomodoro, updatePomodoroUI } from '../../src/views/pomodoro.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
+import { todayKey } from '../../src/utils.js';
 import { TIMING } from '../../src/config/timing.js';
 
 describe('뽀모도로 — 시작·경과·완주·리셋·날짜 경계', () => {
@@ -126,7 +127,7 @@ describe('뽀모도로 — 시작·경과·완주·리셋·날짜 경계', () =>
     });
 
     it('당일 누적 → loadProgress가 복원', () => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = todayKey(); // 로컬 날짜 — toISOString(UTC)은 KST 00~09시에 어긋남
         safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME, '75');
         safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE, today);
         safeSetItem(STORAGE_KEYS.POMO_SESSION_COUNT, '3');

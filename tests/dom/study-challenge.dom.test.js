@@ -29,8 +29,12 @@ import {
     submitDailyShortAnswer, nextDailyStep, closeDailyModal,
 } from '../../src/views/daily-challenge.js';
 import { STORAGE_KEYS, dailyCompletedKey } from '../../src/storage-keys.js';
+import { todayKey } from '../../src/utils.js';
 
-const todayStr = () => new Date().toISOString().split('T')[0];
+// 앱의 날짜 키는 로컬 날짜(localDateKey) — toISOString(UTC)은 KST 00~09시에
+// 하루 전으로 어긋나 그 시간대에 테스트가 깨진다
+const todayStr = () => todayKey();
+const daysAgoKey = n => todayKey(new Date(Date.now() - n * 86400000));
 
 function setupDailyData() {
     const subject = {
@@ -94,7 +98,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
     });
 
     it('스트릭 어제까지 유효 → 유지 표시 (경계)', () => {
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        const yesterday = daysAgoKey(1);
         safeSetItem(STORAGE_KEYS.STUDY_STREAK, '4');
         safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, yesterday);
         updateStreakAndDailyUI();
@@ -103,7 +107,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
     });
 
     it('SC-04: 1일 결손 + 복구권 보유 → 자동 소비로 스트릭 유지', () => {
-        const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0];
+        const twoDaysAgo = daysAgoKey(2);
         safeSetItem(STORAGE_KEYS.STUDY_STREAK, '5');
         safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, twoDaysAgo);
         safeSetItem(STORAGE_KEYS.STREAK_FREEZES, '1');
@@ -112,7 +116,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
         expect(el('streak-days').textContent).toBe('5');
         expect(storedJson(STORAGE_KEYS.STREAK_FREEZES)).toBe(0);
         // lastDate가 어제로 보정돼 중복 소비 방지
-        const expected = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        const expected = daysAgoKey(1);
         expect(safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE)).toBe(expected);
         // 재호출해도 추가 소비 없음
         updateStreakAndDailyUI();
@@ -121,7 +125,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
     });
 
     it('SC-04: 1일 결손이지만 복구권 없음 → 리셋', () => {
-        const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0];
+        const twoDaysAgo = daysAgoKey(2);
         safeSetItem(STORAGE_KEYS.STUDY_STREAK, '5');
         safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, twoDaysAgo);
         updateStreakAndDailyUI();

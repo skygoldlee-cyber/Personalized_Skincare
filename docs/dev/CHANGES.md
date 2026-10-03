@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-19 날짜 키 UTC→로컬 교정 — KST 00~09시 시간대 오류 수정
+
+- pre-push 영향 테스트가 `study-challenge` 5건 실패로 차단 — 원인은 테스트·프로덕션 코드가 `toISOString()`(UTC)로 날짜 키를 만들어 앱의 로컬 날짜(`localDateKey`)와 KST 00~09시에 하루 어긋나는 잠복 결함
+- 교정: `formula-print.js` 작업지시서 **발행일**(프로덕션 — 해당 시간대 인쇄 시 발행일이 하루 전으로 찍힘) + 테스트 3파일 6곳(`study-challenge`·`study-pomodoro`·`state`·`property-based`)을 `todayKey()`로 통일
+
 ## 2026-10-18 모바일 안전장치 3종 — 규약 클래스·정적 체커·터치 기준선 (UX-VFY-06·UX-SET-03)
 
 - **CSS 규약 클래스** (`css/base.css`): `.dialog-card`(90dvh 상한+스크롤 — 신규 `role="dialog"` 카드의 필수 클래스)와 `.btn-row`(flex+wrap — 버튼 2+ 나열 행 기본). 공용 다이얼로그 6종·자가 등록·계량·표 모달·인증·PWA 모달·formula 다이얼로그에 `.dialog-card` 일괄 적용, 오답노트 액션 행 `.btn-row` 전환

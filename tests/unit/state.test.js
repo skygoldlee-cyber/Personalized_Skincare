@@ -3,6 +3,7 @@ import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { state, loadProgress, saveProgress, cleanOrphansForSubject } from '../../src/state.js';
 import { scopedKey } from '../../src/exam-context.js';
+import { todayKey } from '../../src/utils.js';
 
 // --- localStorage 모킹 ---
 
@@ -100,13 +101,13 @@ test('loadProgress: 뽀모도로 날짜 리셋 (날짜가 다르면 0)', () => {
     loadProgress();
     assert.equal(state.trainer.pomodoro.totalTimeToday, 0);
     // 오늘 날짜로 저장되어야 함
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey(); // 로컬 날짜 — toISOString(UTC)은 KST 00~09시에 어긋남
     assert.equal(mockStorage.getItem(scopedKey('pomo_total_time_date')), todayStr);
     assert.equal(mockStorage.getItem(scopedKey('pomo_total_time')), '0');
 });
 
 test('loadProgress: 뽀모도로 같은 날이면 누적 시간 유지', () => {
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     mockStorage.setItem(scopedKey('pomo_total_time_date'), todayStr);
     mockStorage.setItem(scopedKey('pomo_total_time'), '1800');
     loadProgress();

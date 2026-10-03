@@ -6,6 +6,7 @@
 // 메커니즘을 재사용한다 (print.css의 fp-* 규칙 + fp-label 신설).
 
 import { esc } from '../../../sanitize.js';
+import { todayKey } from '../../../utils.js';
 import { QC_FIELDS, HYGIENE_FIELDS } from '../batch-store.js';
 import { PHASE_OPTIONS } from '../formula-store.js';
 import { buildUsageGuideFromBatch } from '../usage-guide.js';
@@ -132,7 +133,7 @@ export function buildWorkOrderHtml(f) {
   return `
     <div class="fp-doc">
       <h1>작업지시서 — ${esc(f.name || '(이름 없음)')}</h1>
-      <p class="fp-meta-line">총 제조량: ${f.targetVolume != null ? `${f.targetVolume}${unit}` : '—'} · 발행일: ${esc(new Date().toISOString().slice(0, 10))}</p>
+      <p class="fp-meta-line">총 제조량: ${f.targetVolume != null ? `${f.targetVolume}${unit}` : '—'} · 발행일: ${esc(todayKey())}</p>
       <h3>계량표</h3>
       <table class="fp-table">
         <thead><tr><th class="fp-check-cell">✓</th><th>원료</th><th class="fp-num">배합률</th><th class="fp-num">투입량</th><th>LOT</th></tr></thead>
