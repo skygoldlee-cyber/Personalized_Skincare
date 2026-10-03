@@ -1,7 +1,7 @@
-// tests/e2e/mobile-overflow.spec.js — 뷰포트 오버플로 스윕 (가로·세로 잘림 게이트)
-// @spec UX-NAV-10,UX-FB-06
-// 수평 오버플로·스크롤 불가 내부 클립·모달 액션 버튼 잘림은 실제 레이아웃
-// 계산이 필요해 jsdom 불가 — 실브라우저 계측으로만 검증한다 (UX-VFY-02).
+// tests/e2e/mobile-overflow.spec.js — 뷰포트 오버플로·클릭 차단 스윕 (잘림 게이트)
+// @spec UX-NAV-05,UX-NAV-10,UX-NAV-11,UX-FB-06
+// 수평 오버플로·스크롤 불가 내부 클립·모달 액션 버튼 잘림·오버레이 가림은
+// 실제 레이아웃 계산이 필요해 jsdom 불가 — 실브라우저 계측으로만 검증한다 (UX-VFY-02).
 //
 // 사례: 성분사전 '성분 추가' 버튼 nowrap 잘림, 자가 등록 모달 등록 버튼 잘림.
 // chromium(1280) + mobile(Pixel 7) + tablet(834) 프로젝트별로 전 뷰를 순회한다.
@@ -21,6 +21,16 @@ async function boot(page) {
     await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
     await page.evaluate(() =>
         document.querySelectorAll('#onboarding-overlay, #app-confirm-overlay').forEach(el => el.remove()));
+}
+
+/** 뷰 전환 중 뜨는 Pro 안내·확인 오버레이를 닫는다 — 스윕 대상은 뷰 자체 레이아웃 */
+async function dismissOverlays(page) {
+    await page.evaluate(() => {
+        document.querySelectorAll(
+            '#pro-upgrade-overlay, #app-confirm-overlay, #whats-new-overlay,'
+            + ' #feedback-overlay, #usage-stats-overlay, #onboarding-overlay, #cing-overlay')
+            .forEach(el => el.remove());
+    });
 }
 
 /**
@@ -137,5 +147,131 @@ test.describe('모바일 오버플로 스윕', () => {
             expect(['auto', 'scroll']).toContain(dlg.overflowY);
             await page.locator('#app-confirm-overlay .app-confirm-cancel').click();
         }
+    });
+
+    test('하단 탭 바가 스크롤 끝 콘텐츠를 가리지 않는다 (UX-NAV-05)', async ({ page }) => {
+        test.setTimeout(120_000);
+        await boot(page);
+        // meta viewport 적용 후 측정 — about:blank는 모바일 에뮬에서 980px로 잡혀 판정이 틀어진다
+        const vw = await page.evaluate(() => window.innerWidth);
+        if (vw > 768) { test.skip(true, '하단 탭 바는 ≤768px 대역 전용'); return; }
+        const views = await page.evaluate(() =>
+            Array.from(document.querySelectorAll('.view-section')).map(el => el.id));
+        const failures = [];
+        for (const v of views) {
+            await page.evaluate(async id => {
+                const nav = await import('./src/views/navigation.js');
+                nav.switchView(id, { scrollTop: true });
+            }, v);
+            await page.waitForTimeout(700);
+            await dismissOverlays(page);
+            const r = await page.evaluate(() => {
+                const tab = document.getElementById('mobile-tab-bar');
+                if (!tab || !tab.offsetParent) return { skip: true };
+                const tabTop = tab.getBoundingClientRect().top;
+                // 스크롤 끝까지 내린 뒤 가장 아래에 있는 상호작용 요소를 실측
+                const mc = document.querySelector('.main-content');
+                if (mc) mc.scrollTop = mc.scrollHeight;
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const active = document.querySelector('.view-section.active');
+                if (!active) return { skip: true };
+                const items = Array.from(active.querySelectorAll(
+                    'button:not([disabled]), a[href], input, select, textarea, [data-click], [role="button"]'))
+                    .filter(el => { const b = el.getBoundingClientRect(); return b.width && b.height; });
+                if (!items.length) return { skip: true };
+                const deepest = items.reduce((a, b) =>
+                    a.getBoundingClientRect().bottom > b.getBoundingClientRect().bottom ? a : b);
+                const dr = deepest.getBoundingClientRect();
+                const lbl = deepest.tagName.toLowerCase()
+                    + (deepest.id ? '#' + deepest.id : '')
+                    + (typeof deepest.className === 'string' && deepest.className.trim()
+                        ? '.' + deepest.className.trim().split(/\s+/)[0] : '');
+                return { skip: false, label: lbl, bottom: dr.bottom, tabTop };
+            });
+            if (!r.skip && r.bottom > r.tabTop + 1) {
+                failures.push(`${v}: ${r.label} bottom=${Math.round(r.bottom)} > tabTop=${Math.round(r.tabTop)}`);
+            }
+        }
+        expect(failures, `탭 바에 가려진 요소:\n${failures.join('\n')}`).toEqual([]);
+    });
+
+    test('상호작용 요소가 다른 요소에 가려져 클릭 불가하지 않다 (UX-NAV-11)', async ({ page }) => {
+        test.setTimeout(180_000);
+        await boot(page);
+        const views = await page.evaluate(() =>
+            Array.from(document.querySelectorAll('.view-section')).map(el => el.id));
+        const failures = [];
+        for (const v of views) {
+            await page.evaluate(async id => {
+                const nav = await import('./src/views/navigation.js');
+                nav.switchView(id, { scrollTop: true });
+            }, v);
+            await page.waitForTimeout(700);
+            await dismissOverlays(page);
+            const r = await page.evaluate(() => {
+                // 소멸성 오버레이는 타이밍상 일시 가림이라 대상 제외
+                const IGNORE_COVER = '#app-toast, .offline-banner, #global-loading-overlay, #mobile-more-sheet';
+                const label = el => el.tagName.toLowerCase()
+                    + (el.id ? '#' + el.id : '')
+                    + (typeof el.className === 'string' && el.className.trim()
+                        ? '.' + el.className.trim().split(/\s+/)[0] : '');
+                const active = document.querySelector('.view-section.active');
+                if (!active) return { total: 0, bad: [] };
+                // 접힘 패널(details·max-height 접기) 등 overflow:hidden 조상에 잘린 요소는
+                // 스크롤로 도달 불가한 의도된 숨김 — 사용자가 펼치기 전까지 대상 아님
+                const clippedByAncestor = el => {
+                    const b = el.getBoundingClientRect();
+                    const cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+                    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+                        const cs = getComputedStyle(a);
+                        const hides = [cs.overflowX, cs.overflowY].some(o => o === 'hidden' || o === 'clip');
+                        if (!hides) continue;
+                        const ar = a.getBoundingClientRect();
+                        if (cx < ar.left - 1 || cx > ar.right + 1 || cy < ar.top - 1 || cy > ar.bottom + 1) return true;
+                    }
+                    return false;
+                };
+                const items = Array.from(active.querySelectorAll(
+                    'button:not([disabled]), a[href], input, select, textarea, [data-click], [role="button"]'))
+                    .filter(el => {
+                        const b = el.getBoundingClientRect();
+                        const cs = getComputedStyle(el);
+                        return b.width && b.height
+                            && cs.pointerEvents !== 'none' && cs.visibility !== 'hidden'
+                            // 닫힌 details 자식은 레이아웃만 남고 미렌더(content-visibility) — 펼치기 전 대상 아님
+                            && !el.closest('details:not([open])')
+                            && !clippedByAncestor(el);
+                    });
+                // 대용량 뷰(사전 그리드 등)는 균등 샘플링으로 상한
+                let sample = items;
+                if (items.length > 80) {
+                    const step = items.length / 80;
+                    sample = Array.from({ length: 80 }, (_, i) => items[Math.floor(i * step)]);
+                }
+                const bad = [];
+                for (const el of sample) {
+                    el.scrollIntoView({ block: 'center', inline: 'center' });
+                    const b = el.getBoundingClientRect();
+                    const cx = b.left + b.width / 2;
+                    const cy = b.top + b.height / 2;
+                    if (cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight) {
+                        bad.push(`${label(el)} — scrollIntoView 후에도 뷰포트 밖 (${Math.round(cx)},${Math.round(cy)})`);
+                        continue;
+                    }
+                    const hit = document.elementFromPoint(cx, cy);
+                    if (!hit) continue;
+                    // 자기 자신·자식(버튼 안 아이콘)·조상(스크롤러 경계 클립 — 스크롤로 도달 가능)은 정상
+                    if (hit === el || el.contains(hit) || hit.contains(el)) continue;
+                    if (hit.closest(IGNORE_COVER)) continue;
+                    bad.push(`${label(el)} ← 가림: ${label(hit)}`);
+                    if (bad.length >= 8) break;
+                }
+                return { total: items.length, bad };
+            });
+            if (r.bad.length) {
+                failures.push(`${v} (검사 ${Math.min(r.total, 80)}개): [${r.bad.join(' | ')}]`);
+            }
+        }
+        expect(failures, `가려진 상호작용 요소:\n${failures.join('\n')}`).toEqual([]);
     });
 });

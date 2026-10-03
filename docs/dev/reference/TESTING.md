@@ -28,8 +28,8 @@
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 842 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 546 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 71 |
-| **합계** | | | | **1459** |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 73 |
+| **합계** | | | | **1461** |
 
 ### 설계 원칙
 
@@ -568,7 +568,7 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 ### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
 
-`tests/e2e/` 13개 spec 파일 · **71 시나리오** × chromium + Pixel 7 + tablet
+`tests/e2e/` 13개 spec 파일 · **73 시나리오** × chromium + Pixel 7 + tablet
 프로젝트. jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
 webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
 시험 도메인 기능의 스펙은 도메인 격리 규약대로 `tests/e2e/exams/<id>/`에 둔다.
@@ -632,6 +632,12 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
   가로 스크롤러 내부·ellipsis 말줄임은 의도된 클립이라 예외.
 - **모달 액션 노출 실측**: 360×640 세로 + 640×320 짧은 가로 뷰포트에서 자가
   등록 모달 푸터 위치와 공용 컨펌 다이얼로그의 90dvh 상한·내부 스크롤을 계측.
+- **탭 바 겹침 실측 (UX-NAV-05)**: ≤768px에서 스크롤 끝까지 내린 뒤 가장 아래
+  상호작용 요소가 탭 바 상단 위에 있는지 전 뷰 검증.
+- **클릭 차단 스윕 (UX-NAV-11)**: 전 뷰의 상호작용 요소를 `scrollIntoView` 후
+  `elementFromPoint`로 히트 테스트 — 탭 바·고정 오버레이·이웃 카드에 덮인
+  "보이는데 못 누르는" 요소를 검출. 접힘 details·overflow 클립·소멸성
+  오버레이(토스트·오프라인 배너)는 의도된 상태라 제외.
 - **실결함 회귀 가드**: 성분사전 '성분 추가' 버튼 nowrap 잘림과 자가 등록 모달
   등록 버튼 잘림이라는 두 실사례에서 비롯 — 수정을 되돌리는 변이로 실패 확인.
 
