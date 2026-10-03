@@ -683,7 +683,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 | 상태 | 규약 | 구현 |
 |------|------|------|
-| Hover | `--bg-hover` 배경 + `transform` 또는 색상 변화 | 데스크톱만 (`pointer: fine` 미디어 쿼리 불필요 — 터치 `:hover`는 `:active`로 흡수) |
+| Hover | `--bg-hover` 배경 + `transform` 또는 색상 변화 | 데스크톱만 — **호버 정책(확정)**: 기존 앱 CSS는 미디어 쿼리 가드 없이 의존하는 문서화된 호환성 선택 (터치 `:hover`는 `:active`로 흡수, sticky-hover 잔상 허용). 단 신규 외주 산출물은 `@media (hover:hover)` 가드 필수 (패키지 CM-02) — 기존 규칙의 일괄 래핑은 하지 않는다 |
 | Active/Pressed | `transform: scale(0.92~0.98)` | 터치 피드백 (UX-FORM-02) |
 | Focus | `:focus-visible` 2px primary 링 | 키보드만 표시 (A-05) |
 | Disabled | `opacity: 0.65` + `cursor: not-allowed` | `trainer.css` `:disabled` 규칙 — `hover:not(:disabled)`로 hover 조합 차단 |
