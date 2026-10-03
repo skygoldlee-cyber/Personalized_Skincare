@@ -1,6 +1,6 @@
 {
   "name": "passory",
-  "version": "2026.10.3",
+  "version": "2026.10.4",
   "description": "Passory — 멀티시험 자격시험 스마트 학습 플랫폼",
   "engines": {
     "node": ">=20"
