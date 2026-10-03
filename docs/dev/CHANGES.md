@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 리더 목차 헬퍼 분리 — src/reader-toc.js (R-3)
+
+- `textbook-reader.js` 955→884줄 — 목차 추출 순수 함수군 6개를 `src/reader-toc.js`로 이동: `isStoryMetaSection`/`filterMetaSections`(이야기형 메타 섹션), `getTocLevel`/`hasOwnNumber`(번호 계층), `cleanRefTitle`(NN_ 접두사), `extractSubHeadings`(###/#### 추출)
+- 사망 헬퍼 `_makeHeadingId`(호출처 0건)는 이전 과정에서 제거
+- sw 프리캐시·domain-map·AGENTS 등록, `tests/unit/reader-toc.test.js` 6건 신설
+
 ## 2026-10-03 html-viewer 캐시 → doc-overlay 공용화 (R-5)
 
 - **`makeSessionCache`에 `maxEntries`(LRU) 옵션 추가** — 최근 사용 키 추적·한도 초과 시 최소 사용 제거·순서를 `<prefix>__lru_order__`에 영속화 (get은 메모리만, set에서만 저장)

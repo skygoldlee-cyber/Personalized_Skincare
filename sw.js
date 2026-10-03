@@ -69,6 +69,7 @@ const SHELL_ASSETS = [
   './src/paths.js',
   './src/exam-context.js',
   './src/reader-format.js',
+  './src/reader-toc.js',
   './src/exam-viewer.js',
   './src/manual-viewer.js',
   './src/doc-overlay.js',

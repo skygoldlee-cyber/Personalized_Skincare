@@ -48,6 +48,7 @@
         "src/pwa-manifest.js",
         "src/questions.js",
         "src/reader-format.js",
+        "src/reader-toc.js",
         "src/recommendations.js",
         "src/router.js",
         "src/sanitize.js",

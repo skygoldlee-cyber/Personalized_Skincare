@@ -164,6 +164,7 @@ src/                    # ES Modules
   glossary-query.js     # 용어집 인덱스 쿼리 API (getGlossaryIndex())
   html-viewer.js        # 외부 HTML 콘텐츠 뷰어
   reader-format.js      # 교재 본문 포맷터
+  reader-toc.js         # 리더 목차 추출 순수 헬퍼 (메타 섹션 필터·계층 판정·하위 헤딩)
   textbook-parser.js    # 교재 MD 파서
   markdown-parser.js    # 공통 MD 파서
   mermaid-utils.js       # Mermaid 다이어그램 설정

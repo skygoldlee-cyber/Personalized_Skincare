@@ -14,6 +14,10 @@ import {
 } from '../pdf-registry.js';
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem } from './glossary-renderer.js';
 import {
+    isStoryMetaSection, filterMetaSections, getTocLevel,
+    hasOwnNumber, cleanRefTitle, extractSubHeadings
+} from '../reader-toc.js';
+import {
     readerAudioState,
     showAudioToast,
     stopReaderAudio,
@@ -377,11 +381,11 @@ function renderChapterContent(subjId, chapterIdx) {
         }).catch(err => {
             console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
             showAudioToast('이야기형 파일을 불러올 수 없어 기본 모드로 표시합니다.');
-            const filteredChapter = _filterMetaSections(originalChapter);
+            const filteredChapter = filterMetaSections(originalChapter);
             return _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
         });
     }
-    const filteredChapter = _filterMetaSections(originalChapter);
+    const filteredChapter = filterMetaSections(originalChapter);
     // TR-12: Promise는 렌더 완료까지 기다려야 한다 — _renderChapterContentInternal은 async라
     // 미반환 시 호출자의 rAF 복원이 렌더 말미의 scrollTop=0 리셋에 덮여 읽기 위치 복원이 실패한다
     return _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
@@ -410,7 +414,7 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
 
     const storyChapter = {
         chapterTitle: parsed.chapterTitle,
-        sections: parsed.sections.filter(s => !_isStoryMetaSection(s.title)),
+        sections: parsed.sections.filter(s => !isStoryMetaSection(s.title)),
         filePath: PATHS.TEXTBOOK_FILE_REL(subjMeta.dir, storyFile),
         fileName: storyFile
     };
@@ -419,80 +423,6 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
     _touchStoryCacheKey(cacheKey);
     _evictStoryCacheIfNeeded();
     return storyChapter;
-}
-
-const _STORY_META_PATTERNS = [
-    /^🧭\s*학습\s*아이콘/,
-    /^🎯\s*최우선\s*암기\s*축/,
-    /^🔢\s*숫자\s*암기\s*미리보기/,
-    /^🚀\s*시험\s*직전/,
-    /^📖\s*학습\s*안내/,
-    /^📖\s*핵심\s*용어\s*정리/,
-    /^📊.*비교표/,
-    /^✅\s*확인문제/,
-    /^목차\s*$/,
-    /^🔍\s*키워드/,
-    /^출처:\s/,
-];
-
-function _isStoryMetaSection(title) {
-    const t = (title || '').trim();
-    return _STORY_META_PATTERNS.some(p => p.test(t));
-}
-
-function _filterMetaSections(chapter) {
-    return {
-        ...chapter,
-        sections: (chapter.sections || []).filter(s => !_isStoryMetaSection(s.title))
-    };
-}
-
-// --- TOC 계층 구조 헬퍼 (A: 들여쓰기, F: 하위 헤딩) ---
-
-/** 섹션 제목의 번호 패턴에서 TOC 들여쓰기 레벨 감지 */
-function _getTocLevel(title) {
-    const t = (title || '').trim();
-    if (/^\d+\.\d+\.\d+/.test(t)) return 3;   // 1.1.1 (3단계)
-    if (/^\d+\.\d+/.test(t)) return 2;         // 1.1 (2단계)
-    if (/^\d+\./.test(t)) return 1;           // 1. (1단계)
-    return 0;                                  // Chapter, 📖, 📊, ✅, 출처, 제N조 등
-}
-
-/** 제목이 자체 번호를 가지고 있으면 toc-num 순번을 표시하지 않음 */
-function _hasOwnNumber(title) {
-    const t = (title || '').trim();
-    return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /Chapter\s+\d+/i.test(t);
-}
-
-/** 참조문서 헤더 (01_화장품법 등) — 앞의 NN_ 접두사 제거 */
-function _cleanRefTitle(title) {
-    const t = (title || '').trim();
-    return t.replace(/^\d+_/, '');
-}
-
-/** 섹션 본문에서 ### / #### 하위 헤딩 추출 */
-function _extractSubHeadings(content) {
-    if (!content) return [];
-    const lines = content.split('\n');
-    const headings = [];
-    let inCodeBlock = false;
-    for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.startsWith('```')) { inCodeBlock = !inCodeBlock; continue; }
-        if (inCodeBlock) continue;
-        if (trimmed.startsWith('### ') && !trimmed.startsWith('#### ')) {
-            headings.push({ level: 3, title: trimmed.replace(/^###\s+/, '').trim() });
-        } else if (trimmed.startsWith('#### ')) {
-            headings.push({ level: 4, title: trimmed.replace(/^####\s+/, '').trim() });
-        }
-    }
-    return headings;
-}
-
-/** 하위 헤딩용 슬러그 ID 생성 */
-const _headingIdCounter = 0;
-function _makeHeadingId(sectionIdx, headingIdx) {
-    return `reader-h-${sectionIdx}-${headingIdx}`;
 }
 
 async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
@@ -522,8 +452,8 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         // 헬퍼: 섹션 아이템 + 하위 헤딩 HTML 생성 (하위 헤딩은 기본 접힘)
         const buildSectionItem = (section, idx, minLevel, displayTitle) => {
             const title = displayTitle || section.title;
-            const level = Math.max(minLevel, _getTocLevel(section.title));
-            const subHeadings = _extractSubHeadings(section.content);
+            const level = Math.max(minLevel, getTocLevel(section.title));
+            const subHeadings = extractSubHeadings(section.content);
             const hasChildren = subHeadings.length > 0;
             let html = `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}" data-toc-title="${esc(title)}">`;
             if (hasChildren) {
@@ -547,10 +477,10 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         let hasSeenNumbered = false;
         chapter.sections.forEach((section, idx) => {
             // 참조문서 헤더 (01_화장품법 등) — NN_ 접두사 제거
-            const displayTitle = _cleanRefTitle(section.title);
+            const displayTitle = cleanRefTitle(section.title);
 
             const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
-            const level = _getTocLevel(section.title);
+            const level = getTocLevel(section.title);
             const isNumberedChild = level >= 1; // 1., (1), ①
 
             if (isChapterHeader) {
@@ -778,7 +708,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             <div class="reader-section-card" id="reader-section-${idx}" data-section-idx="${idx}">
                 <div class="reader-section-header" data-section-idx="${idx}">
                     <i class="fa-solid fa-chevron-down reader-section-toggle"></i>
-                    ${_hasOwnNumber(section.title) ? `<span class="reader-section-num">${idx + 1}</span>` : ''}
+                    ${hasOwnNumber(section.title) ? `<span class="reader-section-num">${idx + 1}</span>` : ''}
                     <h4 class="reader-section-title">${esc(section.title)}</h4>
                     <button class="reader-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-bookmark-key="${esc(bookmarkKey)}" title="북마크 ${isBookmarked ? '제거' : '추가'}">
                         <i class="fa-${isBookmarked ? 'solid' : 'regular'} fa-bookmark"></i>
