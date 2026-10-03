@@ -33,7 +33,6 @@
     --story-quote-bg: rgba(212, 160, 23, 0.06);
     --story-quote-text: #6b5410;
     --story-prologue-bg: linear-gradient(135deg, rgba(184, 134, 11, 0.04), rgba(184, 134, 11, 0.01));
-    --story-badge-gradient: linear-gradient(135deg, #f0c674, #b8860b);
 }
 
 /* Story 모드 — 다크 (앱 테마 기준 — OS 테마가 아닌 .light-theme 클래스에 추종) */
@@ -44,7 +43,6 @@ html:not(.light-theme) {
         --story-quote-bg: rgba(224, 192, 96, 0.08);
         --story-quote-text: #e8d090;
         --story-prologue-bg: linear-gradient(135deg, rgba(224, 192, 96, 0.06), rgba(224, 192, 96, 0.02));
-        --story-badge-gradient: linear-gradient(135deg, #d4a017, #8b6914);
 }
 
 /* Mermaid 라이트 테마 — html.light-theme 스코프로 리더·검색·매뉴얼 오버레이 전역 적용
@@ -570,7 +568,7 @@ pre.mermaid-other .labelBkg {
         padding: var(--space-4);
         max-height: 100%;
     }
-    
+
     /* 과목 선택 한 줄화 — 기존 세로 스택은 본문 영역을 과도하게 잠식함.
        '과목 선택' 라벨은 select 값 자체가 과목명을 보여주므로 모바일에서는 생략 */
     .textbook-reader-controls > div {

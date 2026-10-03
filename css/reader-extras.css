@@ -536,17 +536,7 @@
     transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-/* 3. 이야기형 배지 */
-.badge-story {
-    background: var(--story-badge-gradient);
-    color: var(--color-on-brand);
-    font-size: var(--text-2xs);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--radius-pill);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
+/* 3. 이야기형 배지 — 제거됨 (미사용: 서사 배지는 badge badge-gray로 렌더) */
 
 /* 0. 이야기 경계 마커 — 📖 ┈ 이야기 ┈ / ┈ 본문 ┈ 📘
    파서가 .story-boundary 클래스를 부여(모든 렌더 경로 공통).

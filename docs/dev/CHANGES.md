@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 사망 CSS 정리 — 사용처 0건 규칙 제거 (전수 감사)
+
+- **base.css 유틸리티**: 사용처 전수 스캔(html/views·src·tests·data)으로 0건 확인된 클래스만 제거 — `.is-flex` `.is-grid` `.flex-end` `.items-center` `.justify-between` `.text-center` `.text-success` `.text-danger` `.text-secondary` `.font-bold` `.font-semibold` `.mt-2` `.mt-4` `.mb-2` `.mb-3` `.mb-8` `.gap-6` `.cursor-pointer` `.cursor-crosshair`. 사용 중인 `.is-hidden`·`.text-muted`·`.mb-6` 등은 유지
+- **app-responsive.css**: `.skeleton` + `skeleton-loading` 키프레임 제거 (미사용 + UX-FB-04 부분 스켈레톤 금지와 상충), `.page-title`·`.dashboard-grid`·`.cards-grid` 사망 선택자 정리
+- **reader-extras.css·base.css**: `.badge-story` 중복 정의 2곳 제거 — 서사 배지는 `badge badge-gray`로 렌더되어 실사용 없음
+- **reader-mermaid.css**: `--story-badge-gradient` 변수 2곳 제거 — 위 규칙 삭제로 고아화
+
 ## 2026-10-03 탭바 조합표·오류 분기 명세 — D-3·D-8 잔여 질의 대응 완료
 
 - **SPEC §4.10.1**: 모바일 탭바 슬롯 구성 + 모드×기능 조합표 신설 — `nav-study-only`/`nav-practice-only` 상호배타로 최악 조합은 학습 모드+formula+dictionary = 콘텐츠 5+더보기 6버튼. UX-NAV-01 "핵심 5탭"을 "콘텐츠 최대 5탭"으로 정정해 자기모순 해소 (D-3)

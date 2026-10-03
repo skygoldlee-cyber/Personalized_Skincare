@@ -27,7 +27,7 @@
     /* 스크롤바 — 한눈에 찾을 수 있도록 대비 있는 thumb */
     --scrollbar-thumb: rgba(255, 255, 255, 0.3);
     --scrollbar-thumb-hover: rgba(255, 255, 255, 0.48);
-    
+
     /* Brand Colors */
     --color-primary: #06b6d4;      /* Luminous Cyan */
     --color-primary-dark: #0891b2;
@@ -122,7 +122,7 @@
     --flashcard-back-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
     --flashcard-front-bg-light: linear-gradient(135deg, #e9e4d4, #dcd6c2);
     --flashcard-back-bg-light: linear-gradient(135deg, #dcd6c2, #e9e4d4);
-    
+
     /* Shadows & Glows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
@@ -298,14 +298,14 @@
     --stroke-subtle: rgba(15, 23, 42, 0.1);
     --stroke-medium: rgba(15, 23, 42, 0.15);
     --stroke-strong: rgba(15, 23, 42, 0.2);
-    
+
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
     --bg-canvas: #e5e0cd;
     --color-danger-tint: #dc2626;
     --color-success-tint: #047857;
     --color-warning-tint: #92400e;
-    
+
     --shadow-sm: 0 1px 4px rgba(0,0,0,0.15);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.18);
     --shadow-lg: 0 12px 32px rgba(0,0,0,0.25);
@@ -375,7 +375,6 @@
 .review-card-item,
 .reader-code-block,
 .md-quote,
-.badge-story,
 .pwa-modal-card,
 .pwa-modal-close,
 .pwa-step-num,
@@ -398,12 +397,6 @@
 .is-hidden {
     display: none !important;
 }
-.is-flex {
-    display: flex !important;
-}
-.is-grid {
-    display: grid !important;
-}
 body.no-scroll {
     overflow: hidden;
 }
@@ -413,31 +406,24 @@ body.no-scroll {
 .flex-col { display: flex; flex-direction: column; }
 .flex-center { display: flex; align-items: center; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
-.flex-end { display: flex; justify-content: flex-end; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-1 { flex: 1; }
-.items-center { align-items: center; }
 .justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
 .justify-end { justify-content: flex-end; }
 .text-left { text-align: left; }
-.text-center { text-align: center; }
 .text-primary { color: var(--color-primary); }
 .w-full { width: 100%; }
 .relative { position: relative; }
 
 /* 간격 유틸리티 — --space-* 토큰 기반 */
 .mt-3 { margin-top: var(--space-3); }
-.mb-3 { margin-bottom: var(--space-3); }
 .mb-5 { margin-bottom: var(--space-5); }
 .mb-6 { margin-bottom: var(--space-6); }
 .mb-7 { margin-bottom: var(--space-7); }
-.mb-8 { margin-bottom: var(--space-8); }
 .gap-2 { gap: var(--space-2); }
 .gap-3 { gap: var(--space-3); }
 .gap-4 { gap: var(--space-4); }
 .gap-5 { gap: var(--space-5); }
-.gap-6 { gap: var(--space-6); }
 
 /* 컴포넌트 유틸리티 — index.html 반복 인라인 스타일 제거용 */
 .badge-pill {
@@ -479,25 +465,15 @@ body.no-scroll {
 }
 
 /* 추가 유틸리티 — 인라인 스타일 제거용 */
-.mt-2 { margin-top: var(--space-2); }
-.mt-4 { margin-top: var(--space-4); }
 .mt-5 { margin-top: var(--space-5); }
 .mt-6 { margin-top: var(--space-6); }
 .mt-7 { margin-top: var(--space-7); }
-.mb-2 { margin-bottom: var(--space-2); }
 .mb-4 { margin-bottom: var(--space-4); }
 .ml-2 { margin-left: var(--space-2); }
 .text-muted { color: var(--color-text-muted); }
-.text-success { color: var(--color-success); }
-.text-danger { color: var(--color-danger); }
 .text-warning { color: var(--color-warning); }
-.text-secondary { color: var(--color-secondary); }
-.font-bold { font-weight: var(--font-weight-bold); }
-.font-semibold { font-weight: var(--font-weight-semibold); }
 .grid-2fr-1fr { display: grid; grid-template-columns: 2fr 1fr; }
 .display-contents { display: contents; }
-.cursor-pointer { cursor: pointer; }
-.cursor-crosshair { cursor: crosshair; }
 .whitespace-nowrap { white-space: nowrap; }
 .user-select-none { user-select: none; }
 

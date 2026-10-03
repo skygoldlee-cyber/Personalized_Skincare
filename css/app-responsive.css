@@ -69,17 +69,14 @@
     }
 
     /* 헤더 타이틀 크기 */
-    .app-header h2,
-    .app-header .page-title {
+    .app-header h2 {
         font-size: var(--text-lg-sm);
         line-height: 1.25;
     }
 
     /* 카드·그리드 1열화 */
-    .dashboard-grid,
     .analytics-grid,
     .grid,
-    .cards-grid,
     .dashboard-widgets-row,
     .stats-grid,
     [style*="grid-template-columns"],
@@ -87,7 +84,7 @@
         grid-template-columns: 1fr !important;
         display: grid !important;
     }
-    
+
     /* 실전 모의고사 성적 분석 그리드 모바일 1열 강제 */
     .analytics-grid {
         grid-template-columns: 1fr !important;
@@ -555,19 +552,6 @@
         padding: 0.2rem 0.5rem !important;
     }
 
-    /* 스켈레톤 로딩 애니메이션 */
-    .skeleton {
-        background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-muted) 50%, var(--bg-card) 75%);
-        background-size: 200% 100%;
-        animation: skeleton-loading 1.5s infinite;
-        border-radius: var(--radius-sm);
-    }
-
-    @keyframes skeleton-loading {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-    }
-
 }
 
 /* ============================================================
@@ -604,8 +588,7 @@
         margin-right: 0;
     }
 
-    .app-header h2,
-    .app-header .page-title {
+    .app-header h2 {
         font-size: var(--text-lg-sm);
     }
 
