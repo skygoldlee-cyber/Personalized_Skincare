@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 00eceee5543a51ac
-> 생성: 2026-10-03 · 원천: SPEC.md(397개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: de275b1adcee3516
+> 생성: 2026-10-03 · 원천: SPEC.md(402개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 397개 — 문서 연결 252 · 소스 연결 368 · 테스트 연결 385 · 보고서 연결 109
+**커버리지 요약**: 요구사항 402개 — 문서 연결 252 · 소스 연결 373 · 테스트 연결 390 · 보고서 연결 109
 
 ---
 
@@ -199,6 +199,10 @@
 | DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-04 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/exams/cosmetic/review-drills-formula.dom.test.js | — | — |
 | DI-05 | ✅ | 테스트 | DOC-DEV-05 | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/exams/cosmetic/review-drills-formula.dom.test.js | — | — |
+| DI-06 | ✅ | 테스트 | — | src/exams/cosmetic/custom-ingredient-store.js<br>src/exams/cosmetic/views/formula.js<br>src/views/dictionary.js | tests/dom/dictionary-custom.dom.test.js<br>tests/unit/exams/cosmetic/custom-ingredient-store.test.js | — | — |
+| DI-07 | ✅ | 테스트 | — | src/exams/cosmetic/custom-ingredient-store.js<br>src/exams/cosmetic/formula-check.js<br>src/views/dictionary.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/unit/exams/cosmetic/custom-ingredient-store.test.js | — | — |
+| DI-08 | ✅ | 테스트 | — | src/exams/cosmetic/custom-ingredient-store.js<br>src/exams/cosmetic/views/formula.js<br>src/views/dictionary.js | tests/dom/dictionary-custom.dom.test.js<br>tests/unit/exams/cosmetic/custom-ingredient-store.test.js | — | — |
+| DI-09 | ✅ | 테스트 | — | src/exams/cosmetic/custom-ingredient-store.js<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js | — | — |
 
 ## 3.11 훈련소
 
@@ -307,6 +311,7 @@
 | FO-29 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula-print.js<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-print.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 | FO-30 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 | FO-31 | ✅ | E2E 테스트 | — | css/exams/cosmetic/formula.css<br>html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-32 | ✅ | 테스트 | — | src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js | — | — |
 
 ## 3.19 계정·클라우드 동기화
 

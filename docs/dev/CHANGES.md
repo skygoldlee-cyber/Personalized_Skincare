@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-18 성분 사전 자가 등록 — DI-06~09 + FO-32 (문서 선행)
+
+- **SPEC 선행 선언**: DI-06(사용자 성분 등록·`knowledge.customKey` 스키마 게이트)·DI-07(자가 판정 — `type:'custom'` 고정, '사용자 등록' 배지로 법정 판정과 시각 구분, 자가 선언 한도는 초과 경고 발화)·DI-08(공식 DB 동명 차단 — 정규화 비교, 고시 편입 시 '공식 등록됨' superseded)·DI-09(검증 인덱스 무효화)·FO-32('DB 미등록' 배지 → '사전 등록' 즉시 등록 단축 경로)
+- **스토어** (`src/exams/cosmetic/custom-ingredient-store.js` 신규): 자가 등록 성분 CRUD·정제·50종 한도 — `custom:true` 마커로 생성 번들과 분리, `STORAGE_KEYS.CUSTOM_INGREDIENTS`는 백업·동기·초기화 정책 편입
+- **플랫폼 결합 없는 게이트** (`dictionary.js`): `schema.customKey`(STORAGE_KEYS 멤버명) 선언 시험에만 '성분 추가' 버튼·자가 병합·'사용자 등록' 필터·'+자가 N' 카운트 노출 — platform → domain import 없이 저장소 키 계약 레지스트리로 해석, food 등 미선언 시험은 자동 비활성
+- **검증 엔진** (`formula-check.js`): `checkIngredient`에 커스텀 분기 — `custom` 플래그 반환으로 '자가 등록/자가 한도 이내/자가 한도 초과' 배지, 법정 OK·banned 판정과 책임 경계 분리
+- **계산기 연동** (`formula.js`): `getIndex()`에 자가 항목 병합(공식 우선·superseded 제외) + `invalidateIngredientIndex()`, 'DB 미등록' 셀에 '사전 등록' 액션 → 런타임 생성 모달(이름 프리필·공식 동명 거부·수정 시 삭제 버튼) — 사전 뷰·계산기 양쪽 진입, 저장 즉시 행 배지·사전 목록 갱신
+- **테스트**: unit +12(스토어 CRUD·정규화 충돌·한도·superseded·checkIngredient 커스텀 분기) · DOM +12(사전 병합 7 + 계산기 자가 경로 5)
+- 검증: unit 831 · DOM 530 · types·lint·specrefs·domainmap 통과
+
 ## 2026-10-04 Formula OS 태블릿 현장 작업 대응 — FO-26~31 + UX-PWA-06 (문서 선행)
 
 - **SPEC 선행 선언**: FO-26(태블릿 터치 대역)·FO-27(배합 스테퍼·진행 표시)·FO-28(계량 모드 대형 뷰)·FO-29(작업지시서 인쇄)·FO-30(드래프트 자동저장·복원)·FO-31(고대비 모드) + UX-PWA-06(manifest shortcuts) — §4.10 기기 매트릭스에 Formula OS 행 추가

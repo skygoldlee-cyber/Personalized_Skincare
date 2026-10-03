@@ -73,6 +73,9 @@ export const STORAGE_KEYS = {
 
   // Formula OS — 고대비 모드 토글 상태 (FO-31, 기기 로컬 — 백업·동기화 제외)
   FORMULA_HIGH_CONTRAST: 'formula_high_contrast',
+
+  // Formula OS — 사용자 등록 성분 사전 (custom-ingredient-store.js, DI-06~09)
+  CUSTOM_INGREDIENTS: 'custom_ingredients',
   /* ── domain:cosmetic 계약 키 끝 ── */
 
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
@@ -141,6 +144,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.CUSTOMER_ITEMS,
   STORAGE_KEYS.MATERIAL_ITEMS,
   STORAGE_KEYS.COMPLIANCE_CHECKS,
+  STORAGE_KEYS.CUSTOM_INGREDIENTS,  // 자가 등록 성분 — 백업·동기 대상 (DI-06)
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

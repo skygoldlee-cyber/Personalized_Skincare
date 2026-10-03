@@ -76,6 +76,7 @@ const formula = {
             'formulaPrint', 'formulaExportJson', 'formulaCardExport', 'formulaImportJson',
             'formulaWeighOpen', 'formulaWeighNext', 'formulaWeighPrev', 'formulaWeighClose',
             'formulaToggleContrast', 'formulaPrintWorkOrder',
+            'customIngAdd', 'customIngEdit', 'customIngSave', 'customIngDelete', 'customIngClose',
             'formulaAllergyAdd', 'formulaAllergyRemove', 'formulaCustLoad', 'formulaCustSaveAs',
         ]],
         ['batch', [

@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-02T11:00:23.245Z",
+  "generatedAt": "2026-10-03T12:18:14.063Z",
   "subjects": [
     {
       "key": "law",
@@ -256,6 +256,8 @@ var DATA_REGISTRY = {
   "knowledge": {
     "registryKey": "ingredients",
     "global": "INGREDIENTS_DATA",
+    "customKey": "CUSTOM_INGREDIENTS",
+    "customLabel": "성분 추가",
     "source": {
       "type": "json",
       "validate": "ingredients"
@@ -285,7 +287,8 @@ var DATA_REGISTRY = {
       "labels": {
         "approved": "사용 가능",
         "restricted": "사용 제한",
-        "banned": "사용 금지"
+        "banned": "사용 금지",
+        "custom": "사용자 등록"
       }
     },
     "filters": [
@@ -310,6 +313,12 @@ var DATA_REGISTRY = {
         "label": "사용 금지 원료",
         "icon": "fa-ban",
         "color": "var(--color-danger)"
+      },
+      {
+        "key": "custom",
+        "label": "사용자 등록",
+        "icon": "fa-user-pen",
+        "color": "var(--color-info)"
       }
     ],
     "details": [

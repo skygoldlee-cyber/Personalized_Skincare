@@ -1,9 +1,9 @@
 // tests/dom/formula-calc.dom.test.js — 배합 계산기 + 포뮬러 목록 시나리오
-// @spec FO-01,FO-27,FO-28,FO-30,FO-31
+// @spec FO-01,FO-27,FO-28,FO-30,FO-31,FO-32,DI-07,DI-09
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2a)
 // 검증: 배합률→투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지,
 //       고객 카드 불러오기, 저장→목록 반영, 삭제 confirm, JSON보내기/가져오기,
-//       안정성 기록→카드 배지·전성분
+//       안정성 기록→카드 배지·전성분, 자가 등록 성분 모달·배지·인덱스 갱신
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
@@ -21,7 +21,10 @@ import {
     formulaCalcSave, formulaDelete, formulaCustLoad, formulaOpen,
     formulaExportJson, formulaImportJson,
     formulaWeighOpen, formulaWeighNext, formulaToggleContrast,
+    invalidateIngredientIndex,
+    customIngAdd, customIngEdit, customIngSave, customIngDelete, customIngClose,
 } from '../../../../src/exams/cosmetic/views/formula.js';
+import { createCustomIngredient, listCustomIngredients } from '../../../../src/exams/cosmetic/custom-ingredient-store.js';
 import { getJSON } from '../../../../src/storage.js';
 import { STORAGE_KEYS } from '../../../../src/storage-keys.js';
 import { listFormulas, createFormula, serializeFormula } from '../../../../src/exams/cosmetic/formula-store.js';
@@ -341,5 +344,98 @@ describe('배합 계산기 — 태블릿·현장 작업 (FO-27~31)', () => {
         expect(getJSON(STORAGE_KEYS.FORMULA_HIGH_CONTRAST)).toBe(true);
         formulaToggleContrast();
         expect(view.classList.contains('formula-hc')).toBe(false);
+    });
+});
+
+describe('배합 계산기 — 자가 등록 성분 (DI-07·09, FO-32)', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        loadIndexHtml();
+        window.INGREDIENTS_DATA = INGREDIENTS_STUB;
+        invalidateIngredientIndex(); // 모듈 싱글턴 — 스토어 상태와 재동기화
+        vi.mocked(showToast).mockClear();
+        vi.mocked(showConfirm).mockClear();
+        vi.mocked(showConfirm).mockResolvedValue(true);
+    });
+
+    it("'DB 미등록' 행에 '사전 등록' 액션 — data-click=customIngAdd·원료명 인자 (FO-32)", () => {
+        formulaNew();
+        setRow(0, '미등록원료', 1);
+
+        const cell = rowEl(0).querySelector('.f-check-cell');
+        const btn = cell.querySelector('[data-click="customIngAdd"]');
+        expect(btn).not.toBeNull();
+        expect(btn.dataset.arg).toBe('미등록원료');
+        expect(btn.textContent).toContain('사전 등록');
+    });
+
+    it('자가 등록 원료 — "자가 등록"/"자가 한도 초과" 배지, 법정 라벨 아님 (DI-07)', () => {
+        createCustomIngredient({ name: '자체 베이스A', limit: '2.0%' });
+        createCustomIngredient({ name: '자체 보습B' }); // 한도 미선언
+        invalidateIngredientIndex();
+
+        formulaNew();
+        formulaCalcAddRow();
+        formulaCalcAddRow();
+        setRow(0, '자체 베이스A', 1);   // 자가 한도 2% 이내
+        setRow(1, '자체 베이스A', 5);   // 초과
+        setRow(2, '자체 보습B', 3);     // 한도 없음
+
+        const cells = el('formula-calc-rows').querySelectorAll('.f-check-cell');
+        expect(cells[0].textContent).toContain('자가 한도 이내');
+        expect(cells[1].textContent).toContain('자가 한도 초과');
+        expect(cells[2].textContent).toContain('자가 등록');
+        // 'DB 미등록' 아님 — 커스텀은 등록 항목으로 인식
+        expect(cells[2].textContent).not.toContain('DB 미등록');
+    });
+
+    it('미등록 행 → 등록 모달 프리필 → 저장 시 행 배지 즉시 갱신 (FO-32·DI-09)', () => {
+        formulaNew();
+        setRow(0, '신원료X', 2);
+        expect(rowEl(0).querySelector('.f-check-cell').textContent).toContain('DB 미등록');
+
+        customIngAdd('신원료X');
+        expect(el('cing-overlay').classList.contains('is-hidden')).toBe(false);
+        expect(el('cing-name').value).toBe('신원료X');
+
+        customIngSave();
+        expect(listCustomIngredients().map(i => i.name)).toContain('신원료X');
+        expect(el('cing-overlay').classList.contains('is-hidden')).toBe(true);
+        // 저장 후 행 재렌더 → '자가 등록' 배지
+        expect(rowEl(0).querySelector('.f-check-cell').textContent).toContain('자가 등록');
+        expect(lastToast()[0]).toContain('등록');
+    });
+
+    it('공식 DB 동명 등록 시도 → 거부 토스트·저장 안 됨 (DI-08)', () => {
+        customIngAdd('살리실산');
+        customIngSave();
+
+        expect(listCustomIngredients().length).toBe(0);
+        expect(lastToast()[0]).toContain('공식 DB');
+        expect(el('cing-overlay').classList.contains('is-hidden')).toBe(false); // 모달 유지
+        customIngClose();
+    });
+
+    it('수정·삭제 — 수정은 인덱스 갱신, 삭제는 확인 후 배지 복귀 (DI-06·09)', async () => {
+        const r = createCustomIngredient({ name: '자체 원료C' });
+        invalidateIngredientIndex();
+        formulaNew();
+        setRow(0, '자체 원료C', 1);
+        expect(rowEl(0).querySelector('.f-check-cell').textContent).toContain('자가 등록');
+
+        // 수정 — 한도 부여
+        customIngEdit(r.item.id);
+        expect(el('cing-title').textContent).toContain('수정');
+        expect(el('cing-delete').classList.contains('is-hidden')).toBe(false);
+        el('cing-limit').value = '0.5%';
+        customIngSave();
+        expect(rowEl(0).querySelector('.f-check-cell').textContent).toContain('자가 한도 초과');
+
+        // 삭제 — 확인 후 'DB 미등록' 복귀
+        customIngEdit(r.item.id);
+        await customIngDelete();
+        await flushAsync();
+        expect(listCustomIngredients().length).toBe(0);
+        expect(rowEl(0).querySelector('.f-check-cell').textContent).toContain('DB 미등록');
     });
 });

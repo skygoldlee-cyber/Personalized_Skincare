@@ -1,14 +1,18 @@
 // src/views/dictionary.js - 지식DB(엔티티) 검색 사전 뷰 로직 및 그리드 스페이서 가상 스크롤 구현
-// @spec DI-01~05,PF-09
+// @spec DI-01~08,PF-09
 // 스키마 드리븐 — manifest.knowledge → registry.knowledge가 엔티티 필드·필터·CSV를 선언한다.
 // registry.knowledge 미선언 시험은 사전 뷰가 "데이터셋 미설정" 안내로 처리된다 (화장품 폴백 없음).
+// 자가 등록: schema.customKey(STORAGE_KEYS 멤버명) 선언 시 로컬 등록 항목을 병합한다 —
+// 저장소 키 계약 레지스트리 경유라 platform → domain import 없이 격리가 유지된다.
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
-import { getChosung, todayKey } from '../utils.js';
+import { getChosung, todayKey, normalizeEntityName } from '../utils.js';
 import { hasFeature } from '../exam-context.js';
 import { toCsv, downloadCsv } from '../csv-utils.js';
 import { showToast } from '../ui-utils.js';
 import { DataLoader } from '../data-loader.js';
+import { STORAGE_KEYS } from '../storage-keys.js';
+import { getJSON } from '../storage.js';
 
 /**
  * 지식DB 엔티티 스키마 기본값 — 화장품 원료 사전과 동일한 동작.
@@ -69,9 +73,28 @@ function dictSchema() {
     return (k && typeof k === 'object') ? { ...DEFAULT_KNOWLEDGE, ...k } : null;
 }
 
-/** 엔티티 배열 — 스키마의 global 해석 (DataLoader 동기 접근자 위임). */
+/**
+ * 자가 등록 항목 — schema.customKey(STORAGE_KEYS 멤버명) 선언 시에만 로드.
+ * 공식 동명(정규화) 항목에는 _superseded를 부여한다 — '공식 등록됨' 배지 (DI-08).
+ */
+function customItems(schema, official) {
+    if (!schema || !schema.customKey) return [];
+    const key = STORAGE_KEYS[schema.customKey];
+    const items = key ? getJSON(key) : [];
+    if (!Array.isArray(items) || !items.length) return [];
+    const titleField = schema.fields && schema.fields.title || 'name';
+    const officialNorm = new Set(official.map(i => normalizeEntityName(i[titleField])));
+    return items
+        .filter(i => i && i.name)
+        .map(i => ({ ...i, custom: true, _superseded: officialNorm.has(normalizeEntityName(i.name)) }));
+}
+
+/** 엔티티 배열 — 스키마의 global 해석 + 자가 등록 병합 (customKey 선언 시험만). */
 function dictDb(schema) {
-    return schema ? DataLoader.getKnowledgeItems() : [];
+    if (!schema) return [];
+    const official = DataLoader.getKnowledgeItems();
+    const custom = customItems(schema, official);
+    return custom.length ? [...official, ...custom] : official;
 }
 
 /** 배지 필드값 → 표시 라벨 */
@@ -118,6 +141,24 @@ function renderFilterButtons(schema) {
     }).join('');
 }
 
+/** 자가 등록 진입 버튼 — schema.customKey 선언 시험에만 노출 (DI-06) */
+function renderCustomAddButton(schema) {
+    const row = document.querySelector('#dictionary-view .dictionary-control-panel .flex-center');
+    if (!row) return;
+    let btn = document.getElementById('dict-custom-add');
+    if (!schema.customKey) { if (btn) btn.remove(); return; }
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'dict-custom-add';
+        /** @type {HTMLButtonElement} */ (btn).type = 'button';
+        btn.className = 'btn btn-secondary flex-center gap-2';
+        btn.setAttribute('data-click', 'customIngAdd');
+        btn.setAttribute('title', '공식 DB에 없는 항목을 자가 등록 — 사전·배합 검증에 반영');
+        btn.innerHTML = `<i class="fa-solid fa-user-pen" aria-hidden="true"></i> ${esc(schema.customLabel || '항목 추가')}`;
+        row.appendChild(btn);
+    }
+}
+
 /** 헤더 텍스트·검색 placeholder를 스키마에서 적용 (없으면 HTML 기본값 유지) */
 function applyDictHeader(schema) {
     const h = schema.header;
@@ -155,14 +196,16 @@ export function renderDictionary() {
     }
     applyDictHeader(schema);
     renderFilterButtons(schema);
+    renderCustomAddButton(schema);
 
     const reg = /** @type {any} */ (DataLoader.registry) || {};
     const meta = reg[(schema.registryKey)] || reg.ingredients || null;
     const verEl = document.getElementById('dict-db-version');
     if (verEl) {
         const cnt = meta && meta.stats && meta.stats.count;
+        const customCnt = customItems(schema, DataLoader.getKnowledgeItems()).length;
         verEl.textContent = meta && meta.version
-            ? `${schema.entityUnit || ''} DB v${meta.version}${cnt ? ` · ${Number(cnt).toLocaleString('ko-KR')}종` : ''}`.trim()
+            ? `${schema.entityUnit || ''} DB v${meta.version}${cnt ? ` · ${Number(cnt).toLocaleString('ko-KR')}종` : ''}${customCnt ? ` +자가 ${customCnt}` : ''}`.trim()
             : '';
     }
 
@@ -261,7 +304,9 @@ function createEntityCard(item, schema) {
     const f = schema.fields || {};
     const badgeField = schema.badge && schema.badge.field;
     const badgeVal = badgeField ? item[badgeField] : null;
-    const badgeText = badgeField ? badgeLabel(schema, badgeVal) : '';
+    // _superseded: 고시 개정으로 공식 등록된 자가 항목 — 공식 우선 표기 (DI-08)
+    const badgeText = item._superseded ? '공식 등록됨' : (badgeField ? badgeLabel(schema, badgeVal) : '');
+    const badgeCls = item._superseded ? 'superseded' : (badgeVal == null ? '' : String(badgeVal));
 
     const detailRows = (schema.details || []).map(d => {
         const val = item[d.key];
@@ -276,16 +321,21 @@ function createEntityCard(item, schema) {
     const actionBtn = (a && (!a.feature || hasFeature(a.feature)))
         ? `<button class="btn btn-primary btn-sm dict-add-btn" data-click="${esc(a.click)}" data-arg="${esc(String(item[a.arg] ?? ''))}" title="${esc(a.title || a.label)}"><i class="fa-solid ${esc(a.icon || 'fa-plus')}" aria-hidden="true"></i> ${esc(a.label)}</button>`
         : '';
+    // 자가 등록 항목은 수정 액션 제공 — 삭제는 수정 모달 안 (DI-06)
+    const customBtn = item.custom
+        ? `<button class="btn btn-secondary btn-sm" data-click="customIngEdit" data-arg="${esc(item.id)}" title="자가 등록 항목 수정"><i class="fa-solid fa-pen" aria-hidden="true"></i> 수정</button>`
+        : '';
 
     card.innerHTML = `
         <div class="dict-card-header">
             <div class="dict-card-title">${esc(item[f.title] ?? '')}</div>
-            ${badgeField ? `<span class="dict-badge ${esc(badgeVal == null ? '' : String(badgeVal))}">${badgeText}</span>` : ''}
+            ${badgeField ? `<span class="dict-badge ${esc(badgeCls)}">${badgeText}</span>` : ''}
         </div>
         <div class="dict-card-subtitle">${esc(item[f.subtitle] || f.subtitleEmpty || '')}</div>
         <div class="dict-card-details is-hidden">
             ${detailRows}
             ${actionBtn}
+            ${customBtn}
         </div>
     `;
 

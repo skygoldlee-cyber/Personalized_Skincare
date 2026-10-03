@@ -1,5 +1,5 @@
 // src/exams/cosmetic/formula-check.js — Formula OS 규정 Check 엔진 (Phase 5-A)
-// @spec FO-02
+// @spec FO-02,DI-07
 //
 // 원료 + 배합 농도(%) → 법정 한도 검증. 배합을 "생성"하지 않고 공식 고시
 // 데이터로 "검증"만 수행한다 (생성·검증 분리 원칙).
@@ -81,8 +81,13 @@ export function checkIngredient(ingredient, concentration) {
   }
   base.raw = ingredient.limit || '';
 
+  // 자가 등록 원료 (DI-07) — 법정 유형 선언 금지. 자가 선언 한도는 경고에 반영하되
+  // 결과에 custom 플래그를 붙여 '법정 판정 통과'와 시각·문구를 구분한다.
+  const isCustom = ingredient.custom === true || ingredient.type === 'custom';
+  const mark = r => (isCustom ? { ...r, custom: true } : r);
+
   // 사용 금지 원료 — 수치 검증 이전에 차단
-  if (ingredient.type === 'banned' || BAN_TEXT_RE.test(ingredient.limit || '')) {
+  if (!isCustom && (ingredient.type === 'banned' || BAN_TEXT_RE.test(ingredient.limit || ''))) {
     return { ...base, check: CHECK.BANNED, note: '사용 금지 원료 — 배합 불가' };
   }
 
@@ -101,29 +106,36 @@ export function checkIngredient(ingredient, concentration) {
   // 한도 정보가 없는 경우
   if (!parsed.values.length) {
     if (parsed.labeling) {
-      return { ...base, note: '표시 기준 수치 — 사용 한도가 아닙니다. 원문 확인.' };
+      return mark({ ...base, note: '표시 기준 수치 — 사용 한도가 아닙니다. 원문 확인.' });
     }
     if (!base.raw) {
+      if (isCustom) {
+        return mark({ ...base, check: CHECK.OK, note: '자가 등록 원료 — 한도 미선언. 공급사 스펙을 확인하세요.' });
+      }
       // 한도 표기 없음: approved는 사용 가능, restricted는 확인 필요
       return ingredient.type === 'restricted'
         ? { ...base, note: '사용 제한 원료 — 한도 정보가 없어 원문 확인이 필요합니다.' }
         : { ...base, check: CHECK.OK, note: '제한 없음 (사용 가능 원료)' };
     }
-    return { ...base, note: '한도 수치 해석 불가 — 원문을 확인하세요.' };
+    return mark({ ...base, note: isCustom ? '자가 선언 한도 해석 불가 — 수치를 포함해 입력하세요.' : '한도 수치 해석 불가 — 원문을 확인하세요.' });
   }
 
   if (conc > /** @type {number} */ (parsed.primary)) {
-    return {
+    return mark({
       ...base,
       check: CHECK.WARN,
-      note: `기준 한도 ${parsed.primary}% 초과${parsed.conditional ? ' — 조건별 한도 확인 필요' : ''}`,
-    };
+      note: isCustom
+        ? `자가 등록 한도 ${parsed.primary}% 초과 — 공급사 스펙 기준`
+        : `기준 한도 ${parsed.primary}% 초과${parsed.conditional ? ' — 조건별 한도 확인 필요' : ''}`,
+    });
   }
-  return {
+  return mark({
     ...base,
     check: CHECK.OK,
-    note: parsed.conditional ? '한도 이내 — 조건부 한도(제품류·씻어내는 등) 적용 여부 확인' : '한도 이내',
-  };
+    note: isCustom
+      ? '자가 등록 한도 이내'
+      : (parsed.conditional ? '한도 이내 — 조건부 한도(제품류·씻어내는 등) 적용 여부 확인' : '한도 이내'),
+  });
 }
 
 /**

@@ -77,3 +77,13 @@ export function getChosung(str) {
     }
     return result;
 }
+
+/**
+ * 지식DB 엔티티 이름 정규화 — 공식 DB ↔ 자가 등록 충돌 비교용 (DI-08).
+ * 대소문자·공백 차이를 무시한다 (괄호 내용은 유지 — "살리실산(베타)"와 "살리실산"은 별개 원료).
+ * @param {*} name
+ * @returns {string}
+ */
+export function normalizeEntityName(name) {
+    return typeof name === 'string' ? name.trim().toLowerCase().replace(/\s+/g, '') : '';
+}

@@ -26,8 +26,8 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 819 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 518 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 831 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 530 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 69 |
 | **합계** | | | | **1406** |
 
@@ -249,7 +249,7 @@ npm run hooks:install
 | 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
 | 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
 | 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 27항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
-| 7 | `formula-calc.dom.test.js` | 18 | 배합 계산기·포뮬러 목록 + 태블릿 현장 작업 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복, 배합률 스테퍼·진행 표시, 계량 모드 순회·종료, 드래프트 자동저장·복원, 고대비 토글 (FO-27~31) | 2026-09-23 추가 |
+| 7 | `formula-calc.dom.test.js` | 23 | 배합 계산기·포뮬러 목록 + 태블릿 현장 작업·자가 성분 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복, 배합률 스테퍼·진행 표시, 계량 모드 순회·종료, 드래프트 자동저장·복원, 고대비 토글 (FO-27~31), 자가 등록 배지·모달 프리필·동명 거부·수정삭제 인덱스 갱신 (DI-07·09·FO-32) | 2026-09-23 추가 |
 | 8 | `formula-batch.dom.test.js` | 22 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
 | 9 | `formula-print.dom.test.js` | 10 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스, 작업지시서 단계 그룹·체크란·LOT·서명란 (FO-29) | 2026-09-23 추가 |
 | 10 | `study-quiz.dom.test.js` | 14 | 기출 퀴즈·오답 복습 | 출제·단답/객관식/OX 채점·결과 화면·오답 영속·재시작·약점 퀴즈·복습 필터/제외 | 2026-09-23 추가 |
@@ -286,7 +286,8 @@ npm run hooks:install
 | 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
 | 42 | `pro-plan.dom.test.js` | 9 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵·cloud_sync 행 반영·canCloudSync entitlement 게이트(3 상태) | fetch 스텁, 2026-10-14 추가 |
 | 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | GLOBAL usage_stats 누적·owner 익명 ID·초기화·손상 복구·모달 라벨/합계 렌더·Pro 후보 액션만 판정 합산(20회)·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
-| | **합계** | **407** | | |
+| 44 | `dictionary-custom.dom.test.js` | 7 | 자가 등록 성분 사전 병합 (DI-06·08) | customKey 스키마 게이트, 커스텀 병합·'사용자 등록' 배지·필터·'성분 추가' 버튼, '공식 등록됨' superseded, 카드 수정 액션, '+자가 N' 카운트 | 2026-10-18 추가 |
+| | **합계** | **419** | | |
 
 ---
 

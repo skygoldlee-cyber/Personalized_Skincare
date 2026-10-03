@@ -1328,3 +1328,55 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     .f-progress { font-size: 0.9rem; }
     .f-prog-step { min-height: 32px; padding: 0.35rem 0.9rem; }
 }
+
+/* =========================================================
+   자가 등록 성분 (DI-06~09, FO-32)
+   ========================================================= */
+
+/* 미등록 원료 배지 옆 등록 단축 버튼 */
+.f-reg-btn {
+  margin-left: 0.25rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px dashed var(--color-info);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--color-info);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.f-reg-btn:hover { background: var(--info-tint-12); }
+
+/* 자가 등록 모달 — 계량 모드 오버레이 레이아웃 재사용 */
+.cing-card {
+  max-width: 520px;
+  width: min(92vw, 520px);
+  text-align: left;
+}
+.cing-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+}
+.cing-hint {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+.cing-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.cing-foot { justify-content: flex-end; }
+.cing-foot .btn { flex: none; }
+.cing-foot #cing-delete { margin-right: auto; }
+
+@media (max-width: 900px) {
+    .f-reg-btn { min-height: 36px; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
+    .cing-body { padding: 1rem; }
+}

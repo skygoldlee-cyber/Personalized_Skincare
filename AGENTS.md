@@ -216,6 +216,7 @@ src/                    # ES Modules
       batch-store.js        # Formula OS — 조제 기록(배치) 채번·QC·위생·스냅샷 (50건)
       customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
       material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
+      custom-ingredient-store.js # Formula OS — 자가 등록 성분 CRUD·공식 동명 차단·superseded (50종)
       usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
       views/            # Formula OS 뷰 모듈 (practice-registry 지연 로드)
         formula.js          # 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
