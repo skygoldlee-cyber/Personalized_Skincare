@@ -558,11 +558,26 @@
 /* =======================================================
    🔍 성분 검색 사전 (Ingredient Dictionary) Styles
    ======================================================= */
+.dict-search-row {
+    flex-wrap: wrap;
+}
+
 .dictionary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-5);
     margin-top: var(--space-5);
+}
+
+/* 모바일: 검색창은 한 줄, 액션 버튼(초기화·CSV·성분 추가)은 아래로 줄바꿈 */
+@media (max-width: 600px) {
+    .dict-search-row .search-input-wrapper {
+        flex-basis: 100%;
+    }
+    .dict-search-row > .btn {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
 }
 
 .dict-card {
