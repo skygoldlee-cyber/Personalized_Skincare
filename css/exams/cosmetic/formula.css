@@ -1359,6 +1359,9 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
 }
 .cing-hint {
   display: block;
@@ -1372,6 +1375,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   color: var(--color-text-muted);
   line-height: 1.5;
 }
+.cing-card .f-weigh-head,
+.cing-card .f-weigh-foot { flex-shrink: 0; }
 .cing-foot { justify-content: flex-end; }
 .cing-foot .btn { flex: none; }
 .cing-foot #cing-delete { margin-right: auto; }
