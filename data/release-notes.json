@@ -1,5 +1,14 @@
 [
   {
+    "version": "v20261003-f5ed597",
+    "date": "2026-10-03",
+    "notes": [
+      "TESTING.md DOM 수치 정정 — 546 (study-dictionary 14·dictionary-custom 8)",
+      "TESTING.md 수치 — dictionary-custom 8·DOM 546",
+      "'성분 추가' 버튼 툴팁 보강 — DI-06"
+    ]
+  },
+  {
     "version": "v20261003-e1e572e",
     "date": "2026-10-03",
     "notes": [
@@ -138,13 +147,6 @@
     "date": "2026-10-03",
     "notes": [
       "실무 피처 자산 격리 — 지연 뷰 마크업 + 프리캐시 슬림화"
-    ]
-  },
-  {
-    "version": "v20261003-267666f",
-    "date": "2026-10-03",
-    "notes": [
-      "[리팩터링] extract practice-workspace feature registry (practice-registry.js)"
     ]
   }
 ]
