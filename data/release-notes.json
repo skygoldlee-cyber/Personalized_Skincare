@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20261003-b05ece8",
+    "date": "2026-10-03",
+    "notes": [
+      "TESTING.md 수치 정정 — formula-sales 13·DOM 543",
+      "법규 준수 카드 전 유형 마지막 배치 — FO-33"
+    ]
+  },
+  {
     "version": "v20261003-2344b92",
     "date": "2026-10-03",
     "notes": [
@@ -140,19 +148,6 @@
       "[리팩터링] extract reader TOC helpers into src/reader-toc.js",
       "[리팩터링] share LRU session cache via doc-overlay in html-viewer",
       "[수정] unify date bucket keys to local time + consolidate shared utils"
-    ]
-  },
-  {
-    "version": "v20261003-3d45897",
-    "date": "2026-10-03",
-    "notes": [
-      "[리팩터링] extract shared doc-overlay base from MD viewers",
-      "[정리·css] 사용처 0건 사망 규칙 정리 (전수 감사)",
-      "[문서·uiux] 탭바 조합표·오류 분기 명세 — D-3·D-8 대응 완료",
-      "[문서·uiux] 호버 정책 확정 — 기존 무가드 유지·신규 산출물 CM-02 가드 (B-1)",
-      "[문서·uiux] 배치 매트릭스 6화면 보충·태블릿 스크롤 규칙·SPEC v1.10·패키지 v1.2",
-      "[수정·ui-mode] formula 미보유 시험에서 실무 모드를 study로 강제 간주 (UM-01)",
-      "[수정·uiux] 수주사 질의 대응 — 문서 정합 정정·refDocs 폐기·E2E 갭 소진·검수 기준 확정"
     ]
   }
 ]
