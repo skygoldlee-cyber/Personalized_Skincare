@@ -13,6 +13,16 @@
 - **README·AGENTS·ARCHITECTURE 헤더**: Cosmetic Pass Master → Passory 플랫폼 프레이밍 (Passmula는 cosmetic 팩의 appName으로 유지)
 - 후속 작업: 모듈 물리 이동·import 경로 수정·domain-map/sw.js 갱신·캐시 접두사 passory 전환·플랫폼 시험 id 리터럴 게이트·food 전환 E2E — 구현 시 본 항목에 결과 병기
 
+## 2026-10-03 도메인 자산·테스트 물리 격리 — css/html/tests 시험별 하위 디렉터리
+
+- **`html/views/formula.html` → `html/exams/cosmetic/formula.html`**: 도메인 마크업을 시험별 자산 디렉터리로 격리. `index.template.html`의 `data-lazy-view` 스텁 + `practice-registry.js`의 `markup` 필드 경로 갱신 (지연 주입 계약 불변 — 셸은 스텁만 보유). `build_html.js`의 고아 파셜 검사는 `html/views/`만 스캔하므로 도메인 파셜은 대상에서 자연 제외 — `data-lazy-view` 참조로 계속 추적됨
+- **`css/formula.css` → `css/exams/cosmetic/formula.css`**: `style.css` @import + `sw.js` SHELL_ASSETS + domain-map 패턴 동반 갱신
+- **도메인 테스트 이동**: 도메인 모듈을 직접 import하는 테스트만 `tests/unit/exams/cosmetic/`(11개)·`tests/dom/exams/cosmetic/`(8개)로 `git mv` — 상대 import를 `../../../../src/`로 한 단계 상향, `ROOT`/`__dirname` 계산·`../../data/` 참조 수정. 플랫폼 모듈이 주 대상이고 콘텐츠 경로만 언급하는 테스트(exam-context·law-links·study-trainer 등)는 플랫폼 계층에 유지 — "주 대상 모듈의 계층"이 분류 기준
+- **테스트 러너 glob 갱신**: `node --test tests/unit/*.test.js`가 하위 디렉터리를 못 잡으므로 `tests/unit/**/*.test.js`로 전환 (package.json 5개 스크립트 + check_content.js)
+- **발견된 함정**: `tests/unit/content-engineering.test.js`가 `readdirSync(css)`를 비재귀로 수행해 `css/exams/` 디렉터리를 파일로 읽다 EISDIR — `{recursive:true}`+`.css` 필터로 수정
+- domain-map `domain:cosmetic` 패턴 갱신(테스트·자산 경로), AGENTS·ARCHITECTURE 트리에 `html/exams/<id>/`·`css/exams/<id>/`·`tests/{unit,dom}/exams/<id>/` 노드 추가
+- 검증: unit 804/804 · DOM 510/510 · check:inventory(37개 디렉터리)·check:docs·check:domainmap(1053)·check:types·lint·check:imports·check:html·verify:assets·check:uitext 통과 · 파셜/CSS 서빙 200 확인
+
 ## 2026-10-03 멀티시험 Phase E 보완 — 잔여 결합 9개 항목 정리
 
 - **주석·헤더 정정**: 이동 18개 파일 헤더의 구 경로(`src/formula-*.js` 등)를 `src/exams/cosmetic/…`으로 갱신, `questions.js` 헤더의 "맞춤형화장품 조제관리사 문항 스키마"를 플랫폼 중립 표현으로 교체
@@ -28,11 +38,11 @@
 ## 2026-10-03 멀티시험 Phase E 구현 — 모듈 격리 + passory 브랜딩 완료
 
 - **물리 이동 완료** (`git mv` 18개): 스토어·도메인 로직 9개(`formula-{store,rules,check,stability}`·`batch-store`·`customer-store`·`material-ledger`·`usage-guide`·`store-utils`) → `src/exams/cosmetic/`, 뷰 9개(`formula{,-batch,-compliance,-customer,-fields,-material,-print,-recommend}` + `trainer-ingredients`) → `src/exams/cosmetic/views/`. 이동 파일 내부 상대 import는 `../../../`로 재작성, 플랫폼 진입점(`app.js`·`practice-registry.js`·`pro-upgrade.js`)은 지연 import 문자열만 갱신 — 정적 import 유지 불가라 플래그 off 시험에서 모듈 로드 자체가 안 되는 게이팅 불변
-- **테스트 참조 전수 수정**: DOM·unit 테스트의 정적 import + `vi.mock` 경로 + `tests/unit/formula-os.test.js`의 캐시버스팅 동적 import(`?t=`) + `formula-compliance.test.js`의 `pathToFileURL`까지 — 정규식 일괄 치환 후 타입체크로 잔여 발견·수정
+- **테스트 참조 전수 수정**: DOM·unit 테스트의 정적 import + `vi.mock` 경로 + `tests/unit/exams/cosmetic/formula-os.test.js`의 캐시버스팅 동적 import(`?t=`) + `formula-compliance.test.js`의 `pathToFileURL`까지 — 정규식 일괄 치환 후 타입체크로 잔여 발견·수정
 - **브랜딩**: `package.json` name `cosmetic-pass-master`→`passory` · `sw.js` 캐시 접두사 `cosmetic-pass-*`→`passory-*` (activate 정리 필터는 양 접두사 유지 — 구 캐시 1회 자동 삭제) · `index.template.html` 정적 title/`apple-mobile-web-app-title`/`data-app-name` 플레이스홀더→Passory (부팅 후 시험별 appName으로 덮임) · `analysis-engine`·`exam-context`의 'Passmula' 폴백→'Passory'. **`manifest.webmanifest`의 `id:"cosmetic-pass"`는 유지** — cosmetic 앱의 설치 정체성(변경 시 기존 설치가 별개 앱으로 분리)
 - **게이트 신설 — 플랫폼 시험 id 리터럴 금지**: `check:domainmap`에 platform 계층 `src/**/*.js`의 `'cosmetic'` 같은 등록 시험 id 문자열 리터럴 탐지 추가. 예외는 `domain-map.json` `examLiteralAllow`(파일→사유) — 현재 `exam-context.js`의 `DEFAULT_EXAM_ID` 최후 폴백 1건만. `law-links.js`·`pdf-registry.js`·`keyword-index.js`는 feature:refDocs 생성물이라 대상 아님(생성기 폴백 `_DEFAULT_EXAM_ID`는 후속 과제)
 - **food 전환 E2E** `tests/e2e/exam-switch.spec.js` 3건: ① food 부팅 브랜딩(타이틀·로고·아이콘·data-app-name·`manifest.food.webmanifest` 링크 교체) ② 기능 게이팅(formula-view 네비·ui-mode-toggle is-hidden, dictionary·examSwitch 유지) ③ 도메인 뷰 미로드(formula-view 빈 섹션·ingredients 카드 is-hidden) — comingSoon 시험이라 `current_exam` 시드로 부팅 경로 검증
-- **domain-map 재분류**: `feature:formula`/`feature:ingredients` 규칙 해소 → `domain:cosmetic`(`src/exams/cosmetic/**`·`css/formula.css`·`html/views/formula.html`), `csv-utils.js`는 platform 유지(feature:dictionary의 `views/dictionary.js`가 정적 import — domain 하위 이동 시 역방향 의존)
+- **domain-map 재분류**: `feature:formula`/`feature:ingredients` 규칙 해소 → `domain:cosmetic`(`src/exams/cosmetic/**`·`css/exams/cosmetic/formula.css`·`html/exams/cosmetic/formula.html`), `csv-utils.js`는 platform 유지(feature:dictionary의 `views/dictionary.js`가 정적 import — domain 하위 이동 시 역방향 의존)
 - **AGENTS·ARCHITECTURE 트리 갱신**: `src/exams/cosmetic/` 서브트리 추가, `views/` 카운트 42→33, ARCHITECTURE box 트리 동일 반영 — `check:inventory` 정합 확인
 - 검증: unit 804/804 · DOM 510/510 · check:domainmap 1052파일 · check:inventory · check:imports · check:types · check:html 통과
 
@@ -69,7 +79,7 @@
 
 ## 2026-10-03 실무 피처 자산 격리 — 지연 마크업 + 프리캐시 슬림화
 
-- **뷰 마크업 지연 주입** — `index.template.html`의 `formula.html` include(649줄)를 빈 `<section id="formula-view" data-lazy-view="html/views/formula.html">` 스텁으로 교체. `practice-registry.ensureViewMarkup`이 진입 시 파셜 fetch → outerHTML 교체 (파셜이 자체 `<section>`을 포함하는 자기완결 구조 유지). 시험별 실무 피처 마크업이 셸을 비대화시키는 것을 방지
+- **뷰 마크업 지연 주입** — `index.template.html`의 `formula.html` include(649줄)를 빈 `<section id="formula-view" data-lazy-view="html/exams/cosmetic/formula.html">` 스텁으로 교체. `practice-registry.ensureViewMarkup`이 진입 시 파셜 fetch → outerHTML 교체 (파셜이 자체 `<section>`을 포함하는 자기완결 구조 유지). 시험별 실무 피처 마크업이 셸을 비대화시키는 것을 방지
 - **프리캐시 슬림화** — formula 전용 모듈 16개(`views/formula*.js` 7 + `formula-check/rules/stability/store` + `store-utils` + `usage-guide`)를 SHELL_ASSETS에서 제외. `/src/` 규칙(cacheFirst)으로 지연 import 시 런타임 캐시되며, **`warmPracticeFeatures()`(신규)**가 app.js 부팅 후 유휴 시점(`requestIdleCallback`)에 유효 피처의 로더·마크업을 미리 요청해 캐시 적재 — 오프라인 진입·첫 진입 즉시성 보장. 비활성 시험은 피처 자산을 받지 않음
 - **notice-check 지연화** — `checkMfdsNoticeNow`·`dismissMfdsNotice`·`viewMfdsNoticeStatus`를 app.js 정적 import → 레지스트리 `notice` 로더+핸들러로 이관 (버튼이 formula 마크업 내부에만 존재). enter()는 마크업 주입 → `checkMfdsNotice` 순서 (배너 요소 의존)
 - **도구·테스트**: `build_html.js`가 `data-lazy-view` 참조를 고아 파셜에서 제외, `tests/dom/helpers.js`가 지연 파셜을 파일에서 즉시 주입(기존 DOM 테스트 무변경), delegation-guard·security 테스트가 `html/views/*.html`을 스캔 범위에 추가 (배포 마크업 커버리지 유지)
@@ -799,7 +809,7 @@
   - `tests/unit/build-pipeline.test.js` — BP-01~08 (manifest 스키마·안정 ID·subject/exam 검증·중복·누락 파일·마커 경고·파서 정합·용어집 인덱스·SW 스탬프·카드 감사)
   - `tests/unit/content-structure.test.js` — CS-01~10 (manifest↔파일·교재 8종·문제은행·ref_md 폴더 소유+{doc}/{doc}.md·원료 메타·학습안내서·용어집·오디오북·ASCII 슬러그·참조 이미지)
   - `tests/unit/audit-quality.test.js` — CQ-01~05 (카드 감사 실행·통계·참조 링크·심각도·콤보 감사·베이스라인 카운트, 경고 2건은 오류와 구분)
-  - `tests/unit/formula-os.test.js` — FO-03/04/07/09 (제조 단계 옵션·역할→상 매핑·고객 필드 정제·안전 필드·pH 정규화·단계 상한·import/export 라운드트립·형식 거부·무료 한도)
+  - `tests/unit/exams/cosmetic/formula-os.test.js` — FO-03/04/07/09 (제조 단계 옵션·역할→상 매핑·고객 필드 정제·안전 필드·pH 정규화·단계 상한·import/export 라운드트립·형식 거부·무료 한도)
   - `tests/unit/data-architecture.test.js` — DA-01/02/04/06/08 (멀티시험 레지스트리·활성 시험·경로 해석·기능 플래그·study_md 폴백·해시 번들 패턴·스코프 키 분리)
   - `tests/unit/story-textbook.test.js` — ST-01~07 (이야기형 교재 구조·마커·섹션)
   - `tests/unit/pwa-sw.test.js` — P-01~12 (SW 캐시 분기·프리캐시 관용·스큐 방지·skipWaiting·controllerchange·업데이트 토스트·CACHE_VERSION·프루닝·beforeinstallprompt·진단·인앱 감지·manifest Content-Type·app-fallback 단계 복구·verify:assets CI 연결)
@@ -808,7 +818,7 @@
   - `tests/unit/ux-invariants.test.js` — UX-FB·FORM·PWA·SCR·SET (모바일 스크롤바·CSS 변수 색상·설정 패널 그룹·max-height·44px 타겟·버전 배치·닫기 동작·토스트 하단·커스텀 모달·펄스·로딩 오버레이·종료 2단·standalone 게이팅·SW 토스트·설치 버튼 게이팅·app-height·폼 16px·터치 피드백)
   - `tests/dom/reader-audio.dom.test.js` — AO-01~05 (매니페스트 경로 해석·오디오 없음 토스트·Media Session 메타데이터·액션 핸들러·플레이어 UI·속도 순환·시크·정지)
   - `tests/dom/charts.dom.test.js` — C-01~05 (성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁)
-  - `tests/dom/review-drills-formula.dom.test.js` — RV-01·ND-01·FO-10/11 (복습 통합 목록·과목 필터·숫자 드릴 fetch/캐시/렌더·계산기 상하 고정바·카드형 행·빈 상태·접이식·사전 연동·DB 버전 배지)
+  - `tests/dom/exams/cosmetic/review-drills-formula.dom.test.js` — RV-01·ND-01·FO-10/11 (복습 통합 목록·과목 필터·숫자 드릴 fetch/캐시/렌더·계산기 상하 고정바·카드형 행·빈 상태·접이식·사전 연동·DB 버전 배지)
 - **check_spec_refs.js 개선**: SPEC ID 문법에 `a` 접미사 지원 (`P-04a`, `TR-16a`) — `ID_RE`/`PURE_ID_RE`를 `\d{2}[a-z]?`로 확장
 - **TEST_GAP_BASELINE 103→0**: 신규 요구사항이 tests/ @spec 없이 소스만 참조하면 즉시 실패
 - **단언 정정 사례**: PF-02는 존재하지 않는 subjects/ 파일 레이아웃 대신 실제 `loadSubject(key)`+`_loaded[key]` 캐시 불변식 검증; PF-04는 `FETCH_CACHE_TTL_MS` 객체 리터럴 파싱; 스토리지 키는 `scopedKey` 네임스페이스 경유 `safeSetItem`으로 시드
@@ -1838,7 +1848,7 @@
 - **UI**: 원료 행 아래 `#formula-stability` 패널(aria-live) — 입력·단계·
   pH·절차·제형 변경 시 실시간 재평가. My 포뮬러 카드에 '안정성 n/참고 n'
   배지, 조제 기록지 인쇄에 '제형 안정성 참고' 섹션 추가
-- **테스트**: `tests/unit/formula-stability.test.js` 22건 — 규칙별 발화·
+- **테스트**: `tests/unit/exams/cosmetic/formula-stability.test.js` 22건 — 규칙별 발화·
   미발화 불변식 커버
 
 ## 2026-09-21 상위 문서 Formula OS 반영 점검·동기화

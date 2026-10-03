@@ -287,7 +287,7 @@ const _EXAM_LAW_URLS = {
 | `src/views/formula{,-batch,-compliance,-customer,-fields,-material,-print,-recommend}.js` | `src/exams/cosmetic/views/` | Formula OS 뷰 8개 |
 | `src/exams/cosmetic/views/trainer-ingredients.js` | `src/exams/cosmetic/views/` | 화장품 원료 도메인 문구 포함 (feature:ingredients → domain:cosmetic) |
 | `src/csv-utils.js` | **이동 안 함 — platform 재분류** | `toCsv`/`downloadCsv`는 범용이며 feature:dictionary(`views/dictionary.js`)가 정적 import — cosmetic 하위로 내리면 feature:dictionary → domain:cosmetic 역방향 의존이 생긴다 |
-| `css/formula.css`, `html/views/formula.html` | **이동 안 함 — domain:cosmetic 재분류만** | `style.css` @import·`data-lazy-view` 자산 경로는 타입 디렉터리 규약을 따른다. 시험 소유 표시는 domain-map이 담당 |
+| `css/exams/cosmetic/formula.css`, `html/exams/cosmetic/formula.html` | **물리 이동 완료** (Phase E 보완) | 초기에는 재분류만이었으나 2차 보완에서 `css/exams/<id>/`·`html/exams/<id>/`로 이동 — `style.css` @import·`data-lazy-view` 스텁·`practice-registry.markup`·sw.js SHELL_ASSETS 경로를 함께 갱신. 도메인 테스트도 `tests/{unit,dom}/exams/cosmetic/`로 이동 |
 
 **플랫폼→도메인 참조는 지연 import 문자열만 허용**: `practice-registry.js`(`./exams/cosmetic/views/…`)·`pro-upgrade.js`·`app.js`가 동적 `import()`로 진입한다 — 정적 import가 없어 기능 플래그 off 시험에서는 모듈이 로드 자체가 안 된다(기존과 동일한 게이팅).
 

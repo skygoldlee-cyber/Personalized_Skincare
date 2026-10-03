@@ -15,10 +15,10 @@ import {
   updateCustomer,
   addConsultLog,
   deleteCustomer,
-} from '../../src/exams/cosmetic/customer-store.js';
+} from '../../../../src/exams/cosmetic/customer-store.js';
 import {
   createFormula, getFormula, unlinkCustomerFromFormulas,
-} from '../../src/exams/cosmetic/formula-store.js';
+} from '../../../../src/exams/cosmetic/formula-store.js';
 
 // --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
 

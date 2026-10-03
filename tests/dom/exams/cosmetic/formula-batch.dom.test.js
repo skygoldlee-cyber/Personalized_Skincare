@@ -7,23 +7,23 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { showToast, showConfirm } from '../../src/ui-utils.js';
-import { loadIndexHtml, el, isVisible, lastToast, spyAnchorDownload } from './helpers.js';
+import { showToast, showConfirm } from '../../../../src/ui-utils.js';
+import { loadIndexHtml, el, isVisible, lastToast, spyAnchorDownload } from '../../helpers.js';
 import {
     openBatchPanel, batchNew, batchEdit, batchSave,
     batchDelete, batchPrintRecord, batchPrintLabel,
     batchExportCsv, batchFilterReset, suggestExpiryDays,
-} from '../../src/exams/cosmetic/views/formula-batch.js';
-import { createFormula } from '../../src/exams/cosmetic/formula-store.js';
-import { createCustomer } from '../../src/exams/cosmetic/customer-store.js';
-import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/exams/cosmetic/batch-store.js';
-import { createMaterial } from '../../src/exams/cosmetic/material-ledger.js';
-import { DataLoader } from '../../src/data-loader.js';
+} from '../../../../src/exams/cosmetic/views/formula-batch.js';
+import { createFormula } from '../../../../src/exams/cosmetic/formula-store.js';
+import { createCustomer } from '../../../../src/exams/cosmetic/customer-store.js';
+import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../../../src/exams/cosmetic/batch-store.js';
+import { createMaterial } from '../../../../src/exams/cosmetic/material-ledger.js';
+import { DataLoader } from '../../../../src/data-loader.js';
 
 const INGREDIENTS_STUB = [
     { name: '정제수', engName: 'Water', type: 'approved', category: '용제', description: '', limit: '' },

@@ -5,8 +5,8 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { STAB, evaluateStability } from '../../src/exams/cosmetic/formula-stability.js';
-import { buildIngredientIndex } from '../../src/exams/cosmetic/formula-check.js';
+import { STAB, evaluateStability } from '../../../../src/exams/cosmetic/formula-stability.js';
+import { buildIngredientIndex } from '../../../../src/exams/cosmetic/formula-check.js';
 
 // 테스트용 미니 DB — 실제 원료명·카테고리를 모사
 const DB = [

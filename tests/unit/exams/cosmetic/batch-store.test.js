@@ -16,7 +16,7 @@ import {
   createBatch,
   updateBatch,
   deleteBatch,
-} from '../../src/exams/cosmetic/batch-store.js';
+} from '../../../../src/exams/cosmetic/batch-store.js';
 
 // --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
 

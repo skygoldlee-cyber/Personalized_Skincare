@@ -134,7 +134,7 @@ localStorage 'formula_compliance' → { checked: { itemId: isoString }, updatedA
 - 항목별 `app` 링크 — 조제 기록·고객 관리·원료 장부·계산기로 data-click 직행.
 - 근거: 시행규칙 제12조의2 판매업자 준수사항(품질성적서·손 소독·용기 점검·판매내역서·소비자 설명·부작용 보고), 혼합·소분 시설기준(공간 분리·환기·세척시설), 매년 교육 이수·원료 목록 연 1회 보고.
 - 면책: 자가점검 참고 자료이며 법률 자문이 아님을 패널 상단에 상시 표시.
-- 테스트 `tests/unit/formula-compliance.test.js` — 항목 id 고유성·refs 유효성·LAW_DOCS 실존·필수 섹션 커버리지.
+- 테스트 `tests/unit/exams/cosmetic/formula-compliance.test.js` — 항목 id 고유성·refs 유효성·LAW_DOCS 실존·필수 섹션 커버리지.
 
 ---
 

@@ -24,15 +24,15 @@ import {
   importCustomRules,
   ROLE_PHASE,
   _RULE_KEYS,
-} from '../../src/exams/cosmetic/formula-rules.js';
-import { buildIngredientIndex } from '../../src/exams/cosmetic/formula-check.js';
-import { CUSTOMER_OPTIONS, PHASE_OPTIONS } from '../../src/exams/cosmetic/formula-store.js';
+} from '../../../../src/exams/cosmetic/formula-rules.js';
+import { buildIngredientIndex } from '../../../../src/exams/cosmetic/formula-check.js';
+import { CUSTOMER_OPTIONS, PHASE_OPTIONS } from '../../../../src/exams/cosmetic/formula-store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // 실제 원료 DB 번들 로드 (해시 파일명은 디렉터리 스캔으로 해석)
 function loadIngredients() {
-  const dir = path.resolve(__dirname, '../../data/exams/cosmetic');
+  const dir = path.resolve(__dirname, '../../../../data/exams/cosmetic');
   const file = fs.readdirSync(dir).find(f => /^ingredients_data\.[a-f0-9]+\.js$/.test(f));
   const src = fs.readFileSync(path.join(dir, file), 'utf8');
   return JSON.parse(src.match(/var INGREDIENTS_DATA = (\[[\s\S]*\]);/)[1]);

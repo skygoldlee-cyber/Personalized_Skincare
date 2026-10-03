@@ -5,20 +5,20 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { showToast, showConfirm } from '../../src/ui-utils.js';
+import { showToast, showConfirm } from '../../../../src/ui-utils.js';
 import {
     loadIndexHtml, el, isVisible, selectFile, flushAsync, lastToast, spyAnchorDownload,
-} from './helpers.js';
+} from '../../helpers.js';
 import {
     openMaterialPanel, matNew, matSave,
     matImportCsv, matExportCsv, matCsvTemplate,
-} from '../../src/exams/cosmetic/views/formula-material.js';
-import { listMaterials, createMaterial } from '../../src/exams/cosmetic/material-ledger.js';
+} from '../../../../src/exams/cosmetic/views/formula-material.js';
+import { listMaterials, createMaterial } from '../../../../src/exams/cosmetic/material-ledger.js';
 
 /** 오늘 + offset일을 YYYY-MM-DD로 */
 function dstr(offsetDays) {

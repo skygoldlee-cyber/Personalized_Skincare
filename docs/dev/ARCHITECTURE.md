@@ -204,7 +204,8 @@ passory/
 ├── index.template.html         # SPA 템플릿 — <!-- @include html/views/*.html --> 마커
 ├── index.html                  # SPA 엔트리 포인트 (생성물 — build:html 산출, 직접 편집 금지)
 ├── html/
-│   └── views/                  # 뷰 마크업 파셜 13개 (dashboard·trainer·formula·…)
+│   ├── views/                  # 뷰 마크업 파셜 12개 (dashboard·trainer·…)
+│   └── exams/cosmetic/         # 도메인 뷰 파셜 (formula.html — data-lazy-view 지연 주입)
 ├── tools/build/build_html.js   # index.html 조립기 — --check로 드리프트 검증 (CI·pre-push)
 ├── style.css                   # 메인 스타일 (base.css import)
 ├── sw.js                       # Service Worker
@@ -240,8 +241,9 @@ passory/
 │   ├── html-viewer.css         #   참조자료 HTML 뷰어
 │   ├── ui-overlay.css          #   오버레이, 모달, 토스트
 │   ├── study-calendar.css      #   학습 캘린더, 목표 달성률
-│   ├── formula.css             #   Formula OS (계산기·배치·고객·장부·체크리스트)
-│   └── print.css               #   인쇄 전용 (조제 기록지·라벨·안내문)
+│   ├── print.css               #   인쇄 전용 (조제 기록지·라벨·안내문)
+│   └── exams/cosmetic/
+│       └── formula.css         #   Formula OS (계산기·배치·고객·장부·체크리스트) — domain:cosmetic
 │
 ├── src/                        # 애플리케이션 소스 (ESM)
 │   ├── app.js                  #   오케스트레이터 (초기화, 이벤트 위임, 라우터 연결)

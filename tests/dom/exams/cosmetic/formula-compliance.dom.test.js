@@ -6,18 +6,18 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { showToast, showConfirm } from '../../src/ui-utils.js';
-import { loadIndexHtml, el, isVisible, flushAsync, lastToast } from './helpers.js';
-import { scopedKey } from '../../src/exam-context.js';
+import { showToast, showConfirm } from '../../../../src/ui-utils.js';
+import { loadIndexHtml, el, isVisible, flushAsync, lastToast } from '../../helpers.js';
+import { scopedKey } from '../../../../src/exam-context.js';
 import {
     openCompliancePanel, compToggle, compReset, compOpenLaw,
     COMPLIANCE_SECTIONS,
-} from '../../src/exams/cosmetic/views/formula-compliance.js';
+} from '../../../../src/exams/cosmetic/views/formula-compliance.js';
 
 const FIRST_ID = COMPLIANCE_SECTIONS[0].items[0].id;
 const TOTAL = COMPLIANCE_SECTIONS.reduce((n, s) => n + s.items.length, 0);

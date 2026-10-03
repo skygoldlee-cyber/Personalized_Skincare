@@ -19,7 +19,7 @@ import {
   createMaterial,
   updateMaterial,
   deleteMaterial,
-} from '../../src/exams/cosmetic/material-ledger.js';
+} from '../../../../src/exams/cosmetic/material-ledger.js';
 
 // --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
 

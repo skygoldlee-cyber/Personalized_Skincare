@@ -124,7 +124,8 @@ python ref-pipeline/check_mfds_notice.py --update   # 키: LAW_OC_KEY 환경변�
 ```
 index.template.html     # App Shell 템플릿 — <!-- @include --> 마커로 뷰 파셜 조립
 index.html              # App Shell (생성물 — npm run build:html 산출, 직접 편집 금지)
-html/views/             # 뷰 마크업 파셜 13개 — 뷰 HTML 편집은 여기서, build:html로 재생성
+html/views/             # 뷰 마크업 파셜 12개 — 뷰 HTML 편집은 여기서, build:html로 재생성
+html/exams/<id>/        # 시험 도메인 뷰 파셜 (지연 주입 — formula.html 등, data-lazy-view)
 style.css               # CSS 진입점 (@import로 모듈 로드)
 sw.js                   # Service Worker
 manifest.webmanifest    # PWA 매니페스트
@@ -256,7 +257,8 @@ src/                    # ES Modules
     listeners-delegation.js # data-click/data-input 위임 (CSP 대응)
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
-css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)
+css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)
+  exams/<id>/           # 시험 도메인 스타일 (cosmetic/formula.css 등) — style.css @import에 포함
 content/                # 시험 콘텐츠 컨테이너
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
   lawdb.json            # 공용 법령DB — law.go.kr 메타데이터 SSOT (id·slug·type·matchKeys·watch). 시험별 사용 목록은 references.json.lawRefs가 지정 → build:pdf-registry가 src/law-links.js 생성
@@ -290,8 +292,8 @@ tools/                  # 빌드·검증 스크립트
 ref-pipeline/           # 교재·참조자료 생성/변환 독립 도구함 (PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증) — 사용 절차는 ref-pipeline/README.md 참조
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)
 tests/                  # 테스트
-  unit/                 # node --test 유닛 테스트
-  dom/                  # Vitest + jsdom DOM 테스트
+  unit/                 # node --test 유닛 테스트 (도메인 테스트는 unit/exams/<id>/ 하위)
+  dom/                  # Vitest + jsdom DOM 테스트 (도메인 테스트는 dom/exams/<id>/ 하위)
 docs/                   # 개발 문서
   dev/                  # 아키텍처, 배포 가이드, 변경 이력
   user/                 # 사용자 매뉴얼

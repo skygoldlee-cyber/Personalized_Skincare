@@ -7,19 +7,19 @@ import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   parseCsv, csvToObjects, decodeCsvBuffer, toCsv,
-} from '../../src/csv-utils.js';
+} from '../../../../src/csv-utils.js';
 import {
   importCustomers, listCustomers, CUSTOMER_LIMIT_FREE,
-} from '../../src/exams/cosmetic/customer-store.js';
+} from '../../../../src/exams/cosmetic/customer-store.js';
 import {
   importMaterials, listMaterials, MATERIAL_LIMIT_FREE, createMaterial,
-} from '../../src/exams/cosmetic/material-ledger.js';
+} from '../../../../src/exams/cosmetic/material-ledger.js';
 import {
   CUST_CSV_COLS, CUST_CSV_HEADERS, csvRowToCustomer,
-} from '../../src/exams/cosmetic/views/formula-customer.js';
+} from '../../../../src/exams/cosmetic/views/formula-customer.js';
 import {
   MAT_CSV_COLS, MAT_CSV_HEADERS, csvRowToMaterial,
-} from '../../src/exams/cosmetic/views/formula-material.js';
+} from '../../../../src/exams/cosmetic/views/formula-material.js';
 
 // --- localStorage 모킹 (customer-store.test.js와 동일 패턴) ---
 

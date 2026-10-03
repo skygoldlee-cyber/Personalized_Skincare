@@ -31,7 +31,7 @@ const formula = {
     // 뷰 마크업 파셜 — 셸(index.html)에는 빈 <section id> 스텁만 존재,
     // enter()/예열 시 fetch로 주입된다. 파셜은 자체 <section>을 포함하므로
     // 스텁을 outerHTML 교체한다.
-    markup: './html/views/formula.html',
+    markup: './html/exams/cosmetic/formula.html',
     loaders: {
         main: _lazyImport(() => import('./exams/cosmetic/views/formula.js')),
         batch: _lazyImport(() => import('./exams/cosmetic/views/formula-batch.js')),

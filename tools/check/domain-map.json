@@ -250,16 +250,10 @@
       "patterns": [
         "src/exams/cosmetic/*.js",
         "src/exams/cosmetic/views/*.js",
-        "css/formula.css",
-        "html/views/formula.html",
-        "tests/dom/formula-*.dom.test.js",
-        "tests/dom/review-drills-formula.dom.test.js",
-        "tests/unit/formula-*.test.js",
-        "tests/unit/batch-store.test.js",
-        "tests/unit/customer-store.test.js",
-        "tests/unit/material-ledger.test.js",
-        "tests/unit/usage-guide.test.js",
-        "tests/unit/csv-import.test.js"
+        "css/exams/cosmetic/*.css",
+        "html/exams/cosmetic/*.html",
+        "tests/dom/exams/cosmetic/*.dom.test.js",
+        "tests/unit/exams/cosmetic/*.test.js"
       ]
     },
     {

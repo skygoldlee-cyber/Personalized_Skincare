@@ -7,22 +7,22 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { showToast, showConfirm } from '../../src/ui-utils.js';
+import { showToast, showConfirm } from '../../../../src/ui-utils.js';
 import {
     loadIndexHtml, el, isVisible, selectFile, flushAsync, lastToast, spyAnchorDownload,
-} from './helpers.js';
+} from '../../helpers.js';
 import {
     formulaNew, openFormulaList, formulaCalcAddRow,
     formulaCalcSave, formulaDelete, formulaCustLoad, formulaOpen,
     formulaExportJson, formulaImportJson,
-} from '../../src/exams/cosmetic/views/formula.js';
-import { listFormulas, createFormula, serializeFormula } from '../../src/exams/cosmetic/formula-store.js';
-import { createCustomer } from '../../src/exams/cosmetic/customer-store.js';
+} from '../../../../src/exams/cosmetic/views/formula.js';
+import { listFormulas, createFormula, serializeFormula } from '../../../../src/exams/cosmetic/formula-store.js';
+import { createCustomer } from '../../../../src/exams/cosmetic/customer-store.js';
 
 // 원료 DB 스텁 — getIndex()가 모듈 싱글턴으로 1회 구축되므로 컨트롤러 호출 전 주입
 const INGREDIENTS_STUB = [

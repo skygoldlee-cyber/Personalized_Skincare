@@ -12,7 +12,7 @@ import {
   checkIngredient,
   buildIngredientIndex,
   checkFormulaItems,
-} from '../../src/exams/cosmetic/formula-check.js';
+} from '../../../../src/exams/cosmetic/formula-check.js';
 
 const ing = (type, limit, extra = {}) => ({ name: '테스트원료', type, limit, ...extra });
 

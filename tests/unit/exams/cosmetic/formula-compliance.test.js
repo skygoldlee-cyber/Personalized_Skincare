@@ -7,7 +7,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
 const CONTENT_ROOT = join(ROOT, 'content', 'exams', 'cosmetic');
 const { COMPLIANCE_SECTIONS, LAW_DOCS } = await import(
     pathToFileURL(join(ROOT, 'src/exams/cosmetic/views/formula-compliance.js')).href);

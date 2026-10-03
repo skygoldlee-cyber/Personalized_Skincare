@@ -6,20 +6,20 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { showToast, showConfirm } from '../../src/ui-utils.js';
+import { showToast, showConfirm } from '../../../../src/ui-utils.js';
 import {
     loadIndexHtml, el, isVisible, selectFile, flushAsync, lastToast, spyAnchorDownload,
-} from './helpers.js';
+} from '../../helpers.js';
 import {
     openCustomerPanel, custNew, custSave,
     custImportCsv, custExportCsv, custCsvTemplate,
-} from '../../src/exams/cosmetic/views/formula-customer.js';
-import { listCustomers, createCustomer } from '../../src/exams/cosmetic/customer-store.js';
+} from '../../../../src/exams/cosmetic/views/formula-customer.js';
+import { listCustomers, createCustomer } from '../../../../src/exams/cosmetic/customer-store.js';
 
 function csvFile(text, name = 'customers.csv') {
     return new File([text], name, { type: 'text/csv' });

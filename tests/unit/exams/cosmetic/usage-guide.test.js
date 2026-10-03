@@ -9,7 +9,7 @@ import {
   buildUsageGuide,
   buildUsageGuideFromFormula,
   buildUsageGuideFromBatch,
-} from '../../src/exams/cosmetic/usage-guide.js';
+} from '../../../../src/exams/cosmetic/usage-guide.js';
 
 test('제형 템플릿 — 세럼·에센스 사용법·보관법', () => {
   const g = buildUsageGuide({ formulation: '세럼·에센스' });

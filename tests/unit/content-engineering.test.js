@@ -91,6 +91,8 @@ test('TR-16a: 아래 스크롤 시 크롬 숨김·위 스크롤 시 복귀가 �
   // 아래로(>6px·140px 임계) 숨김, 위로(<-6px) 또는 상단 복귀 시 표시
   assert.ok(/curY > lastScrollY \+ 6 && curY > 140/.test(reader), '하향 숨김 임계');
   assert.ok(/curY < lastScrollY - 6 \|\| curY <= 140/.test(reader), '상향 복귀 조건');
-  const css = readdirSync(join(ROOT, 'css')).map(f => readFileSync(join(ROOT, 'css', f), 'utf-8')).join('\n');
+  const css = readdirSync(join(ROOT, 'css'), { recursive: true })
+    .filter(f => String(f).endsWith('.css'))
+    .map(f => readFileSync(join(ROOT, 'css', f), 'utf-8')).join('\n');
   assert.ok(/\.reader-chrome-hidden/.test(css), 'reader-chrome-hidden CSS 규칙');
 });

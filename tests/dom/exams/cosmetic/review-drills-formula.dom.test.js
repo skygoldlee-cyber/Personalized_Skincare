@@ -5,7 +5,7 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
     showGlobalLoading: vi.fn(),
@@ -15,13 +15,13 @@ vi.mock('../../src/ui-utils.js', () => ({
     HAPTIC: { correct: 30, wrong: [40, 30, 40], tap: 10 },
 }));
 
-import { loadIndexHtml, el, resetStudyState } from './helpers.js';
-import { state } from '../../src/state.js';
-import { renderReviewList } from '../../src/views/quiz.js';
-import { renderStudyAids, loadNumberDrills } from '../../src/study-aids.js';
-import { formulaAddIngredient } from '../../src/exams/cosmetic/views/formula.js';
-import { renderDictionary } from '../../src/views/dictionary.js';
-import { DataLoader } from '../../src/data-loader.js';
+import { loadIndexHtml, el, resetStudyState } from '../../helpers.js';
+import { state } from '../../../../src/state.js';
+import { renderReviewList } from '../../../../src/views/quiz.js';
+import { renderStudyAids, loadNumberDrills } from '../../../../src/study-aids.js';
+import { formulaAddIngredient } from '../../../../src/exams/cosmetic/views/formula.js';
+import { renderDictionary } from '../../../../src/views/dictionary.js';
+import { DataLoader } from '../../../../src/data-loader.js';
 
 /* ---------------- RV-01: 복습 뷰 ---------------- */
 
@@ -171,7 +171,7 @@ describe('FO-10/11: 배합 계산기 UI·성분 사전 연동', () => {
     });
 
     it('FO-11: 사전 "포뮬러에 추가"가 계산기 드래프트에 원료 행을 추가한다', async () => {
-        const { showToast } = await import('../../src/ui-utils.js');
+        const { showToast } = await import('../../../../src/ui-utils.js');
         formulaAddIngredient('히알루론산나트륨');
         // 계산기 행 영역에 원료명이 렌더된다
         const rowsHtml = el('formula-calc-rows').innerHTML;

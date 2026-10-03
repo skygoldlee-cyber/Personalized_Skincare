@@ -191,8 +191,8 @@ src/exams/cosmetic/formula-rules.js          # 추천 규칙 (베이스 템플�
 src/exams/cosmetic/formula-stability.js      # 제형 안정성 체크 (상 비율·상호작용·투입 단계·pH)
 index.html                    # formula-view 섹션 + 내비 아이템 + 그룹 라벨
 css/                          # 기존 토큰 재사용, 소규모 추가분
-tests/unit/formula-check.test.js   # limit 파서·판정 경계 테스트
-tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
+tests/unit/exams/cosmetic/formula-check.test.js   # limit 파서·판정 경계 테스트
+tests/unit/exams/cosmetic/formula-store.test.js   # CRUD·Free 한도 테스트
 ```
 
 > 후속 Phase A~D에서 추가된 파일(`store-utils.js`·`batch-store.js`·`customer-store.js`·`material-ledger.js`·`usage-guide.js`·`csv-utils.js`·`views/formula-{batch,customer,material,compliance,print}.js`·`ui-mode.js` 등)은 `FORMULA_OS_WORKFLOW_DESIGN.md` 참조.
@@ -366,7 +366,7 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 | `src/exams/cosmetic/formula-rules.js` | 베이스 템플릿·고민 매핑·주의문 데이터 + `recommendFor()` + 맞춤 규칙 저장소(`loadCustomRules`·`addCustomCandidate`·`removeCustomCandidate`·`resetCustomRules`·`serializeCustomRules`·`importCustomRules`) |
 | `src/exams/cosmetic/views/formula.js` | 추천 패널 렌더, 칩/불러오기 핸들러, 맞춤 규칙 UI (`renderCustomRules`·`formulaRuleAdd/Remove/Reset/Export/Import`) |
 | `index.html` | `#formula-recommend` 컨테이너 + `.formula-rules-edit` details 블록 |
-| `tests/unit/formula-rules.test.js` | 매핑 무결성: ①테이블 내 모든 이름이 DB에 존재 ②banned 이름 0개 ③추천 출력에 limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤민감성 → 주의문 발화 ⑥역할 후보 ≥5·고민 매핑 ≥5 ⑦커스텀 규칙 라운드트립·병합·필터·JSON 입출력 |
+| `tests/unit/exams/cosmetic/formula-rules.test.js` | 매핑 무결성: ①테이블 내 모든 이름이 DB에 존재 ②banned 이름 0개 ③추천 출력에 limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤민감성 → 주의문 발화 ⑥역할 후보 ≥5·고민 매핑 ≥5 ⑦커스텀 규칙 라운드트립·병합·필터·JSON 입출력 |
 | `sw.js` | SHELL_ASSETS에 formula-rules.js 추가 |
 
 ### 9.6 미결정·한계 (명시)

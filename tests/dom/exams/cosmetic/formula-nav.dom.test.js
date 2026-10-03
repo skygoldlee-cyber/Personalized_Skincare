@@ -5,16 +5,16 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-import { loadIndexHtml, el, isVisible } from './helpers.js';
-import { initFormulaView, exitFormulaSubView, openFormulaCalc } from '../../src/exams/cosmetic/views/formula.js';
-import { openCustomerPanel } from '../../src/exams/cosmetic/views/formula-customer.js';
-import { openMaterialPanel } from '../../src/exams/cosmetic/views/formula-material.js';
-import { openCompliancePanel } from '../../src/exams/cosmetic/views/formula-compliance.js';
+import { loadIndexHtml, el, isVisible } from '../../helpers.js';
+import { initFormulaView, exitFormulaSubView, openFormulaCalc } from '../../../../src/exams/cosmetic/views/formula.js';
+import { openCustomerPanel } from '../../../../src/exams/cosmetic/views/formula-customer.js';
+import { openMaterialPanel } from '../../../../src/exams/cosmetic/views/formula-material.js';
+import { openCompliancePanel } from '../../../../src/exams/cosmetic/views/formula-compliance.js';
 
 const ALL_PANELS = [
     'formula-menu-panel', 'formula-list-panel', 'formula-calc-panel',

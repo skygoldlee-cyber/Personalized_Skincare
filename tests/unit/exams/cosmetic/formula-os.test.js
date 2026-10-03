@@ -31,8 +31,8 @@ beforeEach(async () => {
   });
   const suffix = `?t=${Date.now()}-${Math.random()}`;
   store = {
-    formula: await import(`../../src/exams/cosmetic/formula-store.js${suffix}`),
-    rules: await import(`../../src/exams/cosmetic/formula-rules.js${suffix}`),
+    formula: await import(`../../../../src/exams/cosmetic/formula-store.js${suffix}`),
+    rules: await import(`../../../../src/exams/cosmetic/formula-rules.js${suffix}`),
   };
 });
 
