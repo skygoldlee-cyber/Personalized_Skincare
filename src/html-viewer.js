@@ -5,48 +5,16 @@ import { parseMarkdown } from './markdown-parser.js';
 import { esc } from './sanitize.js';
 import { CACHE } from './config/cache.js';
 import { renderMermaidIn } from './mermaid-render.js';
+import { makeSessionCache } from './doc-overlay.js';
 
 let _overlayEl = null;
 let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
-const _FETCH_CACHE_PREFIX = 'ref_doc_v3_';
-const _FETCH_CACHE_TTL = CACHE.FETCH_CACHE_TTL_MS; // 24시간
-// LRU 캐시 제한: sessionStorage 용량(5-10MB) 초과 방지를 위해 최대 항목 수 제한
-const _FETCH_CACHE_MAX_ENTRIES = CACHE.FETCH_CACHE_MAX_ENTRIES;
-// 캐시 키 순서 관리 (LRU): 가장 최근 사용된 키가 맨 뒤
-let _cacheKeyOrder = [];
-
-// LRU 캐시에서 키를 최근 사용 위치로 이동 (없으면 추가)
-function _touchCacheKey(key) {
-    const idx = _cacheKeyOrder.indexOf(key);
-    if (idx >= 0) _cacheKeyOrder.splice(idx, 1);
-    _cacheKeyOrder.push(key);
-}
-
-// 캐시 항목 수가 한도 초과 시 가장 오래된 항목(LRU) 제거
-function _evictCacheIfNeeded() {
-    while (_cacheKeyOrder.length > _FETCH_CACHE_MAX_ENTRIES) {
-        const oldest = _cacheKeyOrder.shift();
-        try { sessionStorage.removeItem(oldest); } catch {}
-    }
-}
-
-// 캐시 키 목록을 sessionStorage에서 복원 (세션 시작 시 1회)
-function _restoreCacheKeyOrder() {
-    if (_cacheKeyOrder.length > 0) return;
-    try {
-        const order = sessionStorage.getItem(_FETCH_CACHE_PREFIX + '__lru_order__');
-        if (order) _cacheKeyOrder = JSON.parse(order) || [];
-    } catch {}
-}
-
-// 캐시 키 목록을 sessionStorage에 저장 (LRU 순서 영속화)
-function _persistCacheKeyOrder() {
-    try {
-        sessionStorage.setItem(_FETCH_CACHE_PREFIX + '__lru_order__', JSON.stringify(_cacheKeyOrder));
-    } catch {}
-}
+// 24시간 TTL + LRU 상한 (sessionStorage 용량 초과 방지) — doc-overlay 공용 캐시
+const _cache = makeSessionCache('ref_doc_v4_', CACHE.FETCH_CACHE_TTL_MS, {
+    maxEntries: CACHE.FETCH_CACHE_MAX_ENTRIES,
+});
 
 function escHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -188,27 +156,14 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
     _open();
 
-    // LRU 캐시 키 순서 복원 (세션 시작 시 1회)
-    _restoreCacheKeyOrder();
-
     try {
         const fileUrl = new URL(htmlPath, window.location.href).href;
         const isMarkdown = htmlPath.endsWith('.md');
         const baseUrl = fileUrl.substring(0, fileUrl.lastIndexOf('/') + 1);
 
         // sessionStorage 캐싱: 재방문 시 fetch 0회로 즉시 렌더링
-        const cacheKey = _FETCH_CACHE_PREFIX + fileUrl;
-        let innerHTML = null;
-        try {
-            const cached = sessionStorage.getItem(cacheKey);
-            if (cached) {
-                const parsed = JSON.parse(cached);
-                if (Date.now() - parsed.ts < _FETCH_CACHE_TTL) {
-                    innerHTML = parsed.html;
-                    _touchCacheKey(cacheKey); // LRU: 캐시 히트 시 최근 사용 위치로 이동
-                }
-            }
-        } catch {}
+        const cached = _cache.get(fileUrl);
+        let innerHTML = cached ? cached.html : null;
 
         if (innerHTML === null) {
             const resp = await fetch(fileUrl);
@@ -250,12 +205,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             }
 
             // 캐시 저장 (LRU: 새 항목 추가 후 한도 초과 시 가장 오래된 항목 제거)
-            try {
-                _touchCacheKey(cacheKey);
-                _evictCacheIfNeeded();
-                sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), html: innerHTML }));
-                _persistCacheKeyOrder();
-            } catch {}
+            _cache.set(fileUrl, { html: innerHTML });
         }
 
         loading.remove();

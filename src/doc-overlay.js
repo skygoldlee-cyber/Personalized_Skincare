@@ -1,35 +1,71 @@
 // src/doc-overlay.js — MD 문서 전체화면 오버레이 공용 베이스
 // @spec EV-01~08, MV-01~04
 // exam-viewer.js(문제집)·manual-viewer.js(매뉴얼)의 병렬 구현에서 추출한 공통부:
-//   - 세션 캐시(TTL) · 번들 <script> 주입 · TOC 생성/마운트 · 오버레이 셸 수명주기
-// html-viewer.js는 검색 UI·LRU 캐시·인쇄 창 등 상호작용 모델이 달라 본 베이스 대상이 아니다.
+//   - 세션 캐시(TTL·LRU 옵션) · 번들 <script> 주입 · TOC 생성/마운트 · 오버레이 셸 수명주기
+// html-viewer.js는 셸·검색 모델이 달라 오버레이 베이스 대상이 아니지만,
+// 세션 캐시는 makeSessionCache의 maxEntries(LRU) 옵션을 공유한다.
 import { escapeHTML } from './sanitize.js';
 
 /**
  * sessionStorage TTL 캐시. payload는 호출자가 결정 ({ html, mdText? } 등).
+ * opts.maxEntries > 0이면 LRU 한도 — 최근 사용 키가 맨 뒤, 초과 시 가장
+ * 오래된 항목을 제거한다. LRU 순서는 '<prefix>__lru_order__' 키에 영속화
+ * (get에서는 메모리만 갱신, set에서만 저장 — 쓰기 빈도 절약).
  * @param {string} prefix - 캐시 키 접두사 (버전 태그 포함 권장)
  * @param {number} ttl - 유효 시간(ms)
+ * @param {{ maxEntries?: number }} [opts]
  */
-export function makeSessionCache(prefix, ttl) {
+export function makeSessionCache(prefix, ttl, { maxEntries = 0 } = {}) {
     const keyOf = (id) => prefix + String(id).replace(/[^a-zA-Z0-9]/g, '_');
+    const orderKey = prefix + '__lru_order__';
+    let _order = null; // LRU 키 순서 (null = sessionStorage 미복원)
+
+    function _loadOrder() {
+        if (_order !== null) return;
+        _order = [];
+        try {
+            const raw = sessionStorage.getItem(orderKey);
+            if (raw) _order = JSON.parse(raw) || [];
+        } catch (e) { /* noop */ }
+    }
+    function _saveOrder() {
+        try { sessionStorage.setItem(orderKey, JSON.stringify(_order)); } catch (e) { /* noop */ }
+    }
+    function _touch(k) {
+        const i = _order.indexOf(k);
+        if (i >= 0) _order.splice(i, 1);
+        _order.push(k);
+    }
+    function _evict() {
+        while (_order.length > maxEntries) {
+            const oldest = _order.shift();
+            try { sessionStorage.removeItem(oldest); } catch (e) { /* noop */ }
+        }
+    }
+
     return {
         get(id) {
+            const k = keyOf(id);
             try {
-                const raw = sessionStorage.getItem(keyOf(id));
+                const raw = sessionStorage.getItem(k);
                 if (!raw) return null;
                 const entry = JSON.parse(raw);
                 if (Date.now() - entry.timestamp > ttl) {
-                    sessionStorage.removeItem(keyOf(id));
+                    sessionStorage.removeItem(k);
                     return null;
                 }
+                if (maxEntries) { _loadOrder(); _touch(k); }
                 return entry;
             } catch (e) {
                 return null;
             }
         },
         set(id, payload) {
+            const k = keyOf(id);
             try {
-                sessionStorage.setItem(keyOf(id), JSON.stringify({ timestamp: Date.now(), ...payload }));
+                if (maxEntries) { _loadOrder(); _touch(k); _evict(); }
+                sessionStorage.setItem(k, JSON.stringify({ timestamp: Date.now(), ...payload }));
+                if (maxEntries) _saveOrder();
             } catch (e) {
                 // QuotaExceededError 등은 무시 (다음에 재변환)
             }
@@ -41,6 +77,7 @@ export function makeSessionCache(prefix, ttl) {
                 if (k && k.startsWith(prefix)) keys.push(k);
             }
             keys.forEach(k => sessionStorage.removeItem(k));
+            if (_order) { _order = []; }
         }
     };
 }

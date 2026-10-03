@@ -45,7 +45,7 @@ test('PF-03: file:// 폴백이 과목별 분할 번들이다 (data-architecture 
 
 test('PF-04: html-viewer가 sessionStorage 24h TTL 캐시를 사용한다', () => {
   const hv = read('src/html-viewer.js');
-  assert.ok(hv.includes('sessionStorage'), 'sessionStorage 캐시');
+  assert.ok(/makeSessionCache/.test(hv), 'sessionStorage 캐시 (doc-overlay 공용)');
   const cacheCfg = read('src/config/cache.js');
   const m = cacheCfg.match(/FETCH_CACHE_TTL_MS\s*:\s*([^,]+)/);
   assert.ok(m, 'TTL 상수 정의');

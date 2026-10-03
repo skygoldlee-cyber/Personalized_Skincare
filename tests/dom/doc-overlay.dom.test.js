@@ -43,6 +43,43 @@ describe('makeSessionCache — TTL 세션 캐시', () => {
     });
 });
 
+describe('makeSessionCache — maxEntries LRU 옵션', () => {
+    beforeEach(() => { sessionStorage.clear(); });
+
+    it('한도 초과 시 가장 오래된 항목 제거', () => {
+        const c = makeSessionCache('l_v1_', 60000, { maxEntries: 2 });
+        c.set('k1', { html: '1' });
+        c.set('k2', { html: '2' });
+        c.set('k3', { html: '3' });
+        expect(c.get('k1')).toBeNull();
+        expect(c.get('k2').html).toBe('2');
+        expect(c.get('k3').html).toBe('3');
+    });
+
+    it('get 히트 시 최근 사용 위치로 이동 (다음 evict 대상에서 제외)', () => {
+        const c = makeSessionCache('l_v2_', 60000, { maxEntries: 2 });
+        c.set('k1', { html: '1' });
+        c.set('k2', { html: '2' });
+        c.get('k1'); // k1이 최근 사용 → k2가 최소 사용
+        c.set('k3', { html: '3' });
+        expect(c.get('k1').html).toBe('1');
+        expect(c.get('k2')).toBeNull();
+        expect(c.get('k3').html).toBe('3');
+    });
+
+    it('LRU 순서가 sessionStorage에 영속화 — 새 인스턴스가 복원', () => {
+        const c1 = makeSessionCache('l_v3_', 60000, { maxEntries: 2 });
+        c1.set('k1', { html: '1' });
+        c1.set('k2', { html: '2' });
+        // 새 인스턴스 = 세션 재시작 상황. 저장된 순서로 evict 판정
+        const c2 = makeSessionCache('l_v3_', 60000, { maxEntries: 2 });
+        c2.set('k3', { html: '3' });
+        expect(c2.get('k1')).toBeNull();
+        expect(c2.get('k2').html).toBe('2');
+        expect(c2.get('k3').html).toBe('3');
+    });
+});
+
 describe('injectBundleScript — 번들 스크립트 주입', () => {
     beforeEach(() => {
         document.head.innerHTML = '';

@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 html-viewer 캐시 → doc-overlay 공용화 (R-5)
+
+- **`makeSessionCache`에 `maxEntries`(LRU) 옵션 추가** — 최근 사용 키 추적·한도 초과 시 최소 사용 제거·순서를 `<prefix>__lru_order__`에 영속화 (get은 메모리만, set에서만 저장)
+- **`html-viewer.js` 466→419줄** — 수동 LRU 블록(순서 배열·touch/evict/restore/persist ~37줄)과 인라인 캐시 get/set 제거, 공용 캐시로 교체. 캐시 키 접두사 `ref_doc_v3_`→`v4_` (엔트리 스키마 `{ts,html}`→`{timestamp,html}` 통일)
+- 셸·검색·인쇄는 상호작용 모델이 달라 뷰어 전용 유지 (R-5의 설계 결정 유지)
+- **테스트**: doc-overlay DOM +3건 — LRU 제거 순서·get 히트 시 재배치·세션 간 순서 복원. PF-04 인변을 `makeSessionCache` 사용 검사로 갱신
+
 ## 2026-10-03 날짜 버킷 UTC→로컬 통일 + 공용 유틸 정리
 
 - **`todayKey` UTC 결함 수정** (`utils.js`) — 기존 `toISOString().split('T')[0]`는 UTC 날짜라 **KST 00~09시에 하루 전으로 버킷**되는 결함. 진도(state)·SM-2 복습·스트릭·데일리 챌린지·CSV/백업 파일명 등 ~20곳이 이 키를 공유하므로 한 곳 수정으로 전부 로컬 날짜로 통일. 저장된 과거 키는 라벨이므로 마이그레이션 불필요
