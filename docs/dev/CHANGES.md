@@ -6,6 +6,24 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 멀티시험 Phase E — 도메인 모듈 격리 + 플랫폼 브랜드 passory (문서 선행)
+
+- **결정 3건 확정** (MULTI_EXAM_DB_DESIGN Phase E): 플랫폼 브랜드 `passory` · 시험별 PWA 개별 설치 유지(동적 매니페스트 불변, cosmetic의 `id: "cosmetic-pass"`는 설치 정체성이라 변경 금지) · 시험 도메인 모듈은 `src/exams/<id>/` 물리 격리 (domain-map `domain:<examId>` 레이어)
+- **SPEC v1.13**: DA-13(시험 도메인 모듈 격리) 신설 · 헤더/§1.1을 플랫폼 서술로 재작성 · DA-01/04·CS-01~07의 cosmetic 구체 경로를 `{contentRoot}`/`{dataRoot}` 플레이스홀더로 치환 (check_docs_paths가 플레이스홀더→기본 시험으로 해석해 실존 검증 유지)
+- **README·AGENTS·ARCHITECTURE 헤더**: Cosmetic Pass Master → Passory 플랫폼 프레이밍 (Passmula는 cosmetic 팩의 appName으로 유지)
+- 후속 작업: 모듈 물리 이동·import 경로 수정·domain-map/sw.js 갱신·캐시 접두사 passory 전환·플랫폼 시험 id 리터럴 게이트·food 전환 E2E — 구현 시 본 항목에 결과 병기
+
+## 2026-10-03 멀티시험 Phase E 구현 — 모듈 격리 + passory 브랜딩 완료
+
+- **물리 이동 완료** (`git mv` 18개): 스토어·도메인 로직 9개(`formula-{store,rules,check,stability}`·`batch-store`·`customer-store`·`material-ledger`·`usage-guide`·`store-utils`) → `src/exams/cosmetic/`, 뷰 9개(`formula{,-batch,-compliance,-customer,-fields,-material,-print,-recommend}` + `trainer-ingredients`) → `src/exams/cosmetic/views/`. 이동 파일 내부 상대 import는 `../../../`로 재작성, 플랫폼 진입점(`app.js`·`practice-registry.js`·`pro-upgrade.js`)은 지연 import 문자열만 갱신 — 정적 import 유지 불가라 플래그 off 시험에서 모듈 로드 자체가 안 되는 게이팅 불변
+- **테스트 참조 전수 수정**: DOM·unit 테스트의 정적 import + `vi.mock` 경로 + `tests/unit/formula-os.test.js`의 캐시버스팅 동적 import(`?t=`) + `formula-compliance.test.js`의 `pathToFileURL`까지 — 정규식 일괄 치환 후 타입체크로 잔여 발견·수정
+- **브랜딩**: `package.json` name `cosmetic-pass-master`→`passory` · `sw.js` 캐시 접두사 `cosmetic-pass-*`→`passory-*` (activate 정리 필터는 양 접두사 유지 — 구 캐시 1회 자동 삭제) · `index.template.html` 정적 title/`apple-mobile-web-app-title`/`data-app-name` 플레이스홀더→Passory (부팅 후 시험별 appName으로 덮임) · `analysis-engine`·`exam-context`의 'Passmula' 폴백→'Passory'. **`manifest.webmanifest`의 `id:"cosmetic-pass"`는 유지** — cosmetic 앱의 설치 정체성(변경 시 기존 설치가 별개 앱으로 분리)
+- **게이트 신설 — 플랫폼 시험 id 리터럴 금지**: `check:domainmap`에 platform 계층 `src/**/*.js`의 `'cosmetic'` 같은 등록 시험 id 문자열 리터럴 탐지 추가. 예외는 `domain-map.json` `examLiteralAllow`(파일→사유) — 현재 `exam-context.js`의 `DEFAULT_EXAM_ID` 최후 폴백 1건만. `law-links.js`·`pdf-registry.js`·`keyword-index.js`는 feature:refDocs 생성물이라 대상 아님(생성기 폴백 `_DEFAULT_EXAM_ID`는 후속 과제)
+- **food 전환 E2E** `tests/e2e/exam-switch.spec.js` 3건: ① food 부팅 브랜딩(타이틀·로고·아이콘·data-app-name·`manifest.food.webmanifest` 링크 교체) ② 기능 게이팅(formula-view 네비·ui-mode-toggle is-hidden, dictionary·examSwitch 유지) ③ 도메인 뷰 미로드(formula-view 빈 섹션·ingredients 카드 is-hidden) — comingSoon 시험이라 `current_exam` 시드로 부팅 경로 검증
+- **domain-map 재분류**: `feature:formula`/`feature:ingredients` 규칙 해소 → `domain:cosmetic`(`src/exams/cosmetic/**`·`css/formula.css`·`html/views/formula.html`), `csv-utils.js`는 platform 유지(feature:dictionary의 `views/dictionary.js`가 정적 import — domain 하위 이동 시 역방향 의존)
+- **AGENTS·ARCHITECTURE 트리 갱신**: `src/exams/cosmetic/` 서브트리 추가, `views/` 카운트 42→33, ARCHITECTURE box 트리 동일 반영 — `check:inventory` 정합 확인
+- 검증: unit 804/804 · DOM 510/510 · check:domainmap 1052파일 · check:inventory · check:imports · check:types · check:html 통과
+
 ## 2026-10-03 맞춤학습 E2E 시뮬레이션 구현 — ROAD-Q8 완료
 
 - **신규 `tests/e2e/analysis-view.spec.js` (4 시나리오)**: ① 합성 이력 → 진단 카드 5종(오답 패턴·취약 진술·학습 리듬·단원별 취약·합격 갭)·히트맵·성적 추이/레이더 SVG·합격 진단·예상 점수(실제결과 보정 +10점) 렌더 ② 빈 이력 → AN-04 온보딩 카드 + '지금 퀴즈 풀기' CTA 내비게이션 ③ 실제 퀴즈 10문 완주 → 온보딩 해제·과목 카드 (10문) 반영 — 기록→분석 파이프라인 (chromium 전용, 나머지 프로젝트는 시드 테스트가 커버) ④ AN-09 주간 리포트 — `navigator.share` 제거로 클립보드 폴백 강제 + `writeText` 스파이로 본문 검증
@@ -57,12 +75,12 @@
 - **신규 실무 피처 추가 절차**: 레지스트리 엔트리 + exams.json `features` 키 선언 + 뷰 파셜·nav 마크업 (`data-feature="<키>"`) + 저장 키(storage-keys.js) — 코어 수정 없음
 - **테스트**: `tests/unit/practice-registry.test.js` 7건, delegation-guard가 레지스트리 핸들러를 import 수집으로 인정
 
-## 2026-10-03 처방 작업대 필드 블록 분리 — src/views/formula-fields.js (R-2)
+## 2026-10-03 처방 작업대 필드 블록 분리 — src/exams/cosmetic/views/formula-fields.js (R-2)
 
 - `formula.js` 1158→895줄 — 고객·안정성 필드 블록 ~275줄을 `formula-fields.js`로 분리: `populateCustomerFields`/`formulaCustLoad`/`formulaCustSaveAs`/`populateStabilityFields`/`readStabilityInputs`/`writeStabilityInputs`/`readCustomerInputs`/`writeCustomerInputs`/`formulaAllergyAdd`/`formulaAllergyRemove`/`updateFoldSummaries`
 - `calc`·`getEl`·`readCalcInputs`는 formula.js에서 런타임 호출 전용 순환 import (formula-recommend.js와 동일 패턴) — `readCalcInputs` export로 전환
 - 공개 핸들러는 formula.js가 재수출해 app.js 디스패치·formula-recommend.js 계약 불변
-- sw 프리캐시·AGENTS 등록 (domain-map은 `src/views/formula*.js` 글로브로 자동 포함)
+- sw 프리캐시·AGENTS 등록 (domain-map은 `src/exams/cosmetic/views/formula*.js` 글로브로 자동 포함)
 
 ## 2026-10-03 리더 목차 헬퍼 분리 — src/reader-toc.js (R-3)
 
@@ -1793,7 +1811,7 @@
 (법규 검증 formula-check.js·추천 formula-rules.js와 분리). 큐레이션 규칙 테이블
 기반 결정적 평가 — 규칙에 없는 조합은 미판정(보수 원칙).
 
-- **`src/formula-stability.js`** — `evaluateStability(items, index, ctx)` →
+- **`src/exams/cosmetic/formula-stability.js`** — `evaluateStability(items, index, ctx)` →
   `{warnings:[{level:'warn'|'info', msg}], phaseSums}`
   - 상 비율: 수상부+유상부인데 유화제 미감지(warn), 유화제:유상부 <10%(warn),
     점증제 없는 에멀전(info), 유화 대상 없는 유화제(info)
@@ -2797,7 +2815,7 @@ check_combo_pilot 전 과목 무결성.
 - `textbook-search.js` 메모리 최적화: `_titleLower` + `_contentLower` → `_searchText` 단일 필드 통합
 - `scratchpad.js` `initScratchpadCanvas` 중복 등록 방지 가드 추가
 - `reader-format.js` TODO 정규식 체인 코멘트 정리 (장기 개선으로 보류 명시)
-- `trainer.js` → `src/views/trainer-calc-practice.js` (210라인) + `src/views/trainer-ingredients.js` (357라인) 추출 — 906 → 371라인 (59% 감소)
+- `trainer.js` → `src/views/trainer-calc-practice.js` (210라인) + `src/exams/cosmetic/views/trainer-ingredients.js` (357라인) 추출 — 906 → 371라인 (59% 감소)
 - `exam-simulator.js` → `src/views/exam-sim-state.js` (10라인) + `src/views/exam-sim-review.js` (50라인) 추출 — 856 → 826라인
 
 ### 하드코딩 최소화 (AGENTS.md 위반 해결)

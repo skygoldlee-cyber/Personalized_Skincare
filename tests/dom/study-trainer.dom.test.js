@@ -34,7 +34,7 @@ import {
     startLimitsTrainer, nextLimitsQuestion,
 } from '../../src/views/trainer.js';
 import { startCalcPractice, submitCalcAnswer } from '../../src/views/trainer-calc-practice.js';
-import { startIngredientsChallenge } from '../../src/views/trainer-ingredients.js';
+import { startIngredientsChallenge } from '../../src/exams/cosmetic/views/trainer-ingredients.js';
 import { DataLoader } from '../../src/data-loader.js';
 import { openWeakReview } from '../../src/views/trainer-drills.js';
 import { recordStatementJudgments } from '../../src/statement-tracker.js';

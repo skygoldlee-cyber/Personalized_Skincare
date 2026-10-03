@@ -51,16 +51,16 @@
 
 | 모듈 | 책임 | 커버 업무 | 상태 |
 |---|---|---|---|
-| `src/store-utils.js` | 스토어 공통 헬퍼 (loadItems/saveItems/newId/clampStr/pickEnum…) — formula-store도 공용화 | 공통 | ✅ |
-| `src/customer-store.js` | 고객 CRUD — 상담 카드·상담 이력, 포뮬러·배치에서 참조 | 1 | ✅ Phase B |
-| `src/material-ledger.js` | 원료장부 — 입고일·사용기한·보관조건·잔량, 기한 임박 경고 | 4 | ✅ Phase C |
-| `src/batch-store.js` | 조제 이력 — 배치번호 채번, QC·위생 체크, 고객·조제일 기록 | 5·6·7 | ✅ Phase A |
-| `src/usage-guide.js` | 사용 안내문 생성 — 제형별 템플릿 + 원료별 주의 자동 병기 | 8 | ✅ Phase A |
-| `src/views/formula-batch.js` | 배치 목록·폼·상세 패널 컨트롤러 | 5·6·7 | ✅ Phase A |
-| `src/views/formula-print.js` | 조제 기록지·제품 라벨(70mm)·사용 안내문 인쇄 빌더 | 7·8 | ✅ Phase A |
-| `src/views/formula-customer.js` | 고객 목록·폼·상세(상담 이력·역참조) 패널 | 1 | ✅ Phase B |
-| `src/views/formula-material.js` | 원료 장부 목록·폼 패널 | 4 | ✅ Phase C |
-| `src/views/formula-compliance.js` | 법규 준수 체크리스트 — 6개 카테고리 27항목 + 법령 원문 링크 + 체크 상태 영속 | 9 | ✅ Phase D |
+| `src/exams/cosmetic/store-utils.js` | 스토어 공통 헬퍼 (loadItems/saveItems/newId/clampStr/pickEnum…) — formula-store도 공용화 | 공통 | ✅ |
+| `src/exams/cosmetic/customer-store.js` | 고객 CRUD — 상담 카드·상담 이력, 포뮬러·배치에서 참조 | 1 | ✅ Phase B |
+| `src/exams/cosmetic/material-ledger.js` | 원료장부 — 입고일·사용기한·보관조건·잔량, 기한 임박 경고 | 4 | ✅ Phase C |
+| `src/exams/cosmetic/batch-store.js` | 조제 이력 — 배치번호 채번, QC·위생 체크, 고객·조제일 기록 | 5·6·7 | ✅ Phase A |
+| `src/exams/cosmetic/usage-guide.js` | 사용 안내문 생성 — 제형별 템플릿 + 원료별 주의 자동 병기 | 8 | ✅ Phase A |
+| `src/exams/cosmetic/views/formula-batch.js` | 배치 목록·폼·상세 패널 컨트롤러 | 5·6·7 | ✅ Phase A |
+| `src/exams/cosmetic/views/formula-print.js` | 조제 기록지·제품 라벨(70mm)·사용 안내문 인쇄 빌더 | 7·8 | ✅ Phase A |
+| `src/exams/cosmetic/views/formula-customer.js` | 고객 목록·폼·상세(상담 이력·역참조) 패널 | 1 | ✅ Phase B |
+| `src/exams/cosmetic/views/formula-material.js` | 원료 장부 목록·폼 패널 | 4 | ✅ Phase C |
+| `src/exams/cosmetic/views/formula-compliance.js` | 법규 준수 체크리스트 — 6개 카테고리 27항목 + 법령 원문 링크 + 체크 상태 영속 | 9 | ✅ Phase D |
 | `src/csv-utils.js` | CSV 파서·인코딩(EUC-KR 폴백)·직렬화 — 고객·원료 가져오기/보내기 공용 | 1·4 | ✅ |
 
 ### CSV 상호운용 (고객·원료)

@@ -1,12 +1,12 @@
 // tests/unit/formula-stability.test.js
 // @spec FO-12~14
-// src/formula-stability.js — 제형 안정성 체크 엔진 테스트.
+// src/exams/cosmetic/formula-stability.js — 제형 안정성 체크 엔진 테스트.
 // 핵심 불변식: 규칙에 없는 조합은 경고를 만들지 않는다 (미판정이 안전).
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { STAB, evaluateStability } from '../../src/formula-stability.js';
-import { buildIngredientIndex } from '../../src/formula-check.js';
+import { STAB, evaluateStability } from '../../src/exams/cosmetic/formula-stability.js';
+import { buildIngredientIndex } from '../../src/exams/cosmetic/formula-check.js';
 
 // 테스트용 미니 DB — 실제 원료명·카테고리를 모사
 const DB = [

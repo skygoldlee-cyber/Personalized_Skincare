@@ -18,11 +18,11 @@ import {
     openBatchPanel, batchNew, batchEdit, batchSave,
     batchDelete, batchPrintRecord, batchPrintLabel,
     batchExportCsv, batchFilterReset, suggestExpiryDays,
-} from '../../src/views/formula-batch.js';
-import { createFormula } from '../../src/formula-store.js';
-import { createCustomer } from '../../src/customer-store.js';
-import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/batch-store.js';
-import { createMaterial } from '../../src/material-ledger.js';
+} from '../../src/exams/cosmetic/views/formula-batch.js';
+import { createFormula } from '../../src/exams/cosmetic/formula-store.js';
+import { createCustomer } from '../../src/exams/cosmetic/customer-store.js';
+import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/exams/cosmetic/batch-store.js';
+import { createMaterial } from '../../src/exams/cosmetic/material-ledger.js';
 import { DataLoader } from '../../src/data-loader.js';
 
 const INGREDIENTS_STUB = [

@@ -5,7 +5,7 @@
 // 기존 formula.js의 조제 기록지와 같은 #formula-print-area + body.formula-printing
 // 메커니즘을 재사용한다 (print.css의 fp-* 규칙 + fp-label 신설).
 
-import { esc } from '../sanitize.js';
+import { esc } from '../../../sanitize.js';
 import { QC_FIELDS, HYGIENE_FIELDS } from '../batch-store.js';
 import { buildUsageGuideFromBatch } from '../usage-guide.js';
 

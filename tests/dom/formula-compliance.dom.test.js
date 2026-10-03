@@ -17,7 +17,7 @@ import { scopedKey } from '../../src/exam-context.js';
 import {
     openCompliancePanel, compToggle, compReset, compOpenLaw,
     COMPLIANCE_SECTIONS,
-} from '../../src/views/formula-compliance.js';
+} from '../../src/exams/cosmetic/views/formula-compliance.js';
 
 const FIRST_ID = COMPLIANCE_SECTIONS[0].items[0].id;
 const TOTAL = COMPLIANCE_SECTIONS.reduce((n, s) => n + s.items.length, 0);

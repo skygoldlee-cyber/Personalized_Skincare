@@ -10,8 +10,8 @@
 //   - 사용자 커스텀 후보도 런타임에 banned/미등록 이름을 필터링한다
 //   - DB에 없는 베이스 원료(정제수·유화제 등)는 후보 없이 역할명만 표시
 
-import { safeGetItem, safeSetItem } from './state.js';
-import { STORAGE_KEYS } from './storage-keys.js';
+import { safeGetItem, safeSetItem } from '../../state.js';
+import { STORAGE_KEYS } from '../../storage-keys.js';
 
 /* =======================================================
    ① 제형 → 베이스 템플릿

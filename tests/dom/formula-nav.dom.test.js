@@ -11,10 +11,10 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml, el, isVisible } from './helpers.js';
-import { initFormulaView, exitFormulaSubView, openFormulaCalc } from '../../src/views/formula.js';
-import { openCustomerPanel } from '../../src/views/formula-customer.js';
-import { openMaterialPanel } from '../../src/views/formula-material.js';
-import { openCompliancePanel } from '../../src/views/formula-compliance.js';
+import { initFormulaView, exitFormulaSubView, openFormulaCalc } from '../../src/exams/cosmetic/views/formula.js';
+import { openCustomerPanel } from '../../src/exams/cosmetic/views/formula-customer.js';
+import { openMaterialPanel } from '../../src/exams/cosmetic/views/formula-material.js';
+import { openCompliancePanel } from '../../src/exams/cosmetic/views/formula-compliance.js';
 
 const ALL_PANELS = [
     'formula-menu-panel', 'formula-list-panel', 'formula-calc-panel',

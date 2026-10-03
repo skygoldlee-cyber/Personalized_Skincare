@@ -27,12 +27,12 @@
 // checkSnapshot — 배치 생성 시점의 규정 검증·안정성 규칙 결과 요약.
 // 처방이 나중에 수정돼도 당시 검증 근거가 보존된다. 뷰에서 계산해 전달한다.
 
-import { STORAGE_KEYS } from './storage-keys.js';
+import { STORAGE_KEYS } from '../../storage-keys.js';
 import {
   loadItems, saveItems, newId, clampStr, numOrNull, pickEnum,
   clampDate, clampDateTime,
 } from './store-utils.js';
-import { todayKey } from './utils.js';
+import { todayKey } from '../../utils.js';
 
 // Free 플랜 저장 한도 (기록 보존 업무 특성상 포뮬러보다 넉넉하게)
 // keep-export — pro-upgrade.js가 플랜 비교 모달에서 지연 import로 참조

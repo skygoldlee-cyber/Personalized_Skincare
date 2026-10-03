@@ -16,11 +16,11 @@
 // 남기고 customerId를 해제 — 기록 보존 원칙 (unlinkCustomerFromFormulas).
 // 배치는 customerName 스냅샷이 이미 있으므로 별도 정리 불필요.
 
-import { STORAGE_KEYS } from './storage-keys.js';
+import { STORAGE_KEYS } from '../../storage-keys.js';
 import {
   loadItems, saveItems, newId, clampStr, numOrNull, pickEnum, clampDate,
 } from './store-utils.js';
-import { todayKey } from './utils.js';
+import { todayKey } from '../../utils.js';
 import { CUSTOMER_OPTIONS } from './formula-store.js';
 
 // Free 플랜 저장 한도

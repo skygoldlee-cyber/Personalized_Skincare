@@ -7,12 +7,12 @@
 // 백업/초기화 대상에 포함된다. 이 화면은 법률 자문이 아니며, 실제 의무 판단은
 // 원문 법령과 관할 지방식약청 안내를 따라야 한다.
 
-import { esc } from '../sanitize.js';
-import { showToast, showConfirm } from '../ui-utils.js';
-import { safeGetItem, safeSetItem } from '../state.js';
-import { STORAGE_KEYS } from '../storage-keys.js';
-import { contentPath } from '../exam-context.js';
-import { lawUrlFor } from '../law-links.js';
+import { esc } from '../../../sanitize.js';
+import { showToast, showConfirm } from '../../../ui-utils.js';
+import { safeGetItem, safeSetItem } from '../../../state.js';
+import { STORAGE_KEYS } from '../../../storage-keys.js';
+import { contentPath } from '../../../exam-context.js';
+import { lawUrlFor } from '../../../law-links.js';
 import { showPanel, formulaSubNav } from './formula.js';
 
 /* =======================================================

@@ -1,6 +1,6 @@
 // tests/unit/usage-guide.test.js
 // @spec FO-20
-// src/usage-guide.js — 사용 안내문 생성기 테스트.
+// src/exams/cosmetic/usage-guide.js — 사용 안내문 생성기 테스트.
 // 제형 템플릿·원료 주의 규칙·고객 조건 주의 병기를 고정한다.
 
 import { test } from 'node:test';
@@ -9,7 +9,7 @@ import {
   buildUsageGuide,
   buildUsageGuideFromFormula,
   buildUsageGuideFromBatch,
-} from '../../src/usage-guide.js';
+} from '../../src/exams/cosmetic/usage-guide.js';
 
 test('제형 템플릿 — 세럼·에센스 사용법·보관법', () => {
   const g = buildUsageGuide({ formulation: '세럼·에센스' });

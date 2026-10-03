@@ -1,6 +1,6 @@
 /* ============================================================
- * Cosmetic Pass — Service Worker
- * Passmula — 맞춤형화장품 조제관리사 PWA
+ * Passory — Service Worker
+ * 멀티시험 학습 플랫폼 PWA
  *
  * 캐시 전략:
  *  - Navigation (HTML)             : Cache First (캐시 스큐 방지)
@@ -23,9 +23,11 @@
 
 const CACHE_VERSION = 'v20261003-1ca3a02';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
-const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
-const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
-const CDN_CACHE = `cosmetic-pass-cdn-${CACHE_VERSION}`;
+// 캐시 접두사는 플랫폼 브랜드(passory) — 시험 무관 공유 캐시.
+// 구 접두사(cosmetic-pass-*)는 activate의 비현재 캐시 전수 삭제로 자동 정리된다.
+const SHELL_CACHE = `passory-shell-${CACHE_VERSION}`;
+const DATA_CACHE = `passory-data-${DATA_CACHE_VERSION}`;
+const CDN_CACHE = `passory-cdn-${CACHE_VERSION}`;
 
 /** 설치 시 미리 캐시할 App Shell 목록 */
 const SHELL_ASSETS = [
@@ -109,7 +111,7 @@ const SHELL_ASSETS = [
   './src/views/trainer.js',
   './src/views/trainer-drills.js',
   './src/views/trainer-calc-practice.js',
-  './src/views/trainer-ingredients.js',
+  './src/exams/cosmetic/views/trainer-ingredients.js',
   './src/questions.js',
   './src/statement-tracker.js',
   // 실무 피처(formula) 모듈은 프리캐시 제외 — 활성 시험만 쓰는 자산이므로
@@ -289,7 +291,7 @@ self.addEventListener('activate', (event) => {
       .then((keys) =>
         Promise.all(
           keys
-            .filter((key) => key.startsWith('cosmetic-pass-') && !currentCaches.includes(key))
+            .filter((key) => /^(passory|cosmetic-pass)-/.test(key) && !currentCaches.includes(key))
             .map((key) => caches.delete(key))
         )
       )

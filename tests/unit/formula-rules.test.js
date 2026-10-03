@@ -1,6 +1,6 @@
 // tests/unit/formula-rules.test.js
 // @spec FO-05,FO-06
-// src/formula-rules.js — 추천 엔진 무결성 테스트.
+// src/exams/cosmetic/formula-rules.js — 추천 엔진 무결성 테스트.
 // 핵심 불변식: ①매핑의 모든 이름이 실제 DB에 존재 ②banned 이름 0개
 // ③출력에 type/limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤주의문 발화.
 
@@ -24,9 +24,9 @@ import {
   importCustomRules,
   ROLE_PHASE,
   _RULE_KEYS,
-} from '../../src/formula-rules.js';
-import { buildIngredientIndex } from '../../src/formula-check.js';
-import { CUSTOMER_OPTIONS, PHASE_OPTIONS } from '../../src/formula-store.js';
+} from '../../src/exams/cosmetic/formula-rules.js';
+import { buildIngredientIndex } from '../../src/exams/cosmetic/formula-check.js';
+import { CUSTOMER_OPTIONS, PHASE_OPTIONS } from '../../src/exams/cosmetic/formula-store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

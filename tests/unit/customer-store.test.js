@@ -1,6 +1,6 @@
 // tests/unit/customer-store.test.js
 // @spec FO-17,DA-10
-// src/customer-store.js — 고객 카드·상담 이력 영속성 계층 테스트.
+// src/exams/cosmetic/customer-store.js — 고객 카드·상담 이력 영속성 계층 테스트.
 // CRUD·상담 이력 append-only·참조 해제(unlinkCustomerFromFormulas)를 고정한다.
 
 import { test, beforeEach, afterEach } from 'node:test';
@@ -15,10 +15,10 @@ import {
   updateCustomer,
   addConsultLog,
   deleteCustomer,
-} from '../../src/customer-store.js';
+} from '../../src/exams/cosmetic/customer-store.js';
 import {
   createFormula, getFormula, unlinkCustomerFromFormulas,
-} from '../../src/formula-store.js';
+} from '../../src/exams/cosmetic/formula-store.js';
 
 // --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
 

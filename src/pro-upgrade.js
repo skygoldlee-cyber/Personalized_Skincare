@@ -187,10 +187,10 @@ export async function showPlanCompare() {
     if (hasFeature('formula')) {
         try {
             const [fs, cs, ml, bs] = await Promise.all([
-                import('./formula-store.js'),
-                import('./customer-store.js'),
-                import('./material-ledger.js'),
-                import('./batch-store.js'),
+                import('./exams/cosmetic/formula-store.js'),
+                import('./exams/cosmetic/customer-store.js'),
+                import('./exams/cosmetic/material-ledger.js'),
+                import('./exams/cosmetic/batch-store.js'),
             ]);
             limitsRow = `<li>저장 한도 무제한 — 무료 플랜: My 포뮬러 ${fs.FORMULA_LIMIT_FREE} · 고객 ${cs.CUSTOMER_LIMIT_FREE} · 원료 ${ml.MATERIAL_LIMIT_FREE} · 조제 기록 ${bs.BATCH_LIMIT_FREE}</li>`;
         } catch (e) { /* 한도 표기 생략 — 모달 자체는 표시 */ }

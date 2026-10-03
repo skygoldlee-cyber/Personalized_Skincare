@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
-> **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.12 (2026-10-03 기준 — §7.5 ROAD-Q8 맞춤학습 E2E 시뮬레이션 구현 반영)
+> **프로젝트**: Passory — 멀티시험 스마트 학습 플랫폼 (첫 콘텐츠 팩: 맞춤형화장품 조제관리사 = 앱명 Passmula)
+> **버전**: 1.13 (2026-10-03 기준 — DA-13 시험 도메인 모듈 격리 + 플랫폼 브랜드 passory 반영)
 > **버전 규약**: 본문 요구사항의 추가·변경·제거 시 마이너 버전을 갱신하고 변경 내역은 `CHANGES.md`에 기록한다 — 기준선은 커밋 해시로 확정한다
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 > **문서 ID**: DOC-DEV-01
@@ -28,7 +28,7 @@
 
 ### 1.1 목적
 
-맞춤형화장품 조제관리사 자격시험 대비 개인 학습 도구. 서버/DB 없이 순수 프론트엔드로 구현된 PWA(Progressive Web App)이며, 오프라인 환경에서도 모든 학습 기능이 동작한다.
+자격시험별 콘텐츠 팩을 올리는 멀티시험 개인 학습 플랫폼. 첫 번째 시험 팩은 맞춤형화장품 조제관리사(cosmetic, 앱명 Passmula)다. 서버/DB 없이 순수 프론트엔드로 구현된 PWA(Progressive Web App)이며, 오프라인 환경에서도 모든 학습 기능이 동작한다.
 
 ### 1.2 대상 사용자
 
@@ -44,7 +44,7 @@
 | **Vanilla First** | React/Vue 등 프레임워크 미사용. 순수 HTML/CSS/JS (ESM) |
 | **Offline-Capable PWA** | Service Worker로 App Shell + 학습 데이터 캐시. 설치 가능 |
 | **Mobile-First** | 모바일 하단 탭 바 ↔ 데스크톱 사이드바 적응형 네비게이션 |
-| **Content-Agnostic** | `content/exams/cosmetic/manifest.json`을 SSOT로 사용. 교재 전체 교체 시 소스 수정 불필요 |
+| **Content-Agnostic** | `{contentRoot}/manifest.json`을 시험별 SSOT로 사용. 교재 전체 교체·시험 추가 시 소스 수정 불필요 |
 | **Spec-Traceable** | 모든 요구사항은 SPEC ID로 선언하고 코드·테스트·문서는 `@spec` 태그로 연결 — `TRACE_MATRIX.md`(생성물)가 양방향 추적의 진실 소스, `check:specrefs`·`check:trace`·git 훅으로 자동 강제 |
 
 ---
@@ -796,10 +796,10 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| DA-01 | `content/exams/cosmetic/manifest.json`을 SSOT로 사용 (과목, 단원, 시험, 추천 링크) | ✅ |
+| DA-01 | `{contentRoot}/manifest.json`을 시험별 SSOT로 사용 (과목, 단원, 시험, 추천 링크) | ✅ |
 | DA-02 | 시험/성분 데이터: 빌드 타임 해시드 JS 번들 (`<script>` 로드) | ✅ |
 | DA-03 | 교재/카드/퀴즈: 런타임 MD fetch + 파싱 (재빌드 불필요) | ✅ |
-| DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`data/exams/cosmetic/study_md/`) | ✅ |
+| DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`{dataRoot}/study_md/`) | ✅ |
 | DA-05 | 사용자 진행 상황: `localStorage`가 1차 저장소 (계정 없이 전 기능 사용 가능, 로그인 시 선택적 클라우드 동기화 — §3.19) | ✅ |
 | DA-06 | **멀티시험 대칭 구조**: `content/exams.json` 레지스트리 → 시험별 `content/exams/<id>/`·`data/exams/<id>/` 동일 내부 구조, `exam-context.js`의 `contentPath()`/`dataPath()`/`selectExam()`(전환 = reload) | ✅ |
 | DA-07 | **스코프드 진도 키**: `safeGetItem`/`safeSetItem`이 `<examId>:` 네임스페이스 자동 접두(`scopedKey`) — 시험 간 진도 격리, `GLOBAL_KEYS`(테마 등)만 비네임스페이스. 백업 파일은 비접두사 논리 키로 시험 간 호환 | ✅ |
@@ -808,6 +808,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 | DA-10 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
 | DA-11 | **파일 계층 분류 강제**: `tools/check/domain-map.json` + `check:domainmap` — src/css/html/data/content/tests 전 파일이 platform/feature:<플래그>/domain:<시험id> 중 하나로 분류 필수(미분류·중복·스테일 = 오류). exams.json 등록 시험의 `contentRoot`/`dataRoot`는 `domain:<id>` 규칙으로 자동 주입, 미등록 시험 디렉터리 감지 | ✅ |
 | DA-12 | **UI 텍스트 커버리지 감사**: `check:uitext` — `data-uitext` 속성 ↔ 시험 `manifest.uiText` 양방향 검증(dead 키·형식 오류) + platform 분류 마크업에 시험명(name/shortName) 잔존 금지 | ✅ |
+| DA-13 | **시험 도메인 모듈 격리**: 시험 전용 실행 모듈은 `src/exams/<examId>/` 아래에 물리 배치 (도메인 로직 루트 + `views/` 뷰 모듈). 플랫폼 코어(`src/`)는 등록 시험 id를 문자열 리터럴로 참조하지 않고 `exam-context.js`의 레지스트리 해석만 사용 — 위반은 `check:domainmap` 게이트가 차단. 플랫폼→도메인 진입은 기능 플래그 아래 동적 `import()` 문자열만 허용 (`practice-registry.js`·`pro-upgrade.js`) | ✅ |
 
 ### 5.2 안정적 ID 체계
 
@@ -839,13 +840,13 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| CS-01 | 교재: `content/exams/cosmetic/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
-| CS-02 | 문제은행: `content/exams/cosmetic/문제은행/과목N_문제은행.md` | ✅ |
-| CS-03 | 참조자료: `content/exams/cosmetic/참조자료/ref_md/과목N/` (MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
-| CS-04 | 성분 원본: `content/exams/cosmetic/참조자료/원료/` | ✅ |
-| CS-05 | 학습안내서: `content/exams/cosmetic/docs/학습안내서.md` | ✅ |
-| CS-06 | 용어집 큐레이션: `content/exams/cosmetic/교재/glossary/subject{1-4}.json` | ✅ |
-| CS-07 | 오디오북: `content/exams/cosmetic/audiobook/` (Python TTS 파이프라인) | ✅ |
+| CS-01 | 교재: `{contentRoot}/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
+| CS-02 | 문제은행: `{contentRoot}/문제은행/과목N_문제은행.md` | ✅ |
+| CS-03 | 참조자료: `{contentRoot}/참조자료/ref_md/과목N/` (cosmetic 기준 MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
+| CS-04 | 지식DB 원본: `{contentRoot}/참조자료/원료/` (cosmetic 성분) · `{contentRoot}/knowledge/` (일반화 스키마) | ✅ |
+| CS-05 | 학습안내서: `{contentRoot}/docs/학습안내서.md` | ✅ |
+| CS-06 | 용어집 큐레이션: `{contentRoot}/교재/glossary/subject{1-N}.json` | ✅ |
+| CS-07 | 오디오북: `{contentRoot}/audiobook/` (Python TTS 파이프라인 — cosmetic 전용 기능) | ✅ |
 | CS-08 | 파일명 ASCII 슬러그화 (CP949↔UTF-8 불일치 원천 제거) | ✅ |
 | CS-09 | 참조자료 귀속은 폴더가 진실 — `ref_md/과목N/{문서}/{문서}.md`, `references.json` 매핑 + `pdf-registry.js`의 `getRefTables()`가 시험별 해석 | ✅ |
 | CS-10 | 문서 이미지는 `ref_md/**/images/` 상대 참조 — 뷰어가 md 디렉터리 기준 절대 URL로 재작성(`html-viewer.js`·`exam-viewer.js`) | ✅ |
@@ -1049,15 +1050,15 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 | 모듈 | 책임 |
 |------|------|
-| `src/formula-store.js` | 포뮬러 CRUD·저장 한도(5개), 고객·원료·안정성 스키마 정제, 전성분 표시 순서 생성, PHASE/CUSTOMER 옵션 |
-| `src/formula-rules.js` | 추천 규칙 — 베이스 템플릿·고민/피부 매핑, 안전 필터, 맞춤 규칙 병합·직렬화 |
-| `src/formula-check.js` | 고시 한도 검증 엔진 — 원료 인덱스 구축, 배합 검증(4상태+요약) |
-| `src/formula-stability.js` | 제형 안정성 체크 — 상 비율·상호작용·투입 단계·pH 규칙 기반 경고 (warn/info) |
-| `src/batch-store.js` | 조제 기록 채번·QC·위생·처방 스냅샷 (한도 50건) |
-| `src/customer-store.js` | 고객 카드·상담 이력 append-only (한도 20명, 동기화 제외) |
-| `src/material-ledger.js` | 원료 입고·사용기한·재고, 기한 경고 (한도 30종) |
-| `src/usage-guide.js` | 사용 안내문 생성기 (제형 템플릿+원료 주의 규칙) |
-| `src/store-utils.js` | 스토어 공통 헬퍼 (loadItems/newId/clamp…) |
+| `src/exams/cosmetic/formula-store.js` | 포뮬러 CRUD·저장 한도(5개), 고객·원료·안정성 스키마 정제, 전성분 표시 순서 생성, PHASE/CUSTOMER 옵션 |
+| `src/exams/cosmetic/formula-rules.js` | 추천 규칙 — 베이스 템플릿·고민/피부 매핑, 안전 필터, 맞춤 규칙 병합·직렬화 |
+| `src/exams/cosmetic/formula-check.js` | 고시 한도 검증 엔진 — 원료 인덱스 구축, 배합 검증(4상태+요약) |
+| `src/exams/cosmetic/formula-stability.js` | 제형 안정성 체크 — 상 비율·상호작용·투입 단계·pH 규칙 기반 경고 (warn/info) |
+| `src/exams/cosmetic/batch-store.js` | 조제 기록 채번·QC·위생·처방 스냅샷 (한도 50건) |
+| `src/exams/cosmetic/customer-store.js` | 고객 카드·상담 이력 append-only (한도 20명, 동기화 제외) |
+| `src/exams/cosmetic/material-ledger.js` | 원료 입고·사용기한·재고, 기한 경고 (한도 30종) |
+| `src/exams/cosmetic/usage-guide.js` | 사용 안내문 생성기 (제형 템플릿+원료 주의 규칙) |
+| `src/exams/cosmetic/store-utils.js` | 스토어 공통 헬퍼 (loadItems/newId/clamp…) |
 | `src/csv-utils.js` | CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화 |
 
 ### 계정·동기화·시험 컨텍스트

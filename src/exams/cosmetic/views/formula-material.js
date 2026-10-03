@@ -4,10 +4,10 @@
 // 목록(formula-material-panel) + 폼(formula-material-form-panel).
 // 기한 상태는 저장하지 않고 표시 시 계산한다 — materialStatus/daysUntilExpiry.
 
-import { esc } from '../sanitize.js';
-import { todayKey } from '../utils.js';
-import { showToast, showConfirm } from '../ui-utils.js';
-import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
+import { esc } from '../../../sanitize.js';
+import { todayKey } from '../../../utils.js';
+import { showToast, showConfirm } from '../../../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../../../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import {
   listMaterials, getMaterial, getMaterialUsage,
@@ -16,7 +16,7 @@ import {
 } from '../material-ledger.js';
 import {
   parseCsv, csvToObjects, readCsvFile, toCsv, downloadCsv,
-} from '../csv-utils.js';
+} from '../../../csv-utils.js';
 
 const mat = { editingId: null };
 

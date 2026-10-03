@@ -183,12 +183,12 @@ TIP:  폴리올의 대표 성분, 고농도 시 피부 자극
 ### 5.1 신규 파일 (5-A 시점 목록)
 
 ```
-src/views/formula.js          # 허브 + 라우팅 + 목록 렌더
-src/views/formula-edit.js     # 편집 서브뷰 (원료 행 CRUD, 실시간 계산·검증)
-src/formula-store.js          # localStorage CRUD, 한도 게이팅, 채번, 안정성 기록·전성분 스키마
-src/formula-check.js          # 규정 Check 엔진 (limit 파서 + type 판정)
-src/formula-rules.js          # 추천 규칙 (베이스 템플릿·고민/피부 매핑, 안전 필터)
-src/formula-stability.js      # 제형 안정성 체크 (상 비율·상호작용·투입 단계·pH)
+src/exams/cosmetic/views/formula.js          # 허브 + 라우팅 + 목록 렌더
+src/exams/cosmetic/views/formula-edit.js # 편집 서브뷰 (원료 행 CRUD, 실시간 계산·검증)
+src/exams/cosmetic/formula-store.js          # localStorage CRUD, 한도 게이팅, 채번, 안정성 기록·전성분 스키마
+src/exams/cosmetic/formula-check.js          # 규정 Check 엔진 (limit 파서 + type 판정)
+src/exams/cosmetic/formula-rules.js          # 추천 규칙 (베이스 템플릿·고민/피부 매핑, 안전 필터)
+src/exams/cosmetic/formula-stability.js      # 제형 안정성 체크 (상 비율·상호작용·투입 단계·pH)
 index.html                    # formula-view 섹션 + 내비 아이템 + 그룹 라벨
 css/                          # 기존 토큰 재사용, 소규모 추가분
 tests/unit/formula-check.test.js   # limit 파서·판정 경계 테스트
@@ -363,8 +363,8 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 
 | 파일 | 역할 |
 |---|---|
-| `src/formula-rules.js` | 베이스 템플릿·고민 매핑·주의문 데이터 + `recommendFor()` + 맞춤 규칙 저장소(`loadCustomRules`·`addCustomCandidate`·`removeCustomCandidate`·`resetCustomRules`·`serializeCustomRules`·`importCustomRules`) |
-| `src/views/formula.js` | 추천 패널 렌더, 칩/불러오기 핸들러, 맞춤 규칙 UI (`renderCustomRules`·`formulaRuleAdd/Remove/Reset/Export/Import`) |
+| `src/exams/cosmetic/formula-rules.js` | 베이스 템플릿·고민 매핑·주의문 데이터 + `recommendFor()` + 맞춤 규칙 저장소(`loadCustomRules`·`addCustomCandidate`·`removeCustomCandidate`·`resetCustomRules`·`serializeCustomRules`·`importCustomRules`) |
+| `src/exams/cosmetic/views/formula.js` | 추천 패널 렌더, 칩/불러오기 핸들러, 맞춤 규칙 UI (`renderCustomRules`·`formulaRuleAdd/Remove/Reset/Export/Import`) |
 | `index.html` | `#formula-recommend` 컨테이너 + `.formula-rules-edit` details 블록 |
 | `tests/unit/formula-rules.test.js` | 매핑 무결성: ①테이블 내 모든 이름이 DB에 존재 ②banned 이름 0개 ③추천 출력에 limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤민감성 → 주의문 발화 ⑥역할 후보 ≥5·고민 매핑 ≥5 ⑦커스텀 규칙 라운드트립·병합·필터·JSON 입출력 |
 | `sw.js` | SHELL_ASSETS에 formula-rules.js 추가 |

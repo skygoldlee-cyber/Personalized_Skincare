@@ -7,14 +7,14 @@
 // 고객은 독립 엔티티: 포뮬러·배치는 customerId로 참조하고 이름은 스냅샷으로
 // 보존한다. 상담 이력은 append-only — 수정·삭제 대신 신규 기록을 권장.
 
-import { esc } from '../sanitize.js';
-import { todayKey } from '../utils.js';
-import { showToast, showConfirm } from '../ui-utils.js';
-import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
+import { esc } from '../../../sanitize.js';
+import { todayKey } from '../../../utils.js';
+import { showToast, showConfirm } from '../../../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../../../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import { listFormulas } from '../formula-store.js';
-import { setJSONMany } from '../storage.js';
-import { STORAGE_KEYS } from '../storage-keys.js';
+import { setJSONMany } from '../../../storage.js';
+import { STORAGE_KEYS } from '../../../storage-keys.js';
 import { listBatches } from '../batch-store.js';
 import {
   listCustomers, getCustomer, getCustomerUsage,
@@ -26,7 +26,7 @@ import { CUSTOMER_OPTIONS } from '../formula-store.js';
 
 import {
   parseCsv, csvToObjects, readCsvFile, toCsv, downloadCsv,
-} from '../csv-utils.js';
+} from '../../../csv-utils.js';
 
 // 폼 상태 — editingId + 알레르기 칩 목록 (포뮬러 폼과 동일 패턴)
 const cust = /** @type {{editingId: string|null, allergies: string[]}} */ ({ editingId: null, allergies: [] });

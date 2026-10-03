@@ -1,6 +1,6 @@
 // tests/unit/formula-store.test.js
 // @spec FO-08,FO-23
-// src/formula-store.js — My Formula 영속성 계층 테스트.
+// src/exams/cosmetic/formula-store.js — My Formula 영속성 계층 테스트.
 // CRUD·Free 한도·스냅샷 보존·투입량 계산의 불변식을 고정한다.
 
 import { test, beforeEach, afterEach } from 'node:test';
@@ -19,7 +19,7 @@ import {
   calcAmounts,
   serializeFormula,
   importFormula,
-} from '../../src/formula-store.js';
+} from '../../src/exams/cosmetic/formula-store.js';
 
 // --- localStorage 모킹 (state.test.js와 동일 패턴) ---
 

@@ -1,6 +1,6 @@
 // tests/unit/formula-check.test.js
 // @spec FO-02
-// src/formula-check.js — Formula OS 규정 Check 엔진 골든 테스트.
+// src/exams/cosmetic/formula-check.js — Formula OS 규정 Check 엔진 골든 테스트.
 // 파서 변경·판정 기준 변경 시 회귀를 감지한다.
 // 핵심 불변식: 모호한 입력은 절대 ok/warn이 아니라 unknown.
 
@@ -12,7 +12,7 @@ import {
   checkIngredient,
   buildIngredientIndex,
   checkFormulaItems,
-} from '../../src/formula-check.js';
+} from '../../src/exams/cosmetic/formula-check.js';
 
 const ing = (type, limit, extra = {}) => ({ name: '테스트원료', type, limit, ...extra });
 

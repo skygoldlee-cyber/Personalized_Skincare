@@ -34,7 +34,7 @@ vi.mock('../../src/views/trainer-calc-practice.js', () => ({
     startCalcPractice: vi.fn(), generateCalcQuestion: vi.fn(),
     submitCalcAnswer: vi.fn(), toggleSolutionAccordion: vi.fn()
 }));
-vi.mock('../../src/views/trainer-ingredients.js', () => ({
+vi.mock('../../src/exams/cosmetic/views/trainer-ingredients.js', () => ({
     startIngredientsChallenge: vi.fn(), submitIngAnswer: vi.fn(), nextIngQuestion: vi.fn()
 }));
 

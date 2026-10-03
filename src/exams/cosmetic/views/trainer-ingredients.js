@@ -3,12 +3,12 @@
 // 데이터셋은 registry.knowledge 스키마로 해석한다 (registryKey/global).
 // 문항 생성은 엔티티의 분류 필드(badge.field, 예: type=approved/restricted/banned)를
 // 요구하므로, 해당 필드를 가진 도메인 데이터셋이 있는 시험에서만 발화한다.
-import { state } from '../state.js';
-import { esc, safeTextWithBreaks, stripTags } from '../sanitize.js';
-import { shuffle } from '../utils.js';
-import { showToast, vibrate, HAPTIC, markChoiceButtons, wrongReviewHtml, trainerResultHtml, showAnswerFeedback } from '../ui-utils.js';
-import { DataLoader } from '../data-loader.js';
-import { checkShortAnswer } from './trainer.js';
+import { state } from '../../../state.js';
+import { esc, safeTextWithBreaks, stripTags } from '../../../sanitize.js';
+import { shuffle } from '../../../utils.js';
+import { showToast, vibrate, HAPTIC, markChoiceButtons, wrongReviewHtml, trainerResultHtml, showAnswerFeedback } from '../../../ui-utils.js';
+import { DataLoader } from '../../../data-loader.js';
+import { checkShortAnswer } from '../../../views/trainer.js';
 
 /* =======================================================
    🧪 지식DB 분류 안전성 챌린지 훈련 로직 (Knowledge Safety Trainer)

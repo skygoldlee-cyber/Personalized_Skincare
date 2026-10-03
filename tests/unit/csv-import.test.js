@@ -10,16 +10,16 @@ import {
 } from '../../src/csv-utils.js';
 import {
   importCustomers, listCustomers, CUSTOMER_LIMIT_FREE,
-} from '../../src/customer-store.js';
+} from '../../src/exams/cosmetic/customer-store.js';
 import {
   importMaterials, listMaterials, MATERIAL_LIMIT_FREE, createMaterial,
-} from '../../src/material-ledger.js';
+} from '../../src/exams/cosmetic/material-ledger.js';
 import {
   CUST_CSV_COLS, CUST_CSV_HEADERS, csvRowToCustomer,
-} from '../../src/views/formula-customer.js';
+} from '../../src/exams/cosmetic/views/formula-customer.js';
 import {
   MAT_CSV_COLS, MAT_CSV_HEADERS, csvRowToMaterial,
-} from '../../src/views/formula-material.js';
+} from '../../src/exams/cosmetic/views/formula-material.js';
 
 // --- localStorage 모킹 (customer-store.test.js와 동일 패턴) ---
 

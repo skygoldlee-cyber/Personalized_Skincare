@@ -1,6 +1,6 @@
 // tests/unit/batch-store.test.js
 // @spec FO-16,FO-23
-// src/batch-store.js — 조제 기록(배치) 영속성 계층 테스트.
+// src/exams/cosmetic/batch-store.js — 조제 기록(배치) 영속성 계층 테스트.
 // 채번·불변 필드·QC/위생 정제·스냅샷 보존의 불변식을 고정한다.
 
 import { test, beforeEach, afterEach } from 'node:test';
@@ -16,7 +16,7 @@ import {
   createBatch,
   updateBatch,
   deleteBatch,
-} from '../../src/batch-store.js';
+} from '../../src/exams/cosmetic/batch-store.js';
 
 // --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
 

@@ -6,7 +6,7 @@
 
 ## 프로젝트 개요
 
-**Passmula** — 맞춤형화장품 조제관리사 자격시험 대비 + Formula OS 실무 배합 통합 플랫폼.
+**Passory** — 멀티시험 자격시험 학습 플랫폼. 시험은 콘텐츠 팩(`content/exams/<id>/` + `exams.json` 엔트리)으로 온보딩되며, 기본 팩은 맞춤형화장품 조제관리사(`cosmetic`, 앱명 Passmula + Formula OS 실무 배합). 시험 전용 실행 모듈은 `src/exams/<id>/`에 격리된다 (SPEC DA-13).
 
 - 순수 HTML/CSS/JavaScript (Vanilla ES Modules, 프레임워크 없음)
 - PWA (Service Worker 오프라인 캐시, 설치 가능)
@@ -179,16 +179,7 @@ src/                    # ES Modules
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)
-  formula-store.js      # Formula OS — 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제
-  formula-rules.js      # Formula OS — 추천 규칙 (베이스·고민/피부 매핑, 안전 필터, 맞춤 규칙)
-  formula-check.js      # Formula OS — 고시 한도 규정 검증 엔진 (원료 인덱스, 4상태 판정)
-  formula-stability.js  # Formula OS — 제형 안정성 체크 (상 비율·상호작용·단계·pH)
-  store-utils.js        # Formula OS — 스토어 공통 헬퍼 (loadItems/newId/clamp…)
-  batch-store.js        # Formula OS — 조제 기록(배치) 채번·QC·위생·스냅샷 (50건)
-  customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
-  material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
-  usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
-  csv-utils.js          # Formula OS — CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화
+  csv-utils.js          # CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화 (사전 내보내기 등 공용)
   pwa-install.js        # PWA 설치 프롬프트 설정
   pwa-install-capture.js # beforeinstallprompt 조기 캡처 + SW 조기 등록 (<head> 즉시 실행, 클래식 스크립트)
   app-version.js        # 앱 버전 접근·표시 포맷터 (window.APP_VERSION → formatAppVersion)
@@ -210,7 +201,28 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러 (42개)
+  exams/                # 시험 도메인 모듈 격리 (DA-13) — 시험 전용 실행 코드
+    cosmetic/           # 맞춤형화장품 조제관리사 도메인 (domain:cosmetic)
+      formula-store.js      # Formula OS — 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제
+      formula-rules.js      # Formula OS — 추천 규칙 (베이스·고민/피부 매핑, 안전 필터, 맞춤 규칙)
+      formula-check.js      # Formula OS — 고시 한도 규정 검증 엔진 (원료 인덱스, 4상태 판정)
+      formula-stability.js  # Formula OS — 제형 안정성 체크 (상 비율·상호작용·단계·pH)
+      store-utils.js        # Formula OS — 스토어 공통 헬퍼 (loadItems/newId/clamp…)
+      batch-store.js        # Formula OS — 조제 기록(배치) 채번·QC·위생·스냅샷 (50건)
+      customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
+      material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
+      usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
+      views/            # Formula OS 뷰 모듈 (practice-registry 지연 로드)
+        formula.js          # 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
+        formula-recommend.js # 추천 베이스·원료 패널 + 맞춤 규칙 UI
+        formula-fields.js   # 처방 작업대 고객·안정성 필드 블록
+        formula-batch.js    # 조제 기록(배치) 목록·폼·상세 패널
+        formula-customer.js # 고객 관리 패널 (카드·상담 이력·역참조)
+        formula-material.js # 원료 장부 패널 (기한 배지·경고)
+        formula-compliance.js # 법규 준수 체크리스트 + 법령 MD 링크
+        formula-print.js    # 인쇄 빌더 (조제 기록지·라벨·안내문)
+        trainer-ingredients.js # 원료 배합 챌린지 (features.ingredients)
+  views/                # 뷰 컨트롤러 (33개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-ref-links.js # 참조자료 링크 생성·프리뷰·클릭 위임 (textbook-reader.js에서 분리)
@@ -224,7 +236,6 @@ src/                    # ES Modules
     dashboard.js        # 대시보드 + 맞춤학습 뷰 (통계·히트맵·개인화 진단 카드)
     trainer.js          # 스마트 훈련소 허브 (재수출)
     trainer-calc-practice.js  # 계산 연습기
-    trainer-ingredients.js    # 원료 배합 챌린지
     trainer-drills.js   # O/X 드릴 + 드릴 공통 오케스트레이션
     trainer-drill-combo.js # 복수정답형(combo) 드릴 (trainer-drills.js에서 분리)
     pomodoro.js         # 뽀모도로 타이머
@@ -243,14 +254,6 @@ src/                    # ES Modules
     listeners-simulator.js # 모의고사 (OMR 이동·제출·단축키)
     listeners-dictionary.js # 성분 사전 검색 디바운스
     listeners-delegation.js # data-click/data-input 위임 (CSP 대응)
-    formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
-    formula-recommend.js # 추천 베이스·원료 패널 + 맞춤 규칙 UI (formula.js에서 분리)
-    formula-fields.js   # 처방 작업대 고객·안정성 필드 블록 (formula.js에서 분리)
-    formula-batch.js    # Formula OS — 조제 기록(배치) 목록·폼·상세 패널
-    formula-customer.js # Formula OS — 고객 관리 패널 (카드·상담 이력·역참조)
-    formula-material.js # Formula OS — 원료 장부 패널 (기한 배지·경고)
-    formula-compliance.js # Formula OS — 법규 준수 체크리스트 + 법령 MD 링크
-    formula-print.js    # Formula OS — 인쇄 빌더 (조제 기록지·라벨·안내문)
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
 css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)

@@ -14,12 +14,12 @@ vi.mock('../../src/ui-utils.js', () => ({
 
 import { showToast } from '../../src/ui-utils.js';
 import { loadIndexHtml, el, lastToast } from './helpers.js';
-import { formulaNew, formulaOpen, formulaPrint } from '../../src/views/formula.js';
+import { formulaNew, formulaOpen, formulaPrint } from '../../src/exams/cosmetic/views/formula.js';
 import {
     batchPrintRecord, batchPrintLabel, batchPrintGuide,
-} from '../../src/views/formula-batch.js';
-import { createFormula } from '../../src/formula-store.js';
-import { createBatch } from '../../src/batch-store.js';
+} from '../../src/exams/cosmetic/views/formula-batch.js';
+import { createFormula } from '../../src/exams/cosmetic/formula-store.js';
+import { createBatch } from '../../src/exams/cosmetic/batch-store.js';
 
 const INGREDIENTS_STUB = [
     { name: '정제수', engName: 'Water', type: 'approved', category: '용제', description: '', limit: '' },

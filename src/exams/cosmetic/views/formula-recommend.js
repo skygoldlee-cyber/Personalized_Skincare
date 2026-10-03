@@ -2,8 +2,8 @@
 // @spec FO-05,FO-06,FO-08
 // 규칙 기반 추천(이름만 제안, 농도 미제안) 렌더링, 맞춤 후보/규칙 CRUD·보내기·가져오기,
 // 원료 datalist 생성. 공유 상태(calc)·렌더러는 formula.js에서 import한다(런타임 호출 전용 순환).
-import { esc } from '../sanitize.js';
-import { showToast, showConfirm } from '../ui-utils.js';
+import { esc } from '../../../sanitize.js';
+import { showToast, showConfirm } from '../../../ui-utils.js';
 import {
   recommendFor, baseDefaultCandidates,
   loadCustomRules, addCustomCandidate, removeCustomCandidate,
@@ -15,8 +15,8 @@ import {
   calc, getEl, getIndex,
   renderCalcRows, renderStability, updateFoldSummaries, readCustomerInputs,
 } from './formula.js';
-import { DataLoader } from '../data-loader.js';
-import { todayKey } from '../utils.js';
+import { DataLoader } from '../../../data-loader.js';
+import { todayKey } from '../../../utils.js';
 /* =======================================================
    추천 베이스 · 원료 패널 (규칙 기반 — 이름만 제안, 농도 미제안)
    ======================================================= */

@@ -17,8 +17,8 @@ import {
 import {
     openMaterialPanel, matNew, matSave,
     matImportCsv, matExportCsv, matCsvTemplate,
-} from '../../src/views/formula-material.js';
-import { listMaterials, createMaterial } from '../../src/material-ledger.js';
+} from '../../src/exams/cosmetic/views/formula-material.js';
+import { listMaterials, createMaterial } from '../../src/exams/cosmetic/material-ledger.js';
 
 /** 오늘 + offset일을 YYYY-MM-DD로 */
 function dstr(offsetDays) {

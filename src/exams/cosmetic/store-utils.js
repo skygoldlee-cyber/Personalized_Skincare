@@ -5,7 +5,7 @@
 // 저장·식별·정제 부품. 모든 키는 safeGetItem/safeSetItem 경유로
 // 시험별 네임스페이스(scopedKey)가 자동 적용된다.
 
-import { getJSON, setJSON, getJSONAsync, setJSONAsync } from './storage.js';
+import { getJSON, setJSON, getJSONAsync, setJSONAsync } from '../../storage.js';
 
 /** 키의 배열 항목 전체 로드 — 파싱 실패·비배열은 빈 배열 */
 export function loadItems(key) {

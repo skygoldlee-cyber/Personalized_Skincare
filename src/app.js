@@ -1,4 +1,4 @@
-// app.js - Passmula 멀티시험 학습 플랫폼 애플리케이션 로직
+// app.js - Passory 멀티시험 학습 플랫폼 애플리케이션 로직
 // @spec S-02,S-03,S-08,UX-NAV-01,UX-PWA-01,UX-PWA-05,PF-10
 import { state, loadProgress } from './state.js';
 import { shuffle } from './utils.js';
@@ -99,7 +99,7 @@ import { getPracticeLazyHandlers, getPracticeViewRenderers, warmPracticeFeatures
    아래 LAZY_MODULE_HANDLERS가 DELEGATED_HANDLERS에 이름을 등록해 브리지한다. */
 const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
 const loadCalcPracticeModule = _lazyImport(() => import('./views/trainer-calc-practice.js'));
-const loadIngredientsChallengeModule = _lazyImport(() => import('./views/trainer-ingredients.js'));
+const loadIngredientsChallengeModule = _lazyImport(() => import('./exams/cosmetic/views/trainer-ingredients.js'));
 
 /** 지연 모듈의 네임드 export를 data-click 핸들러로 변환 */
 const _lazyFn = (load, name) => async (...args) => {

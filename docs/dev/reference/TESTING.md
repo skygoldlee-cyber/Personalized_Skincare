@@ -194,15 +194,15 @@ npm run hooks:install
 | 22 | `data-loader.test.js` | 7 | `src/data-loader.js` — 데이터 번들 로딩, 캐시 동작 | `window` 글로벌 모킹 |
 | 23 | `exam-context.test.js` | 12 | `src/exam-context.js` — 시험 해석, `scopedKey` 네임스페이스, 기능 플래그 | 합성 데이터 |
 | 24 | `storage-key-sync.test.js` | 2 | `src/storage-keys.js` 선언 키 ↔ 실제 사용 키 동기화 | 키 누락 회귀 가드 |
-| 25 | `formula-store.test.js` | 31 | `src/formula-store.js` — 포뮬러 CRUD·저장 한도(5), 고객·원료·안정성 스키마 정제, 전성분 표시 순서 | Formula OS, localStorage 모킹 |
-| 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
-| 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
-| 28 | `formula-stability.test.js` | 22 | `src/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
-| 29 | `batch-store.test.js` | 14 | `src/batch-store.js` — 배치 채번(YYYYMMDD-NN), identity 불변, QC·위생 병합, `checkSnapshot` 보존, 50건 한도, LOT 추적·인도일·재고 경고·QC 조치 | Formula OS Phase A |
-| 30 | `usage-guide.test.js` | 7 | `src/usage-guide.js` — 제형 템플릿, 원료 주의 규칙(레티노이드·AHA·향료 등), 임신/알레르기 병기 | Formula OS Phase A |
-| 31 | `customer-store.test.js` | 9 | `src/customer-store.js` — 고객 CRUD, 상담 이력 append-only, `unlinkCustomerFromFormulas`, 20명 한도 | Formula OS Phase B |
-| 32 | `material-ledger.test.js` | 9 | `src/material-ledger.js` — 원료 CRUD, 기한 상태 파생(expired/soon/ok/none), `daysUntilExpiry` 자정 기준 | Formula OS Phase C |
-| 33 | `formula-compliance.test.js` | 4 | `src/views/formula-compliance.js` — 항목 id 고유성, refs 유효성, 법령 파일 실존, 필수 섹션 커버리지 | Formula OS Phase D |
+| 25 | `formula-store.test.js` | 31 | `src/exams/cosmetic/formula-store.js` — 포뮬러 CRUD·저장 한도(5), 고객·원료·안정성 스키마 정제, 전성분 표시 순서 | Formula OS, localStorage 모킹 |
+| 26 | `formula-rules.test.js` | 23 | `src/exams/cosmetic/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
+| 27 | `formula-check.test.js` | 20 | `src/exams/cosmetic/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
+| 28 | `formula-stability.test.js` | 22 | `src/exams/cosmetic/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
+| 29 | `batch-store.test.js` | 14 | `src/exams/cosmetic/batch-store.js` — 배치 채번(YYYYMMDD-NN), identity 불변, QC·위생 병합, `checkSnapshot` 보존, 50건 한도, LOT 추적·인도일·재고 경고·QC 조치 | Formula OS Phase A |
+| 30 | `usage-guide.test.js` | 7 | `src/exams/cosmetic/usage-guide.js` — 제형 템플릿, 원료 주의 규칙(레티노이드·AHA·향료 등), 임신/알레르기 병기 | Formula OS Phase A |
+| 31 | `customer-store.test.js` | 9 | `src/exams/cosmetic/customer-store.js` — 고객 CRUD, 상담 이력 append-only, `unlinkCustomerFromFormulas`, 20명 한도 | Formula OS Phase B |
+| 32 | `material-ledger.test.js` | 9 | `src/exams/cosmetic/material-ledger.js` — 원료 CRUD, 기한 상태 파생(expired/soon/ok/none), `daysUntilExpiry` 자정 기준 | Formula OS Phase C |
+| 33 | `formula-compliance.test.js` | 4 | `src/exams/cosmetic/views/formula-compliance.js` — 항목 id 고유성, refs 유효성, 법령 파일 실존, 필수 섹션 커버리지 | Formula OS Phase D |
 | 34 | `csv-import.test.js` | 17 | `src/csv-utils.js` 파서·EUC-KR 디코딩 + `importCustomers`/`importMaterials` 중복·한도·sanitize | Formula OS CSV |
 | 35 | `supabase-client.test.js` | 6 | `src/supabase-client.js` — lazy init, UMD 동적 로드, 미설정 폴백 | window 스텁 |
 | 36 | `sw-prune.test.js` | 5 | `sw.js` 캐시 프루닝 — 한글 경로 인코딩 오삭제 회귀 가드 | 서비스워커 로직 |
@@ -439,7 +439,7 @@ npm run hooks:install
 ### 4.11 Formula OS — 배합 계산기
 
 #### `formula-store.test.js` (31개)
-- `src/formula-store.js`: 포뮬러 저장/조회/복제/삭제 CRUD
+- `src/exams/cosmetic/formula-store.js`: 포뮬러 저장/조회/복제/삭제 CRUD
 - 저장 한도 `FORMULA_LIMIT`(5개) 초과 시 오래된 항목 삭제
 - 고객 정보 정제 — 이름 길이, 피부 유형/제형 화이트리스트(`CUSTOMER_OPTIONS`), 알레르기·임신수유·사용 중 제품 필드
 - 원료 행 정제 — 이름/배합률/제조 단계(`PHASES`), 빈 행 제거, 단계별 정렬 순서
@@ -449,7 +449,7 @@ npm run hooks:install
 - localStorage 모킹 (`getItem`/`setItem`/`removeItem`)
 
 #### `formula-rules.test.js` (23개)
-- `src/formula-rules.js`: 제형별 베이스 템플릿(세럼·크림 등) 추천 역할 규칙
+- `src/exams/cosmetic/formula-rules.js`: 제형별 베이스 템플릿(세럼·크림 등) 추천 역할 규칙
 - 고민·피부 유형별 원료 제안 매핑
 - 안전 필터 — `banned` 상태 원료 제외, 고객 알레르기 원료 제외, 임신수유 `⚠` 플래그
 - 맞춤 규칙 추가/삭제/초기화, 기본 규칙과 병합 시키기
@@ -457,7 +457,7 @@ npm run hooks:install
 - 합성 데이터 (가짜 원료 레지스트리 주입), 실제 DB 무관
 
 #### `formula-check.test.js` (20개)
-- `src/formula-check.js`: 원료 이름 인덱스 구축 (표기 변형·별표 병기)
+- `src/exams/cosmetic/formula-check.js`: 원료 이름 인덱스 구축 (표기 변형·별표 병기)
 - 배합 검증 4상태 — 한도이내(`within`) / 한도초과(`over`) / 금지(`banned`) / 확인필요(`unknown`)
 - 고시 한도(`maxPercent`)와 실제 배합률 비교, 경계값(같음 = 이내)
 - 고시 출처(`고시/별표 번호`) 문자열 추적

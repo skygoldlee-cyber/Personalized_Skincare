@@ -1,7 +1,8 @@
-# 💄 Passmula
+# 💄 Passory
 
-> **Pass + Formula — 맞춤형화장품 조제관리사 자격시험 통합 플랫폼**
+> **멀티시험 자격증 학습 플랫폼 — 시험별 콘텐츠 팩 구조**
 >
+> 첫 콘텐츠 팩: **맞춤형화장품 조제관리사** (앱명 Passmula — Pass + Formula).
 > 교재 읽기 · 플래시카드 · 기출 퀴즈 · 오답 복습 · 성적 분석 · 오디오북 · Formula OS 실무 배합까지 하나로.
 > **문서 ID**: DOC-ROOT-01
 > **관련 SPEC ID**: 해당 없음 (프로젝트 소개)
@@ -13,7 +14,9 @@
 
 ## 📖 프로젝트 소개
 
-**Passmula**는 한국 **맞춤형화장품 조제관리사** 국가자격시험을 준비하는 수험생을 위한 웹 기반 학습 애플리케이션입니다. 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, Vercel에 정적 배포되며 **localStorage가 1차 저장소**입니다 (계정 없이 전 기능 사용 가능). 로그인한 사용자에게는 **선택적 Supabase 클라우드 동기화**를 제공합니다.
+**Passory**는 자격시험을 "콘텐츠 팩"으로 수용하는 웹 기반 멀티시험 학습 플랫폼입니다. `content/exams/<시험id>/`에 콘텐츠를 배치하고 `content/exams.json`에 엔트리를 추가하면 새 시험이 온보딩됩니다 (현재 등록: 맞춤형화장품 조제관리사 `cosmetic` — 앱명 Passmula, 식품기사 `food` — Phase C 파일럿). 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, Vercel에 정적 배포되며 **localStorage가 1차 저장소**입니다 (계정 없이 전 기능 사용 가능). 로그인한 사용자에게는 **선택적 Supabase 클라우드 동기화**를 제공합니다.
+
+아래 기능 목록은 기본 시험 팩(cosmetic) 기준입니다 — 시험별 `features` 플래그로 기능이 자동 게이팅됩니다.
 
 ### 시험 과목 (4과목 · 19단원)
 

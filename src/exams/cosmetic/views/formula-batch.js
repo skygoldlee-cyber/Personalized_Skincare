@@ -7,9 +7,9 @@
 // 배치는 회차 기록: 생성 시 처방의 검증 결과·전성분·제형을 스냅샷으로 저장해
 // 처방이 수정·삭제돼도 당시 기록이 보존된다 (batch-store.js 주석 참조).
 
-import { esc } from '../sanitize.js';
-import { showToast, showConfirm } from '../ui-utils.js';
-import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
+import { esc } from '../../../sanitize.js';
+import { showToast, showConfirm } from '../../../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../../../pro-upgrade.js';
 import { showPanel, formulaSubNav, getEl } from './formula.js';
 import { listFormulas, getFormula } from '../formula-store.js';
 import { listCustomers, getCustomer } from '../customer-store.js';
@@ -22,15 +22,15 @@ import {
   QC_FIELDS, QC_VALUES, HYGIENE_FIELDS,
 } from '../batch-store.js';
 import { localDateTimeNow } from '../store-utils.js';
-import { DataLoader } from '../data-loader.js';
+import { DataLoader } from '../../../data-loader.js';
 import { daysUntilExpiry, findMaterialsByName } from '../material-ledger.js';
 import { isPreservative } from '../formula-stability.js';
 import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
 } from './formula-print.js';
 
-import { toCsv, downloadCsv } from '../csv-utils.js';
-import { todayKey, localDateKey } from '../utils.js';
+import { toCsv, downloadCsv } from '../../../csv-utils.js';
+import { todayKey, localDateKey } from '../../../utils.js';
 
 // 폼 상태 — editingId가 있으면 보정 모드(identity 필드 읽기 전용)
 const draft = { editingId: null };

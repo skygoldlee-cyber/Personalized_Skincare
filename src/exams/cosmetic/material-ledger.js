@@ -12,7 +12,7 @@
 // 기한 상태는 저장하지 않고 조회 시 계산한다 (materialStatus) — 날짜가 지나도
 // 별도 갱신 없이 항상 현재 상태를 반영.
 
-import { STORAGE_KEYS } from './storage-keys.js';
+import { STORAGE_KEYS } from '../../storage-keys.js';
 import {
   loadItems, saveItems, newId, clampStr, numOrNull, clampDate,
 } from './store-utils.js';

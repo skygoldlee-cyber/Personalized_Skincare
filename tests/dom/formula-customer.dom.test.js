@@ -18,8 +18,8 @@ import {
 import {
     openCustomerPanel, custNew, custSave,
     custImportCsv, custExportCsv, custCsvTemplate,
-} from '../../src/views/formula-customer.js';
-import { listCustomers, createCustomer } from '../../src/customer-store.js';
+} from '../../src/exams/cosmetic/views/formula-customer.js';
+import { listCustomers, createCustomer } from '../../src/exams/cosmetic/customer-store.js';
 
 function csvFile(text, name = 'customers.csv') {
     return new File([text], name, { type: 'text/csv' });

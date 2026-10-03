@@ -33,11 +33,11 @@ const formula = {
     // 스텁을 outerHTML 교체한다.
     markup: './html/views/formula.html',
     loaders: {
-        main: _lazyImport(() => import('./views/formula.js')),
-        batch: _lazyImport(() => import('./views/formula-batch.js')),
-        customer: _lazyImport(() => import('./views/formula-customer.js')),
-        material: _lazyImport(() => import('./views/formula-material.js')),
-        compliance: _lazyImport(() => import('./views/formula-compliance.js')),
+        main: _lazyImport(() => import('./exams/cosmetic/views/formula.js')),
+        batch: _lazyImport(() => import('./exams/cosmetic/views/formula-batch.js')),
+        customer: _lazyImport(() => import('./exams/cosmetic/views/formula-customer.js')),
+        material: _lazyImport(() => import('./exams/cosmetic/views/formula-material.js')),
+        compliance: _lazyImport(() => import('./exams/cosmetic/views/formula-compliance.js')),
         notice: _lazyImport(() => import('./notice-check.js')),
     },
     // [loaderKey, data-click 핸들러명 목록] — app.js 위임 디스패치에 브리지된다

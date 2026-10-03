@@ -81,16 +81,16 @@ export function selectExam(id) {
 
 /**
  * 활성 시험의 앱 이름 — 브랜드면(iOS 홈화면 타이틀·푸터·온보딩·미디어 세션)에 쓰는 단일 이름.
- * 우선순위: exam.appName → logoMain+logoSub → exam.name → 'Passmula'(레지스트리 부재 폴백).
+ * 우선순위: exam.appName → logoMain+logoSub → exam.name → 'Passory'(플랫폼 브랜드 폴백).
  * @returns {string}
  */
 export function getExamAppName() {
     const exam = getActiveExam();
-    if (!exam) return 'Passmula';
+    if (!exam) return 'Passory';
     return exam.appName
         || ((exam.logoMain || '') + (exam.logoSub || '')).trim()
         || exam.name
-        || 'Passmula';
+        || 'Passory';
 }
 
 /** 시험 기능 플래그 (exams.json의 features — 미지정 시 false) */

@@ -10,7 +10,7 @@ import { dirname, join } from 'node:path';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CONTENT_ROOT = join(ROOT, 'content', 'exams', 'cosmetic');
 const { COMPLIANCE_SECTIONS, LAW_DOCS } = await import(
-    pathToFileURL(join(ROOT, 'src/views/formula-compliance.js')).href);
+    pathToFileURL(join(ROOT, 'src/exams/cosmetic/views/formula-compliance.js')).href);
 
 test('모든 체크 항목 id가 고유하고 비어 있지 않다', () => {
     const ids = [];

@@ -3,9 +3,9 @@
 // 고객 정보 선택지 채우기·고객 카드 불러오기/저장·안정성 확인 필드 읽기/쓰기·
 // 알레르기 칩·접이식 섹션 요약. 공유 상태(calc)·getEl·readCalcInputs는
 // formula.js에서 import한다 (런타임 호출 전용 순환 — formula-recommend.js와 동일 패턴).
-import { esc } from '../sanitize.js';
-import { showToast } from '../ui-utils.js';
-import { showStoreError } from '../pro-upgrade.js';
+import { esc } from '../../../sanitize.js';
+import { showToast } from '../../../ui-utils.js';
+import { showStoreError } from '../../../pro-upgrade.js';
 import {
   CUSTOMER_OPTIONS, STABILITY_METHODS, STABILITY_RESULTS,
 } from '../formula-store.js';

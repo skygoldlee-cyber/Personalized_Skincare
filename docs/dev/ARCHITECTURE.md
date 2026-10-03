@@ -1,6 +1,6 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
-> **대상 프로젝트**: Passmula (Cosmetic Pass Master) — 맞춤형화장품 조제관리사 스마트 학습 + Formula OS 실무 플랫폼
+> **대상 프로젝트**: Passory — 멀티시험 스마트 학습 플랫폼 (기본 시험 팩: 맞춤형화장품 조제관리사, 앱명 Passmula + Formula OS 실무)
 > **최종 업데이트**: 2026-09-24
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명 — 이 문서만으로 신규 기여자가 설계 의도를 파악하고 동일한 패턴으로 구현할 수 있는 수준을 지향
 > **문서 ID**: DOC-DEV-02
@@ -298,16 +298,28 @@ passory/
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
 │   ├── sync.js                 #   클라우드 스냅샷 동기화 (sync_snapshots push/pull, Pro entitlement 게이트 — canCloudSync)
-│   ├── formula-store.js        #   Formula OS — 포뮬러 CRUD·한도(5)·스키마 정제·전성분 생성
-│   ├── formula-rules.js        #   Formula OS — 추천 규칙 (베이스·고민/피부 매핑·안전 필터)
-│   ├── formula-check.js        #   Formula OS — 고시 한도 검증 엔진 (4상태 판정)
-│   ├── formula-stability.js    #   Formula OS — 제형 안정성 체크 (상 비율·상호작용·단계·pH)
-│   ├── batch-store.js          #   Formula OS — 조제 기록(배치) 채번·QC·스냅샷 (한도 50)
-│   ├── customer-store.js       #   Formula OS — 고객 카드·상담 이력 (한도 20, 동기화 제외)
-│   ├── material-ledger.js      #   Formula OS — 원료 입고·기한·재고 (한도 30)
-│   ├── usage-guide.js          #   Formula OS — 사용 안내문 생성기
-│   ├── store-utils.js          #   Formula OS — 스토어 공통 헬퍼 (loadItems/newId/clamp…)
-│   ├── csv-utils.js            #   CSV 파서·EUC-KR 폴백·BOM 직렬화
+│   ├── csv-utils.js            #   CSV 파서·EUC-KR 폴백·BOM 직렬화 (공용)
+│   ├── exams/                  #   시험 도메인 모듈 격리 (DA-13) — 시험 전용 실행 코드
+│   │   └── cosmetic/           #     맞춤형화장품 조제관리사 도메인 (domain:cosmetic)
+│   │       ├── formula-store.js    #   포뮬러 CRUD·한도(5)·스키마 정제·전성분 생성
+│   │       ├── formula-rules.js    #   추천 규칙 (베이스·고민/피부 매핑·안전 필터)
+│   │       ├── formula-check.js    #   고시 한도 검증 엔진 (4상태 판정)
+│   │       ├── formula-stability.js #  제형 안정성 체크 (상 비율·상호작용·단계·pH)
+│   │       ├── batch-store.js      #   조제 기록(배치) 채번·QC·스냅샷 (한도 50)
+│   │       ├── customer-store.js   #   고객 카드·상담 이력 (한도 20, 동기화 제외)
+│   │       ├── material-ledger.js  #   원료 입고·기한·재고 (한도 30)
+│   │       ├── usage-guide.js      #   사용 안내문 생성기
+│   │       ├── store-utils.js      #   스토어 공통 헬퍼 (loadItems/newId/clamp…)
+│   │       └── views/              #   Formula OS 뷰 (practice-registry 지연 로드)
+│   │           ├── formula.js          # 계산기·My 포뮬러·서브내비
+│   │           ├── formula-recommend.js # 추천 베이스/원료 패널·맞춤 규칙 UI
+│   │           ├── formula-fields.js   # 처방 작업대 필드 블록
+│   │           ├── formula-batch.js    # 조제 기록(배치) 목록·폼·상세
+│   │           ├── formula-customer.js # 고객 관리 패널
+│   │           ├── formula-material.js # 원료 장부 패널
+│   │           ├── formula-compliance.js # 법규 준수 체크리스트
+│   │           ├── formula-print.js    # 인쇄 빌더 (기록지·라벨·안내문)
+│   │           └── trainer-ingredients.js # 원료 배합 챌린지
 │   ├── config/
 │   │   ├── timing.js           #   타이밍 상수 (PWA 프로브, 스와이프 임계값)
 │   │   └── cache.js            #   캐시 설정 상수
@@ -319,7 +331,6 @@ passory/
 │       ├── daily-challenge.js  #     데일리 챌린지 (quiz.js에서 분리)
 │       ├── trainer.js          #     훈련소 허브 (재수출)
 │       ├── trainer-calc-practice.js  # 계산 연습기
-│       ├── trainer-ingredients.js    # 원료 배합 챌린지
 │       ├── trainer-drills.js   #     O/X 드릴 + 드릴 공통 오케스트레이션
 │       ├── trainer-drill-combo.js #  복수정답형(combo) 드릴 (trainer-drills.js에서 분리)
 │       ├── pomodoro.js         #     뽀모도로 타이머 (trainer.js에서 분리)
@@ -337,13 +348,6 @@ passory/
 │       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
-│       ├── formula.js          #     Formula OS 허브 — 계산기·My 포뮬러·서브내비
-│       ├── formula-recommend.js #    추천 베이스/원료 패널·맞춤 규칙 UI (formula.js 분리)
-│       ├── formula-batch.js    #     조제 기록(배치) 목록·폼·상세
-│       ├── formula-customer.js #     고객 관리 패널
-│       ├── formula-material.js #     원료 장부 패널
-│       ├── formula-compliance.js #   법규 준수 체크리스트
-│       ├── formula-print.js    #     인쇄 빌더 (기록지·라벨·안내문)
 │       ├── event-listeners.js  #     이벤트 리스너 일괄 바인딩
 │       ├── offline-detection.js #    오프라인 감지
 │       └── navigation.js       #     뷰 전환 유틸
@@ -583,10 +587,10 @@ passory/
 | [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) — `content/exams/cosmetic/knowledge/ingredients.json` SSOT의 `bundleFields` 투영 결과. 참조자료 `참조자료/원료/*.md`의 GENERATED-TABLE 표도 같은 빌드가 재생성 | `tools/build/index.js` (knowledge plugin) |
 | `data/exams/<id>/<key>_data.<hash>.js` | 범용 지식DB 번들 (food 예: `additives_data` — 식품첨가물 사전). `content/exams/food/knowledge/additives.json`처럼 시험 콘텐츠 루트의 `knowledge/` 원본 → `<KEY>_DATA` 전역 + `registry[key]` 메타(version·updatedAt·stats) — `DataLoader.loadDictionary()`가 `registry.knowledge.registryKey`로 온디맨드 로드 | `tools/build/index.js` (knowledge plugin) |
 | `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/knowledge/ingredients.json`의 `meta`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
-| `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
-| `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
-| `src/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 서브내비 칩, 인쇄·JSON 공유 | 수동 관리 |
-| `src/views/formula-batch.js` · `formula-customer.js` · `formula-material.js` · `formula-compliance.js` · `formula-print.js` | Formula OS 패널 뷰 — 조제 기록(목록·폼·상세), 고객 관리, 원료 장부, 법규 준수 체크리스트(법령 MD 링크·체크 영속), 인쇄 빌더(기록지·라벨·안내문) | 수동 관리 |
+| `src/exams/cosmetic/formula-store.js` · `src/exams/cosmetic/formula-rules.js` · `src/exams/cosmetic/formula-check.js` · `src/exams/cosmetic/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
+| `src/exams/cosmetic/batch-store.js` · `src/exams/cosmetic/customer-store.js` · `src/exams/cosmetic/material-ledger.js` · `src/exams/cosmetic/usage-guide.js` · `src/exams/cosmetic/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
+| `src/exams/cosmetic/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 서브내비 칩, 인쇄·JSON 공유 | 수동 관리 |
+| `src/exams/cosmetic/views/formula-batch.js` · `formula-customer.js` · `formula-material.js` · `formula-compliance.js` · `formula-print.js` | Formula OS 패널 뷰 — 조제 기록(목록·폼·상세), 고객 관리, 원료 장부, 법규 준수 체크리스트(법령 MD 링크·체크 영속), 인쇄 빌더(기록지·라벨·안내문) | 수동 관리 |
 | [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id_factory) |
 | [`data/audio_manifest.js`](../../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
@@ -1101,7 +1105,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **빌드 타임 자동 치환**: `tools/build/stamp_sw_version.js`가 빌드 완료 시 `CACHE_VERSION`을 `v${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요. 날짜는 **HEAD 커밋 날짜**(`%cd`) 기준 — 배포 머신 시각이 아니므로 이력과 일치 (git 미가용 시 로컬 시각 폴백)
 - **버전 3계층**: 기계 ID(`v20261016-fd06122` — 캐시 키·버전 비교) / 표시용(`v2026.10.16 · fd06122` — `src/app-version.js`의 `formatAppVersion`, 사이드바·설정·변경이력 모달) / 콘텐츠(원료 DB `2026.09.6` CalVer). `package.json`의 `version`은 배포 스탬프가 `YYYY.M.D`로 자동 동기화
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
-- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨 — 단 실무 피처 모듈(`src/views/formula*.js`, `formula-store` 등)은 제외. 활성 시험만 사용하므로 시험 간 프리캐시 비대화를 막기 위해 지연 import + `warmPracticeFeatures()` 유휴 예열로 런타임 캐시(cacheFirst)에 적재한다 (formula 스토어는 `pro-upgrade.js`도 `hasFeature` 게이트 아래 지연 import하므로 부트 그래프에 없음)
+- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨 — 단 실무 피처 모듈(`src/exams/cosmetic/views/formula*.js`, `formula-store` 등)은 제외. 활성 시험만 사용하므로 시험 간 프리캐시 비대화를 막기 위해 지연 import + `warmPracticeFeatures()` 유휴 예열로 런타임 캐시(cacheFirst)에 적재한다 (formula 스토어는 `pro-upgrade.js`도 `hasFeature` 게이트 아래 지연 import하므로 부트 그래프에 없음)
 - 콘텐츠 문서(`MD_ASSETS`)는 코드와 달리 전 시험 공유 프리캐시가 정책 — 원본 MD는 시험 간 소용량 텍스트이고 오프라인 최초 열람 보장이 우선이다 (시험별 격리는 코드 자산에만 적용)
 - `data/exams/cosmetic/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
@@ -1696,7 +1700,7 @@ npm run deploy
 
 ### D. 새 Formula OS 스토어 추가
 
-1. `src/store-utils.js`의 공통 헬퍼(`loadItems`/`saveItems`/`newId`/`clamp`) 재사용
+1. `src/exams/cosmetic/store-utils.js`의 공통 헬퍼(`loadItems`/`saveItems`/`newId`/`clamp`) 재사용
 2. `*_LIMIT_FREE` 상수 + `canCreate()` 게이트로 Free 한도 적용
 3. 스키마 정제 함수(`sanitize*`)로 입력 정규화
 4. `formula.js`의 PANELS/서브내비에 패널 등록 + `index.html`에 패널 섹션 추가
@@ -2108,7 +2112,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 | `MV-01~04` | §3.15 매뉴얼 뷰어 | `src/manual-viewer.js` |
 | `C-01~05` | §3.16 차트 | `src/charts.js` |
 | `CQ-01~05` | §3.17 콘텐츠 감사 | `tools/` audit 스크립트 (`audit:cards`/`audit:combo`) |
-| `FO-01~23` | §3.18 Formula OS | `src/formula-*.js` + `views/formula*.js` — 도메인 아키텍처 절 |
+| `FO-01~23` | §3.18 Formula OS | `src/exams/cosmetic/formula-*.js` + `views/formula*.js` — 도메인 아키텍처 절 |
 | `AU-01~08` | §3.19 계정·동기화 | `src/supabase-*.js` + `sync.js` — 계정·클라우드 절 |
 | `SC-01~03` | §3.20 학습 캘린더 | `src/views/study-calendar.js` + `study-tracker.js` |
 | `RV-01` | §3.20 복습 뷰 | `review-view` (quiz.js 렌더) |

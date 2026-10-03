@@ -25,7 +25,7 @@
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
 
-import { STORAGE_KEYS } from './storage-keys.js';
+import { STORAGE_KEYS } from '../../storage-keys.js';
 import { loadItems, saveItems, newId, clampStr, numOrNull, pickEnum } from './store-utils.js';
 
 // Free 플랜 저장 한도 (결제 연동 없이 정책 상수로만 동작)

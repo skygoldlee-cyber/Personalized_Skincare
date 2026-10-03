@@ -17,6 +17,8 @@
  *   - feature 규칙의 flag는 content/exams.json 의 features 에 존재해야 함
  *   - domain:<id> 의 id는 exams.json 에 등록된 시험이어야 함
  *   - 매칭 결과가 없는(=삭제·이동된 파일의) 스테일 패턴은 오류
+ *   - platform 계층 src 하위 .js 에 시험 id 문자열 리터럴 금지
+ *     (불가피한 폴백은 map.examLiteralAllow에 사유를 명시해 면제)
  *
  * 자동 도메인 규칙:
  *   exams.json에 등록된 각 시험의 contentRoot/dataRoot는 자동으로
@@ -194,6 +196,32 @@ function main() {
         }
         matchedCount.set(hits[0].label, matchedCount.get(hits[0].label) + 1);
         layerOf.set(file, hits[0].rule.layer);
+    }
+
+    // --- platform 계층 시험 id 리터럴 금지 ---
+    // 시험 id는 exams.json(EXAMS_LIST)에서 해석해야 한다. platform으로 분류된
+    // src 파일이 'cosmetic' 같은 id 리터럴을 내장하면 도메인 결합이 코드에
+    // 재유입되므로 차단한다. examLiteralAllow는 마지막 보루 폴백 등
+    // "레지스트리 자체가 부재한 저하 상태"에서만 쓰는 예외 명단이다.
+    {
+        const allow = new Set(Object.keys(map.examLiteralAllow || {}));
+        const idAlt = [...examIds].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        if (idAlt.length > 0) {
+            const idLiteralRe = new RegExp(`['"\`](?:${idAlt.join('|')})['"\`]`);
+            for (const [file, layer] of layerOf) {
+                if (layer !== 'platform') continue;
+                if (!/^src\/.+\.js$/.test(file)) continue;
+                if (allow.has(file)) continue;
+                const src = fs.readFileSync(path.join(ROOT, file), 'utf8');
+                const m = src.match(idLiteralRe);
+                if (m) {
+                    errors.push(
+                        `${file}: platform 계층에 시험 id 리터럴 ${m[0]} — ` +
+                        `EXAMS_LIST/getActiveExam() 해석으로 대체 (폴백 필요 시 domain-map.json examLiteralAllow에 사유 명시)`
+                    );
+                }
+            }
+        }
     }
 
     // --- 스테일 패턴 ---
