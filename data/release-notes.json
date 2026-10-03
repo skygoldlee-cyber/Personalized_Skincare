@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-267666f",
+    "date": "2026-10-03",
+    "notes": [
+      "[리팩터링] extract practice-workspace feature registry (practice-registry.js)"
+    ]
+  },
+  {
     "version": "v20261003-3e79e5d",
     "date": "2026-10-03",
     "notes": [
@@ -147,13 +154,6 @@
       "[기능·check] check:testfirst — Docs-First 테스트 선행 게이트 기계화",
       "[수정·pdf2md] 실패 침묵·우선순위 불일치·필터 오해석 3건 수정",
       "[수정·ref-pipeline] md2doc 리뷰 반영 — 폴백·캐시·경로 탈출 등 8건"
-    ]
-  },
-  {
-    "version": "v20261002-8b84710",
-    "date": "2026-10-02",
-    "notes": [
-      "[문서·agents] 소스 수정 전 설계 문서·테스트 선행 절차 명문화"
     ]
   }
 ]
