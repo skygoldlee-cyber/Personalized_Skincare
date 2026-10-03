@@ -83,6 +83,140 @@
 
 ---
 
+## 기존 기법 상세
+
+### 1. 단일 소스 오브 트루스 (SSOT)
+
+- **개념**: 모든 정보에 유일한 권위 원본을 두고, 파생물은 전부 생성물로 만든다 — 원본·사본의 양방향 편집이 만드는 불일치를 구조적으로 원천 차단
+- **구현물**: `content/`(교재·문제은행·문서 원본) → `build:data`/`build_doc_bundles` → `data/` 번들 · `index.template.html`+`html/views/` 파셜 → `build:html` → `index.html` · SPEC+`@spec` 태그 → `build:trace` → `TRACE_MATRIX.md`
+- **규약**: 생성물 직접 편집 금지(헤더에 생성기 명시) — 수정은 항상 원본에서, 생성물은 재생성
+
+### 2. 신선도 게이트 (Freshness Gate)
+
+- **개념**: "원본을 바꿨는데 생성물 재생성을 잊었다"는 침묵의 불일치를 게이트로 탐지
+- **구현물·방식**:
+  - `check:trace` — TRACE_MATRIX 입력 파일 해시 스탬프 비교
+  - `check:html` — index.html을 파셜에서 재조립해 바이트 비교(개행 정규화)
+  - `check:datafresh` — 빌드 체인 실행 후 `git diff`로 생성물 변동 감지·자동 원복
+  - `check:drillfresh`·`check:docbundles` — 드릴/문서 번들 ↔ 원본 쌍 비교
+- **효과**: 생성물 경로가 clean일 때만 실행되는 설계로 거짓 양성 없이 누락된 재생성을 매번 차단
+
+### 3. 결정성 빌드 (Deterministic Build)
+
+- **개념**: 동일 입력이면 환경 무관하게 동일 바이트 출력 — 재현 불가 빌드는 diff·캐시·검증을 전부 불가능하게 만든다
+- **구현물**: `.gitattributes`의 LF 강제 + `build_trace_matrix`의 개행 정규화 해시 — Windows(autocrlf)와 Linux CI가 동일 해시를 생산
+- **효과**: 해시 기반 신선도 게이트(#2)가 성립하는 전제 조건
+
+### 4. 다층 검증 방어 (Defense in Depth)
+
+- **개념**: 하나의 게이트가 뚫려도 다음 층이 잡도록 검증을 시점별로 중첩
+- **층**: `pre-commit`(types·lint·secrets) → `pre-push`(trace·specrefs·docs·영향 테스트) → `check:ci`(18단계) → `deploy.js` 가드(clean tree·origin 동기화·게이트 재실행·배포 후 스모크)
+- **강제**: `check:hooks`가 훅 미설치를 경고(check:ci 첫 단계) — 로컬 우회 경로 자체를 감시
+
+### 5. 요구사항 추적성 (Requirements Traceability)
+
+- **개념**: 요구사항 ID → 구현 → 테스트 → 문서의 링크를 코드 주석(`@spec`)과 문서 헤더(`관련 SPEC ID`)로 인라인화해 기계 스캔
+- **구현물**: `tools/build/build_trace_matrix.js` → `docs/dev/TRACE_MATRIX.md` — 390개 요구사항 × 소스/테스트/문서/보고서 링크
+- **게이트**: `check:specrefs` — 스테일 ID 참조 탐지 + "소스 연결 있는데 테스트 없는 요구사항" 갭 기준선(**현재 0 — 신규 갭 즉시 실패**)
+- **효과**: "이 요구사항 어디 구현됐지?" 역방향 질의와 "이 코드가 어떤 요구사항이지?" 정방향 질의 모두 지원
+
+### 6. 영향도 분석 (Impact Analysis)
+
+- **개념**: 변경 파일에서 영향받는 요구사항과 실행해야 할 테스트를 추적 매트릭스로 역산
+- **구현물**: `tools/check/impact_tests.js` — 미커밋 diff 자동 분석, `--ref`로 커밋 범위 분석, `--run`으로 권장 테스트 실제 실행
+- **배선**: pre-push 훅에서 `--run` 실행 — 전체 스위트 대신 영향 범위만 검증해 푸시 지연 최소화
+
+### 7. 이중 구현 등가성 (Dual-Implementation Equivalence)
+
+- **개념**: 동일 변환을 구현한 두 파서(빌드용·런타임용)가 같은 입력에서 이행 차이를 내지 않는지 지속 대조
+- **구현물**: `check:parser` — 빌드 파이프라인 파서 ↔ 런타임 `markdown-parser.js`의 동일 문서 변환 결과 비교
+- **배경**: 콘텐츠 MD가 빌드 번들과 앱 내 뷰어에서 각각 파싱되는 구조 — 한쪽만 수정되는 파서 드리프트가 실수로 발생한 이력에서 도입
+
+### 8. 아키텍처 피트니스 함수 (Architecture Fitness Functions)
+
+- **개념**: 아키텍처 규칙을 문서가 아닌 실행 가능한 검사로 표현 — "규칙을 지켜라"가 아니라 "위반하면 빌드가 깨진다"
+- **구현물**:
+  - `check:domainmap` — watchedDirs 전 파일의 platform/feature/domain 분류 강제 + 시험명·`exams/<id>/` 리터럴의 platform 침투 차단
+  - `check:imports` — import/export 교차 검증 + **도메인 경계 3규칙**(신규 6종 상세 참조)
+  - `check:storage` — `storage.js` 우회하는 localStorage 직접 접근 차단(부트스크립트 등 사유 등록된 허용 목록 제외)
+- **효과**: 멀티시험 분리 같은 대규모 리팩터링이 "한 번의 수술"이 아니라 게이트가 유지하는 지속 상태가 됨
+
+### 9. 도메인 격리·규약 경로 (Convention over Configuration)
+
+- **개념**: 시험별 자산을 `exams/<id>/` 규약 위치에 두고 활성 시험만 런타임 해석 — 설정 파일 대신 디렉터리 규약이 배치를 결정
+- **구현물**: `src/exams/`·`html/exams/`·`css/exams/`·`tests/*/exams/`·`content/exams/`·`data/exams/` 6계층 + `_domainImport()`+`${getActiveExamId()}` 템플릿 + `exam-data-boot.js`(파싱 중 활성 시험 데이터 번들 동기 삽입)
+- **검증**: E2E가 네트워크 수준에서 증명 — food 부팅 시 `exams/cosmetic/` 요청 0건. 규약 테스트가 feature 선언 시험의 실물 파일 존재를 검증
+
+### 10. 테스트 피라미드 (Test Pyramid)
+
+- **개념**: 빠르고 결정적인 하층 테스트를 다수, 느리고 취약한 상층을 소수로 — 비용 대비 신뢰 최적화
+- **계층**(2026-10 기준): unit `node --test` 800+(순수 로직) → DOM vitest+jsdom 510(뷰 계약·오프라인 모킹) → E2E Playwright 21(실브라우저 부트·SW·격리)
+- **규약**: `check:testfirst`가 로직 변경 시 테스트 동반을 강제 — 피라미드가 스스로 유지됨
+
+### 13. 커버리지 기준선 (Coverage Ratchet)
+
+- **개념**: 절대 목표치 대신 "지금보다 나빠지지 않는다"를 강제 — 기존 부채는 동결하고 신규 악화만 차단
+- **구현물**: `coverage_merge.js --check` — unit+DOM v8 커버리지 병합 후 기준선 대비 하향 시 실패
+- **철학**: 백분율 목표는 게이밍(무의미 테스트 작성)을 유도하지만, 래칫은 회귀만 막아 실효성이 높음
+
+### 14. 골든 마스터 비교 (Golden Master)
+
+- **개념**: 레거시 변환 결과를 "정답본"으로 동결하고, 재변환 출력과 대조해 회귀 탐지 — 요구사양을 완전히 명문화 못 하는 변환 로직에 유효
+- **구현물**: `verify:refs` — `ref_md_v2/`(재변환 스테이징) vs `ref_md/`(승격된 현행본) 내용 대조, 누락 시 exit 1
+- **절차**: PDF 교체 → convert:refs → verify:refs → 수동 승격 → `check:reffresh -- --update`(PDF 해시 스탬프)
+
+### 16. 문서-코드 동기화 게이트 (Docs-First Enforcement)
+
+- **개념**: "문서는 나중에"가 구조적으로 불가능하도록 커밋/푸시 단계에서 강제
+- **구현물**:
+  - `check:docsync` — src/tools/tests/설정 변경 시 docs/·AGENTS·README 갱신 동반 필수 (`SKIP_DOCSYNC=1`·`[no-docs]` 우회 경로는 명시적으로 존재 — 면제도 감사 가능하게)
+  - `check:testfirst` — 로직 변경 시 테스트 동반 (`[no-test]`·`SKIP_TESTFIRST=1`)
+- **효과**: 문서 정합 게이트(#17)가 "스테일을 잡는" 층이라면, 이 층은 "스테일이 생기지 않게 하는" 층
+
+### 17. 문서 인벤토리 정합 (Inventory Parity)
+
+- **개념**: 문서 안의 선언(트리·경로·명령·키 목록)과 실제 파일시스템·package.json·코드 사용의 양방향 일치를 검증
+- **구현물**: `check:inventory`(AGENTS 트리·ARCHITECTURE box 트리 ↔ 실물) · `check:commands`(문서의 npm 인용 ↔ 스크립트) · `check:plan`(feature-plan 키 ↔ 코드 사용 ↔ 로드맵) · `check:featflags`(exams.json features ↔ 코드 사용 — 미선언 키는 영구 falsy 죽은 경로) · `check:ciparity`(ci.yml ↔ check:ci) · `check:notes`(릴리스 노트 ↔ 커밋 해석)
+- **효과**: docs/README 트리의 "(10개)" 같은 개수 표기까지 실측과 불일치하면 실패 — 문서가 거짓말을 할 수 없는 구조
+
+### 19. Docs-as-Code
+
+- **개념**: 문서를 코드와 같은 수명주기(버전·검증·리뷰)로 관리
+- **구현물**: 모든 문서의 `문서 ID`(DOC-XXX-NN, 유일성 검증) + `관련 SPEC ID` 헤더 + `check:docs`가 경로 참조 실존·ID 누락/중복을 pre-push·CI에서 검증
+- **효과**: 문서 링크 부패·고아 문서·인덱스 누락이 게이트 실패로 표면화
+
+### 20. 저장소 추상화 계층 (Storage Abstraction)
+
+- **개념**: 영속성 접근을 단일 모듈로 수렴시켜 백엔드 교체·스코프·쿼터 정책을 중앙화
+- **구현물**: `src/storage.js` — localStorage(1차)/Supabase(선택 동기화) 동일 API, 동기 getItem/setItem + Async 이중 인터페이스, 쓰기 훅·쿼터 감지 중앙화
+- **강제**: `check:storage`(#8)가 우회를 차단 — 부트 스크립트 등 예외는 ALLOWED_FILES에 사유 명시 필수 (ADR-0003)
+
+### 22. 배포 단일 진입점 + 스탬프 (Single-Entry Deploy)
+
+- **개념**: 배포는 사람 절차가 아닌 스크립트 하나 — 가드·검증·버전 스탬프·사후 확인이 한 흐름
+- **구현물**: `tools/deploy/deploy.js` — clean tree·origin/main 동기화 가드 → 품질 게이트 재실행 → `stamp:sw`로 CACHE_VERSION 자동 커밋·푸시 → `vercel --prod` → 배포 후 스모크(index 200·sw.js 버전·APP_VERSION 일치)
+- **규약**: `vercel --prod` 직접 실행 금지 — 미푸시 커밋이 프로덕션에 올라가는 사고 경로 차단
+
+### 23. 공급망 보안 (Supply-Chain Security)
+
+- **개념**: 내 코드가 아니라 의존성·빌드 산출물의 무결성도 검증 대상
+- **구현물**: `npm run sbom`(SPDX 산출 → CI 아티팩트) · `npm audit --audit-level=high`(CI 게이트) · Dependabot 주간 PR · `check:secrets`(개인키·service_role·토큰 패턴 — pre-commit 차단, publishable key는 ALLOWLIST)
+- **판별**: Stryker 도입 시 undici high 취약점을 즉시 탐지→`audit fix` 해소한 실전 사례 있음
+
+### 24. CalVer 버저닝
+
+- **개념**: `v<날짜>-<커밋해시>` — 배포 시각과 코드 정체를 한 문자열로 (API 소비자가 없는 앱에서 SemVer의 의미론은 불필요)
+- **구현물**: `stamp:sw`가 sw.js CACHE_VERSION·APP_VERSION을 커밋 해시로 스탬프 → 배포 스모크가 sw.js 버전 문자열과 APP_VERSION 일치를 실검증
+- **효과**: 프로덕션에 올라간 정확한 커밋을 역추적 가능 — "지금 서버에 뭐가 떠 있지"가 버전 문자열 하나로 해소
+
+### 25. 점진적 품질 강제 (Quality Ratchet)
+
+- **개념**: 레거시 위반은 기준선으로 동결하고 신규 위반만 실패시키는 일방향 래칫 — 완벽 요구는 마비를 만들지만 래칫은 방향만 강제
+- **구현물**: `lint --max-warnings 0`(기존 경고 동결·신규 경고 차단) · specrefs 갭 기준선 0 · 커버리지 하향 차단(#13)
+- **철학**: 개선은 선택, 악화는 불가 — 시간이 지날수록 품질이 단조 증가
+
+---
+
 ## 카테고리별 적용 맵
 
 ### A. 요구사항 → 산출물 추적
