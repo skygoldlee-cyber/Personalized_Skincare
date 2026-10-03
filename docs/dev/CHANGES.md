@@ -23,6 +23,15 @@
 - domain-map `domain:cosmetic` 패턴 갱신(테스트·자산 경로), AGENTS·ARCHITECTURE 트리에 `html/exams/<id>/`·`css/exams/<id>/`·`tests/{unit,dom}/exams/<id>/` 노드 추가
 - 검증: unit 804/804 · DOM 510/510 · check:inventory(37개 디렉터리)·check:docs·check:domainmap(1053)·check:types·lint·check:imports·check:html·verify:assets·check:uitext 통과 · 파셜/CSS 서빙 200 확인
 
+## 2026-10-03 도메인 경로 규약화 — 활성 시험 id로 자산 해석
+
+- **플랫폼 레지스트리의 하드코딩 도메인 경로 제거**: `practice-registry.js`·`app.js`·`pro-upgrade.js`의 지연 import가 `` `./exams/${getActiveExamId()}/…` `` 규약 경로로 전환 — 시험 추가 시 `src/exams/<id>/`·`html/exams/<id>/`·`css/exams/<id>/` 규약 배치만으로 동작
+- **`index.template.html` 스텁 플레이스홀더화**: `data-lazy-view="html/exams/{examId}/formula.html"` — build_html·DOM helpers·런타임 주입이 `{examId}`를 활성 시험으로 해석 (피처 미보유 시험은 미주입)
+- **정적 검증 보존**: `check:imports`가 `${getActiveExamId()}` 세그먼트를 등록 시험 전수로 확장 해석 + `_domainImport(rel)` 패턴 인식 — 템플릿 경로도 파일 실존·export 검증 유지
+- **회귀 게이트**: `check:domainmap`에 platform 파일의 `exams/<등록id>/` 경로 리터럴 탐지 추가
+- **커버리지 복구**: delegation-guard·security 테스트의 파셜 스캔을 재귀로 확장해 `html/exams/` 지연 파셜 포함
+- 검증: unit 805 · DOM 510 · E2E 18/18(신규 규약 테스트 — `/html/exams/cosmetic/formula.html` 요청 + 네비 클릭 주입) · check:types·imports·html·domainmap 통과
+
 ## 2026-10-03 멀티시험 Phase E 보완 — 잔여 결합 9개 항목 정리
 
 - **주석·헤더 정정**: 이동 18개 파일 헤더의 구 경로(`src/formula-*.js` 등)를 `src/exams/cosmetic/…`으로 갱신, `questions.js` 헤더의 "맞춤형화장품 조제관리사 문항 스키마"를 플랫폼 중립 표현으로 교체

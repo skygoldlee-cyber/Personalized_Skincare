@@ -106,3 +106,28 @@ test.describe('시험 전환 실경로 — selectExam → 리로드 → 부팅',
         await expect(page.locator('[data-app-name]').first()).toHaveText('Passmula');
     });
 });
+
+test.describe('도메인 경로 규약 — 활성 시험 id로 뷰 모듈·마크업 해석', () => {
+    test('cosmetic 부팅 — formula-view 마크업이 html/exams/cosmetic/ 규약 경로에서 주입된다', async ({ page }) => {
+        // warmPracticeFeatures가 유휴 시점 예열하므로 부팅 전부터 네트워크를 감청한다
+        const requests = [];
+        page.on('request', r => { if (r.url().includes('/html/exams/')) requests.push(r.url()); });
+        // 온보딩 오버레이 스킵 — cosmetic 기본 시험의 온보딩 완료를 시드
+        await page.addInitScript(() => {
+            localStorage.setItem('onboarding_seen_v1', '1');
+            localStorage.setItem('cosmetic:onboarding_seen_v1', '1');
+        });
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        // 예열이 안 탔을 수 있으니 뷰 진입으로 주입을 확정한다
+        await page.locator('[data-target="formula-view"]:visible').first().click();
+        await page.waitForFunction(() => {
+            const v = document.getElementById('formula-view');
+            return v && !v.hasAttribute('data-lazy-view');
+        }, null, { timeout: 15_000 });
+        // 규약 해석: 마크업은 활성 시험 id 디렉터리에서 fetch됐다
+        expect(requests.some(u => u.endsWith('/html/exams/cosmetic/formula.html'))).toBe(true);
+        // 주입된 파셜의 도메인 마크업이 실제 렌더됨
+        await expect(page.locator('#formula-view [data-click]').first()).toBeAttached();
+    });
+});

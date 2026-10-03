@@ -44,7 +44,7 @@ export const STORAGE_KEYS = {
   STATEMENT_STATS: 'statement_stats',
 
   /* ── domain:cosmetic 계약 키 ────────────────────────────────
-   * 아래 키는 src/exams/cosmetic/ 도메인 모듈이 소유한다.
+   * 아래 키는 src/exams/<시험id>/ 도메인 모듈이 소유한다.
    * 이 파일에 두는 이유: BACKUP_KEYS/RESET_KEYS/SYNC_EXCLUDE가
    * 플랫폼 계층에서 이 키들을 참조해야 하므로, platform → domain
    * 정적 import를 피하기 위해 중앙 레지스트리에 유지한다.

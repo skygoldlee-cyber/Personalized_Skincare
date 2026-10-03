@@ -216,6 +216,29 @@ function resolveModule(importerDir, modulePath) {
     return fs.existsSync(resolved) ? resolved : null;
 }
 
+// 템플릿 경로 확장 — `./exams/${getActiveExamId()}/views/x.js` 같은 규약
+// 경로는 src/exams/ 아래 실재하는 시험 디렉터리 각각으로 치환해 해석한다.
+// (활성 시험 id로 런타임 해석되는 도메인 경로 규약 — practice-registry/app.js 참조)
+function resolveModuleMulti(importerDir, modulePath) {
+    const cleaned = modulePath.split('?')[0];
+    if (!cleaned.includes('${')) {
+        const r = resolveModule(importerDir, cleaned);
+        return r ? [r] : [];
+    }
+    const examsDir = path.join(SRC_DIR, 'exams');
+    const examDirs = fs.existsSync(examsDir)
+        ? fs.readdirSync(examsDir, { withFileTypes: true })
+            .filter(e => e.isDirectory()).map(e => e.name)
+        : [];
+    const results = [];
+    for (const id of examDirs) {
+        const expanded = cleaned.replace(/\$\{[^}]*\}/g, id);
+        const r = resolveModule(importerDir, expanded);
+        if (r) results.push(r);
+    }
+    return results;
+}
+
 // --- 메인 검증 ---
 function main() {
     const files = collectJsFiles(SRC_DIR);
@@ -435,13 +458,17 @@ function main() {
             }
         }
         // LAZY_MODULE_HANDLERS 지연 로딩 테이블 — const loadX = _lazyImport(() => import('경로'))
-        // 로더를 찾아 테이블 [로더, ['이름'...]] 쌍의 이름을 해당 모듈의 사용으로 집계
+        // 로더를 찾아 테이블 [로더, ['이름'...]] 쌍의 이름을 해당 모듈의 사용으로 집계.
+        // 백틱 템플릿(`./exams/${id}/...`)은 resolveModuleMulti로 시험 디렉터리 확장 해석.
         const lazyLoaders = new Map();
-        const LAZY_LOADER_RE = /const\s+([A-Za-z_$][\w$]*)\s*=\s*_lazyImport\(\(\)\s*=>\s*import\(\s*'([^']+)'\s*\)\)/g;
+        const LAZY_LOADER_RE = /const\s+([A-Za-z_$][\w$]*)\s*=\s*_lazyImport\(\(\)\s*=>\s*import\(\s*(['"`])([^'"`]+)\2\s*\)\)/g;
         let lm;
         while ((lm = LAZY_LOADER_RE.exec(src)) !== null) {
-            const resolved = resolveModule(importerDir, lm[2]);
-            if (resolved) lazyLoaders.set(lm[1], resolved);
+            for (const resolved of resolveModuleMulti(importerDir, lm[3])) {
+                const cur = lazyLoaders.get(lm[1]) || [];
+                cur.push(resolved);
+                lazyLoaders.set(lm[1], cur);
+            }
         }
         if (lazyLoaders.size > 0) {
             const lazyMatch = /LAZY_MODULE_HANDLERS\s*=\s*\[([\s\S]*?)\];/.exec(src);
@@ -455,7 +482,7 @@ function main() {
                     let nm;
                     NAME_RE.lastIndex = 0;
                     while ((nm = NAME_RE.exec(pm[2])) !== null) {
-                        allImports.add(lazyResolved + '::' + nm[1]);
+                        for (const r of lazyResolved) allImports.add(r + '::' + nm[1]);
                     }
                 }
             }
@@ -465,13 +492,28 @@ function main() {
         // practice-registry.js의 loaders/handlers 선언이 이 형태다)
         DYN_IMPORT_RE.lastIndex = 0;
         let dtm;
+        // 도메인 규약 로더 — _domainImport('views/x.js')는 런타임에
+        // `./exams/<활성시험>/views/x.js`로 해석된다 (practice-registry.js).
+        // 정적 검증은 src/exams/ 아래 각 시험 디렉터리로 확장해 수행한다.
+        const DOMAIN_LOADER_RE = /_domainImport\(\s*'([^']+)'\s*\)/g;
+        let dl;
+        while ((dl = DOMAIN_LOADER_RE.exec(src)) !== null) {
+            for (const resolved of resolveModuleMulti(importerDir, `./exams/\${e}/${dl[1]}`)) {
+                for (const name of (moduleExports.get(resolved) || [])) {
+                    if (name === 'default' || allImports.has(resolved + '::' + name)) continue;
+                    const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+                    if (nameRe.test(src)) allImports.add(resolved + '::' + name);
+                }
+            }
+        }
         while ((dtm = DYN_IMPORT_RE.exec(src)) !== null) {
-            const resolved = resolveModule(importerDir, cleanDynPath(dtm[1]));
-            if (!resolved) continue;
-            for (const name of (moduleExports.get(resolved) || [])) {
-                if (name === 'default' || allImports.has(resolved + '::' + name)) continue;
-                const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
-                if (nameRe.test(src)) allImports.add(resolved + '::' + name);
+            // ${} 보존 — resolveModuleMulti가 시험 디렉터리 확장 후 쿼리스트링 제거
+            for (const resolved of resolveModuleMulti(importerDir, dtm[1].split('?')[0])) {
+                for (const name of (moduleExports.get(resolved) || [])) {
+                    if (name === 'default' || allImports.has(resolved + '::' + name)) continue;
+                    const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+                    if (nameRe.test(src)) allImports.add(resolved + '::' + name);
+                }
             }
         }
     }

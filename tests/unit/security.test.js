@@ -13,9 +13,13 @@ const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf-8'));
 const indexHtml = readFileSync(join(ROOT, 'index.html'), 'utf-8');
 // 지연 주입 뷰 파셜(data-lazy-view) — practice-registry가 런타임 주입하는
 // 배포 마크업이므로 index.html과 동일한 보안 스캔 대상이다.
-const allMarkup = indexHtml + '\n' + readdirSync(join(ROOT, 'html', 'views'))
-    .filter(f => f.endsWith('.html'))
-    .map(f => readFileSync(join(ROOT, 'html', 'views', f), 'utf-8'))
+// 시험별 도메인 파셜(html/exams/<id>/)도 대상이므로 html/ 전체를 재귀 수집한다.
+const collectHtmlFiles = (dir) => readdirSync(dir, { withFileTypes: true })
+    .flatMap(e => e.isDirectory()
+        ? collectHtmlFiles(join(dir, e.name))
+        : (e.name.endsWith('.html') ? [join(dir, e.name)] : []));
+const allMarkup = indexHtml + '\n' + collectHtmlFiles(join(ROOT, 'html'))
+    .map(f => readFileSync(f, 'utf-8'))
     .join('\n');
 const appJs = readFileSync(join(ROOT, 'src', 'app.js'), 'utf-8');
 // 실무 피처 지연 핸들러명은 practice-registry.js가 선언 소유 — 브리지 탐색 범위에 포함

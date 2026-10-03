@@ -319,6 +319,16 @@ const _EXAM_LAW_URLS = {
 - food E2E에 실전환 경로 추가 — `selectExam('food')` 호출→리로드→식품기사 부팅(시드가 아닌 계약 경로), comingSoon 카드 디스패치 시 안내만 표시·`current_exam` 불변 가드.
 - 잔여 과제(후속): `law-links.js`·`pdf-registry.js`·`keyword-index.js`의 `_DEFAULT_EXAM_ID` 생성 폴백을 빌드 시 exams.json 기본 시험에서 유도하도록 생성기 갱신 — 현재도 동작하지만 기본 시험 변경 시 재생성 필수.
 
+**Phase E 보완 (2026-10-03, 3차) — 도메인 경로 규약화**
+
+- 플랫폼 레지스트리의 하드코딩 도메인 경로(`./exams/cosmetic/…`, `./html/exams/cosmetic/…`)를 제거 — `practice-registry.js`·`app.js`·`pro-upgrade.js`의 지연 import가 `` `./exams/${getActiveExamId()}/…` `` 규약 경로로 활성 시험 자산을 런타임 해석. 시험 추가 시 동일 규약(`src/exams/<id>/views/`·`html/exams/<id>/`·`css/exams/<id>/`)에 파일을 두면 플랫폼 코드 수정 없이 동작
+- `index.template.html`의 formula 스텁을 `data-lazy-view="html/exams/{examId}/formula.html"` 플레이스홀더로 전환 — `build_html.js`·`tests/dom/helpers.js`·런타임 지연 주입이 `{examId}`를 활성 시험으로 해석 (활성 시험이 해당 피처를 보유하지 않으면 미주입)
+- **정적 검증 보존**: `check:imports`가 템플릿 동적 import의 `${getActiveExamId()}` 세그먼트를 exams.json 등록 시험 전수로 확장해 파일 실존·export 검증을 유지 — 규약화로 검증이 무력화되지 않음. `practice-registry.js`의 `_domainImport(rel)` 헬퍼 패턴도 명시 인식
+- **회귀 게이트**: `check:domainmap`에 platform 파일 내 `exams/<등록id>/` 경로 세그먼트 리터럴 탐지 추가 — 신규 하드코딩 도메인 경로를 커밋 시점에 차단
+- `delegation-guard`·`security` 테스트의 파셜 스캔을 `html/views/` 단층 → 재귀(`html/exams/` 포함)로 확장 — 지연 주입 파셜의 위임 핸들러·CSP 커버리지 복구
+- 유닛 `practice-registry.test.js`에 규약 검증 추가 — feature 선언 시험마다 `src/exams/<id>/`·`html/exams/<id>/` 자산 실존 확인
+- E2E `exam-switch.spec.js`에 규약 경로 검증 추가 — cosmetic 부팅 시 `/html/exams/cosmetic/formula.html` 요청 발생 + 네비 클릭으로 실제 뷰 주입(온보딩 오버레이는 `onboarding_seen_v1` 시드로 우회)
+
 ### Phase C 파일럿 결과 (food, 2026-09-30)
 
 - **스코프**: 식품기사 필기의 1과목(식품위생학) 축소본 — 교재 1챕터 + 문항 8제 + ref_md 발췌본 3종(식품위생법 제21065호 / 식품공전 제2026-55호 / 표시기준 제2026-37호). `manifest._pilot` 주석으로 부분 콘텐츠임을 명시.

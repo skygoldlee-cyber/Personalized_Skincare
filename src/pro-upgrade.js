@@ -13,7 +13,7 @@ import { trapFocus } from './ui-utils.js';
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { trackAction } from './usage-stats.js';
-import { hasFeature } from './exam-context.js';
+import { hasFeature, getActiveExamId } from './exam-context.js';
 
 /** 스토어 오류가 무료 한도 초과인지 판별 */
 function isFreeLimitError(error) {
@@ -186,11 +186,12 @@ export async function showPlanCompare() {
     let limitsRow = '';
     if (hasFeature('formula')) {
         try {
+            const eid = getActiveExamId();
             const [fs, cs, ml, bs] = await Promise.all([
-                import('./exams/cosmetic/formula-store.js'),
-                import('./exams/cosmetic/customer-store.js'),
-                import('./exams/cosmetic/material-ledger.js'),
-                import('./exams/cosmetic/batch-store.js'),
+                import(`./exams/${eid}/formula-store.js`),
+                import(`./exams/${eid}/customer-store.js`),
+                import(`./exams/${eid}/material-ledger.js`),
+                import(`./exams/${eid}/batch-store.js`),
             ]);
             limitsRow = `<li>저장 한도 무제한 — 무료 플랜: My 포뮬러 ${fs.FORMULA_LIMIT_FREE} · 고객 ${cs.CUSTOMER_LIMIT_FREE} · 원료 ${ml.MATERIAL_LIMIT_FREE} · 조제 기록 ${bs.BATCH_LIMIT_FREE}</li>`;
         } catch (e) { /* 한도 표기 생략 — 모달 자체는 표시 */ }

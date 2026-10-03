@@ -99,7 +99,8 @@ import { getPracticeLazyHandlers, getPracticeViewRenderers, warmPracticeFeatures
    아래 LAZY_MODULE_HANDLERS가 DELEGATED_HANDLERS에 이름을 등록해 브리지한다. */
 const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
 const loadCalcPracticeModule = _lazyImport(() => import('./views/trainer-calc-practice.js'));
-const loadIngredientsChallengeModule = _lazyImport(() => import('./exams/cosmetic/views/trainer-ingredients.js'));
+// 도메인 훈련 모듈 — src/exams/<활성시험>/views/ 규약 경로를 활성 시험으로 해석
+const loadIngredientsChallengeModule = _lazyImport(() => import(`./exams/${getActiveExamId()}/views/trainer-ingredients.js`));
 
 /** 지연 모듈의 네임드 export를 data-click 핸들러로 변환 */
 const _lazyFn = (load, name) => async (...args) => {
@@ -168,7 +169,7 @@ import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView, initViewHashRouting } from './router.js';
-import { getCurrentExamId, getExamList, purgeLegacyStorage } from './exam-context.js';
+import { getCurrentExamId, getActiveExamId, getExamList, purgeLegacyStorage } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword } from './auth-view.js';

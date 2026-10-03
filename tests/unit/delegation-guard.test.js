@@ -29,7 +29,7 @@ import { getPracticeLazyHandlers } from '../../src/practice-registry.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', '..');
 const SRC_DIR = path.join(ROOT, 'src');
-const VIEWS_DIR = path.join(ROOT, 'html', 'views');
+const HTML_DIR = path.join(ROOT, 'html');
 const INDEX_HTML = path.join(ROOT, 'index.html');
 const APP_JS = path.join(SRC_DIR, 'app.js');
 
@@ -44,11 +44,18 @@ function collectJsFiles(dir) {
     return out;
 }
 
-// 뷰 마크업 파셜도 스캔 — data-lazy-view 지연 주입 뷰는 index.html에 없지만
-// 배포 마크업이므로 동일한 인라인 핸들러·핸들러명 해석 규칙이 적용된다.
-const VIEW_PARTIALS = fs.readdirSync(VIEWS_DIR)
-    .filter(n => n.endsWith('.html'))
-    .map(n => path.join(VIEWS_DIR, n));
+// 뷰 마크업 파셜도 스캔 — data-lazy-view 지연 주입 뷰(html/exams/<id>/ 포함)는
+// index.html에 없지만 배포 마크업이므로 동일한 인라인 핸들러·핸들러명 해석
+// 규칙이 적용된다. 시험별 도메인 파셜도 대상이므로 html/ 전체를 재귀 수집한다.
+const VIEW_PARTIALS = (function collectHtml(dir) {
+    const out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) out.push(...collectHtml(full));
+        else if (entry.name.endsWith('.html')) out.push(full);
+    }
+    return out;
+})(HTML_DIR);
 
 const SCAN_FILES = [...collectJsFiles(SRC_DIR), INDEX_HTML, ...VIEW_PARTIALS];
 

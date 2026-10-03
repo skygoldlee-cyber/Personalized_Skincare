@@ -8,8 +8,13 @@ import assert from 'node:assert/strict';
 import {
     isPracticeCapable, getEnabledPracticeFeatures, getPracticeLanding,
     getPracticeViewTitles, getPracticeHashSlugs, getPracticeLazyHandlers,
-    getPracticeViewRenderers, warmPracticeFeatures,
+    getPracticeViewRenderers, warmPracticeFeatures, getPracticeDomainSpec,
 } from '../../src/practice-registry.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 let originalWindow;
 
@@ -96,4 +101,31 @@ test('유휴 예열 — warmPracticeFeatures가 유효 피처만 예열한다', 
         assert.equal(calls.length, 0);
     } finally { global.fetch = origFetch; }
     assert.equal(typeof warmPracticeFeatures, 'function');
+});
+
+test('도메인 경로 규약 — feature를 켠 시험마다 뷰 모듈·마크업이 src/html/exams/<id>/ 아래 존재', () => {
+    // 레지스트리가 시험 id 리터럴 없이 규약 경로로 해석하므로, 피처 활성 시험은
+    // 규약 위치에 파일을 배치해야 한다 — 신규 시험의 누락을 여기서 차단.
+    const spec = getPracticeDomainSpec();
+    assert.ok(Object.keys(spec).length > 0);
+    const exams = JSON.parse(
+        fs.readFileSync(path.join(ROOT, 'content', 'exams.json'), 'utf8')
+    ).exams;
+    for (const exam of exams) {
+        for (const [featKey, decl] of Object.entries(spec)) {
+            if (!exam.features || !exam.features[featKey]) continue;
+            for (const rel of decl.modules) {
+                assert.ok(
+                    fs.existsSync(path.join(ROOT, 'src', 'exams', exam.id, rel)),
+                    `${exam.id}: src/exams/${exam.id}/${rel} 없음 (features.${featKey} 활성)`
+                );
+            }
+            if (decl.markup) {
+                assert.ok(
+                    fs.existsSync(path.join(ROOT, 'html', 'exams', exam.id, decl.markup)),
+                    `${exam.id}: html/exams/${exam.id}/${decl.markup} 없음 (features.${featKey} 활성)`
+                );
+            }
+        }
+    }
 });

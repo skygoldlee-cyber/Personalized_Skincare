@@ -6,7 +6,7 @@
 // 직접 호출한다. data-click 위임 자체는 delegation-guard 유닛 테스트가
 // 정적으로 검증하므로 여기서는 "함수 호출 → DOM 반영"만 본다.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { vi } from 'vitest';
@@ -14,6 +14,7 @@ import { showToast } from '../../src/ui-utils.js';
 import { state, loadProgress, safeSetItem, safeGetItem } from '../../src/state.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 import { DataLoader } from '../../src/data-loader.js';
+import { getActiveExamId } from '../../src/exam-context.js';
 import { TIMING } from '../../src/config/timing.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -29,10 +30,15 @@ export function loadIndexHtml() {
     document.body.innerHTML = (m ? m[1] : html)
         .replace(/<script[\s\S]*?<\/script>/gi, '');
     // 지연 주입 뷰 파셜 반영 — 프로덕션은 practice-registry가 진입 시 fetch+주입,
-    // 테스트는 파일에서 즉시 주입해 동일 최종 DOM을 얻는다.
+    // 테스트는 파일에서 즉시 주입해 동일 최종 DOM을 얻는다. 속성값은 규약 파일명이며
+    // html/exams/<활성시험>/ 아래에서 해석한다 (프로덕션 _domainMarkup과 동일 규약).
+    // 활성 시험이 해당 피처 파일을 제공하지 않으면 스텁 유지 — 프로덕션의
+    // feature 미보유(미주입) 상태와 동일.
     document.body.querySelectorAll('[data-lazy-view]').forEach(stub => {
-        const partial = readFileSync(join(ROOT, stub.getAttribute('data-lazy-view')), 'utf-8');
-        stub.outerHTML = partial;
+        const rel = stub.getAttribute('data-lazy-view');
+        const path = rel.includes('/') ? rel : join('html', 'exams', getActiveExamId(), rel);
+        const abs = join(ROOT, path);
+        if (existsSync(abs)) stub.outerHTML = readFileSync(abs, 'utf-8');
     });
 }
 

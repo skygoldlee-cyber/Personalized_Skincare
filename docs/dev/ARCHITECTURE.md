@@ -291,7 +291,7 @@ passory/
 │   ├── globals.d.ts            #   전역 타입 선언
 │   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
 │   ├── ui-mode.js              #   학습/실무 UI 모드 전환
-│   ├── practice-registry.js    #   실무작업실 피처 레지스트리 (features 키 → 뷰·랜딩·로더·핸들러)
+│   ├── practice-registry.js    #   실무작업실 피처 레지스트리 (features 키 → 뷰·랜딩·로더·핸들러) — 도메인 자산은 `exams/${getActiveExamId()}/…` 규약 경로로 해석 (check:imports가 시험별 확장 정적 검증)
 │   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
 │   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback), 신기능 힌트(⚙️ 점+NEW 배지)
 │   ├── pro-upgrade.js          #   Pro 안내 — feature-plan.json 무료/Pro 로드, PRO 배지(data-pro-feature) 표시 제어, 진입 1회 안내·한도 초과 업그레이드 모달

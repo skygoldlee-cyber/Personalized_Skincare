@@ -15,9 +15,24 @@
 // 의존성 규칙: 이 모듈의 정적 import는 exam-context 하나로 제한한다.
 // 피처 뷰 모듈·DataLoader·ui-utils·도메인 훅은 전부 enter() 내부의
 // 지연 import()로 참조해, import 시점의 모듈 그래프 팽창·순환을 막는다.
-import { hasFeature } from './exam-context.js';
+import { hasFeature, getActiveExamId } from './exam-context.js';
 
 const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
+
+// 도메인 경로 규약 — 실무 피처 자산은 활성 시험 id 아래 시험 무관 동일 상대
+// 경로에 둔다: 모듈 src/exams/<시험id>/<rel>, 마크업 html/exams/<시험id>/<rel>.
+// 로더 호출 시점의 활성 시험으로 경로를 해석하므로 플랫폼 코드에 시험 id
+// 리터럴이 남지 않고, 신규 시험은 같은 구조로 파일만 배치하면 된다.
+// .rel은 규약 선언 자체 — 유닛 테스트가 "features 키 보유 시험 → 파일 실존"을 검증한다.
+/**
+ * @param {string} rel - src/exams/<시험id>/ 아래 상대 모듈 경로
+ * @returns {(() => Promise<any>) & { rel: string }}
+ */
+const _domainImport = (rel) => Object.assign(
+    _lazyImport(() => import(`./exams/${getActiveExamId()}/${rel}`)),
+    { rel }
+);
+const _domainMarkup = (rel) => `./html/exams/${getActiveExamId()}/${rel}`;
 
 const formula = {
     viewId: 'formula-view',
@@ -30,14 +45,16 @@ const formula = {
     loadErrorText: 'Formula OS를 불러오지 못했습니다.',
     // 뷰 마크업 파셜 — 셸(index.html)에는 빈 <section id> 스텁만 존재,
     // enter()/예열 시 fetch로 주입된다. 파셜은 자체 <section>을 포함하므로
-    // 스텁을 outerHTML 교체한다.
-    markup: './html/exams/cosmetic/formula.html',
+    // 스텁을 outerHTML 교체한다. 상대 경로는 html/exams/<활성시험>/ 규약.
+    markup: 'formula.html',
+    // 도메인 뷰 모듈 — src/exams/<활성시험>/views/ 규약. 플랫폼 공용 모듈은
+    // (notice-check) 시험 무관 단일 경로라 리터럴을 유지한다.
     loaders: {
-        main: _lazyImport(() => import('./exams/cosmetic/views/formula.js')),
-        batch: _lazyImport(() => import('./exams/cosmetic/views/formula-batch.js')),
-        customer: _lazyImport(() => import('./exams/cosmetic/views/formula-customer.js')),
-        material: _lazyImport(() => import('./exams/cosmetic/views/formula-material.js')),
-        compliance: _lazyImport(() => import('./exams/cosmetic/views/formula-compliance.js')),
+        main: _domainImport('views/formula.js'),
+        batch: _domainImport('views/formula-batch.js'),
+        customer: _domainImport('views/formula-customer.js'),
+        material: _domainImport('views/formula-material.js'),
+        compliance: _domainImport('views/formula-compliance.js'),
         notice: _lazyImport(() => import('./notice-check.js')),
     },
     // [loaderKey, data-click 핸들러명 목록] — app.js 위임 디스패치에 브리지된다
@@ -116,8 +133,9 @@ async function ensureViewMarkup(feat) {
     if (!feat.markup) return;
     const el = document.getElementById(feat.viewId);
     if (!el || !el.hasAttribute('data-lazy-view')) return;
-    const res = await fetch(feat.markup);
-    if (!res.ok) throw new Error(`view markup ${res.status}: ${feat.markup}`);
+    const url = _domainMarkup(feat.markup);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`view markup ${res.status}: ${url}`);
     el.outerHTML = await res.text();
 }
 
@@ -199,6 +217,25 @@ export function getPracticeViewRenderers() {
     const out = {};
     for (const f of Object.values(PRACTICE_FEATURES)) {
         out[f.viewId] = () => { void f.enter(); };
+    }
+    return out;
+}
+
+/**
+ * 도메인 경로 규약 검증용 — {featureKey: {markup, modules[]}}.
+ * markup·modules는 시험 무관 상대 경로이며 실제 위치는
+ * html/exams/<시험id>/ · src/exams/<시험id>/ 로 해석된다.
+ * 유닛 테스트가 exams.json에서 해당 feature를 켠 시험마다 파일 실존을 확인한다.
+ */
+export function getPracticeDomainSpec() {
+    const out = {};
+    for (const [key, f] of Object.entries(PRACTICE_FEATURES)) {
+        out[key] = {
+            markup: f.markup || null,
+            modules: Object.values(f.loaders)
+                .map(l => /** @type {any} */ (l).rel)
+                .filter(Boolean),
+        };
     }
     return out;
 }

@@ -217,6 +217,9 @@ function main() {
         const idAlt = [...litSet].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
         if (idAlt.length > 0) {
             const idLiteralRe = new RegExp(`['"\`](?:${idAlt.join('|')})['"\`]`);
+            // 경로 세그먼트 형태의 시험 id 결합도 탐지 — './exams/cosmetic/x.js'처럼
+            // 완전 리터럴이 아닌 경로 문자열에 박힌 도메인 결합도 회귀 방지 대상.
+            const pathRe = new RegExp(`exams/(?:${[...examIds].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})/`);
             for (const [file, layer] of layerOf) {
                 if (layer !== 'platform') continue;
                 if (!/^src\/.+\.js$/.test(file)) continue;
@@ -227,6 +230,13 @@ function main() {
                     errors.push(
                         `${file}: platform 계층에 시험 식별 리터럴 ${m[0]} — ` +
                         `EXAMS_LIST/getActiveExam() 해석으로 대체 (폴백 필요 시 domain-map.json examLiteralAllow에 사유 명시)`
+                    );
+                }
+                const pm = src.match(pathRe);
+                if (pm) {
+                    errors.push(
+                        `${file}: platform 계층에 시험 경로 리터럴 "${pm[0]}" — ` +
+                        `getActiveExamId() 규약 경로(예: \`./exams/\${getActiveExamId()}/...\`)로 대체`
                     );
                 }
             }
