@@ -543,7 +543,7 @@
 
 | ID | 요구사양 | 근거·구현 포인트 |
 |----|---------|------------------|
-| UX-NAV-01 | **3단계 적응형 네비게이션**: `>900px` 사이드바 / `769–900px` 상단 바(가로 스크롤 네비) / `≤768px` 사이드바 완전 숨김 + 하단 탭 바 (핵심 5탭 + [더보기] 하단 시트) | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 |
+| UX-NAV-01 | **3단계 적응형 네비게이션**: `>900px` 사이드바 / `769–900px` 상단 바(가로 스크롤 네비) / `≤768px` 사이드바 완전 숨김 + 하단 탭 바 (콘텐츠 최대 5탭 + [더보기] 하단 시트 — §4.10.1 조합표) | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 |
 | UX-NAV-02 | **헤더는 sticky**: `position: sticky; top: 0` + 반투명 배경(`--drawer-bg`) + `backdrop-filter: blur()` | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 |
 | UX-NAV-03 | **`overflow: hidden` 금지 on 헤더**: sticky 헤더에 `overflow:hidden`을 주면 헤더 아래로 펼쳐지는 드롭다운이 잘림 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 |
 | UX-NAV-04 | **`100vw` 대신 `100%`**: 뷰포트 기준 너비는 수직 스크롤바 폭을 포함해 가로 오버플로를 유발할 수 있음 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 |
@@ -683,7 +683,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 | 상태 | 규약 | 구현 |
 |------|------|------|
-| Hover | `--bg-hover` 배경 + `transform` 또는 색상 변화 | 데스크톱만 — **호버 정책(확정)**: 기존 앱 CSS는 미디어 쿼리 가드 없이 의존하는 문서화된 호환성 선택 (터치 `:hover`는 `:active`로 흡수, sticky-hover 잔상 허용). 단 신규 외주 산출물은 `@media (hover:hover)` 가드 필수 (패키지 CM-02) — 기존 규칙의 일괄 래핑은 하지 않는다 |
+| Hover | `--bg-hover` 배경 + `transform` 또는 색상 변화 | 데스크톱만 — **호버 정책(확정)**: 기존 앱 CSS는 미디어 쿼리 가드 없이 의존하는 문서화된 호환성 선택 (터치 `:hover`는 `:active`로 흡수, sticky-hover 잔상 허용). 단 신규 외주 산출물은 `@media (hover:hover)` 가드 필수 (외주 패키지 공통 규약의 호버 항목 — 패키지 전용 ID) — 기존 규칙의 일괄 래핑은 하지 않는다 |
 | Active/Pressed | `transform: scale(0.92~0.98)` | 터치 피드백 (UX-FORM-02) |
 | Focus | `:focus-visible` 2px primary 링 | 키보드만 표시 (A-05) |
 | Disabled | `opacity: 0.65` + `cursor: not-allowed` | `trainer.css` `:disabled` 규칙 — `hover:not(:disabled)`로 hover 조합 차단 |
@@ -725,7 +725,15 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 
 - 대역 경계(768/900)에서 네비게이션·레이아웃·스크롤 소유자가 함께 전환된다 (R-01, UX-NAV-01).
 - 기기 판별은 UA가 아니라 뷰포트 크기·포인터 — `pointer: coarse`는 폭 기준과 병기 (UX-SCR-01).
-- 모바일 하단 탭바 구성: 대시보드·카드·퀴즈·실무`a`·성분사전`a`·실무매뉴얼`b`·더보기 (`a`=feature 게이트, `b`=실무 모드 전용). 초과 메뉴는 `#mobile-more-sheet` (`role="dialog"`).
+- 모바일 하단 탭바 구성 슬롯: 대시보드·카드·퀴즈·실무`a`·성분사전`a`·실무매뉴얼`b`·더보기 (`a`=feature 게이트, `b`=실무 모드 전용). 초과 메뉴는 `#mobile-more-sheet` (`role="dialog"`).
+- 탭바 조합표 — 학습 항목(`nav-study-only`)과 실무 항목(`nav-practice-only`)은 모드 상호배타로 동시 노출 불가. UX-NAV-01의 "핵심 5탭"은 **더보기를 제외한 콘텐츠 탭 최대치**를 의미한다 (최악 조합 = 학습 모드+formula+dictionary → 콘텐츠 5 + 더보기 = 버튼 6). 실무 모드의 '학습 도구 펼치기'(`study-tools-open`)는 사용자 명시 확장이라 기본 조합에서 제외:
+
+| 기능 조합 | 학습 모드 | 실무 모드 (formula 필수, UM-01) |
+|---|---|---|
+| formula + dictionary | 대시보드·카드·퀴즈·실무·사전 + 더보기 = 6 | 실무·사전·실무매뉴얼 + 더보기 = 4 |
+| formula만 | 대시보드·카드·퀴즈·실무 + 더보기 = 5 | 실무·실무매뉴얼 + 더보기 = 3 |
+| dictionary만 | 대시보드·카드·퀴즈·사전 + 더보기 = 5 | — (실무 모드 진입 불가) |
+| 둘 다 없음 | 대시보드·카드·퀴즈 + 더보기 = 4 | — |
 - 회전 버튼(`#orientation-toggle-btn`)은 전 대역 `display:none !important` 비활성 계약 — OS 회전으로 대체, `landscape-mode` 핸들러는 유지 (R-08).
 
 #### 4.10.2 화면별 배치 매트릭스
