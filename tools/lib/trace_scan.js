@@ -19,9 +19,9 @@ const SCAN_EXTS = new Set(['.js', '.css', '.html', '.ts', '.py']);
 const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pycache__'), 'node_modules'];
 const EXCLUDE_FILES = [
   path.join('tools', 'check', 'check_spec_refs.js'),
-  path.join('tools', 'build_trace_matrix.js'),
-  path.join('tools', 'impact_tests.js'),
-  path.join('tools', 'trace.js'),
+  path.join('tools', 'build', 'build_trace_matrix.js'),
+  path.join('tools', 'check', 'impact_tests.js'),
+  path.join('tools', 'build', 'trace.js'),
   path.join('tools', 'lib', 'trace_scan.js'),
 ];
 
