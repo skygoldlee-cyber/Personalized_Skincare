@@ -1380,3 +1380,123 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     .f-reg-btn { min-height: 36px; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
     .cing-body { padding: 1rem; }
 }
+
+/* ── 사업 유형 프로파일 (FO-33) ───────────────────────── */
+.formula-biz-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-muted);
+}
+.formula-biz-label {
+    font-size: 0.82rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    margin-right: 0.3rem;
+}
+.formula-biz-chip {
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    min-height: 40px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.formula-biz-chip.is-active {
+    background: var(--primary-tint-12);
+    border-color: var(--color-primary);
+    color: var(--color-text-main);
+}
+.formula-set-label {
+    font-size: 0.78rem;
+    font-weight: normal;
+    color: var(--color-text-muted);
+}
+
+/* ── 표시사항 검토 (FO-35) ───────────────────────── */
+.label-check-list {
+    list-style: none;
+    margin: 0.8rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.label-check-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius-sm);
+}
+.label-check-mark {
+    display: inline-flex;
+    justify-content: center;
+    width: 1.2rem;
+    font-weight: var(--font-weight-bold);
+}
+.label-check-ok { color: var(--color-success); }
+.label-check-warn { color: var(--color-warning); background: color-mix(in srgb, var(--color-warning) 9%, transparent); }
+.label-check-skip { color: var(--color-text-muted); }
+.label-check-opt { font-size: 0.75rem; color: var(--color-text-muted); }
+.label-check-summary {
+    margin: 0.7rem 0 0;
+    font-size: 0.88rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+}
+
+/* ── 광고 문구 점검 (FO-36) ───────────────────────── */
+.adlint-summary { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+.adlint-sum {
+    display: inline-flex;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: var(--font-weight-bold);
+    border: 1px solid transparent;
+}
+.adlint-medicine { color: var(--color-danger); border-color: var(--color-danger); background: color-mix(in srgb, var(--color-danger) 12%, transparent); }
+.adlint-overclaim { color: var(--color-warning); border-color: var(--color-warning); background: color-mix(in srgb, var(--color-warning) 12%, transparent); }
+.adlint-functional { color: var(--color-secondary); border-color: var(--color-secondary); background: color-mix(in srgb, var(--color-secondary) 12%, transparent); }
+.adlint-text {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+}
+.adlint-mark { padding: 0 0.15rem; border-radius: 3px; font-weight: var(--font-weight-bold); }
+.adlint-mark.adlint-medicine { background: color-mix(in srgb, var(--color-danger) 22%, transparent); color: var(--color-danger); }
+.adlint-mark.adlint-overclaim { background: color-mix(in srgb, var(--color-warning) 24%, transparent); color: var(--color-warning); }
+.adlint-mark.adlint-functional { background: color-mix(in srgb, var(--color-secondary) 22%, transparent); color: var(--color-secondary); }
+.adlint-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.85rem; }
+.adlint-ctx { color: var(--color-text-muted); font-size: 0.8rem; }
+.adlint-sug { color: var(--color-success); font-size: 0.8rem; }
+.adlint-note { margin: 0.9rem 0 0; font-size: 0.78rem; color: var(--color-text-muted); }
+.adlint-ok {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-success);
+    border-radius: var(--radius-sm);
+    color: var(--color-success);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+    .formula-biz-chip { min-height: 44px; font-size: 0.9rem; }
+}

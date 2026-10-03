@@ -27,8 +27,9 @@
                             단, <a data-law="기능성화장품 기준 및 시험방법" href="https://www.law.go.kr/행정규칙/기능성화장품기준및시험방법" target="_blank" rel="noopener" class="comp-law-ext" title="기능성화장품 기준 및 시험방법 — 지정 원료 목록 · law.go.kr 최신 통합본">기능성 원료</a>·<a data-law="화장품의 색소 종류 및 기준" href="https://www.law.go.kr/행정규칙/화장품의색소종류및기준" target="_blank" rel="noopener" class="comp-law-ext" title="화장품의 색소 종류 및 기준 — 지정 색소 목록 · law.go.kr 최신 통합본">색소</a>·보존제·자외선차단 성분은 지정 목록(포지티브 리스트)을 따릅니다.</span>
                         </p>
                     </div>
+                    <div id="formula-biz-bar" class="formula-biz-bar" role="group" aria-label="사업 유형 선택"></div>
                     <div class="trainer-menu-grid">
-                        <div class="trainer-menu-card" data-click="openCustomerPanel">
+                        <div class="trainer-menu-card" data-click="openCustomerPanel" data-biz="custom sales">
                             <span class="trainer-step-badge" aria-hidden="true">1</span>
                             <div class="trainer-card-icon icon-purple">
                                 <i class="fa-solid fa-users" aria-hidden="true"></i>
@@ -37,7 +38,7 @@
                             <p>고객 카드에 피부 타입·알레르기·상담 이력을 기록하고 처방·조제 기록과 연결합니다.</p>
                             <span class="trainer-card-btn">고객 목록 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
-                        <div class="trainer-menu-card" data-click="formulaNew">
+                        <div class="trainer-menu-card" data-click="formulaNew" data-biz="custom mfg">
                             <span class="trainer-step-badge" aria-hidden="true">2</span>
                             <div class="trainer-card-icon icon-green">
                                 <i class="fa-solid fa-calculator" aria-hidden="true"></i>
@@ -55,7 +56,7 @@
                             <p><strong>처방전 보관함</strong> — 계산기에서 저장한 레시피를 보관하고, 다시 열고, 복제하고, 조제 기록으로 연결합니다.</p>
                             <span class="trainer-card-btn">목록 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
-                        <div class="trainer-menu-card" data-click="openMaterialPanel">
+                        <div class="trainer-menu-card" data-click="openMaterialPanel" data-biz="custom mfg">
                             <span class="trainer-step-badge" aria-hidden="true">4</span>
                             <div class="trainer-card-icon icon-red">
                                 <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i>
@@ -64,7 +65,7 @@
                             <p>원료의 입고일·사용기한·보관조건·잔량을 관리하고 기한 임박을 경고합니다.</p>
                             <span class="trainer-card-btn">장부 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
-                        <div class="trainer-menu-card" data-click="openBatchPanel">
+                        <div class="trainer-menu-card" data-click="openBatchPanel" data-biz="custom mfg">
                             <span class="trainer-step-badge" aria-hidden="true">5</span>
                             <div class="trainer-card-icon icon-teal">
                                 <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
@@ -81,6 +82,24 @@
                             <h4>법규 준수</h4>
                             <p>영업 신고·시설 위생·기록 보관·표시 의무 등 법정 준수사항을 점검하고 법령 원문을 확인합니다.</p>
                             <span class="trainer-card-btn">체크리스트 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="trainer-menu-card" data-click="openLabelPanel" data-biz="mfg sales">
+                            <span class="trainer-step-badge is-continuous" aria-hidden="true">제10조</span>
+                            <div class="trainer-card-icon icon-purple">
+                                <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                            </div>
+                            <h4>표시사항 검토</h4>
+                            <p>화장품법 제10조 필수 표시사항(제품명·책임판매업자·전성분·제조번호 등)을 항목별로 점검하고 라벨 시트를 인쇄합니다.</p>
+                            <span class="trainer-card-btn">검토 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="trainer-menu-card" data-click="openAdLintPanel" data-biz="mfg sales">
+                            <span class="trainer-step-badge is-continuous" aria-hidden="true">제13조</span>
+                            <div class="trainer-card-icon icon-red">
+                                <i class="fa-solid fa-rectangle-ad" aria-hidden="true"></i>
+                            </div>
+                            <h4>광고 문구 점검</h4>
+                            <p>제품 설명·광고 문구를 의약품 오인·과대광고 금지 표현과 대조해 위험 표현을 하이라이트합니다.</p>
+                            <span class="trainer-card-btn">문구 점검 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="formula-safety-note">
@@ -647,7 +666,7 @@
                     <div class="sim-arena-header mb-6">
                         <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
-                            <h4>법규 준수 체크리스트</h4>
+                            <h4>법규 준수 체크리스트 <span id="comp-set-label" class="formula-set-label"></span></h4>
                             <span class="badge badge-quiz-cat" id="comp-progress-badge">점검 0/0</span>
                             <button class="btn btn-secondary btn-sm" data-click="compReset" title="체크리스트를 전부 미완료 상태로 초기화"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 초기화</button>
                         </div>
@@ -669,5 +688,76 @@
                         <h5 class="comp-section-title"><i class="fa-solid fa-book" aria-hidden="true"></i> 법령·참조 문서</h5>
                         <div id="comp-docs" class="comp-doc-grid"></div>
                     </section>
+                </div>
+
+                <!-- 13. 표시사항 검토 (FO-35, mfg·sales 유형) -->
+                <div id="formula-label-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>표시사항 검토</h4>
+                            <button class="btn btn-secondary btn-sm" data-click="labelPrintSheet" title="입력한 표시사항을 A4 시트로 인쇄"><i class="fa-solid fa-print" aria-hidden="true"></i> 라벨 시트 인쇄</button>
+                        </div>
+                    </div>
+                    <div id="formula-label-subnav"></div>
+                    <div class="formula-principle-note">
+                        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                        <span>화장품법 제10조·시행규칙 별표4 기준의 자가점검입니다. 전성분은 함량 내림차순(1% 이하 순서 자유), 기능성화장품은 심사·보고 후 기능성 표기가 가능합니다.
+                        <a data-law="화장품법" href="https://www.law.go.kr/법령/화장품법" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr — 화장품법 (최신 통합본)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>법령 원문</a></span>
+                    </div>
+                    <div class="formula-calc-form">
+                        <div class="formula-field-row">
+                            <label class="formula-field"><span class="formula-field-label">제품명 *</span>
+                                <input type="text" id="label-product" class="form-input" maxlength="80" autocomplete="off"></label>
+                            <label class="formula-field"><span class="formula-field-label">제조번호 *</span>
+                                <input type="text" id="label-lot" class="form-input" maxlength="40" autocomplete="off" placeholder="예: LOT-2026-001"></label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field"><span class="formula-field-label">책임판매업자 상호 *</span>
+                                <input type="text" id="label-seller" class="form-input" maxlength="80" autocomplete="organization"></label>
+                            <label class="formula-field"><span class="formula-field-label">책임판매업자 주소 *</span>
+                                <input type="text" id="label-address" class="form-input" maxlength="160" autocomplete="street-address"></label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field"><span class="formula-field-label">사용기한 (또는 개봉 후 사용기한) *</span>
+                                <input type="text" id="label-expiry" class="form-input" maxlength="60" autocomplete="off" placeholder="예: 2027-10-01 또는 개봉 후 12개월"></label>
+                            <label class="formula-field"><span class="formula-field-label">내용물 용량·중량 *</span>
+                                <input type="text" id="label-volume" class="form-input" maxlength="40" autocomplete="off" placeholder="예: 100ml"></label>
+                            <label class="formula-field"><span class="formula-field-label">제조국 (수입품)</span>
+                                <input type="text" id="label-country" class="form-input" maxlength="40" autocomplete="off" placeholder="국산이면 비워둠"></label>
+                        </div>
+                        <label class="formula-field"><span class="formula-field-label">전성분 *</span>
+                            <select id="label-formula-select" class="form-select" aria-label="My 포뮬러에서 전성분 가져오기"></select>
+                            <textarea id="label-ingredients" class="form-input" rows="3" maxlength="2000" placeholder="정제수, 글리세린, ... (함량 내림차순)"></textarea></label>
+                        <label class="formula-field"><span class="formula-field-label">사용 시 주의사항 (해당 유형)</span>
+                            <textarea id="label-caution" class="form-input" rows="2" maxlength="500" placeholder="유형별 주의사항 규정에 해당하는 문구"></textarea></label>
+                        <label class="formula-chip"><input type="checkbox" id="label-functional"><span>기능성화장품 (미백·주름개선·자외선차단 등 — 기능성 표기·심사 필요)</span></label>
+                        <div id="label-check-result" aria-live="polite"></div>
+                    </div>
+                </div>
+
+                <!-- 14. 광고 문구 점검 (FO-36, mfg·sales 유형) -->
+                <div id="formula-adlint-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>광고 문구 점검</h4>
+                            <button class="btn btn-secondary btn-sm" data-click="adlintClear" title="입력·결과 지우기"><i class="fa-solid fa-eraser" aria-hidden="true"></i> 지우기</button>
+                        </div>
+                    </div>
+                    <div id="formula-adlint-subnav"></div>
+                    <div class="formula-principle-note">
+                        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                        <span>화장품법 제13조 — 의약품 오인·기능성 오인·허위·과대 표시·광고가 금지됩니다. 제품 상세페이지·SNS 문구를 붙여넣어 사전 점검하세요.
+                        <a data-law="화장품법" href="https://www.law.go.kr/법령/화장품법" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr — 화장품법 (최신 통합본)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>법령 원문</a></span>
+                    </div>
+                    <div class="formula-calc-form">
+                        <label class="formula-field"><span class="formula-field-label">점검할 문구</span>
+                            <textarea id="adlint-input" class="form-input" rows="6" maxlength="5000" placeholder="제품 설명·광고 문구를 붙여넣으세요. 예: 피부 속 염증을 치료하고 주름을 개선하는 기적의 크림"></textarea></label>
+                        <div class="formula-calc-bar fcb-bottom">
+                            <button class="btn btn-primary" data-click="adlintRun"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 문구 점검</button>
+                        </div>
+                        <div id="adlint-result" aria-live="polite"></div>
+                    </div>
                 </div>
             </section>

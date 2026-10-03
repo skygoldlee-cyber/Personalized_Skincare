@@ -1,10 +1,11 @@
 // Formula OS — 법규 준수 체크리스트 (Phase D)
-// @spec FO-19
+// @spec FO-19,FO-33,FO-34
 // 맞춤형화장품판매업자·조제관리사의 법정 의무를 카테고리별 자가점검 항목으로 정리.
+// FO-34: 사업 유형별 세트화 — 맞춤형(custom)·제조업(mfg, CGMP)·책임판매업(sales).
 // 항목 내용은 참조자료 법령 정리(과목1 cosmetic-law, 과목4 mixing-subdivision·overview)와
 // ref_md 법령 원문에 근거하며, 각 항목은 근거 문서로 바로 이동 링크를 가진다.
-// 체크 상태는 localStorage `formula_compliance`(시험별 네임스페이스)에 저장되고
-// 백업/초기화 대상에 포함된다. 이 화면은 법률 자문이 아니며, 실제 의무 판단은
+// 체크 상태는 세트별 localStorage 키(formula_compliance[_mfg|_sales], 시험별 네임스페이스)에
+// 분리 저장되고 백업/초기화 대상에 포함된다. 이 화면은 법률 자문이 아니며, 실제 의무 판단은
 // 원문 법령과 관할 지방식약청 안내를 따라야 한다.
 
 import { esc } from '../../../sanitize.js';
@@ -15,6 +16,7 @@ import { contentPath } from '../../../exam-context.js';
 import { lawUrlFor } from '../../../law-links.js';
 import { resolveRefPath } from '../../../pdf-registry.js';
 import { showPanel, formulaSubNav } from './formula.js';
+import { getBizType, bizChecklistSet } from '../biz-profile.js';
 
 /* =======================================================
    참조 문서 테이블 — contentRoot 기준 상대 경로
@@ -86,7 +88,8 @@ function docPath(doc) {
 }
 
 /* =======================================================
-   체크리스트 정의 — 항목 id는 영구 안정 (체크 상태의 키)
+   체크리스트 세트 정의 (FO-34) — 사업 유형별 항목군
+   항목 id는 영구 안정 (체크 상태의 키). 세트 id는 biz-profile.BIZ_CHECKLIST_SET 값.
    ======================================================= */
 
 const SECTIONS = [
@@ -161,13 +164,122 @@ const SECTIONS = [
   },
 ];
 
+/* ── 화장품제조업 (mfg) — 우수화장품 제조 및 품질관리기준(CGMP) 기준 자가점검 ── */
+const MFG_SECTIONS = [
+  {
+    id: 'mfg-license',
+    title: '등록·조직',
+    icon: 'fa-id-card',
+    items: [
+      { id: 'mfg-reg', text: '화장품제조업 등록 완료 (제조소별)', note: '관할 지방식약청 — 시설·설비 요건 심사 포함', refs: ['law', 'rule'] },
+      { id: 'mfg-quality', text: '품질관리 담당 조직·책임자 지정', note: '제조와 품질관리의 책임 분리 — CGMP 조직 요건', refs: ['cgmp'] },
+      { id: 'mfg-edu', text: '종사자 위생·품질관리 교육 실시·기록', refs: ['cgmp'] },
+    ],
+  },
+  {
+    id: 'mfg-facility',
+    title: '시설·위생 (CGMP)',
+    icon: 'fa-pump-soap',
+    items: [
+      { id: 'mfg-zone', text: '작업소 용도별 구획 — 원료·제조·충전·포장 분리', refs: ['cgmp'] },
+      { id: 'mfg-clean', text: '작업소·설비 정기 세척·소독 계획과 기록', refs: ['cgmp'] },
+      { id: 'mfg-water', text: '제조용수 수질 관리 — 정기 수질 검사', refs: ['cgmp'] },
+      { id: 'mfg-pest', text: '방충·방서·방진 대책 + 정기 점검 기록', refs: ['cgmp'] },
+      { id: 'mfg-person', text: '종업원 위생 — 위생복·손 위생·건강 상태 관리', refs: ['cgmp'] },
+    ],
+  },
+  {
+    id: 'mfg-records',
+    title: '기록·표준서',
+    icon: 'fa-clipboard-check',
+    items: [
+      { id: 'mfg-std', text: '표준서 비치 — 제조관리·품질관리·위생관리기준서', note: 'CGMP 요건 — 각 기준서를 작성해 제조소에 비치', refs: ['cgmp'] },
+      { id: 'mfg-batrec', text: '제조기록서 작성·보관 (배치 단위)', note: '제조번호·일자·원료 투입·공정 조건·수율 — 조제 기록 패널 활용 가능', refs: ['cgmp', 'law'], app: { label: '조제 기록 탭', click: 'openBatchPanel' } },
+      { id: 'mfg-lot', text: '제조번호 부여 — 원료 LOT까지 추적 가능', note: '회수 시 원료 LOT → 제조번호 역추적이 되어야 함', refs: ['cgmp'] },
+      { id: 'mfg-qcrec', text: '출하 전 품질검사 기록 — 시험항목·판정 결과 보관', refs: ['cgmp'] },
+      { id: 'mfg-keep', text: '제조·품질 기록 3년 보관', refs: ['law', 'cgmp'] },
+    ],
+  },
+  {
+    id: 'mfg-safety',
+    title: '안전·표시·회수',
+    icon: 'fa-shield-heart',
+    items: [
+      { id: 'mfg-ingred', text: '안전기준 원료 관리 — 사용불가 배제·사용한도 준수', refs: ['safety'], app: { label: '배합 계산기', click: 'formulaNew' } },
+      { id: 'mfg-label', text: '제품 표시사항 기재 확인 (화장품법 제10조)', note: '제조번호·사용기한·전성분·제조업자 표시 — 표시사항 패널 활용', refs: ['law', 'labeling'], app: { label: '표시사항 탭', click: 'openLabelPanel' } },
+      { id: 'mfg-recall', text: '위해 제품 회수 절차·연락체계 수립', note: '제조번호별 출고 추적이 전제', refs: ['law', 'cgmp'] },
+      { id: 'mfg-side', text: '부작용 발생 시 지체 없이 식약처 보고', refs: ['law'] },
+    ],
+  },
+];
+
+/* ── 책임판매업 (sales) — 표시·광고·유통 책임 자가점검 ── */
+const SALES_SECTIONS = [
+  {
+    id: 'sales-license',
+    title: '등록·조직',
+    icon: 'fa-id-card',
+    items: [
+      { id: 'sales-reg', text: '책임판매업 등록 완료', refs: ['law', 'rule'] },
+      { id: 'sales-manager', text: '책임판매관리자 선임 — 정기 안전관리 교육 이수', note: '미선임·교육 미이수 시 과태료 대상', refs: ['law', 'rule'] },
+    ],
+  },
+  {
+    id: 'sales-label',
+    title: '표시사항 (화장품법 제10조)',
+    icon: 'fa-tag',
+    items: [
+      { id: 'sales-fields', text: '필수 표시 기재 — 제품명·책임판매업자·전성분·사용기한·제조번호·용량', note: '표시사항 검토 패널로 항목별 확인 가능', refs: ['law', 'labeling'], app: { label: '표시사항 탭', click: 'openLabelPanel' } },
+      { id: 'sales-ingred', text: '전성분 함량 내림차순 표기 (1% 이하는 순서 자유)', refs: ['labeling'] },
+      { id: 'sales-functional', text: '기능성화장품 표시 — 기능성 문구·심사 여부 확인', note: '미심사 제품에 미백·주름개선·자외선차단 표기 금지', refs: ['law'] },
+      { id: 'sales-caution', text: '사용 시 주의사항·알레르기 유발성분 표시', refs: ['caution', 'labeling'] },
+    ],
+  },
+  {
+    id: 'sales-ads',
+    title: '광고 (화장품법 제13조)',
+    icon: 'fa-rectangle-ad',
+    items: [
+      { id: 'sales-nomedi', text: '의약품 오인 표현 금지 — 치료·예방 등 질병 효능 표현', note: '광고 문구 점검 패널로 사전 검토', refs: ['law', 'statute'], app: { label: '광고 점검 탭', click: 'openAdLintPanel' } },
+      { id: 'sales-noover', text: '과대광고 금지 — 부작용 없음·100% 등 절대 표현', refs: ['law'] },
+      { id: 'sales-scope', text: '심사 받은 기능성 범위를 넘는 효능 광고 금지', refs: ['law'] },
+      { id: 'sales-review', text: '광고물 게재 전 표현 검토 기록 유지', app: { label: '광고 점검 탭', click: 'openAdLintPanel' } },
+    ],
+  },
+  {
+    id: 'sales-dist',
+    title: '유통·회수·소비자',
+    icon: 'fa-truck',
+    items: [
+      { id: 'sales-expiry', text: '사용기한 경과 제품 판매·진열 금지 관리', note: 'FEFO(기한 임박 순 출고) 권장', refs: ['law'] },
+      { id: 'sales-store', text: '제품 보관 상태 관리 — 직사광선·온습도', refs: ['cgmp'] },
+      { id: 'sales-recall', text: '위해 제품 회수 절차·연락체계 수립', note: '제조번호별 재고·출고 추적이 전제', refs: ['law'] },
+      { id: 'sales-record', text: '판매·출고·반품 기록 관리', refs: ['law'] },
+      { id: 'sales-counsel', text: '소비자 상담·불만·부작용 접수 기록', note: '부작용 의심은 식약처 보고 — 고객 카드로 상담 이력 관리 가능', refs: ['law'], app: { label: '고객 관리 탭', click: 'openCustomerPanel' } },
+    ],
+  },
+];
+
+const CHECKLIST_SETS = {
+  custom: { label: '맞춤형화장품 조제', key: STORAGE_KEYS.COMPLIANCE_CHECKS, sections: SECTIONS },
+  mfg: { label: '화장품제조업 (CGMP)', key: STORAGE_KEYS.COMPLIANCE_CHECKS_MFG, sections: MFG_SECTIONS },
+  sales: { label: '책임판매업', key: STORAGE_KEYS.COMPLIANCE_CHECKS_SALES, sections: SALES_SECTIONS },
+};
+
+/** 활성 세트 — 사업 유형 프로파일에서 유도 (FO-33·34), 폴백은 맞춤형 */
+function activeSet() {
+  return CHECKLIST_SETS[bizChecklistSet(getBizType())] || CHECKLIST_SETS.custom;
+}
+
 /* =======================================================
    체크 상태 영속화 — {checked: {id: isoString}, updatedAt}
+   세트별 분리 키 (FO-34) — 유형 전환 시 점검 이력이 섞이지 않는다.
    ======================================================= */
 
-function loadChecks() {
+function loadChecks(set) {
+  const s = set || activeSet();
   try {
-    const raw = safeGetItem(STORAGE_KEYS.COMPLIANCE_CHECKS);
+    const raw = safeGetItem(s.key);
     if (!raw) return {};
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === 'object' && parsed.checked && typeof parsed.checked === 'object' ? parsed.checked : {};
@@ -176,8 +288,9 @@ function loadChecks() {
   }
 }
 
-function saveChecks(checked) {
-  return safeSetItem(STORAGE_KEYS.COMPLIANCE_CHECKS, JSON.stringify({ checked, updatedAt: new Date().toISOString() }));
+function saveChecks(checked, set) {
+  const s = set || activeSet();
+  return safeSetItem(s.key, JSON.stringify({ checked, updatedAt: new Date().toISOString() }));
 }
 
 /* =======================================================
@@ -195,8 +308,21 @@ function refLinks(refs) {
   }).join('')}</span>`;
 }
 
-function renderSections(checked) {
-  return SECTIONS.map(sec => {
+function renderDocList() {
+  return Object.keys(LAW_DOCS).map(key => {
+    const doc = LAW_DOCS[key];
+    const lawUrl = lawUrlFor(doc.file || doc.path) || lawUrlFor(doc.label);
+    const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>` : '';
+    return `<span class="comp-doc-row"><a href="#" class="comp-doc-link" data-click="compOpenLaw" data-arg="${esc(key)}">
+      <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+      <span class="comp-doc-label">${esc(doc.label)}</span>
+      <span class="comp-doc-desc">${esc(doc.desc)}</span>
+    </a>${ext}</span>`;
+  }).join('');
+}
+
+function renderSections(sections, checked) {
+  return sections.map(sec => {
     const done = sec.items.filter(it => checked[it.id]).length;
     const items = sec.items.map(it => {
       const isDone = !!checked[it.id];
@@ -216,29 +342,19 @@ function renderSections(checked) {
   }).join('');
 }
 
-function renderDocList() {
-  return Object.keys(LAW_DOCS).map(key => {
-    const doc = LAW_DOCS[key];
-    const lawUrl = lawUrlFor(doc.file || doc.path) || lawUrlFor(doc.label);
-    const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>` : '';
-    return `<span class="comp-doc-row"><a href="#" class="comp-doc-link" data-click="compOpenLaw" data-arg="${esc(key)}">
-      <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
-      <span class="comp-doc-label">${esc(doc.label)}</span>
-      <span class="comp-doc-desc">${esc(doc.desc)}</span>
-    </a>${ext}</span>`;
-  }).join('');
-}
-
 function render() {
-  const checked = loadChecks();
+  const set = activeSet();
+  const checked = loadChecks(set);
   const list = document.getElementById('comp-list');
-  if (list) list.innerHTML = renderSections(checked);
+  if (list) list.innerHTML = renderSections(set.sections, checked);
   const docs = document.getElementById('comp-docs');
   if (docs) docs.innerHTML = renderDocList();
-  const total = SECTIONS.reduce((n, s) => n + s.items.length, 0);
+  const total = set.sections.reduce((n, s) => n + s.items.length, 0);
   const done = Object.keys(checked).filter(id => checked[id]).length;
   const badge = document.getElementById('comp-progress-badge');
   if (badge) badge.textContent = `점검 ${done}/${total}`;
+  const setLabel = document.getElementById('comp-set-label');
+  if (setLabel) setLabel.textContent = `· ${set.label} 기준`;
 }
 
 /* =======================================================
@@ -254,7 +370,7 @@ export function openCompliancePanel() {
 
 export function compToggle(itemId) {
   if (typeof itemId !== 'string' || !itemId) return;
-  const known = SECTIONS.some(s => s.items.some(it => it.id === itemId));
+  const known = activeSet().sections.some(s => s.items.some(it => it.id === itemId));
   if (!known) return;
   const checked = loadChecks();
   if (checked[itemId]) {
@@ -286,4 +402,4 @@ export function compOpenLaw(key) {
 }
 
 // 테스트·외부 검증용 — 항목 정의와 문서 테이블 노출
-export { SECTIONS as COMPLIANCE_SECTIONS, LAW_DOCS };
+export { SECTIONS as COMPLIANCE_SECTIONS, CHECKLIST_SETS, LAW_DOCS };

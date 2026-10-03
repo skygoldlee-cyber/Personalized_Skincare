@@ -71,7 +71,7 @@ test('해시 슬러그 — formula-view → formula', () => {
 test('지연 핸들러 — 로더 함수 + 이름 배열 쌍, 이름은 전체 유니크', () => {
     setExams([]);
     const handlers = getPracticeLazyHandlers();
-    assert.equal(handlers.length, 6); // main·batch·customer·material·compliance·notice
+    assert.equal(handlers.length, 7); // main·batch·customer·material·compliance·sales·notice
     const names = [];
     for (const [load, list] of handlers) {
         assert.equal(typeof load, 'function');
@@ -80,7 +80,7 @@ test('지연 핸들러 — 로더 함수 + 이름 배열 쌍, 이름은 전체 �
     }
     assert.equal(new Set(names).size, names.length);
     // 대표 핸들러 표본 — 도메인 디스패치 계약 확인
-    for (const sample of ['openFormulaList', 'openBatchPanel', 'openCustomerPanel', 'openMaterialPanel', 'openCompliancePanel', 'checkMfdsNoticeNow']) {
+    for (const sample of ['openFormulaList', 'openBatchPanel', 'openCustomerPanel', 'openMaterialPanel', 'openCompliancePanel', 'openLabelPanel', 'openAdLintPanel', 'checkMfdsNoticeNow']) {
         assert.ok(names.includes(sample), `핸들러 누락: ${sample}`);
     }
 });

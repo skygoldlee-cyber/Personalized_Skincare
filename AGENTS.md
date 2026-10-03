@@ -217,6 +217,8 @@ src/                    # ES Modules
       customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
       material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
       custom-ingredient-store.js # Formula OS — 자가 등록 성분 CRUD·공식 동명 차단·superseded (50종)
+      biz-profile.js        # Formula OS — 사업 유형 프로파일 (맞춤형·제조업·책임판매업, 패널 게이트)
+      ad-lint.js            # Formula OS — 광고 문구 금지 표현 린트 엔진 (화장품법 제13조)
       usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
       views/            # Formula OS 뷰 모듈 (practice-registry 지연 로드)
         formula.js          # 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
@@ -225,7 +227,8 @@ src/                    # ES Modules
         formula-batch.js    # 조제 기록(배치) 목록·폼·상세 패널
         formula-customer.js # 고객 관리 패널 (카드·상담 이력·역참조)
         formula-material.js # 원료 장부 패널 (기한 배지·경고)
-        formula-compliance.js # 법규 준수 체크리스트 + 법령 MD 링크
+        formula-compliance.js # 법규 준수 체크리스트 + 법령 MD 링크 (유형별 세트)
+        formula-sales.js    # 표시사항 검토 + 광고 문구 점검 패널 (mfg·sales 유형)
         formula-print.js    # 인쇄 빌더 (조제 기록지·라벨·안내문)
         trainer-ingredients.js # 원료 배합 챌린지 (features.ingredients)
   views/                # 뷰 컨트롤러 (33개)

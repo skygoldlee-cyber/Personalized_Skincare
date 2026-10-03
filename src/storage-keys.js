@@ -76,6 +76,16 @@ export const STORAGE_KEYS = {
 
   // Formula OS — 사용자 등록 성분 사전 (custom-ingredient-store.js, DI-06~09)
   CUSTOM_INGREDIENTS: 'custom_ingredients',
+
+  // Formula OS — 사업 유형 프로파일 (FO-33, 기기 로컬 설정 — 백업 제외)
+  FORMULA_BIZ_TYPE: 'formula_biz_type',
+
+  // Formula OS — 유형별 체크리스트 세트 체크 상태 (FO-34, 세트별 분리 키)
+  COMPLIANCE_CHECKS_MFG: 'formula_compliance_mfg',
+  COMPLIANCE_CHECKS_SALES: 'formula_compliance_sales',
+
+  // Formula OS — 표시사항 검토 폼 드래프트 (FO-35)
+  FORMULA_LABEL_DRAFT: 'formula_label_draft',
   /* ── domain:cosmetic 계약 키 끝 ── */
 
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
@@ -144,7 +154,10 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.CUSTOMER_ITEMS,
   STORAGE_KEYS.MATERIAL_ITEMS,
   STORAGE_KEYS.COMPLIANCE_CHECKS,
+  STORAGE_KEYS.COMPLIANCE_CHECKS_MFG,   // 유형별 체크리스트 세트 — 제조업 (FO-34)
+  STORAGE_KEYS.COMPLIANCE_CHECKS_SALES, // 유형별 체크리스트 세트 — 책임판매업 (FO-34)
   STORAGE_KEYS.CUSTOM_INGREDIENTS,  // 자가 등록 성분 — 백업·동기 대상 (DI-06)
+  STORAGE_KEYS.FORMULA_LABEL_DRAFT, // 표시사항 검토 폼 — 작업 데이터 (FO-35)
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

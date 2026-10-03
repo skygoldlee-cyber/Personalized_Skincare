@@ -37,6 +37,7 @@ import {
   getCustomIngredient, annotateCustomItems,
   createCustomIngredient, updateCustomIngredient, deleteCustomIngredient,
 } from '../custom-ingredient-store.js';
+import { getBizType, setBizType, bizVisible, BIZ_TYPES } from '../biz-profile.js';
 import { renderDictionary } from '../../../views/dictionary.js';
 // 추천·맞춤 규칙 액션은 formula-recommend.js 구현 — app.js 디스패치 호환을 위해 재수출
 export {
@@ -60,6 +61,7 @@ const PANELS = [
   'formula-customer-panel', 'formula-customer-form-panel', 'formula-customer-detail-panel',
   'formula-material-panel', 'formula-material-form-panel',
   'formula-compliance-panel',
+  'formula-label-panel', 'formula-adlint-panel',
 ];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
@@ -109,15 +111,20 @@ const SUBNAV_ITEMS = [
   { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
   { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
   { id: 'material', label: '원료 장부', click: 'openMaterialPanel' },
+  { id: 'label', label: '표시사항', click: 'openLabelPanel' },
+  { id: 'adlint', label: '광고 점검', click: 'openAdLintPanel' },
   { id: 'compliance', label: '법규 준수', click: 'openCompliancePanel' },
 ];
 
 /**
  * 서브내비 칩 HTML — 서브패널 헤더에 삽입.
+ * 사업 유형 프로파일로 항목을 게이트한다 (FO-33) — BIZ_PANELS 미선언 id는 모든 유형 공용.
  * @param {string} active - 현재 패널의 SUBNAV_ITEMS.id (활성 칩 표시)
  */
 export function formulaSubNav(active) {
-  return `<div class="formula-subnav" role="navigation" aria-label="Formula OS 섹션 이동">${SUBNAV_ITEMS.map(item => {
+  const biz = getBizType();
+  const items = SUBNAV_ITEMS.filter(item => bizVisible(item.id, biz));
+  return `<div class="formula-subnav" role="navigation" aria-label="Formula OS 섹션 이동">${items.map(item => {
     const cls = item.id === active ? 'formula-subnav-chip is-active' : 'formula-subnav-chip';
     return `<button type="button" class="${cls}" data-click="${item.click}">${esc(item.label)}</button>`;
   }).join('')}</div>`;
@@ -127,9 +134,37 @@ export function formulaSubNav(active) {
    허브 / 서브뷰 전환
    ======================================================= */
 
+/**
+ * 사업 유형 프로파일 적용 (FO-33) — 유형 선택 칩 렌더 + 허브 카드 가시 게이트.
+ * 카드의 data-biz="custom mfg" 목록에 현재 유형이 없으면 숨긴다.
+ */
+function applyBizProfile() {
+  const biz = getBizType();
+  const bar = document.getElementById('formula-biz-bar');
+  if (bar) {
+    bar.innerHTML = `<span class="formula-biz-label"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> 사업 유형</span>` +
+      Object.values(BIZ_TYPES).map(t =>
+        `<button type="button" class="formula-biz-chip${t.id === biz ? ' is-active' : ''}" data-click="formulaSetBizType" data-arg="${esc(t.id)}" title="${esc(t.desc)}" aria-pressed="${t.id === biz}">${esc(t.label)}</button>`
+      ).join('');
+  }
+  document.querySelectorAll('#formula-menu-panel [data-biz]').forEach(card => {
+    const allow = (/** @type {HTMLElement} */(card).dataset.biz || '').split(/\s+/);
+    card.classList.toggle('is-hidden', !allow.includes(biz));
+  });
+}
+
+/** 사업 유형 변경 — 허브 재렌더 + 서브패널이면 메뉴로 복귀 (FO-33) */
+export function formulaSetBizType(type) {
+  if (!setBizType(type)) return;
+  const t = BIZ_TYPES[getBizType()] || BIZ_TYPES.custom;
+  showToast(`사업 유형을 "${t.label}"(으)로 변경했습니다. 체크리스트·메뉴가 유형별 기준으로 바뀝니다.`, 'success');
+  initFormulaView();
+}
+
 export function initFormulaView() {
   showPanel('formula-menu-panel');
   applyFormulaContrast();
+  applyBizProfile();
   const usage = getFormulaUsage();
   const badge = getEl('formula-usage-badge');
   if (badge) badge.textContent = `저장 ${usage.count}/${usage.limit}`;

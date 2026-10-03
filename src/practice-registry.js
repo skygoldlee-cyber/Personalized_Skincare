@@ -60,6 +60,7 @@ const formula = {
         customer: _domainImport('views/formula-customer.js'),
         material: _domainImport('views/formula-material.js'),
         compliance: _domainImport('views/formula-compliance.js'),
+        sales: _domainImport('views/formula-sales.js'),
         notice: _lazyImport(() => import('./notice-check.js')),
     },
     // [loaderKey, data-click 핸들러명 목록] — app.js 위임 디스패치에 브리지된다
@@ -78,6 +79,7 @@ const formula = {
             'formulaToggleContrast', 'formulaPrintWorkOrder',
             'customIngAdd', 'customIngEdit', 'customIngSave', 'customIngDelete', 'customIngClose',
             'formulaAllergyAdd', 'formulaAllergyRemove', 'formulaCustLoad', 'formulaCustSaveAs',
+            'formulaSetBizType',
         ]],
         ['batch', [
             'openBatchPanel', 'batchNew', 'batchEdit', 'batchSave', 'batchOpen', 'batchDelete',
@@ -95,6 +97,10 @@ const formula = {
         ]],
         ['compliance', [
             'openCompliancePanel', 'compToggle', 'compReset', 'compOpenLaw',
+        ]],
+        ['sales', [
+            'openLabelPanel', 'labelFormulaImport', 'labelPrintSheet',
+            'openAdLintPanel', 'adlintRun', 'adlintClear',
         ]],
         ['notice', [
             'checkMfdsNoticeNow', 'dismissMfdsNotice', 'viewMfdsNoticeStatus',

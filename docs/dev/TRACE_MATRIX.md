@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: de275b1adcee3516
-> 생성: 2026-10-03 · 원천: SPEC.md(402개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 2dca0474c2ce9611
+> 생성: 2026-10-03 · 원천: SPEC.md(406개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 402개 — 문서 연결 252 · 소스 연결 373 · 테스트 연결 390 · 보고서 연결 109
+**커버리지 요약**: 요구사항 406개 — 문서 연결 252 · 소스 연결 377 · 테스트 연결 394 · 보고서 연결 109
 
 ---
 
@@ -312,6 +312,10 @@
 | FO-30 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 | FO-31 | ✅ | E2E 테스트 | — | css/exams/cosmetic/formula.css<br>html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 | FO-32 | ✅ | 테스트 | — | src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js | — | — |
+| FO-33 | ✅ | 테스트 | — | src/exams/cosmetic/biz-profile.js<br>src/exams/cosmetic/views/formula-compliance.js<br>src/exams/cosmetic/views/formula-sales.js | tests/dom/exams/cosmetic/formula-sales.dom.test.js<br>tests/unit/exams/cosmetic/formula-sales.test.js | — | — |
+| FO-34 | ✅ | 테스트 | — | src/exams/cosmetic/biz-profile.js<br>src/exams/cosmetic/views/formula-compliance.js | tests/dom/exams/cosmetic/formula-sales.dom.test.js<br>tests/unit/exams/cosmetic/formula-sales.test.js | — | — |
+| FO-35 | ✅ | 테스트 | — | src/exams/cosmetic/views/formula-sales.js | tests/dom/exams/cosmetic/formula-sales.dom.test.js | — | — |
+| FO-36 | ✅ | 테스트 | — | src/exams/cosmetic/ad-lint.js<br>src/exams/cosmetic/views/formula-sales.js | tests/dom/exams/cosmetic/formula-sales.dom.test.js<br>tests/unit/exams/cosmetic/formula-sales.test.js | — | — |
 
 ## 3.19 계정·클라우드 동기화
 
