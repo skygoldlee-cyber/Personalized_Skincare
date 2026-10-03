@@ -68,11 +68,11 @@ flowchart TD
 | # | 단계 | 명령/작업 | 통과 기준 (게이트) | 상세 |
 |---|---|---|---|---|
 | 0 | 사전 점검 | 0a `python ref-pipeline/check_laws.py` — 인용 법령 개정이 교체 원인인지 확인<br/>0b 새 교재 MD 작성 — `| 용어 \| 설명 |` 표, `🔖/📌/★` 마커, `## N.` 챕터, 참조 링크 `../참조자료/ref_md/과목N/…` | 법령 판정 확인 + 파서 계약 충족 | TEXTBOOK_AUTHORING_GUIDE |
-| 1 | 파일 교체 | `{EXAM}/교재/{과목}/` 에 `_표준형.md`·`_이야기형.md` 배치 (파일명 변경이면 `node tools/sync_textbook_files.js --rename <구> <신>`으로 교체 — manifest+sw.js+인용 경로 원자 전파) | 파일명 규칙 일치 | CONTENT_WORKFLOW §3.1 |
-| 2 | 등록 정합 | `node tools/sync_textbook_files.js` — manifest file/storyFile·exams·`sw.js MD_ASSETS` 자동 동기화 (`--check`로 사전 확인). 수동 잔여: `integratedExam`·`references.json`(subjectDirMap·refDirs·sourceRefMap) | `드리프트 없음` + 선언↔파일 일치 | §3.1-1 ① |
+| 1 | 파일 교체 | `{EXAM}/교재/{과목}/` 에 `_표준형.md`·`_이야기형.md` 배치 (파일명 변경이면 `node tools/sync/sync_textbook_files.js --rename <구> <신>`으로 교체 — manifest+sw.js+인용 경로 원자 전파) | 파일명 규칙 일치 | CONTENT_WORKFLOW §3.1 |
+| 2 | 등록 정합 | `node tools/sync/sync_textbook_files.js` — manifest file/storyFile·exams·`sw.js MD_ASSETS` 자동 동기화 (`--check`로 사전 확인). 수동 잔여: `integratedExam`·`references.json`(subjectDirMap·refDirs·sourceRefMap) | `드리프트 없음` + 선언↔파일 일치 | §3.1-1 ① |
 | 3 | **백업** | `{dataRoot}/card_terms_snapshot.json` + `id_migration.js` 사본을 작업 브랜치 외 별도 위치에 보관 | 복원 가능한 사본 확보 | 롤백 절차 참조 |
 | 4 | 빌드+검증 | `npm.cmd run check:content -- --build` (수 분 소요) | 전 계층 통과 | §3.1-1 ④ |
-| 5 | 인용 동기화 | `node tools/sync_citation_lines.js --check` → 필요 시 실행 후 재--check | **미발견 0건** | §3.1-1 ⑤ |
+| 5 | 인용 동기화 | `node tools/sync/sync_citation_lines.js --check` → 필요 시 실행 후 재--check | **미발견 0건** | §3.1-1 ⑤ |
 | 6 | ref_md 귀속 | `node tools/check/check_ref_subjects.js` + `check_reflayout.js` | 불일치가 교체 전 기준선 이내 | §3.1-1 ⑥ |
 | 7 | 진도 이관 | `npm.cmd run build:id-migration` → `id_migration.js`·스냅샷 **커밋 포함** | 이관 맵 생성; 삭제 용어 진도는 사용자 안내 | §3.1-1 ⑦ |
 | 8 | 파생물 (병렬 가능) | 8a `python ref-pipeline/batch_convert.py` → `html/`<br/>8b `python ref-pipeline/audiobook/run_pipeline.py --subject {키} --tts` → `mp3/` → **CDN 업로드 + `AUDIO_BASE_URL` 확인** (MP3는 Vercel 배포 불가)<br/>8c `python ref-pipeline/check_laws.py` → `report/` | 변환 성공 + `build:audio-manifest` + CDN URL 유효 | ref-pipeline README 시나리오 B |
@@ -84,14 +84,14 @@ flowchart TD
 교재 변경으로 손봐야 하는 파일을 **직접 수정 / 자동 동기화 / 자동 재생성 / 조건부 수정**으로 구분한다.
 `src/` 앱 코드는 과목·교재명 하드코딩이 없어 **대부분의 교재 변경은 `src/`를 건드리지 않는다** — 수정 대상은 `content/` 설정·원문과 `sw.js`의 프리캐시 목록뿐이다.
 
-### ⓪ 자동 동기화 도구 — `tools/sync_textbook_files.js`
+### ⓪ 자동 동기화 도구 — `tools/sync/sync_textbook_files.js`
 
 파일시스템을 진실(source of truth)로 선언 지점을 자동 동기화한다. **교재 변경 후 가장 먼저 실행**할 것.
 
 ```powershell
-node tools/sync_textbook_files.js --check   # 불일치 보고만 (drift 시 exit 1)
-node tools/sync_textbook_files.js           # 동기화 실행
-node tools/sync_textbook_files.js --rename 교재/law/OLD.md 교재/law/NEW.md  # 파일명 변경 전파
+node tools/sync/sync_textbook_files.js --check   # 불일치 보고만 (drift 시 exit 1)
+node tools/sync/sync_textbook_files.js           # 동기화 실행
+node tools/sync/sync_textbook_files.js --rename 교재/law/OLD.md 교재/law/NEW.md  # 파일명 변경 전파
 ```
 
 | 대상 | 자동 처리 |
@@ -147,7 +147,7 @@ node tools/sync_textbook_files.js --rename 교재/law/OLD.md 교재/law/NEW.md  
 }
 ```
 
-- **파일명 변경**: `node tools/sync_textbook_files.js --rename <구경로> <신경로>`가 `chapters[].file`/`storyFile` + `sw.js MD_ASSETS` + `문제은행` 인용 경로 3곳을 원자 전파. 수동 시에는 3곳을 함께 갱신할 것
+- **파일명 변경**: `node tools/sync/sync_textbook_files.js --rename <구경로> <신경로>`가 `chapters[].file`/`storyFile` + `sw.js MD_ASSETS` + `문제은행` 인용 경로 3곳을 원자 전파. 수동 시에는 3곳을 함께 갱신할 것
 - **과목 추가**: `subjects[]` + `exams[]` + `integratedExam.questionsPerSubject` + `교재/glossary/subject{N}.json` + `number-drills/{key}.json` 수동 선언 후 `sync_textbook_files.js`가 `MD_ASSETS` 갱신
 - **과목 삭제**: 위 역순 + `card_terms_snapshot.json`의 해당 과목이 다음 build에서 제거됨 (이관 대상 없음)
 
@@ -236,7 +236,7 @@ const MD_ASSETS = [
 |---|---|---|
 | `check:content -- --build` | 전 계층 일괄 | 실패 단계별 리포트 |
 | `[선언]` | manifest 선언 파일 부재 + **미등록 .md 역방향 경고** (빌드에서 조용히 제외) | 선언·파일 불일치 |
-| `[구조]` | 교재/문제은행 디스크 ↔ manifest·`sw.js MD_ASSETS` 구조 드리프트 | `node tools/sync_textbook_files.js` 실행 |
+| `[구조]` | 교재/문제은행 디스크 ↔ manifest·`sw.js MD_ASSETS` 구조 드리프트 | `node tools/sync/sync_textbook_files.js` 실행 |
 | `[인용]` | 문제은행→교재 `#L` 링크 — 라인 밀림·**대상 파일 부재(이름 변경/삭제)**·재작성 | 미발견 항목 수동 수정 |
 | `[참조라인]` | `(LNN)`/`📌출처` 조문 ↔ ref_md 실제 내용 | 라인/조문 불일치 |
 | `[신선도]` | 참조자료 PDF 해시 ↔ ref_md — PDF 교체 감지 | `check:reffresh -- --update` |

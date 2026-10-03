@@ -758,11 +758,11 @@ quadrantChart
 
 #### 라인 번호 동기화
 
-교재 내용이 수정되어 라인 번호가 변경된 경우, `tools/sync_citation_lines.js`로 문제은행의 인용 링크 라인 번호를 자동 동기화한다:
+교재 내용이 수정되어 라인 번호가 변경된 경우, `tools/sync/sync_citation_lines.js`로 문제은행의 인용 링크 라인 번호를 자동 동기화한다:
 
 ```powershell
-node tools/sync_citation_lines.js --check    # 변경사항 확인만
-node tools/sync_citation_lines.js             # 실제 동기화 실행
+node tools/sync/sync_citation_lines.js --check    # 변경사항 확인만
+node tools/sync/sync_citation_lines.js             # 실제 동기화 실행
 ```
 
 - **원리**: 인용문(`>` 블록) 텍스트를 지문으로 사용해 인용 라인을 검증하고, 불일치 시 타겟 파일에서 위치를 재탐색

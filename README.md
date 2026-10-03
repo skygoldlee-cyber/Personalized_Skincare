@@ -312,7 +312,7 @@ python run_pipeline.py
 npm.cmd run deploy
 ```
 
-`tools/deploy.js`가 git 가드(main·clean·origin 동기화) → 콤보 품질 게이트 → `sw.js` `CACHE_VERSION` 자동 스탬프(변경 시 자동 커밋·푸시) → `vercel --prod`를 일괄 수행합니다. 콘텐츠 변경 시에는 먼저 `npm.cmd run build:data`로 번들을 재생성하고 커밋하세요.
+`tools/deploy/deploy.js`가 git 가드(main·clean·origin 동기화) → 콤보 품질 게이트 → `sw.js` `CACHE_VERSION` 자동 스탬프(변경 시 자동 커밋·푸시) → `vercel --prod`를 일괄 수행합니다. 콘텐츠 변경 시에는 먼저 `npm.cmd run build:data`로 번들을 재생성하고 커밋하세요.
 
 ---
 

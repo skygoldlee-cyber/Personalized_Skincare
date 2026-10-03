@@ -59,7 +59,7 @@
 npm.cmd run deploy
 ```
 
-> ⚠️ `vercel --prod` 직접 실행 금지 — `tools/deploy.js`가 main 브랜치·clean tree·origin 동기화를 검증하고 `CACHE_VERSION`을 자동 스탬프합니다. 미푸시 커밋이 프로덕션에 올라가는 사고 방지.
+> ⚠️ `vercel --prod` 직접 실행 금지 — `tools/deploy/deploy.js`가 main 브랜치·clean tree·origin 동기화를 검증하고 `CACHE_VERSION`을 자동 스탬프합니다. 미푸시 커밋이 프로덕션에 올라가는 사고 방지.
 > 콘텐츠 변경 시 배포 전 `npm.cmd run build:data`로 `data/` 번들을 재생성·커밋합니다.
 
 ---

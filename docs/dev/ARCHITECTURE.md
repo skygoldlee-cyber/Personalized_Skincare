@@ -442,7 +442,8 @@ passory/
 │   │   ├── check_inventory.js      #   문서 디렉토리 트리 ↔ 실제 파일시스템 정합 (check:inventory)
 │   │   ├── verify_shell_assets.js  #   프리캐시 파일 존재 CI 검증
 │   │   └── audit_card_quality.js   #   카드 품질 자동 감사 (npm run audit:cards)
-│   ├── sync_citation_lines.js  #   문제은행 인용 라인번호 동기화 (build:data에 통합)
+│   ├── sync/                   #   콘텐츠 동기화 (sync_citation_lines·sync_textbook_files — build:data에 통합)
+│   ├── deploy/                 #   배포 가드 (deploy.js — npm run deploy)
 │   └── _archive/               #   일회성 마이그레이션·수동 수정 스크립트 보관
 │       #   (audit_citation_links·audit_hyperlinks·check_pdf_to_md_mapping·
 │       #    convert_pdf_links_to_md·normalize_url_encoding·migrate_ref_md_subjects·
@@ -835,7 +836,7 @@ const state = {
 ### 새 시험 추가 절차
 > **전체 런북**: `runbooks/NEW_EXAM_RUNBOOK.md` (스캐폴딩→콘텐츠 선언→검증→배포 4단계 + 체크리스트)
 
-0. `node tools/scaffold_exam.js <id> --name "시험명"` — exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·디렉터리 트리 1커맨드 생성 (Phase B; 실 사용 예는 `food` 시험 — Phase C 파일럿, MULTI_EXAM_DB_DESIGN §9 "Phase C 파일럿 결과" 참조)
+0. `node tools/build/scaffold_exam.js <id> --name "시험명"` — exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·디렉터리 트리 1커맨드 생성 (Phase B; 실 사용 예는 `food` 시험 — Phase C 파일럿, MULTI_EXAM_DB_DESIGN §9 "Phase C 파일럿 결과" 참조)
 1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
    - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
    - 지식DB(사전)가 있으면: `knowledge/<key>.json` 데이터셋(예: `content/exams/food/knowledge/additives.json`) + `manifest.knowledge`에 엔티티 스키마·`registryKey` 선언 + `features.dictionary` 활성화 — 빌드가 `<key>_data.<hash>.js` 번들 생성, `DataLoader.loadDictionary()`가 온디맨드 로드, `dictionary.js`가 스키마 드리븐 렌더
@@ -875,7 +876,7 @@ const state = {
 
 ### 새 시험 추가 (스캐폴딩)
 
-`npm run scaffold:exam -- <id> --name "시험명" [--short-name X] [--year N] [--dry-run|--force]` — `tools/scaffold_exam.js`가 exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·`docs/` 디렉터리를 생성하고 다음 단계(콘텐츠 교체→`build:data`→기능 플래그)를 출력한다. `<id> --remove`로 골격 전체 제거.
+`npm run scaffold:exam -- <id> --name "시험명" [--short-name X] [--year N] [--dry-run|--force]` — `tools/build/scaffold_exam.js`가 exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·`docs/` 디렉터리를 생성하고 다음 단계(콘텐츠 교체→`build:data`→기능 플래그)를 출력한다. `<id> --remove`로 골격 전체 제거.
 
 ### 시험별 문서 규약
 
@@ -1629,7 +1630,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 
 ## 🚀 배포 파이프라인
 
-배포는 **`npm run deploy` 하나로만** 수행한다 (`tools/deploy.js`). `vercel --prod` 직접 실행은 git을 거치지 않고 로컬 파일을 직접 업로드하므로 금지.
+배포는 **`npm run deploy` 하나로만** 수행한다 (`tools/deploy/deploy.js`). `vercel --prod` 직접 실행은 git을 거치지 않고 로컬 파일을 직접 업로드하므로 금지.
 
 ### deploy.js 가드 순서
 
@@ -1965,7 +1966,7 @@ npm.cmd run deploy
 | `tools/build/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
 | `tools/build/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
 | `tools/check/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
-| `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
+| `tools/deploy/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
 | `ref-pipeline/batch_convert.py` | `load_target_groups()` — manifest `subjects[].dir` 기준 glob | 배치 HTML 변환 대상 (과목 추가 시 자동) |
 | `ref-pipeline/md2doc.py` | `--cli --in` 인자 (미지정 시 GUI) | 단일 HTML 변환 |
 | `tools/_archive/convert_ref_md.py` | (아카이브 — 임무 완료) | 구 ref_md HTML→MD 일회성 변환 |
@@ -2092,7 +2093,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 > | 용도 | 설계 탐색 — "이 기능이 어느 모듈·어느 절인가" | 추적 검증 — "이 ID가 코드·테스트에 연결됐는가" |
 > | 갱신 | 신규 기능 시 수동 행 추가 | `npm run build:trace` (pre-push·check:content가 신선도 강제) |
 >
-> ID 단위 추적의 진실 소스는 **TRACE_MATRIX.md**(생성물 — 직접 편집 금지)이며, 이 표는 모듈 관점의 요약 뷰다. ID와 정확한 파일 목록이 필요하면 `node tools/trace.js <ID>` 사용.
+> ID 단위 추적의 진실 소스는 **TRACE_MATRIX.md**(생성물 — 직접 편집 금지)이며, 이 표는 모듈 관점의 요약 뷰다. ID와 정확한 파일 목록이 필요하면 `node tools/build/trace.js <ID>` 사용.
 
 ### 기능 요구사양 (SPEC §3)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * tools/deploy.js — 안전한 Vercel 배포 가드
+ * tools/deploy/deploy.js — 안전한 Vercel 배포 가드
  *
  * `vercel --prod`는 git을 거치지 않고 로컬 파일을 직접 업로드하므로,
  * 미푸시 커밋/미커밋 변경이 그대로 프로덕션에 올라가는 사고를 막기 위한 래퍼.
@@ -26,14 +26,14 @@
 const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { stampSwVersion } = require('./build/stamp_sw_version.js');
-const { stampReleaseNotes } = require('./build/stamp_release_notes.js');
+const { stampSwVersion } = require('../build/stamp_sw_version.js');
+const { stampReleaseNotes } = require('../build/stamp_release_notes.js');
 
 // 팀 프로젝트는 개인 계정 기본 스코프로는 배포가 거부되므로(Not authorized),
 // .vercel/project.json의 orgId를 --scope로 명시한다. 개인 프로젝트(orgId 없음)면 생략.
 function vercelScopeArgs() {
     try {
-        const p = path.join(__dirname, '..', '.vercel', 'project.json');
+        const p = path.join(__dirname, '..', '..', '.vercel', 'project.json');
         const { orgId } = JSON.parse(fs.readFileSync(p, 'utf8'));
         return orgId ? ['--scope', orgId] : [];
     } catch {
@@ -44,7 +44,7 @@ function vercelScopeArgs() {
 // 프로젝트의 기본 *.vercel.app 도메인 — projectName 기반이라 리네임에 자동 추종
 function projectUrl() {
     try {
-        const p = path.join(__dirname, '..', '.vercel', 'project.json');
+        const p = path.join(__dirname, '..', '..', '.vercel', 'project.json');
         const { projectName } = JSON.parse(fs.readFileSync(p, 'utf8'));
         return projectName ? `https://${projectName}.vercel.app` : null;
     } catch {
@@ -211,7 +211,7 @@ function main() {
     // 배포 후 스모크 — 200·스탬프 불일치·엣지 정체를 자동 탐지
     const baseUrl = projectUrl();
     const stamped = stamp.changed ? stamp.newValue
-        : (fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8').match(/CACHE_VERSION\s*=\s*'([^']+)'/) || [])[1];
+        : (fs.readFileSync(path.join(__dirname, '..', '..', 'sw.js'), 'utf8').match(/CACHE_VERSION\s*=\s*'([^']+)'/) || [])[1];
     if (baseUrl && stamped) {
         console.log(`\n▶ 배포 후 스모크 — ${baseUrl}`);
         smokeCheck(baseUrl, stamped).then((fails) => {

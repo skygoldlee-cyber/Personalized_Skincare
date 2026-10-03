@@ -6,17 +6,17 @@
  * 읽어 영향받는 요구사항과 실행해야 할 테스트 파일을 역산한다.
  *
  * 사용법:
- *   node tools/impact_tests.js                      # 미커밋 변경(워크트리+스테이징) 자동 분석
- *   node tools/impact_tests.js src/views/dashboard.js css/dashboard.css
- *   node tools/impact_tests.js --ref origin/main    # 특정 ref 대비 diff 분석
- *   node tools/impact_tests.js --ref origin/main --run  # 권장 테스트까지 실행 (pre-push 게이트)
+ *   node tools/check/impact_tests.js                      # 미커밋 변경(워크트리+스테이징) 자동 분석
+ *   node tools/check/impact_tests.js src/views/dashboard.js css/dashboard.css
+ *   node tools/check/impact_tests.js --ref origin/main    # 특정 ref 대비 diff 분석
+ *   node tools/check/impact_tests.js --ref origin/main --run  # 권장 테스트까지 실행 (pre-push 게이트)
  */
 
 // @spec none (영향도 분석 도구)
 const fs = require('fs');
 const path = require('path');
 const { execSync, spawnSync } = require('child_process');
-const T = require('./lib/trace_scan');
+const T = require('../lib/trace_scan');
 
 const REF_RE = /^(?!-)[A-Za-z0-9][A-Za-z0-9._~/-]*$/; // git ref 형식 — 플래그·셸 인젝션 차단 (^는 cmd 이스케이프 충돌로 제외, HEAD~N 지원)
 

@@ -1,7 +1,7 @@
 // @spec TR-06~08
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatSectionContentForReader } from '../../src/reader-format.js';
+import { formatSectionContentForReader } from '../../../src/reader-format.js';
 
 // 헬퍼: <pre class="mermaid">...</pre> 내부 콘텐츠 추출
 function extractMermaidContent(html) {

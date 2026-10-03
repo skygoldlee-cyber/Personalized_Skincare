@@ -12,17 +12,17 @@
  * 4. 라인 번호가 변경된 경우 문제은행 파일 자동 수정
  *
  * 사용법:
- *   node tools/sync_citation_lines.js          # 동기화 실행
- *   node tools/sync_citation_lines.js --check   # 변경사항 확인만 (수정 안 함)
- *   node tools/sync_citation_lines.js --fingerprint  # 지문 파일 생성/갱신
+ *   node tools/sync/sync_citation_lines.js          # 동기화 실행
+ *   node tools/sync/sync_citation_lines.js --check   # 변경사항 확인만 (수정 안 함)
+ *   node tools/sync/sync_citation_lines.js --fingerprint  # 지문 파일 생성/갱신
  */
 
 // @spec CS-01
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam_targets');
+const { getExamTargets } = require('../build/exam_targets');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 
 // [멀티시험] 각 시험의 {contentRoot}/문제은행/ 아래 manifest 등록 파일을 대상으로 한다.
 function collectExamFiles() {

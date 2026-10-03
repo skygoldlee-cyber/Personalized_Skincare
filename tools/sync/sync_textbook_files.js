@@ -18,18 +18,18 @@
  *   glossary/number-drills 내용, 학습안내서 본문, #L 라인번호 재동기화(sync:citations 담당).
  *
  * 사용:
- *   node tools/sync_textbook_files.js           # 동기화 실행 (쓰기)
- *   node tools/sync_textbook_files.js --check   # 불일치 보고만 (exit 1 on drift)
- *   node tools/sync_textbook_files.js --rename <contentRoot 상대 구경로> <신경로>
+ *   node tools/sync/sync_textbook_files.js           # 동기화 실행 (쓰기)
+ *   node tools/sync/sync_textbook_files.js --check   # 불일치 보고만 (exit 1 on drift)
+ *   node tools/sync/sync_textbook_files.js --rename <contentRoot 상대 구경로> <신경로>
  *       예: --rename 교재/law/OLD.md 교재/law/NEW.md
  */
 
 // @spec none (콘텐츠 구조 동기화 도구)
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets, getPrecacheMdAssets, getPrecacheMediaAssets } = require('./build/exam_targets.js');
+const { getExamTargets, getPrecacheMdAssets, getPrecacheMediaAssets } = require('../build/exam_targets.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const SW_PATH = path.join(ROOT, 'sw.js');
 const MD_BEGIN = '// MD_ASSETS:BEGIN';
 const MD_END = '// MD_ASSETS:END';
@@ -354,6 +354,6 @@ if (manual.length) {
 }
 
 if (CHECK_ONLY && drift.length) {
-    console.log('\n❌ 구조 드리프트 감지 — node tools/sync_textbook_files.js 로 동기화하세요.');
+    console.log('\n❌ 구조 드리프트 감지 — node tools/sync/sync_textbook_files.js 로 동기화하세요.');
     process.exit(1);
 }

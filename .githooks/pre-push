@@ -34,8 +34,8 @@ done
 
 # 영향 테스트 게이트 — push 대상 diff의 @spec을 역산해 관련 unit/DOM 테스트만 실행.
 # 변경 파일에 추적 태그가 없으면 권장 테스트 0개로 스킵(통과)된다.
-echo "  - node tools/impact_tests.js --ref origin/main --run"
-node tools/impact_tests.js --ref origin/main --run || {
+echo "  - node tools/check/impact_tests.js --ref origin/main --run"
+node tools/check/impact_tests.js --ref origin/main --run || {
     echo "✗ pre-push 차단: 영향 테스트 실패"
     echo "  우회: SKIP_PREPUSH=1 git push"
     exit 1

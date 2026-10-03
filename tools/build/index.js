@@ -516,7 +516,7 @@ if (typeof window !== 'undefined') {
       }
     }
     // MD_ASSETS 목록은 exam_targets.getPrecacheMdAssets로 통합 생성
-    // (tools/sync_textbook_files.js --check가 같은 목록으로 drift를 감시)
+    // (tools/sync/sync_textbook_files.js --check가 같은 목록으로 drift를 감시)
     mdAssets.push(...getPrecacheMdAssets(WORKSPACE_DIR));
     void generatedFiles; // 참고용 수집 — 프리캐시 목록에는 포함하지 않음
 

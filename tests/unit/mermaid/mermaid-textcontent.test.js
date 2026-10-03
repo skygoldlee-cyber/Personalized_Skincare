@@ -1,8 +1,8 @@
 // @spec TR-06~08
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatSectionContentForReader } from '../../src/reader-format.js';
-import { parseMarkdown } from '../../src/markdown-parser.js';
+import { formatSectionContentForReader } from '../../../src/reader-format.js';
+import { parseMarkdown } from '../../../src/markdown-parser.js';
 
 // 헬퍼: <pre class="mermaid">...</pre> 전체 태그 추출
 function extractMermaidFull(html) {

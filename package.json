@@ -19,7 +19,7 @@
     "build:keyword-index": "node tools/build/build_keyword_index.js",
     "build:exam-bundles": "node tools/build/build_exam_bundles.js",
     "build:audio-manifest": "node tools/build/build_audio_manifest.js",
-    "sync:citations": "node tools/sync_citation_lines.js",
+    "sync:citations": "node tools/sync/sync_citation_lines.js",
     "postbuild:data": "npm run check:parser",
     "check:parser": "node tools/check/check_parser_parity.js",
     "check:imports": "node tools/check/check_imports.js",
@@ -49,8 +49,8 @@
     "check:secrets": "node tools/check/check_secrets.js",
     "check:notes": "node tools/check/check_release_notes.js",
     "check:specrefs": "node tools/check/check_spec_refs.js",
-    "build:trace": "node tools/build_trace_matrix.js",
-    "check:trace": "node tools/build_trace_matrix.js --check",
+    "build:trace": "node tools/build/build_trace_matrix.js",
+    "check:trace": "node tools/build/build_trace_matrix.js --check",
     "lint": "eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0",
     "check:types": "tsc -p jsconfig.json --noEmit",
     "hooks:install": "git config core.hooksPath .githooks && echo 'pre-commit/pre-push 훅 활성화됨 (.githooks)'",
@@ -79,10 +79,10 @@
     "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content",
     "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content -- --quick",
     "check:ci": "npm run check:hooks && npm run check:secrets && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && node tools/check/check_doc_sync.js --ref origin/main && node tools/check/check_test_first.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser",
-    "deploy": "node tools/deploy.js",
+    "deploy": "node tools/deploy/deploy.js",
     "audit:combo": "node tools/check/audit_combo.js",
     "check:uitext": "node tools/check/check_uitext.js",
-    "scaffold:exam": "node tools/scaffold_exam.js"
+    "scaffold:exam": "node tools/build/scaffold_exam.js"
   },
   "keywords": [
     "cosmetics",

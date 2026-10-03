@@ -6,7 +6,7 @@
 현행 참조자료 파이프라인:
 - 변환 엔진: `tools/pdf2md.py`
 - 스테이징 변환/골든 비교: `tools/convert_ref_pdfs_v2.py` (`npm run convert:refs`, `npm run verify:refs`)
-- 인용 라인 동기화: `tools/sync_citation_lines.js` (`npm run sync:citations` — build:data에 포함)
+- 인용 라인 동기화: `tools/sync/sync_citation_lines.js` (`npm run sync:citations` — build:data에 포함)
 - 정합성 검증: `tools/check_reflayout.js`, `tools/check_ref_freshness.js`, `tools/check_ref_subjects.js`
 
 2026-09-26 추가: `audit_citation_links.js`, `audit_hyperlinks.js`,

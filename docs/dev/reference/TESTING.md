@@ -113,8 +113,8 @@ npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(기
 npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
 
 # 영향도 분석 — 변경 파일 → 영향 요구사항·권장 테스트
-node tools/impact_tests.js                      # 미커밋 변경 분석
-node tools/impact_tests.js --ref origin/main    # 브랜치 diff 분석 (CI PR 단계와 동일)
+node tools/check/impact_tests.js                      # 미커밋 변경 분석
+node tools/check/impact_tests.js --ref origin/main    # 브랜치 diff 분석 (CI PR 단계와 동일)
 
 # Git 훅 (opt-in) — IDE 오류 상태에서 커밋·푸시 차단
 npm run hooks:install
@@ -139,8 +139,8 @@ npm run hooks:install
 | `lint` | `eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0` | ESLint — 0 problems 필수 (경고도 차단) |
 | `check:types` | `tsc -p jsconfig.json --noEmit` | JSDoc 타입 진단 (checkJs) |
 | `check:specrefs` | `node tools/check/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
-| `check:trace` | `node tools/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
-| `build:trace` | `node tools/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
+| `check:trace` | `node tools/build/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
+| `build:trace` | `node tools/build/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
 | `hooks:install` | `git config core.hooksPath .githooks` | pre-commit·pre-push 훅 활성화 (opt-in) |
 
 ### 커버리지 임계값
@@ -763,7 +763,7 @@ function detectDiagramType(textContent) {
 - npm run check:parser    # 빌드↔런타임 파서 정합성
 - npx playwright install --with-deps chromium
 - npm run test:e2e        # Playwright E2E → 실패 시 test-results 아티팩트
-- node tools/impact_tests.js --ref origin/main   # PR만 — 영향 요구사항 리포트
+- node tools/check/impact_tests.js --ref origin/main   # PR만 — 영향 요구사항 리포트
 ```
 
 - PR에서는 `impact_tests.js --ref origin/main`이 변경 파일의 영향 요구사항·권장 테스트를 출력한다 — 리뷰어가 회귀 범위를 확인하는 용도.

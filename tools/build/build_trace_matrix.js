@@ -13,7 +13,7 @@
  * 사용법:
  *   npm.cmd run build:trace                    # TRACE_MATRIX.md 재생성
  *   npm.cmd run check:trace                    # 신선도 검증 — 입력 해시가 다르면 exit 1
- *   node tools/build_trace_matrix.js --check   # 직접 검증
+ *   node tools/build/build_trace_matrix.js --check   # 직접 검증
  *
  * 신선도: 생성 시 입력(SPEC + @spec 태그 + 문서 헤더)의 해시를 파일에 스탬프.
  * --check는 재해시해 비교 — SPEC·@spec·문서 헤더가 바뀌면 재생성을 강제한다.
@@ -25,7 +25,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const T = require('./lib/trace_scan');
+const T = require('../lib/trace_scan');
 
 const OUT_FILE = path.join(T.ROOT, 'docs', 'dev', 'TRACE_MATRIX.md');
 const HASH_RE = /> 입력 해시: ([0-9a-f]+)/;

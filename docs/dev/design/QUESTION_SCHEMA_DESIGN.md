@@ -374,7 +374,7 @@ python ref-pipeline/convert.py 별표1          # 이름 필터 부분 변환
 - **전체집합 오지 제한**: `generateComboOptions`의 `banFull`로 정답이 전체가 아닌 문항의
   "모두 고르기" 선지를 제한해 선지 패턴 단조로움을 줄인다.
 - **진술 explain 비중복**: 생성 문항은 진술별 해설을 저장하지 않고 문항 `explain`으로 폴백 — 번들 ~45% 절감.
-- **태그 추론**: `tools/drill-utils.js`의 `inferTags`가 STANDARD_TAGS 어휘(수치·기한·금지원료 등)를
+- **태그 추론**: `tools/build/drill-utils.js`의 `inferTags`가 STANDARD_TAGS 어휘(수치·기한·금지원료 등)를
   발문+진술에서 자동 부여 — "숫자·기준 카드 덱" 필터 기반.
 - **문항 id**: `stableId(subjKey,'bank','combo',원문id)` — 재생성 순서와 무관하게 안정.
 

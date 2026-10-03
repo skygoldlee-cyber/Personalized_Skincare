@@ -1,12 +1,12 @@
-// tools/migrate_ingredients_to_json.js — 원료 MD → knowledge/ingredients.json 일회성 이관
+// tools/_archive/migrate_ingredients_to_json.js — 원료 MD → knowledge/ingredients.json 일회성 이관
 // @spec BP-01
 // ============================================================
 // 참조자료/원료/{approved,restricted,banned}_ingredients.md 의 원료 표를
 // knowledge/ingredients.json(SSOT)으로 이관하고, 원본 MD의 표 영역을
 // GENERATED-TABLE 마커로 감싼다 (서술·구조는 그대로 유지).
 //
-//   node tools/migrate_ingredients_to_json.js            # 변환 + 검증
-//   node tools/migrate_ingredients_to_json.js --dry-run  # 검증만 (파일 미기록)
+//   node tools/_archive/migrate_ingredients_to_json.js            # 변환 + 검증
+//   node tools/_archive/migrate_ingredients_to_json.js --dry-run  # 검증만 (파일 미기록)
 //
 // 검증: bundleFields 투영 결과가 기존 ingredients_data.*.js 번들과
 //       이름 기준으로 완전히 동일한지 비교한다.
@@ -15,9 +15,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const { renderTable } = require('./build/plugins/knowledge.plugin');
+const { renderTable } = require('../build/plugins/knowledge.plugin');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..', '..');
 const SRC_DIR = path.join(ROOT, 'content/exams/cosmetic/참조자료/원료');
 const OUT_JSON = path.join(ROOT, 'content/exams/cosmetic/knowledge/ingredients.json');
 const DRY_RUN = process.argv.includes('--dry-run');

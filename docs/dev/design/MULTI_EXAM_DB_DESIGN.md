@@ -241,7 +241,7 @@ const _EXAM_LAW_URLS = {
 5. npm.cmd run check:content -- --build    빌드 + 통합 검증
 ```
 
-`tools/scaffold_exam.js` (신규, Phase B)가 1~3번의 골격을 생성한다: `exams.json` 엔트리 삽입 + `manifest.json` 템플릿(과목 1개 예시) + 디렉터리 트리 + `references.json` 빈 스키마. "문서화된 6단계"를 1커맨드로 만들어 온보딩 실수를 줄인다.
+`tools/build/scaffold_exam.js` (신규, Phase B)가 1~3번의 골격을 생성한다: `exams.json` 엔트리 삽입 + `manifest.json` 템플릿(과목 1개 예시) + 디렉터리 트리 + `references.json` 빈 스키마. "문서화된 6단계"를 1커맨드로 만들어 온보딩 실수를 줄인다.
 
 ---
 
@@ -262,7 +262,7 @@ const _EXAM_LAW_URLS = {
 | Phase | 내용 | 완료 조건 |
 |-------|------|----------|
 | A — 결합도 해소 | §6 표의 A1~A7 — ✅ 완료 (2026-09-30) | `check:all` 통과 + cosmetic 회귀 0 |
-| B — 스캐폴더 | `tools/scaffold_exam.js` — ✅ 완료 (2026-09-30) | 더미 시험(dummytest)으로 scaffold→build→피커 표시→제거→잔재 0 라운드트립 통과 |
+| B — 스캐폴더 | `tools/build/scaffold_exam.js` — ✅ 완료 (2026-09-30) | 더미 시험(dummytest)으로 scaffold→build→피커 표시→제거→잔재 0 라운드트립 통과 |
 | C — 파일럿 | 식품기사(`food`) — 법령 암기형, 식약처 고시 체계 공유로 재사용성 최대 — ✅ 완료 (2026-09-30) | 전 체인 동작: 교재→문항→인용→법령 링크→고시 감시 (아래 "Phase C 파일럿 결과" 참조) |
 | D — 지식DB 일반화 | `dictionary` 스키마 드리븐화 + 두 번째 엔티티 타입 적용 | ✅ 완료 (2026-09-30 — food `additives` 세트, `knowledge.plugin.js`, `loadDictionary()`, 스키마 DOM 테스트 7건) · 엔티티 역참조(§5.3)·다중 세트 UI(§5.2)는 후속 |
 | E — 도메인 모듈 격리 + 플랫폼 브랜딩 | cosmetic 전용 실행 모듈을 `src/exams/cosmetic/`로 물리 이동 (§10 항목 5의 후속 설계 확정) + 플랫폼 식별자를 시험 브랜드에서 분리 (`passory`) | ✅ 완료 (2026-10-03) — 하단 "Phase E" 참조 |

@@ -120,4 +120,4 @@ jobs:
 
       - name: PR impact report
         if: github.event_name == 'pull_request'
-        run: node tools/impact_tests.js --ref origin/main
+        run: node tools/check/impact_tests.js --ref origin/main

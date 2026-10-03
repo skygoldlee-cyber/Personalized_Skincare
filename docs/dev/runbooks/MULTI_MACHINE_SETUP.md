@@ -105,7 +105,7 @@ export VERCEL_TOKEN="발급받은_토큰"
 npm.cmd run deploy
 ```
 
-> 표준 배포는 `npm run deploy`입니다 — `tools/deploy.js`가 git 가드(clean tree·origin 동기화) → 콤보 품질 게이트 → `sw.js` CACHE_VERSION 자동 스탬프 → `vercel --prod`를 일괄 수행합니다. `vercel --prod` 직접 실행은 미푸시 커밋이 프로덕션에 올라갈 수 있어 금지입니다.
+> 표준 배포는 `npm run deploy`입니다 — `tools/deploy/deploy.js`가 git 가드(clean tree·origin 동기화) → 콤보 품질 게이트 → `sw.js` CACHE_VERSION 자동 스탬프 → `vercel --prod`를 일괄 수행합니다. `vercel --prod` 직접 실행은 미푸시 커밋이 프로덕션에 올라갈 수 있어 금지입니다.
 
 ---
 

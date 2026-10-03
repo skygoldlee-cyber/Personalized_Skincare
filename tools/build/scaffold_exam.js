@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// tools/scaffold_exam.js — 신규 시험 팩 스캐폴더 (Phase B, MULTI_EXAM_DB_DESIGN §7)
+// tools/build/scaffold_exam.js — 신규 시험 팩 스캐폴더 (Phase B, MULTI_EXAM_DB_DESIGN §7)
 // @spec ES-01,DA-06
 //
 // "새 시험 추가"의 1~3번 수동 단계를 1커맨드로 만든다:
@@ -13,16 +13,16 @@
 // features 플래그 ↔ 필수 문서 불변식을 check:docbundles --check로 검증한다.
 //
 // 사용:
-//   node tools/scaffold_exam.js <id> --name "시험명" [--short-name X] [--year 2027]
-//   node tools/scaffold_exam.js <id> --remove      # 골격 제거 (exams.json 엔트리 + 디렉터리)
-//   node tools/scaffold_exam.js <id> --name ... --dry-run
+//   node tools/build/scaffold_exam.js <id> --name "시험명" [--short-name X] [--year 2027]
+//   node tools/build/scaffold_exam.js <id> --remove      # 골격 제거 (exams.json 엔트리 + 디렉터리)
+//   node tools/build/scaffold_exam.js <id> --name ... --dry-run
 //
 // 생성물을 실제 시험으로 승격하려면 샘플 MD를 실제 교재·문제은행으로 교체하고
 // manifest.json의 subjects/exams를 실제 과목 구성으로 수정한다.
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const EXAMS_JSON = path.join(ROOT, 'content', 'exams.json');
 
 const ID_RE = /^[a-z][a-z0-9_-]*$/;
@@ -247,7 +247,7 @@ function scaffold(id, opts) {
     console.log('     (check:docbundles가 플래그↔문서 불변식을 강제)');
     console.log('  4. npm.cmd run check:content -- --build  (빌드 + 통합 검증)');
     console.log('  5. npm.cmd run check:domainmap — content/data/exams/<id>는 자동으로 domain 분류됨');
-    console.log(`  6. 되돌리려면: node tools/scaffold_exam.js ${id} --remove`);
+    console.log(`  6. 되돌리려면: node tools/build/scaffold_exam.js ${id} --remove`);
 }
 
 function remove(id) {
@@ -277,7 +277,7 @@ function remove(id) {
 const args = parseArgs(process.argv.slice(2));
 const id = args._[0];
 if (!id) {
-    console.log('사용: node tools/scaffold_exam.js <id> --name "시험명" [--short-name X] [--year YYYY] [--dry-run|--force|--remove]');
+    console.log('사용: node tools/build/scaffold_exam.js <id> --name "시험명" [--short-name X] [--year YYYY] [--dry-run|--force|--remove]');
     process.exit(1);
 }
 if (!ID_RE.test(id)) fail(`시험 id는 ${ID_RE} 형식이어야 합니다: ${id}`);

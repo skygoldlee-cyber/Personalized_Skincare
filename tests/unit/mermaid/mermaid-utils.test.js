@@ -1,7 +1,7 @@
 // @spec TR-06~08,TH-06
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../../src/mermaid-utils.js';
+import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../../../src/mermaid-utils.js';
 
 test('detectMermaidType: 각 다이어그램 키워드 감지', () => {
     assert.equal(detectMermaidType('mindmap\n  root'), 'mindmap');

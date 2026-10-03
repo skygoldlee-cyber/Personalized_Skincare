@@ -6,13 +6,13 @@
  * TRACE MATRIX와 동일한 스캔으로 즉시 출력한다.
  *
  * 사용법:
- *   node tools/trace.js Q-05            # 단일 요구사항
- *   node tools/trace.js FO-01 FO-02     # 복수
- *   node tools/trace.js DOC-DSN-03      # 문서 ID → 해당 문서의 관련 요구사항
+ *   node tools/build/trace.js Q-05            # 단일 요구사항
+ *   node tools/build/trace.js FO-01 FO-02     # 복수
+ *   node tools/build/trace.js DOC-DSN-03      # 문서 ID → 해당 문서의 관련 요구사항
  */
 
 // @spec none (추적 조회 도구)
-const T = require('./lib/trace_scan');
+const T = require('../lib/trace_scan');
 
 function showSpec(id, data) {
   const { specIds, src, tst, docs, reports } = data;
@@ -48,8 +48,8 @@ function showDoc(docId, data) {
 function main() {
   const args = process.argv.slice(2).filter(a => !a.startsWith('--'));
   if (!args.length) {
-    console.log('사용법: node tools/trace.js <SPEC-ID|DOC-ID>...');
-    console.log('예: node tools/trace.js Q-05  |  node tools/trace.js DOC-DSN-03');
+    console.log('사용법: node tools/build/trace.js <SPEC-ID|DOC-ID>...');
+    console.log('예: node tools/build/trace.js Q-05  |  node tools/build/trace.js DOC-DSN-03');
     process.exit(1);
   }
   const data = T.scanAll();

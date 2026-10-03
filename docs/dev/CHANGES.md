@@ -23,6 +23,13 @@
 - domain-map `domain:cosmetic` 패턴 갱신(테스트·자산 경로), AGENTS·ARCHITECTURE 트리에 `html/exams/<id>/`·`css/exams/<id>/`·`tests/{unit,dom}/exams/<id>/` 노드 추가
 - 검증: unit 804/804 · DOM 510/510 · check:inventory(37개 디렉터리)·check:docs·check:domainmap(1053)·check:types·lint·check:imports·check:html·verify:assets·check:uitext 통과 · 파셜/CSS 서빙 200 확인
 
+## 2026-10-03 도구·테스트 디렉터리 정리 — tools 역할별 재배치 + 유닛 클러스터
+
+- **tools/ 역할별 재배치**: 루트 산재 9개 스크립트를 역할 디렉터리로 이동 — `tools/build/`(build_trace_matrix·trace·drill-utils·scaffold_exam), `tools/sync/`(sync_citation_lines·sync_textbook_files), `tools/deploy/`(deploy), `tools/check/`(impact_tests), `tools/_archive/`(migrate_ingredients_to_json — 완료된 일회성 이관). 내부 ROOT/`__dirname`·상대 require 전수 재작성, package.json·ci.yml·pre-push 훅·check_content.js 호출 경로 갱신
+- **tests/unit/mermaid/ 클러스터**: `mermaid-*.test.js` 6개를 접두사 클러스터 디렉터리로 이동 — `**/*.test.js` glob이라 러너 변경 없이 상대 import만 한 단계 상향
+- 문서 트리·명령 경로 일괄 갱신 (AGENTS·ARCHITECTURE·TESTING·런북 5종), 과거 이력 경로 1건 allowlist
+- 검증: unit 805 · DOM 510 · impact_tests/scaffold dry-run·sync --check 실동작 확인 · check:docs·inventory·ciparity·types·lint 통과
+
 ## 2026-10-03 도메인 네트워크 격리 — 비활성 시험 자산 미로드
 
 - **신규 E2E가 실결함 발견**: food 부팅 중 `data/exams/cosmetic/registry.js`·`id_migration.js`·`css/exams/cosmetic/formula.css` 요청 — 셸의 `__EXAM_DATA_ROOT__` 태그가 빌드 시 기본 시험으로 고정되고 CSS가 정적 @import였던 결합

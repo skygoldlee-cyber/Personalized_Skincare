@@ -40,8 +40,8 @@ npm.cmd run build:story                 # 표준형 + story/*_서사.md 패치 �
 #   이야기형 패치 작성법(슬롯 마커·지시어 문법): docs/dev/runbooks/STORY_PATCH_GUIDE.md
 # 콘텐츠 동기화 (build:data에 자동 통합됨)
 npm.cmd run sync:citations              # 문제은행 인용 라인번호 동기화
-node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
-node tools/sync_textbook_files.js       # 교재/문제은행 파일 ↔ manifest·sw.js MD_ASSETS 구조 동기화 (--check=보고만, --rename <구> <신>=파일명 변경 전파)
+node tools/sync/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
+node tools/sync/sync_textbook_files.js       # 교재/문제은행 파일 ↔ manifest·sw.js MD_ASSETS 구조 동기화 (--check=보고만, --rename <구> <신>=파일명 변경 전파)
 
 # 로컬 서버 (vercel.json 헤더 미러링 — 프로덕션 CSP·캐시 정책 그대로 적용)
 npm.cmd run serve                      # http://localhost:3000
@@ -93,7 +93,7 @@ npm.cmd run check:docsync               # 소스 변경 시 문서 갱신 강제
 npm.cmd run check:testfirst             # 로직(src/*.js·ref-pipeline/*.py) 변경 시 테스트(tests/·ref-pipeline/tests/) 동반 강제 — Docs-First 기계화. 우회: SKIP_TESTFIRST=1 · 커밋 메시지 행 끝 [no-test] (--ref 모드, 그 커밋만 면제)
 npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
 npm.cmd run check:lawurls               # law.go.kr 한글주소 유효성 전수 검증 (law-links.js 매핑 실호출, 오류 페이지 본문 판별)
-node tools/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석, --run으로 권장 테스트 실제 실행 — pre-push 게이트)
+node tools/check/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석, --run으로 권장 테스트 실제 실행 — pre-push 게이트)
 npm.cmd run hooks:install               # Git 훅 활성화 (opt-in) — pre-commit: check:types+lint (IDE 오류 시 커밋 차단) / pre-push: +check:trace/specrefs/docs/영향테스트(impact_tests --run)
 npm.cmd run check:hooks                 # 훅 설치 여부 확인 (권고 — 미설치 시 로컬 게이트 우회됨, check:ci 첫 단계)
 
@@ -285,11 +285,12 @@ data/                   # 빌드 생성 번들
   exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)
 tools/                  # 빌드·검증 스크립트
-  build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
-  check/                # 검증·감사 스크립트 (check_*·audit_*·verify_shell_assets·coverage_merge)
+  build/                # 데이터 파이프라인 (manifest → registry + 해시 번들) + 생성기 (build_trace_matrix·scaffold_exam·drill-utils·trace)
+  check/                # 검증·감사 스크립트 (check_*·audit_*·verify_shell_assets·coverage_merge·impact_tests)
+  sync/                 # 콘텐츠 동기화 (sync_citation_lines·sync_textbook_files)
+  deploy/               # 배포 가드 (deploy.js)
   lib/                  # 공용 스캔·파싱 라이브러리 (trace_scan.js)
   _archive/             # 일회성·이력 스크립트 보관
-  sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시 — 대상 파일 없으면 미발견으로 실패)
 ref-pipeline/           # 교재·참조자료 생성/변환 독립 도구함 (PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증) — 사용 절차는 ref-pipeline/README.md 참조
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)
 tests/                  # 테스트
@@ -355,7 +356,7 @@ docs/                   # 개발 문서
 - 요구사양(SPEC ID) ↔ 문서(DOC ID) ↔ 소스·테스트(@spec) ↔ 보고서(report_archive 헤더)의 유기적 추적은 `docs/dev/TRACE_MATRIX.md`(DOC-DEV-04)가 담당 — `npm.cmd run build:trace`로 재생성하는 자동 산출물(직접 편집 금지).
 - 연결 규약: 각 문서 헤더의 `> **관련 SPEC ID**: XX-##` 행 + 코드의 `@spec` 태그가 원천. `check:specrefs`가 양쪽 모두 SPEC 존재 여부를 검증한다.
 - SPEC ID 변경·문서 추가·@spec 태그 변경 후에는 `npm.cmd run build:trace`로 매트릭스를 갱신한다. `npm.cmd run check:trace`가 입력 해시로 신선도를 검증(check:content 포함) — 스테일이면 실패.
-- 활용 도구: `node tools/trace.js Q-05`(요구사항 도시어 — 문서·소스·테스트·보고서 즉시 조회), `node tools/impact_tests.js [파일…]`(변경 파일 → 영향 요구사항·권장 테스트 역산 — 인자 없으면 미커밋 변경 자동 분석).
+- 활용 도구: `node tools/build/trace.js Q-05`(요구사항 도시어 — 문서·소스·테스트·보고서 즉시 조회), `node tools/check/impact_tests.js [파일…]`(변경 파일 → 영향 요구사항·권장 테스트 역산 — 인자 없으면 미커밋 변경 자동 분석).
 
 ## 코드 스타일 및 규칙
 
@@ -416,7 +417,7 @@ docs/                   # 개발 문서
 
 - **PowerShell 환경**: `&&` 연산자 사용 불가 → `;` 사용. `npm` → `npm.cmd`.
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
-- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요. `check:content`(CI의 `--content-only` 단계 포함)가 스냅샷 drift·인용 대상 파일 부재·미등록 md·구조 드리프트를 차단 — 교재 파일 추가/이름 변경/삭제 시 `node tools/sync_textbook_files.js`(`--rename` 포함)로 선언·프리캐시·인용 경로를 먼저 동기화할 것
+- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요. `check:content`(CI의 `--content-only` 단계 포함)가 스냅샷 drift·인용 대상 파일 부재·미등록 md·구조 드리프트를 차단 — 교재 파일 추가/이름 변경/삭제 시 `node tools/sync/sync_textbook_files.js`(`--rename` 포함)로 선언·프리캐시·인용 경로를 먼저 동기화할 것
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
 - **DOM 테스트**: `tests/dom/` — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/design/DOM_TEST_DESIGN.md`, 파일별 목록·정책은 `docs/dev/reference/TESTING.md`)
 

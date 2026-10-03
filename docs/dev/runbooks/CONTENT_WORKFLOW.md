@@ -174,8 +174,8 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 2. `npm.cmd run build:data` 실행 (build:story 자동 포함 — 이야기형 재생성 후 인용 동기화 필요 시 `sync:citations`)
 3. **인용 라인 동기화** (교재 라인 변경 시):
    ```powershell
-   node tools/sync_citation_lines.js --check   # 변경사항 확인만
-   node tools/sync_citation_lines.js            # 실제 동기화 실행
+   node tools/sync/sync_citation_lines.js --check   # 변경사항 확인만
+   node tools/sync/sync_citation_lines.js            # 실제 동기화 실행
    ```
    - 문제은행의 인용 링크(`[label: L####](<path#L####>)`) 라인 번호를 교재 변경에 맞춰 자동 갱신
    - 인용문(`>` 블록) 지문으로 인용 라인 ±3 검증 → 불일치 시 타겟 파일에서 재탐색(정확 포함 → 쉥글 → 키프레이즈)
@@ -242,7 +242,7 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 
 **5. 인용 라인번호 (가장 깨지기 쉬운 지점)**
 - [ ] 문제은행의 `(<교재파일.md#L1234>)` 인용은 라인 번호에 하드 의존 — 교재 교체로 라인이 밀리면 인용 전수 재검증
-- [ ] `node tools/sync_citation_lines.js --check` 결과 미발견 0건 확인
+- [ ] `node tools/sync/sync_citation_lines.js --check` 결과 미발견 0건 확인
 - [ ] `tools/config/citation_fingerprints.json` 지문 재생성 필요 시 `--fingerprint`
 
 **6. 참조자료(ref_md) 귀속**
@@ -335,7 +335,7 @@ npm.cmd run verify:refs                        # (= python ref-pipeline/convert.
   동명 디렉터리에 복사해 승격한다(`index.html` 보존). 문서 과목은
   `tools/build/ref_statements.js`의 `DOC_SUBJECT_RULES`로 확인.
 - 승격 후 라인 번호가 밀리므로 반드시 `npm.cmd run sync:citations` →
-  `node tools/sync_citation_lines.js --check`(미발견 0 확인) →
+  `node tools/sync/sync_citation_lines.js --check`(미발견 0 확인) →
   `npm.cmd run build:data` → `node tools/build/build_combo_drills.js` 순서로
   후속 재생성을 실행한다.
 

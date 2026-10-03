@@ -187,7 +187,7 @@ const DATA_ASSETS = [
 ];
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장)
- *  MD_ASSETS:BEGIN/END 마커 안은 tools/sync_textbook_files.js가
+ *  MD_ASSETS:BEGIN/END 마커 안은 tools/sync/sync_textbook_files.js가
  *  manifest 선언 기준으로 재생성 — 마커 사이만 자동 갱신된다. */
 const MD_ASSETS = [
   // MD_ASSETS:BEGIN

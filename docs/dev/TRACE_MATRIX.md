@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: eb7274be66efe87e
+> 입력 해시: ebe067ddf1da810c
 > 생성: 2026-10-03 · 원천: SPEC.md(390개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -107,9 +107,9 @@
 | TR-03 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | TR-04 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | TR-05 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-06 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/reader-toc.js<br>…외 1개 | tests/dom/mermaid-zoom.dom.test.js<br>tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-advanced.spec.js<br>tests/unit/mermaid-parser.test.js<br>…외 6개 | — | — |
-| TR-07 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
-| TR-08 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
+| TR-06 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/reader-toc.js<br>…외 1개 | tests/dom/mermaid-zoom.dom.test.js<br>tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-advanced.spec.js<br>tests/unit/mermaid/mermaid-parser.test.js<br>…외 6개 | — | — |
+| TR-07 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid/mermaid-parser.test.js<br>tests/unit/mermaid/mermaid-pipeline.test.js<br>tests/unit/mermaid/mermaid-reader-format.test.js<br>…외 3개 | — | — |
+| TR-08 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid/mermaid-parser.test.js<br>tests/unit/mermaid/mermaid-pipeline.test.js<br>tests/unit/mermaid/mermaid-reader-format.test.js<br>…외 3개 | — | — |
 | TR-09 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/markdown-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js | — | — |
 | TR-10 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/reader-ref-links.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-advanced.spec.js | — | — |
 | TR-11 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
@@ -320,7 +320,7 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | DR-01 | ✅ | 테스트 | — | html/views/trainer.html<br>index.html<br>src/views/trainer-drills.js<br>tools/build/build_ox_drills.js<br>…외 1개 | tests/dom/study-trainer-drills.dom.test.js | DOC-ARC-05<br>DOC-ARC-09 | — |
-| DR-02 | ✅ | 테스트 | DOC-DSN-04<br>DOC-RBK-02<br>DOC-REF-01 | src/views/trainer-drill-combo.js<br>src/views/trainer-drills.js<br>tools/build/build_combo_drills.js<br>tools/drill-utils.js | tests/dom/study-trainer-drills.dom.test.js<br>tests/unit/combo-transform.test.js | DOC-ARC-05<br>DOC-ARC-09 | — |
+| DR-02 | ✅ | 테스트 | DOC-DSN-04<br>DOC-RBK-02<br>DOC-REF-01 | src/views/trainer-drill-combo.js<br>src/views/trainer-drills.js<br>tools/build/build_combo_drills.js<br>tools/build/drill-utils.js | tests/dom/study-trainer-drills.dom.test.js<br>tests/unit/combo-transform.test.js | DOC-ARC-05<br>DOC-ARC-09 | — |
 | DR-03 | ✅ | 테스트 | DOC-RBK-02<br>DOC-REF-01 | src/statement-tracker.js<br>src/views/trainer-drills.js | tests/dom/study-trainer-drills.dom.test.js<br>tests/unit/statement-tracker.test.js | DOC-ARC-05<br>DOC-ARC-09 | — |
 | DR-04 | ✅ | 테스트 | DOC-RBK-02<br>DOC-REF-01 | src/statement-tracker.js<br>src/views/trainer-drills.js<br>src/weak-items.js | tests/dom/study-trainer-drills.dom.test.js<br>tests/unit/statement-tracker.test.js | DOC-ARC-05<br>DOC-ARC-09 | 법령·고시 수치 (드릴 콘텐츠의 기원 — 문항 자체는 내부 제작) |
 | DR-05 | ✅ | 테스트 | DOC-RBK-02<br>DOC-REF-01 | src/statement-tracker.js<br>src/views/trainer-drills.js | tests/dom/study-trainer-drills.dom.test.js<br>tests/unit/statement-tracker.test.js | DOC-ARC-05<br>DOC-ARC-09 | — |
@@ -468,7 +468,7 @@
 | TH-03 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-init.js<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js<br>tests/e2e/theme.spec.js | — | — |
 | TH-04 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js<br>tests/e2e/theme.spec.js | — | — |
 | TH-05 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-extras.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js<br>tests/e2e/theme.spec.js | — | — |
-| TH-06 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-mermaid.css<br>src/mermaid-utils.js | tests/dom/common-theme.dom.test.js<br>tests/e2e/flows.spec.js<br>tests/unit/mermaid-utils.test.js | — | — |
+| TH-06 | ✅ | E2E 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-mermaid.css<br>src/mermaid-utils.js | tests/dom/common-theme.dom.test.js<br>tests/e2e/flows.spec.js<br>tests/unit/mermaid/mermaid-utils.test.js | — | — |
 
 ## 4.8 UI/UX 설계 요구사양
 
@@ -540,13 +540,13 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 20개 | tests/unit/build-pipeline.test.js | — | — |
+| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | tests/unit/build-pipeline.test.js | — | — |
 | BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/schema.js<br>tools/check/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_exam_bundles.js<br>tools/build/index.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/check_parser_parity.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy/deploy.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-09 | ✅ | 테스트 | DOC-RBK-02<br>DOC-RBK-10 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
 | BP-10 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/reader-analysis-gates.test.js | — | — |

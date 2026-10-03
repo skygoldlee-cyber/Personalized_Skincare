@@ -50,11 +50,6 @@
     "reason": "설계안 제안 경로 — 시험 루트 해석 공유 헬퍼 (미구현)"
   },
   {
-    "file": "docs/dev/design/MULTI_EXAM_DB_DESIGN.md",
-    "ref": "tools/scaffold_exam.js",
-    "reason": "설계안 제안 경로 — 신규 시험 팩 스캐폴더 (미구현)"
-  },
-  {
     "file": "docs/dev/design/READER_FEEDBACK_DESIGN.md",
     "ref": "content/피드백/*.md",
     "reason": "설계안 제안 경로 — 실제 저장은 Supabase 테이블"
@@ -217,5 +212,10 @@
     "file": "ref-pipeline/README.md",
     "ref": "ref-pipeline/.mermaid_cache/",
     "reason": "md2doc.py Mermaid 사전렌더 캐시 디렉터리 — gitignore (런타임 생성물)"
+  },
+  {
+    "file": "docs/dev/ARCHITECTURE.md",
+    "ref": "tests/unit/mermaid-rendering.test.js",
+    "reason": "변경 이력 섹션의 과거 경로 언급 (2026-09-02 이력 — 현 위치 tests/unit/mermaid/)"
   }
 ]
