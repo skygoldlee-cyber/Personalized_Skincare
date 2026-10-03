@@ -28,8 +28,8 @@
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 842 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 546 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 69 |
-| **합계** | | | | **1457** |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 71 |
+| **합계** | | | | **1459** |
 
 ### 설계 원칙
 
@@ -568,7 +568,7 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 ### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
 
-`tests/e2e/` 12개 spec 파일 · **69 시나리오** × chromium + Pixel 7 + tablet
+`tests/e2e/` 13개 spec 파일 · **71 시나리오** × chromium + Pixel 7 + tablet
 프로젝트. jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
 webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
 시험 도메인 기능의 스펙은 도메인 격리 규약대로 `tests/e2e/exams/<id>/`에 둔다.
@@ -623,6 +623,17 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
   `navigateToView`가 부여한 `active`를 소실시켜 지연 뷰가 숨던 결함을 이 스펙이
   발견했고, `practice-registry.js`가 주입 후 `active`를 보존하도록 수정됨 — 전체
   지연 뷰 딥링크의 회귀 가드 역할을 겸한다.
+
+**mobile-overflow.spec.js — 뷰포트 오버플로 스윕 (UX-NAV-10, UX-FB-06, 2026-10-18 추가)**
+
+- **전 뷰 수평 오버플로 실측**: `.view-section` 전체를 `switchView`로 순회하며
+  `scrollWidth > clientWidth` 페이지 넘침과 스크롤 불가 내부 클립을 수집 —
+  범인 요소를 식별자+좌표로 리포트. chromium·mobile·tablet 전 프로젝트 적용.
+  가로 스크롤러 내부·ellipsis 말줄임은 의도된 클립이라 예외.
+- **모달 액션 노출 실측**: 360×640 세로 + 640×320 짧은 가로 뷰포트에서 자가
+  등록 모달 푸터 위치와 공용 컨펌 다이얼로그의 90dvh 상한·내부 스크롤을 계측.
+- **실결함 회귀 가드**: 성분사전 '성분 추가' 버튼 nowrap 잘림과 자가 등록 모달
+  등록 버튼 잘림이라는 두 실사례에서 비롯 — 수정을 되돌리는 변이로 실패 확인.
 
 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium` 필요).
 확장 시 시나리오 단위로 `tests/e2e/**/*.spec.js`에 추가 — 인증 경로는 별도 spec 권장.

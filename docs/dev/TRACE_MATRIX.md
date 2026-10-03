@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 815d179e17c3c378
-> 생성: 2026-10-03 · 원천: SPEC.md(407개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 4501302d36ef5bcc
+> 생성: 2026-10-03 · 원천: SPEC.md(409개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 407개 — 문서 연결 256 · 소스 연결 378 · 테스트 연결 395 · 보고서 연결 109
+**커버리지 요약**: 요구사항 409개 — 문서 연결 256 · 소스 연결 378 · 테스트 연결 397 · 보고서 연결 109
 
 ---
 
@@ -495,6 +495,7 @@
 | UX-FB-03 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | E2E 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/e2e/app.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | E2E 테스트 | DOC-DSN-11 | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js<br>tests/e2e/a11y-interaction.spec.js | — | — |
+| UX-FB-06 | 자가 등록 모달(`.cing-*`)이 필드 5개로 `90dvh`를 넘겨 등록·취소 버튼이 잘린 실사례. 공용 `.app-confirm-dialog`(컨펌·의견·Pro·온보딩·통계 공유)와 `.auth-modal-card`·`.f-weigh-card`에 적용 — UX-SET-02(설정 패널)의 다이얼로그 일반화. E2E가 세로·가로 뷰포트에서 푸터 버튼 위치를 실측 | E2E 테스트 | — | — | tests/e2e/mobile-overflow.spec.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | E2E 테스트 | — | css/reader.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | E2E 테스트 | — | css/base.css | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | E2E 테스트 | DOC-DSN-01<br>DOC-REF-09 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/app.spec.js<br>…외 1개 | — | — |
@@ -506,6 +507,7 @@
 | UX-NAV-07 | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 | E2E 테스트 | DOC-DSN-01<br>DOC-DSN-11 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js<br>tests/e2e/responsive-flow.spec.js | — | — |
 | UX-NAV-08 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 | E2E 테스트 | DOC-DSN-11<br>DOC-REF-09 | src/modal-back.js<br>src/router.js | tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/app.spec.js<br>tests/e2e/more-sheet.spec.js | — | — |
 | UX-NAV-09 | 인플로우 크롬은 본문 높이를 영구 잠식하고, transform만 적용한 숨김은 공간을 회수하지 못함(실측: 본문 63%→89% vh). 오버레이 시 콘텐츠 스크롤 컨테이너에 `padding-top`=크롬 높이를 줘 첫 화면이 크롬 아래 묻히지 않게 함 — 패딩은 스크롤과 함께 밀려나므로 읽는 중 잠식 0. 크롬 아래를 지나는 다른 오버레이(섹션 표시줄 등)는 `~` 시빌링 셀렉터로 숨김 상태와 위치를 연동할 것 | E2E 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
+| UX-NAV-10 | 성분사전 검색 행이 버튼 4개(초기화·CSV·전체 CSV·성분 추가)를 nowrap으로 나열해 모바일에서 '성분 추가'가 잘린 실사례. `text-overflow:ellipsis` 말줄임과 가로 스크롤 컨테이너(표 wrapper 등)는 의도된 클립이라 예외. E2E 스윕(`mobile-overflow.spec.js`)이 전 뷰를 프로젝트 뷰포트별로 실측 | E2E 테스트 | — | — | tests/e2e/mobile-overflow.spec.js | — | — |
 | UX-PWA-01 | 모바일 OS(Android/iOS)는 웹의 자체 종료를 차단 — 프로그래밍으로 완전 종료 불가. 데스크톱 설치 PWA는 `close()`가 동작하므로 모바일 안내는 불필요. 차단되면 "최근 앱 목록에서 밀어 닫으세요"(터치)/"창을 닫아주세요"(데스크톱) 안내 화면으로 대체하는 것이 최선 | E2E 테스트 | — | src/app.js | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-02 | 브라우저 탭에서 의미 없는 버튼(앱 종료 등)을 숨겨 혼란 방지. iOS는 `navigator.standalone`만 지원하므로 둘 다 확인 필수 | E2E 테스트 | — | src/pwa-install.js | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-03 | "배포했는데 안 바뀐다" 보고의 대부분이 이 패턴. 사용자 안내 문구와 업데이트 토스트 필수 | 테스트 | — | sw.js<br>tools/check/check_perf_budget.js | tests/unit/ux-invariants.test.js | — | — |
