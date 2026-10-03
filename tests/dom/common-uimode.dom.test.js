@@ -173,13 +173,13 @@ describe('UI 모드 — formula 미보유 시험', () => {
         STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
     });
 
-    it('실무 토글 직접 호출 방어 + 버튼 마크업이 feature:formula로 게이트됨 (H)', () => {
+    it('실무 토글 직접 호출 방어 + 버튼 마크업이 practiceMode 가상 키로 게이트됨 (H)', () => {
         toggleUiMode();
         expect(localStorage.getItem('ui_mode')).not.toBe('practice');
         expect(isPracticeMode()).toBe(false);
-        // 사이드바 푸터·설정 패널 토글 2곳 모두 formula 미보유 시험에서 비노출 대상
+        // 사이드바 푸터·설정 패널 토글 2곳 모두 실무 피처 미보유 시험에서 비노출 대상
         document.querySelectorAll('[data-click="toggleUiMode"]').forEach(b => {
-            expect(b.dataset.feature).toBe('formula');
+            expect(b.dataset.feature).toBe('practiceMode');
         });
     });
 });

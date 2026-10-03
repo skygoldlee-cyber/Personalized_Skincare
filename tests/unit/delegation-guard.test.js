@@ -24,6 +24,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getPracticeLazyHandlers } from '../../src/practice-registry.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', '..');
@@ -67,7 +68,8 @@ const WINDOW_BRIDGE_RE = /window\.([A-Za-z_$][\w$]*)\s*=/g;
 const REGISTRY_BLOCK_RE = /const DELEGATED_HANDLERS = \{([\s\S]*?)\};/;
 // 블록 내 // 주석을 제거한 뒤, `키,` `키:` `메서드(` 형태의 식별자를 모두 수집
 const REGISTRY_KEY_RE = /([A-Za-z_$][\w$]*)\s*(?:,|:|\()/g;
-// LAZY_MODULE_HANDLERS 테이블(지연 로딩 모듈의 네임드 export)의 '이름' 문자열도 브리지로 인정
+// LAZY_MODULE_HANDLERS 테이블(지연 로딩 모듈의 네임드 export)의 '이름' 문자열도 브리지로 인정.
+// 실무 피처 핸들러는 practice-registry.js가 선언 소유 — 정규식 대신 모듈을 import해 수집한다.
 const LAZY_BLOCK_RE = /const LAZY_MODULE_HANDLERS = \[([\s\S]*?)\];/;
 const LAZY_NAME_RE = /'([A-Za-z_$][\w$]*)'/g;
 
@@ -126,6 +128,10 @@ test('모든 data-click / data-input 핸들러는 window에 브리지되어 있�
         LAZY_NAME_RE.lastIndex = 0;
         let n;
         while ((n = LAZY_NAME_RE.exec(lazyMatch[1]))) bridged.add(n[1]);
+    }
+    // 실무 피처 레지스트리의 지연 핸들러도 브리지로 인정
+    for (const [, names] of getPracticeLazyHandlers()) {
+        names.forEach(n => bridged.add(n));
     }
 
     // 3) 교차 검증

@@ -6,6 +6,18 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 실무작업실 피처 레지스트리 — src/practice-registry.js (B안)
+
+- **`practice-registry.js` 신설** — 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러 명단·`enter()` 훅)의 선언적 레지스트리. 정적 import는 `exam-context` 하나로 제한, 피처 모듈·DataLoader·ui-utils·도메인 훅은 `enter()` 내부 지연 import — import 시점 순환·모듈 그래프 팽창 없음
+- **ui-mode.js COSMETIC 결합 해소** — `isPracticeMode()`가 `hasFeature('formula')` 대신 `isPracticeCapable()`(실무 피처 ≥1개)로 판정, `PRACTICE_LANDING='formula-view'` 상수 제거 → `getPracticeLanding()`(유효 피처 첫 번째, 선언 순서)
+- **app.js 도메인 코드 제거** — formula 지연 로더 5개·핸들러 68명·`formula-view` 렌더러(고시 감지 훅 포함)를 레지스트리 유도로 교체 — 실무 피처 추가 시 app.js 수정 불필요
+- **router.js** — `formula-view` 타이틀·해시 슬러그 리터럴을 `getPracticeViewTitles()`/`getPracticeHashSlugs()`로 유도
+- **`data-feature="practiceMode"` 가상 키** — 모드 토글 2곳 + "실무" 그룹 라벨이 `isPracticeCapable()`로 게이트 (실무 피처가 formula가 아닌 시험도 커버). `check_feature_flags.js`의 `DYNAMIC_KEYS`에 등록
+- **결함 수정 겸** — "실무" 그룹 라벨(`nav-group-label-practice`)에 `data-feature` 누락으로 실무 피처 미보유 시험에서 빈 섹션 라벨이 노출되던 것 수정
+- **CSS 시맨틱 개명** — `nav-item-formula`/`nav-group-label-formula`/`mobile-tab-formula` → `*-practice` (violet 실무 도메인 강조 스타일은 신규 실무 피처가 공유)
+- **신규 실무 피처 추가 절차**: 레지스트리 엔트리 + exams.json `features` 키 선언 + 뷰 파셜·nav 마크업 (`data-feature="<키>"`) + 저장 키(storage-keys.js) — 코어 수정 없음
+- **테스트**: `tests/unit/practice-registry.test.js` 7건, delegation-guard가 레지스트리 핸들러를 import 수집으로 인정
+
 ## 2026-10-03 처방 작업대 필드 블록 분리 — src/views/formula-fields.js (R-2)
 
 - `formula.js` 1158→895줄 — 고객·안정성 필드 블록 ~275줄을 `formula-fields.js`로 분리: `populateCustomerFields`/`formulaCustLoad`/`formulaCustSaveAs`/`populateStabilityFields`/`readStabilityInputs`/`writeStabilityInputs`/`readCustomerInputs`/`writeCustomerInputs`/`formulaAllergyAdd`/`formulaAllergyRemove`/`updateFoldSummaries`

@@ -5,6 +5,7 @@ import { safeGetItem, safeSetItem, safeRemoveItem } from "./state.js";
 import { STORAGE_KEYS } from "./storage-keys.js";
 import { DataLoader } from "./data-loader.js";
 import { getActiveExam, getExamAppName, getExamList, hasFeature } from "./exam-context.js";
+import { isPracticeCapable } from "./practice-registry.js";
 import { showToast, showAlert } from "./ui-utils.js";
 
 // 설치형 PWA 콜드 스타트에서 dvh가 실제 화면보다 크게 측정되는 경우가 있어
@@ -212,10 +213,14 @@ export function applyFeatureFlags() {
     const multiExam = getExamList().length > 1;
     document.querySelectorAll('[data-feature]').forEach(node => {
         const el = /** @type {HTMLElement} */ (node);
-        // 시험 전환 버튼은 플래그가 아닌 실제 시험 수로 결정 — 1개면 무의미
+        // 시험 전환 버튼은 플래그가 아닌 실제 시험 수로 결정 — 1개면 무의미.
+        // practiceMode는 실무 피처 1개 이상 보유 시 노출되는 가상 키
+        // (실무 피처가 formula가 아닌 시험에서도 모드 토글이 떠야 한다).
         const on = el.dataset.feature === 'examSwitch'
             ? multiExam
-            : hasFeature(el.dataset.feature);
+            : el.dataset.feature === 'practiceMode'
+                ? isPracticeCapable()
+                : hasFeature(el.dataset.feature);
         if (!on) el.classList.add('is-hidden');
     });
 }

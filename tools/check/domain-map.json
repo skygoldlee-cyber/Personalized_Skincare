@@ -42,6 +42,7 @@
         "src/onboarding.js",
         "src/package.json",
         "src/paths.js",
+        "src/practice-registry.js",
         "src/pro-upgrade.js",
         "src/pwa-install-capture.js",
         "src/pwa-install.js",

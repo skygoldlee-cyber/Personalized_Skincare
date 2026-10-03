@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: e87f68ac759f9ef7
+> 입력 해시: f929b469517103f1
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -337,11 +337,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| UM-01 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-02 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-03 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-04 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/router.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js | DOC-ARC-06 | — |
-| UM-05 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
+| UM-01 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/practice-registry.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/unit/practice-registry.test.js | DOC-ARC-06 | — |
+| UM-02 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/practice-registry.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/unit/practice-registry.test.js | DOC-ARC-06 | — |
+| UM-03 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/practice-registry.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/unit/practice-registry.test.js | DOC-ARC-06 | — |
+| UM-04 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/practice-registry.js<br>src/router.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/unit/practice-registry.test.js | DOC-ARC-06 | — |
+| UM-05 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/practice-registry.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/unit/practice-registry.test.js | DOC-ARC-06 | — |
 
 ## 3.22 시험 선택·전환
 

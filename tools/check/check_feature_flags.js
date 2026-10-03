@@ -14,6 +14,7 @@
  *     침묵적으로 비활성됐던 사례)
  *   - 선언됐으나 사용처 없음 → 경고 (프로비저닝 허용)
  *   - 예외 키: examSwitch — app-shell.js에서 features가 아닌 시험 수로 동적 판정
+ *              practiceMode — practice-registry.js의 실무 피처 보유 여부로 동적 판정
  *
  * 사용법:
  *   npm.cmd run check:featflags   # 단독 실행
@@ -29,7 +30,7 @@ const CODE_DIRS = ['src', 'html'];
 const CODE_FILES = ['index.template.html'];
 
 // features 플래그가 아닌 동적 판정 키 (app-shell.js applyFeatureFlags 참조)
-const DYNAMIC_KEYS = new Set(['examSwitch']);
+const DYNAMIC_KEYS = new Set(['examSwitch', 'practiceMode']);
 
 const exams = JSON.parse(fs.readFileSync(EXAMS, 'utf8')).exams || [];
 const declared = new Set();

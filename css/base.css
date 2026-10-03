@@ -789,33 +789,33 @@ body.ui-mode-practice .ui-mode-toggle {
     color: var(--color-primary);
 }
 
-/* Formula OS — 실무 도메인 시각 구분 (학습 메뉴는 cyan, 실무는 violet) */
-.nav-group-label-formula {
+/* 실무 피처 — 실무 도메인 시각 구분 (학습 메뉴는 cyan, 실무는 violet) */
+.nav-group-label-practice {
     color: var(--color-secondary);
     opacity: 0.9;
 }
 
-.nav-item-formula {
+.nav-item-practice {
     border: 1px solid var(--secondary-tint-15);
     background: linear-gradient(135deg, var(--secondary-tint-12), transparent 65%);
 }
 
-.nav-item-formula i {
+.nav-item-practice i {
     color: var(--color-secondary);
 }
 
-.nav-item-formula:hover {
+.nav-item-practice:hover {
     background: linear-gradient(135deg, var(--secondary-tint-15), var(--bg-subtle));
     border-color: rgba(139, 92, 246, 0.4);
 }
 
-.nav-item-formula.active {
+.nav-item-practice.active {
     background: linear-gradient(135deg, var(--secondary-tint-15), var(--secondary-tint-12));
     border-color: rgba(139, 92, 246, 0.4);
     border-left: 3px solid var(--color-secondary);
 }
 
-.nav-item-formula.active i {
+.nav-item-practice.active i {
     color: var(--color-secondary);
 }
 

@@ -393,10 +393,10 @@
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`). **`features.formula` 미보유 시험에서는 practice를 study로 강제 간주** (`isPracticeMode`가 피처 포함 판정 — 전역 키 잔존으로 인한 학습 nav 전멸 방지), 토글 버튼도 `data-feature="formula"`로 비노출 | ✅ |
+| UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`). **실무 피처 미보유 시험에서는 practice를 study로 강제 간주** (`isPracticeMode`가 `practice-registry.js`의 `isPracticeCapable()`로 판정 — 실무 피처 = exams.json `features` 키 ↔ 레지스트리 엔트리 1:1. 전역 키 잔존으로 인한 학습 nav 전멸 방지), 토글 버튼은 `data-feature="practiceMode"` 가상 키로 비노출 (실무 피처가 formula가 아닌 시험도 커버) | ✅ |
 | UM-02 | 항목 표시 제어 — `nav-study-only`(실무 모드에서 숨김) / `nav-practice-only`(학습 모드에서 숨김) 클래스 | ✅ |
 | UM-03 | 학습 도구 접이식 — 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침, `aria-expanded` + 영속 | ✅ |
-| UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 formula-view로 리다이렉트 | ✅ |
+| UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 실무 랜딩 뷰(`getPracticeLanding()` — 유효 실무 피처 첫 번째)로 리다이렉트 | ✅ |
 | UM-05 | 설정 메뉴에도 모드 전환 항목 — 사이드바 숨겨진 모바일에서 접근 보장 | ✅ |
 
 ### 3.22 시험 선택·전환 (멀티시험)
@@ -728,7 +728,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 - 모바일 하단 탭바 구성 슬롯: 대시보드·카드·퀴즈·실무`a`·성분사전`a`·실무매뉴얼`b`·더보기 (`a`=feature 게이트, `b`=실무 모드 전용). 초과 메뉴는 `#mobile-more-sheet` (`role="dialog"`).
 - 탭바 조합표 — 학습 항목(`nav-study-only`)과 실무 항목(`nav-practice-only`)은 모드 상호배타로 동시 노출 불가. UX-NAV-01의 "핵심 5탭"은 **더보기를 제외한 콘텐츠 탭 최대치**를 의미한다 (최악 조합 = 학습 모드+formula+dictionary → 콘텐츠 5 + 더보기 = 버튼 6). 실무 모드의 '학습 도구 펼치기'(`study-tools-open`)는 사용자 명시 확장이라 기본 조합에서 제외:
 
-| 기능 조합 | 학습 모드 | 실무 모드 (formula 필수, UM-01) |
+| 기능 조합 | 학습 모드 | 실무 모드 (실무 피처 필수, UM-01) |
 |---|---|---|
 | formula + dictionary | 대시보드·카드·퀴즈·실무·사전 + 더보기 = 6 | 실무·사전·실무매뉴얼 + 더보기 = 4 |
 | formula만 | 대시보드·카드·퀴즈·실무 + 더보기 = 5 | 실무·실무매뉴얼 + 더보기 = 3 |

@@ -53,6 +53,7 @@ const SHELL_ASSETS = [
   './src/pwa-install.js',
   './src/theme-toggle.js',
   './src/ui-mode.js',
+  './src/practice-registry.js',
   './src/supabase-config.js',
   './src/supabase-client.js',
   './src/auth-view.js',

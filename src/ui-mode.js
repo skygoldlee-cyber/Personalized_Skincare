@@ -4,7 +4,7 @@
 // 모드는 시험과 무관한 기기 설정(GLOBAL_KEYS) — 'ui_mode': 'study' | 'practice'.
 import { state, safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
-import { hasFeature } from './exam-context.js';
+import { isPracticeCapable, getPracticeLanding } from './practice-registry.js';
 import { switchView } from './views/navigation.js';
 import { showToast } from './ui-utils.js';
 
@@ -21,16 +21,14 @@ const STUDY_ONLY_VIEWS = new Set([
     'calendar-view',
 ]);
 
-const PRACTICE_LANDING = 'formula-view';
-
 export function getUiMode() {
     return safeGetItem(STORAGE_KEYS.UI_MODE) === 'practice' ? 'practice' : 'study';
 }
 
 export function isPracticeMode() {
-    // formula 미보유 시험에서는 실무 모드를 study로 강제 간주 — ui_mode는 전역 키라
+    // 실무 피처 미보유 시험에서는 실무 모드를 study로 강제 간주 — ui_mode는 전역 키라
     // 시험 간 잔존하며, 게이트 없이 적용하면 학습 nav만 숨겨지는 반쪽 상태가 된다.
-    return getUiMode() === 'practice' && hasFeature('formula');
+    return getUiMode() === 'practice' && isPracticeCapable();
 }
 
 /** body 클래스·토글 라벨·aria 상태를 저장된 모드와 동기화한다. */
@@ -56,17 +54,17 @@ export function applyUiMode() {
 export function initUiMode() {
     applyUiMode();
     if (isPracticeMode()) {
-        switchView(PRACTICE_LANDING, { scrollTop: true });
+        switchView(getPracticeLanding(), { scrollTop: true });
     }
 }
 
 export function toggleUiMode() {
-    if (!hasFeature('formula')) return; // 토글 버튼은 data-feature로 숨김 — 직접 호출 방어
+    if (!isPracticeCapable()) return; // 토글 버튼은 data-feature="practiceMode"로 숨김 — 직접 호출 방어
     const next = isPracticeMode() ? 'study' : 'practice';
     safeSetItem(STORAGE_KEYS.UI_MODE, next);
     applyUiMode();
     if (next === 'practice' && STUDY_ONLY_VIEWS.has(state.currentView)) {
-        switchView(PRACTICE_LANDING, { scrollTop: true });
+        switchView(getPracticeLanding(), { scrollTop: true });
     }
     showToast(next === 'practice'
         ? '실무 모드로 전환했습니다. 학습 기능은 "학습 도구"에서 열 수 있습니다.'

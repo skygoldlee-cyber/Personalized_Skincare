@@ -90,6 +90,7 @@
 │ │  │ 코어: app.js(오케스트레이터) · router.js · state.js │   │ │
 │ │  │ storage.js(저장소 추상화·백엔드 교체) · storage-keys │   │ │
 │ │  │ exam-context.js(시험 해석·scopedKey) · ui-mode.js   │   │ │
+│ │  │ practice-registry.js(실무 피처 레지스트리)            │   │ │
 │ │  │ paths.js · data-loader.js · weak-items.js           │   │ │
 │ │  └──────────────────────────────────────────────────┘   │ │
 │ │  ┌──────────────────────────────────────────────────┐   │ │
@@ -288,6 +289,7 @@ passory/
 │   ├── globals.d.ts            #   전역 타입 선언
 │   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
 │   ├── ui-mode.js              #   학습/실무 UI 모드 전환
+│   ├── practice-registry.js    #   실무작업실 피처 레지스트리 (features 키 → 뷰·랜딩·로더·핸들러)
 │   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
 │   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback), 신기능 힌트(⚙️ 점+NEW 배지)
 │   ├── pro-upgrade.js          #   Pro 안내 — feature-plan.json 무료/Pro 로드, PRO 배지(data-pro-feature) 표시 제어, 진입 1회 안내·한도 초과 업그레이드 모달
@@ -662,6 +664,7 @@ formula-rules.js (추천 규칙)          formula-check.js (고시 한도 검증
 formula-stability.js (제형 안정성)    batch-store.js (조제 기록)
 customer-store.js (고객 카드)         material-ledger.js (원료 장부)
 usage-guide.js (안내문 생성)          ui-mode.js (학습/실무 모드)
+practice-registry.js (실무 피처 레지스트리)
 supabase-config.js (설정)            supabase-client.js (lazy init)
 auth-view.js (계정 모달)             sync.js (스냅샷 동기화)
 pwa-install.js (설치 프롬프트)        theme-init.js + theme-toggle.js
@@ -953,10 +956,12 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 - **키**: `ui_mode` = `'study' | 'practice'` (GLOBAL_KEYS — 시험 무관 기기 설정)
 - **게이팅**: `body.ui-mode-practice` 클래스 + `.nav-study-only`(실무에서 숨김) / `.nav-practice-only`(학습에서 숨김) 클래스로 CSS 제어
-- **랜딩**: 실무 모드 초기화 시 `formula-view`로 랜딩 (`hasFeature('formula')` 게이트)
+- **실무 피처 레지스트리**: [`src/practice-registry.js`](../../src/practice-registry.js)가 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러·enter 훅)를 선언한다. `isPracticeCapable()`(실무 피처 ≥1개)가 실무 모드 존재 조건, `getPracticeLanding()`이 랜딩 뷰(유효 피처 첫 번째). 신규 실무 피처는 레지스트리 엔트리 + exams.json 키 선언으로 추가 — ui-mode·router·app 코어 수정 불필요
+- **랜딩**: 실무 모드 초기화 시 `getPracticeLanding()` 뷰로 랜딩 (cosmetic = `formula-view`)
+- **토글 게이트**: `data-feature="practiceMode"` 가상 키 — `applyFeatureFlags`가 `isPracticeCapable()`로 판정 (실무 피처가 formula가 아닌 시험에서도 토글 노출)
 - **학습 도구 접이식**: 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침 — `ui_study_tools_open` 키 영속 + `aria-expanded` 동기화
 - **진입점 이중화**: 사이드바 푸터 버튼 + 설정 패널 항목 (모바일은 사이드바가 숨겨지므로 설정 경로 필수)
-- **학습 전용 뷰 가드**: `STUDY_ONLY_VIEWS` — 실무 모드에서 학습 뷰 접근 시 formula-view로 리다이렉트
+- **학습 전용 뷰 가드**: `STUDY_ONLY_VIEWS` — 실무 모드에서 학습 뷰 접근 시 실무 랜딩으로 리다이렉트
 
 ---
 

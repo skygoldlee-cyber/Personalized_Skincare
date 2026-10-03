@@ -460,6 +460,20 @@ function main() {
                 }
             }
         }
+        // 동적 import + 이름 본문 등장 — data-click 위임 디스패치처럼 문자열로
+        // 참조되는 네임드 export를 사용으로 간주 (testFileUses와 동일 규칙.
+        // practice-registry.js의 loaders/handlers 선언이 이 형태다)
+        DYN_IMPORT_RE.lastIndex = 0;
+        let dtm;
+        while ((dtm = DYN_IMPORT_RE.exec(src)) !== null) {
+            const resolved = resolveModule(importerDir, cleanDynPath(dtm[1]));
+            if (!resolved) continue;
+            for (const name of (moduleExports.get(resolved) || [])) {
+                if (name === 'default' || allImports.has(resolved + '::' + name)) continue;
+                const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+                if (nameRe.test(src)) allImports.add(resolved + '::' + name);
+            }
+        }
     }
 
     // 의도된 공개 API 억제: 선언부 바로 위 주석에 'keep-export' 가 있으면 경고 제외

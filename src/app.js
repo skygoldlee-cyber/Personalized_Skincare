@@ -91,17 +91,14 @@ import {
     closeGoalSettings,
     saveGoalSettings
 } from './views/study-calendar.js';
-import { checkMfdsNotice, checkMfdsNoticeNow, dismissMfdsNotice, viewMfdsNoticeStatus } from './notice-check.js';
+import { checkMfdsNoticeNow, dismissMfdsNotice, viewMfdsNoticeStatus } from './notice-check.js';
+import { getPracticeLazyHandlers, getPracticeViewRenderers } from './practice-registry.js';
 
-/* Formula OS 도메인 클러스터 — 지연 로딩 (features.formula 미보유 시험은 이 번들을 다운로드하지 않는다).
+/* 실무작업실 피처 클러스터 — practice-registry.js가 지연 로더·핸들러 명단을 소유한다
+   (해당 features 키 미보유 시험은 이 번들을 다운로드하지 않는다).
    첫 핸들러 호출 시에만 import() 되며 캐시된다. data-click 디스패치는 window를 조회하므로
    아래 LAZY_MODULE_HANDLERS가 DELEGATED_HANDLERS에 이름을 등록해 브리지한다. */
 const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
-const loadFormulaModule = _lazyImport(() => import('./views/formula.js'));
-const loadFormulaBatchModule = _lazyImport(() => import('./views/formula-batch.js'));
-const loadFormulaCustomerModule = _lazyImport(() => import('./views/formula-customer.js'));
-const loadFormulaMaterialModule = _lazyImport(() => import('./views/formula-material.js'));
-const loadFormulaComplianceModule = _lazyImport(() => import('./views/formula-compliance.js'));
 const loadCalcPracticeModule = _lazyImport(() => import('./views/trainer-calc-practice.js'));
 const loadIngredientsChallengeModule = _lazyImport(() => import('./views/trainer-ingredients.js'));
 
@@ -113,34 +110,8 @@ const _lazyFn = (load, name) => async (...args) => {
 
 /** @type {Array<[() => Promise<any>, string[]]>} */
 const LAZY_MODULE_HANDLERS = [
-    [loadFormulaModule, [
-        'exitFormulaSubView', 'openFormulaList', 'openFormulaCalc', 'openIngredientDict',
-        'formulaNew', 'formulaOpen', 'formulaDuplicate', 'formulaDelete',
-        'formulaCalcAddRow', 'formulaCalcRemoveRow', 'formulaCalcSave', 'formulaAddIngredient',
-        'formulaRecAdd', 'formulaRecAddBase', 'formulaLoadBase',
-        'formulaRuleAdd', 'formulaRuleRemove', 'formulaRuleReset',
-        'formulaRuleExport', 'formulaRuleImport',
-        'formulaSortPhase', 'formulaStepAdd', 'formulaStepRemove',
-        'formulaPrint', 'formulaExportJson', 'formulaCardExport', 'formulaImportJson',
-        'formulaAllergyAdd', 'formulaAllergyRemove', 'formulaCustLoad', 'formulaCustSaveAs',
-    ]],
-    [loadFormulaBatchModule, [
-        'openBatchPanel', 'batchNew', 'batchEdit', 'batchSave', 'batchOpen', 'batchDelete',
-        'batchFormulaChanged', 'batchCustChanged', 'batchPrintRecord', 'batchPrintLabel',
-        'batchPrintGuide', 'batchFilterReset', 'batchExportCsv',
-    ]],
-    [loadFormulaCustomerModule, [
-        'openCustomerPanel', 'custNew', 'custEdit', 'custSave', 'custOpen', 'custDelete',
-        'custLogAdd', 'custAllergyAdd', 'custAllergyRemove',
-        'custImportCsv', 'custExportCsv', 'custCsvTemplate',
-    ]],
-    [loadFormulaMaterialModule, [
-        'openMaterialPanel', 'matNew', 'matEdit', 'matSave', 'matDelete',
-        'matImportCsv', 'matExportCsv', 'matCsvTemplate',
-    ]],
-    [loadFormulaComplianceModule, [
-        'openCompliancePanel', 'compToggle', 'compReset', 'compOpenLaw',
-    ]],
+    // 실무 피처 핸들러 — 레지스트리 선언에서 유도 (features 키 ↔ 엔트리 1:1)
+    ...getPracticeLazyHandlers(),
     // 도메인 특화 훈련 모듈 — features.calcPractice / features.ingredients 게이트
     [loadCalcPracticeModule, [
         'startCalcPractice', 'generateCalcQuestion', 'submitCalcAnswer', 'toggleSolutionAccordion',
@@ -391,18 +362,8 @@ function setupNavigation() {
                 renderDictionary();
             });
         },
-        'formula-view': () => {
-            checkMfdsNotice(); // 식약처 신규 고시 감지 배너 (비차단, 실패 무시)
-            showGlobalLoading('Formula OS 데이터를 불러오는 중입니다...');
-            loadFormulaModule().then(m => {
-                DataLoader.loadIngredients()
-                    .catch(() => showToast('원료 데이터를 불러오지 못했습니다.', 'error'))
-                    .finally(() => { hideGlobalLoading(); m.initFormulaView(); });
-            }).catch(() => {
-                hideGlobalLoading();
-                showToast('Formula OS를 불러오지 못했습니다.', 'error');
-            });
-        },
+        // 실무 피처 뷰 — 레지스트리 엔트리의 enter()가 로딩·도메인 훅·초기화를 소유
+        ...getPracticeViewRenderers(),
         'calendar-view': () => {
             renderStudyCalendar();
         },

@@ -12,6 +12,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf-8'));
 const indexHtml = readFileSync(join(ROOT, 'index.html'), 'utf-8');
 const appJs = readFileSync(join(ROOT, 'src', 'app.js'), 'utf-8');
+// 실무 피처 지연 핸들러명은 practice-registry.js가 선언 소유 — 브리지 탐색 범위에 포함
+const handlerSources = appJs + readFileSync(join(ROOT, 'src', 'practice-registry.js'), 'utf-8');
 
 function headerValue(name) {
   for (const group of vercel.headers || []) {
@@ -74,8 +76,8 @@ test('S-08: HTML의 data-click 핸들러명이 브리지·네임스페이스에 
   const names = new Set([...indexHtml.matchAll(/data-click="([^"]+)"/g)].map(m => m[1]));
   const missing = [...names].filter(n => {
     const top = n.split('.')[0];
-    // 네임스페이스 호출(X.y)은 window.X 객체만 필요 — app.js·import 대상에 선언 존재 확인
-    if (!appJs.includes(top)) {
+    // 네임스페이스 호출(X.y)은 window.X 객체만 필요 — app.js·레지스트리에 선언 존재 확인
+    if (!handlerSources.includes(top)) {
       // index.html 클래식 스크립트 전역 (window.*) 도 허용
       const globals = ['openExternalLink'];
       return !globals.includes(top);
