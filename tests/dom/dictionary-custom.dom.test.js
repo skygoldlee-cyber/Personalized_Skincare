@@ -93,6 +93,13 @@ describe('지식DB 사전 — 자가 등록 성분 병합 (DI-06·08)', () => {
         expect(btn.textContent).toContain('성분 추가');
     });
 
+    it('"성분 추가" 툴팁 — 자가 등록 성격(사용자 등록 배지·법정 판정 아님) 명시', () => {
+        renderDictionary();
+        const btn = document.getElementById('dict-custom-add');
+        expect(btn.title).toContain('사용자 등록');
+        expect(btn.title).toContain('법정 판정');
+    });
+
     it('custom 필터 → 자가 항목만 표시', () => {
         seedCustom([{ id: 'cing_1', name: '자체 베이스 A', type: 'custom', custom: true }]);
         setDictFilter('custom');

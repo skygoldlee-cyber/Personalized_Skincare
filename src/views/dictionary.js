@@ -153,7 +153,7 @@ function renderCustomAddButton(schema) {
         /** @type {HTMLButtonElement} */ (btn).type = 'button';
         btn.className = 'btn btn-secondary flex-center gap-2';
         btn.setAttribute('data-click', 'customIngAdd');
-        btn.setAttribute('title', '공식 DB에 없는 항목을 자가 등록 — 사전·배합 검증에 반영');
+        btn.setAttribute('title', '공식 DB에 없는 원료를 직접 등록 — 등록 항목은 \'사용자 등록\' 배지로 표시되고 자가 선언 한도만 검증됩니다 (법정 판정이 아닌 사내 참고용)');
         btn.innerHTML = `<i class="fa-solid fa-user-pen" aria-hidden="true"></i> ${esc(schema.customLabel || '항목 추가')}`;
         row.appendChild(btn);
     }
