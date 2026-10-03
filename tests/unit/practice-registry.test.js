@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import {
     isPracticeCapable, getEnabledPracticeFeatures, getPracticeLanding,
     getPracticeViewTitles, getPracticeHashSlugs, getPracticeLazyHandlers,
-    getPracticeViewRenderers,
+    getPracticeViewRenderers, warmPracticeFeatures,
 } from '../../src/practice-registry.js';
 
 let originalWindow;
@@ -66,7 +66,7 @@ test('해시 슬러그 — formula-view → formula', () => {
 test('지연 핸들러 — 로더 함수 + 이름 배열 쌍, 이름은 전체 유니크', () => {
     setExams([]);
     const handlers = getPracticeLazyHandlers();
-    assert.equal(handlers.length, 5); // main·batch·customer·material·compliance
+    assert.equal(handlers.length, 6); // main·batch·customer·material·compliance·notice
     const names = [];
     for (const [load, list] of handlers) {
         assert.equal(typeof load, 'function');
@@ -75,7 +75,7 @@ test('지연 핸들러 — 로더 함수 + 이름 배열 쌍, 이름은 전체 �
     }
     assert.equal(new Set(names).size, names.length);
     // 대표 핸들러 표본 — 도메인 디스패치 계약 확인
-    for (const sample of ['openFormulaList', 'openBatchPanel', 'openCustomerPanel', 'openMaterialPanel', 'openCompliancePanel']) {
+    for (const sample of ['openFormulaList', 'openBatchPanel', 'openCustomerPanel', 'openMaterialPanel', 'openCompliancePanel', 'checkMfdsNoticeNow']) {
         assert.ok(names.includes(sample), `핸들러 누락: ${sample}`);
     }
 });
@@ -84,4 +84,16 @@ test('뷰 렌더러 맵 — 등록된 실무 뷰 id 키의 함수', () => {
     setExams([]);
     const renderers = getPracticeViewRenderers();
     assert.equal(typeof renderers['formula-view'], 'function');
+});
+
+test('유휴 예열 — warmPracticeFeatures가 유효 피처만 예열한다', () => {
+    setExams([{ id: 'x', features: {} }]);
+    const calls = [];
+    const origFetch = global.fetch;
+    global.fetch = (...a) => { calls.push(a[0]); return Promise.resolve({ ok: true, text: () => Promise.resolve('') }); };
+    try {
+        warmPracticeFeatures(); // 피처 미보유 — 아무 요청도 없어야 함
+        assert.equal(calls.length, 0);
+    } finally { global.fetch = origFetch; }
+    assert.equal(typeof warmPracticeFeatures, 'function');
 });

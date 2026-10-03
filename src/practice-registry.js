@@ -6,6 +6,12 @@
 // 추가하고 exams.json에 features 키를 선언하면 된다 — ui-mode 랜딩,
 // 뷰 타이틀·해시 슬러그, 지연 로더·핸들러 등록이 전부 이 표에서 유도된다.
 //
+// 시험별 자산 격리: 피처 뷰 모듈은 SHELL_ASSETS 프리캐시에 두지 않고
+// (활성 시험만 쓰는 자산이므로) 뷰 마크업도 셸에 빈 스텁만 둔 채
+// markup 필드의 파셜을 진입/예열 시 주입한다. warmPracticeFeatures()가
+// 유휴 시점에 유효 피처의 모듈·마크업을 미리 요청해 SW 캐시(cacheFirst/
+// SWR 경유)에 적재 — 오프라인 진입과 첫 진입 지연을 함께 확보한다.
+//
 // 의존성 규칙: 이 모듈의 정적 import는 exam-context 하나로 제한한다.
 // 피처 뷰 모듈·DataLoader·ui-utils·도메인 훅은 전부 enter() 내부의
 // 지연 import()로 참조해, import 시점의 모듈 그래프 팽창·순환을 막는다.
@@ -20,12 +26,17 @@ const formula = {
     subtitle: '원료 조회 · 배합 계산 · My 포뮬러 저장·검증',
     loadingText: 'Formula OS 데이터를 불러오는 중입니다...',
     loadErrorText: 'Formula OS를 불러오지 못했습니다.',
+    // 뷰 마크업 파셜 — 셸(index.html)에는 빈 <section id> 스텁만 존재,
+    // enter()/예열 시 fetch로 주입된다. 파셜은 자체 <section>을 포함하므로
+    // 스텁을 outerHTML 교체한다.
+    markup: './html/views/formula.html',
     loaders: {
         main: _lazyImport(() => import('./views/formula.js')),
         batch: _lazyImport(() => import('./views/formula-batch.js')),
         customer: _lazyImport(() => import('./views/formula-customer.js')),
         material: _lazyImport(() => import('./views/formula-material.js')),
         compliance: _lazyImport(() => import('./views/formula-compliance.js')),
+        notice: _lazyImport(() => import('./notice-check.js')),
     },
     // [loaderKey, data-click 핸들러명 목록] — app.js 위임 디스패치에 브리지된다
     /** @type {Array<[string, string[]]>} */
@@ -58,6 +69,9 @@ const formula = {
         ['compliance', [
             'openCompliancePanel', 'compToggle', 'compReset', 'compOpenLaw',
         ]],
+        ['notice', [
+            'checkMfdsNoticeNow', 'dismissMfdsNotice', 'viewMfdsNoticeStatus',
+        ]],
     ],
     // 뷰 진입 — 피처가 자체 로딩·데이터 선행·초기화·도메인 훅을 소유한다.
     // renderFn은 비동기 — navigateToView가 반환값을 기다리지 않으므로
@@ -66,12 +80,14 @@ const formula = {
         const [{ DataLoader }, { checkMfdsNotice }, { showGlobalLoading, hideGlobalLoading, showToast }] =
             await Promise.all([
                 import('./data-loader.js'),
-                import('./notice-check.js'),
+                formula.loaders.notice(),
                 import('./ui-utils.js'),
             ]);
-        checkMfdsNotice(); // 식약처 신규 고시 감지 배너 — 도메인 훅 (비차단, 실패 무시)
         showGlobalLoading(formula.loadingText);
         try {
+            // 배너·허브 버튼이 뷰 마크업에 의존하므로 주입을 선행한다
+            await ensureViewMarkup(formula);
+            checkMfdsNotice(); // 식약처 신규 고시 감지 배너 — 도메인 훅 (비차단, 실패 무시)
             const m = await formula.loaders.main();
             try {
                 await DataLoader.loadIngredients();
@@ -86,6 +102,35 @@ const formula = {
         }
     },
 };
+
+/**
+ * 뷰 마크업 지연 주입 — 셸의 빈 스텁 <section>(data-lazy-view 보유)을
+ * 파셜 파일의 내용으로 통째 교체한다. 파셜 자체가 <section id>를 포함하므로
+ * 주입 후 스텁은 사라지고 data-lazy-view 부재가 "주입 완료" 표식이 된다.
+ * (DOM 테스트는 helpers가 동일 파셜을 미리 주입하므로 이 경로는
+ *  실제 런타임 최초 진입에서만 실행된다)
+ */
+async function ensureViewMarkup(feat) {
+    if (!feat.markup) return;
+    const el = document.getElementById(feat.viewId);
+    if (!el || !el.hasAttribute('data-lazy-view')) return;
+    const res = await fetch(feat.markup);
+    if (!res.ok) throw new Error(`view markup ${res.status}: ${feat.markup}`);
+    el.outerHTML = await res.text();
+}
+
+/**
+ * 유휴 시점 예열 — 유효 실무 피처의 뷰 모듈·마크업을 미리 요청한다.
+ * 요청은 SW cacheFirst/SWR을 경유해 캐시에 적재되므로, 활성 시험의 실무
+ * 피처만 프리캐시 없이도 오프라인 진입·첫 진입 즉시성을 확보한다.
+ * 실패는 무시 — 예열은 최적화이며 실제 진입 시 다시 시도된다.
+ */
+export function warmPracticeFeatures() {
+    for (const f of getEnabledPracticeFeatures()) {
+        for (const load of Object.values(f.loaders)) load().catch(() => {});
+        ensureViewMarkup(f).catch(() => {});
+    }
+}
 
 /** 실무 피처 정의 — 키는 exams.json의 features 키와 1:1 대응한다 */
 const PRACTICE_FEATURES = { formula };

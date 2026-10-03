@@ -4,13 +4,19 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf-8'));
 const indexHtml = readFileSync(join(ROOT, 'index.html'), 'utf-8');
+// 지연 주입 뷰 파셜(data-lazy-view) — practice-registry가 런타임 주입하는
+// 배포 마크업이므로 index.html과 동일한 보안 스캔 대상이다.
+const allMarkup = indexHtml + '\n' + readdirSync(join(ROOT, 'html', 'views'))
+    .filter(f => f.endsWith('.html'))
+    .map(f => readFileSync(join(ROOT, 'html', 'views', f), 'utf-8'))
+    .join('\n');
 const appJs = readFileSync(join(ROOT, 'src', 'app.js'), 'utf-8');
 // 실무 피처 지연 핸들러명은 practice-registry.js가 선언 소유 — 브리지 탐색 범위에 포함
 const handlerSources = appJs + readFileSync(join(ROOT, 'src', 'practice-registry.js'), 'utf-8');
@@ -38,7 +44,7 @@ test('S-01: CSP에 script-src 정책이 있고 unsafe-inline을 허용하지 않
 });
 
 test('S-01: data-click 위임 패턴이 인라인 핸들러를 대체한다 (on*= 부재)', () => {
-  const inlineHandlers = indexHtml.match(/\son\w+\s*=/g) || [];
+  const inlineHandlers = allMarkup.match(/\son\w+\s*=/g) || [];
   assert.deepEqual(inlineHandlers, [], `인라인 핸들러 잔존: ${inlineHandlers.join(', ')}`);
   assert.ok(indexHtml.includes('data-click'), 'data-click 위임 사용');
 });
@@ -73,7 +79,7 @@ test('S-08: DELEGATED_HANDLERS 맵이 window 브리지로 노출된다', () => {
 });
 
 test('S-08: HTML의 data-click 핸들러명이 브리지·네임스페이스에 해석 가능하다', () => {
-  const names = new Set([...indexHtml.matchAll(/data-click="([^"]+)"/g)].map(m => m[1]));
+  const names = new Set([...allMarkup.matchAll(/data-click="([^"]+)"/g)].map(m => m[1]));
   const missing = [...names].filter(n => {
     const top = n.split('.')[0];
     // 네임스페이스 호출(X.y)은 window.X 객체만 필요 — app.js·레지스트리에 선언 존재 확인

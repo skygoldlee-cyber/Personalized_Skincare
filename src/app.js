@@ -91,8 +91,7 @@ import {
     closeGoalSettings,
     saveGoalSettings
 } from './views/study-calendar.js';
-import { checkMfdsNoticeNow, dismissMfdsNotice, viewMfdsNoticeStatus } from './notice-check.js';
-import { getPracticeLazyHandlers, getPracticeViewRenderers } from './practice-registry.js';
+import { getPracticeLazyHandlers, getPracticeViewRenderers, warmPracticeFeatures } from './practice-registry.js';
 
 /* 실무작업실 피처 클러스터 — practice-registry.js가 지연 로더·핸들러 명단을 소유한다
    (해당 features 키 미보유 시험은 이 번들을 다운로드하지 않는다).
@@ -454,6 +453,9 @@ initApp = function() {
     originalInitApp();
     setupOfflineDetection(state, togglePomodoro);
     setupModalBackHandler();
+    // 실무 피처 자산 유휴 예열 — 활성 시험 것만 요청해 SW 캐시에 적재 (practice-registry 주석 참고)
+    const scheduleWarm = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
+    scheduleWarm(() => warmPracticeFeatures());
 };
 
 
@@ -542,8 +544,7 @@ const DELEGATED_HANDLERS = {
     submitDailyCardAnswer, submitDailyShortAnswer,
     // 사전/시험 전환
     clearDictSearch, setDictFilter, dictExportCsv, showExamSelect, selectExamAction,
-    // Formula OS (배합 계산·My 포뮬러) — 모듈은 지연 로딩, 핸들러명만 등록 (LAZY_MODULE_HANDLERS)
-    dismissMfdsNotice, checkMfdsNoticeNow, viewMfdsNoticeStatus,
+    // Formula OS (배합 계산·My 포뮬러) — 모듈·핸들러는 practice-registry 지연 로딩 (LAZY_MODULE_HANDLERS)
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,

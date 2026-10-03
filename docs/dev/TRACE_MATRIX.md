@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: f929b469517103f1
+> 입력 해시: 1814b6d9d26548c5
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -290,7 +290,7 @@
 | FO-12 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-13 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-14 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js<br>src/views/formula-print.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 시행규칙 — 전성분 표기 순서 (1% 초과 내림차순 → 1% 이하 → 색소 최하단) |
-| FO-15 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/formula.css<br>css/trainer.css<br>html/views/formula.html<br>index.html<br>…외 1개 | tests/dom/formula-nav.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-15 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/formula.css<br>css/trainer.css<br>html/views/formula.html<br>src/views/formula.js | tests/dom/formula-nav.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-16 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/batch-store.js<br>src/store-utils.js<br>src/views/formula-batch.js | tests/dom/formula-batch.dom.test.js<br>tests/unit/batch-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법·시행규칙 — 맞춤형화장품 판매업의 조제 기록 의무 |
 | FO-17 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/customer-store.js<br>src/store-utils.js<br>src/views/formula-customer.js | tests/dom/formula-customer.dom.test.js<br>tests/unit/customer-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-18 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/material-ledger.js<br>src/store-utils.js<br>src/views/formula-material.js | tests/dom/formula-material.dom.test.js<br>tests/unit/material-ledger.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
@@ -299,8 +299,8 @@
 | FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
 | FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
-| FO-24 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
-| FO-25 | ✅ | 테스트 | — | html/views/formula.html<br>index.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
+| FO-24 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | html/views/formula.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
+| FO-25 | ✅ | 테스트 | — | html/views/formula.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
 
 ## 3.19 계정·클라우드 동기화
 

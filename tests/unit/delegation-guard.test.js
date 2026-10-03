@@ -29,6 +29,7 @@ import { getPracticeLazyHandlers } from '../../src/practice-registry.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', '..');
 const SRC_DIR = path.join(ROOT, 'src');
+const VIEWS_DIR = path.join(ROOT, 'html', 'views');
 const INDEX_HTML = path.join(ROOT, 'index.html');
 const APP_JS = path.join(SRC_DIR, 'app.js');
 
@@ -43,7 +44,13 @@ function collectJsFiles(dir) {
     return out;
 }
 
-const SCAN_FILES = [...collectJsFiles(SRC_DIR), INDEX_HTML];
+// 뷰 마크업 파셜도 스캔 — data-lazy-view 지연 주입 뷰는 index.html에 없지만
+// 배포 마크업이므로 동일한 인라인 핸들러·핸들러명 해석 규칙이 적용된다.
+const VIEW_PARTIALS = fs.readdirSync(VIEWS_DIR)
+    .filter(n => n.endsWith('.html'))
+    .map(n => path.join(VIEWS_DIR, n));
+
+const SCAN_FILES = [...collectJsFiles(SRC_DIR), INDEX_HTML, ...VIEW_PARTIALS];
 
 // 차단 대상 인라인 이벤트 핸들러 속성 목록 (필요 시 확장).
 const INLINE_HANDLER_ATTRS = [

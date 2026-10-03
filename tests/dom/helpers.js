@@ -28,6 +28,12 @@ export function loadIndexHtml() {
     const m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
     document.body.innerHTML = (m ? m[1] : html)
         .replace(/<script[\s\S]*?<\/script>/gi, '');
+    // 지연 주입 뷰 파셜 반영 — 프로덕션은 practice-registry가 진입 시 fetch+주입,
+    // 테스트는 파일에서 즉시 주입해 동일 최종 DOM을 얻는다.
+    document.body.querySelectorAll('[data-lazy-view]').forEach(stub => {
+        const partial = readFileSync(join(ROOT, stub.getAttribute('data-lazy-view')), 'utf-8');
+        stub.outerHTML = partial;
+    });
 }
 
 export function el(id) {

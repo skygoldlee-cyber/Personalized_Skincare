@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 실무 피처 자산 격리 — 지연 마크업 + 프리캐시 슬림화
+
+- **뷰 마크업 지연 주입** — `index.template.html`의 `formula.html` include(649줄)를 빈 `<section id="formula-view" data-lazy-view="html/views/formula.html">` 스텁으로 교체. `practice-registry.ensureViewMarkup`이 진입 시 파셜 fetch → outerHTML 교체 (파셜이 자체 `<section>`을 포함하는 자기완결 구조 유지). 시험별 실무 피처 마크업이 셸을 비대화시키는 것을 방지
+- **프리캐시 슬림화** — formula 전용 모듈 16개(`views/formula*.js` 7 + `formula-check/rules/stability/store` + `store-utils` + `usage-guide`)를 SHELL_ASSETS에서 제외. `/src/` 규칙(cacheFirst)으로 지연 import 시 런타임 캐시되며, **`warmPracticeFeatures()`(신규)**가 app.js 부팅 후 유휴 시점(`requestIdleCallback`)에 유효 피처의 로더·마크업을 미리 요청해 캐시 적재 — 오프라인 진입·첫 진입 즉시성 보장. 비활성 시험은 피처 자산을 받지 않음
+- **notice-check 지연화** — `checkMfdsNoticeNow`·`dismissMfdsNotice`·`viewMfdsNoticeStatus`를 app.js 정적 import → 레지스트리 `notice` 로더+핸들러로 이관 (버튼이 formula 마크업 내부에만 존재). enter()는 마크업 주입 → `checkMfdsNotice` 순서 (배너 요소 의존)
+- **잔여 결합**: formula 스토어 3종(batch/customer/material-ledger)은 `pro-upgrade.js` 정적 import로 부트 그래프에 잔류 — 소형 모듈, 도메인 분리는 별도 과제
+- **도구·테스트**: `build_html.js`가 `data-lazy-view` 참조를 고아 파셜에서 제외, `tests/dom/helpers.js`가 지연 파셜을 파일에서 즉시 주입(기존 DOM 테스트 무변경), delegation-guard·security 테스트가 `html/views/*.html`을 스캔 범위에 추가 (배포 마크업 커버리지 유지)
+
 ## 2026-10-03 실무작업실 피처 레지스트리 — src/practice-registry.js (B안)
 
 - **`practice-registry.js` 신설** — 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러 명단·`enter()` 훅)의 선언적 레지스트리. 정적 import는 `exam-context` 하나로 제한, 피처 모듈·DataLoader·ui-utils·도메인 훅은 `enter()` 내부 지연 import — import 시점 순환·모듈 그래프 팽창 없음

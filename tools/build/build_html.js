@@ -54,6 +54,11 @@ function build() {
     }
     return fs.readFileSync(file, 'utf8');
   });
+  // data-lazy-view 지연 주입 파셜도 참조로 인정 — practice-registry가
+  // 런타임에 fetch해 주입하므로 @include가 없어도 고아가 아니다.
+  for (const lm of tpl.matchAll(/data-lazy-view="([^"]+)"/g)) {
+    referenced.add(path.normalize(lm[1]));
+  }
   let resolved = out;
   if (resolved.includes('__EXAM_DATA_ROOT__')) {
     resolved = resolved.split('__EXAM_DATA_ROOT__').join(defaultExamDataRoot());

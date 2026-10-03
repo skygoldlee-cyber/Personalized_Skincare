@@ -533,7 +533,7 @@ passory/
 
 | 파일 | 역할 |
 |------|------|
-| [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환. **생성물** — `index.template.html` + `html/views/*.html`을 `build:html`로 조립. 뷰 마크업 편집은 파셜에서 수행, `check:html`이 드리프트를 차단 |
+| [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환 — 단 실무 피처 뷰는 `data-lazy-view` 스텁만 두고 practice-registry가 파셜을 지연 주입. **생성물** — `index.template.html` + `html/views/*.html`을 `build:html`로 조립. 뷰 마크업 편집은 파셜에서 수행, `check:html`이 드리프트를 차단 |
 | [`style.css`](../../style.css) | CSS 진입점 (`@import`로 모듈 로드). 실제 디자인 토큰·테마 변수는 `css/base.css` `:root`에 정의 (SPEC §4.9) |
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
@@ -956,7 +956,8 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 - **키**: `ui_mode` = `'study' | 'practice'` (GLOBAL_KEYS — 시험 무관 기기 설정)
 - **게이팅**: `body.ui-mode-practice` 클래스 + `.nav-study-only`(실무에서 숨김) / `.nav-practice-only`(학습에서 숨김) 클래스로 CSS 제어
-- **실무 피처 레지스트리**: [`src/practice-registry.js`](../../src/practice-registry.js)가 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러·enter 훅)를 선언한다. `isPracticeCapable()`(실무 피처 ≥1개)가 실무 모드 존재 조건, `getPracticeLanding()`이 랜딩 뷰(유효 피처 첫 번째). 신규 실무 피처는 레지스트리 엔트리 + exams.json 키 선언으로 추가 — ui-mode·router·app 코어 수정 불필요
+- **실무 피처 레지스트리**: [`src/practice-registry.js`](../../src/practice-registry.js)가 시험 `features` 키 → 실무 뷰 정의(뷰 id·타이틀·해시 슬러그·지연 로더·data-click 핸들러·enter 훅·마크업 파셜)를 선언한다. `isPracticeCapable()`(실무 피처 ≥1개)가 실무 모드 존재 조건, `getPracticeLanding()`이 랜딩 뷰(유효 피처 첫 번째). 신규 실무 피처는 레지스트리 엔트리 + exams.json 키 선언으로 추가 — ui-mode·router·app 코어 수정 불필요
+- **피처 자산 격리**: 실무 뷰 마크업은 셸에 빈 `<section data-lazy-view>` 스텁만 두고 엔트리의 `markup` 파셜을 진입 시 fetch+주입. 뷰 모듈은 SHELL_ASSETS 프리캐시에 두지 않고 `warmPracticeFeatures()`(app.js 유휴 예열)가 유효 피처의 모듈·마크업을 미리 요청해 SW 캐시에 적재 — 비활성 시험은 피처 자산을 다운로드하지 않는다
 - **랜딩**: 실무 모드 초기화 시 `getPracticeLanding()` 뷰로 랜딩 (cosmetic = `formula-view`)
 - **토글 게이트**: `data-feature="practiceMode"` 가상 키 — `applyFeatureFlags`가 `isPracticeCapable()`로 판정 (실무 피처가 formula가 아닌 시험에서도 토글 노출)
 - **학습 도구 접이식**: 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침 — `ui_study_tools_open` 키 영속 + `aria-expanded` 동기화
@@ -1092,7 +1093,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **빌드 타임 자동 치환**: `tools/build/stamp_sw_version.js`가 빌드 완료 시 `CACHE_VERSION`을 `v${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요. 날짜는 **HEAD 커밋 날짜**(`%cd`) 기준 — 배포 머신 시각이 아니므로 이력과 일치 (git 미가용 시 로컬 시각 폴백)
 - **버전 3계층**: 기계 ID(`v20261016-fd06122` — 캐시 키·버전 비교) / 표시용(`v2026.10.16 · fd06122` — `src/app-version.js`의 `formatAppVersion`, 사이드바·설정·변경이력 모달) / 콘텐츠(원료 DB `2026.09.6` CalVer). `package.json`의 `version`은 배포 스탬프가 `YYYY.M.D`로 자동 동기화
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
-- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
+- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨 — 단 실무 피처 뷰 모듈(`src/views/formula*.js` 등)은 제외. 활성 시험만 사용하므로 시험 간 프리캐시 비대화를 막기 위해 지연 import + `warmPracticeFeatures()` 유휴 예열로 런타임 캐시(cacheFirst)에 적재한다 (잔여 결합: formula 스토어 3종은 `pro-upgrade.js` 정적 import로 부트 그래프에 잔류)
 - `data/exams/cosmetic/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
 ### 캐시 스큐 방지 설계 (v39, 2026-08-26)
