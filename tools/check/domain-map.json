@@ -58,6 +58,7 @@
         "src/csv-utils.js",
         "src/data-loader.js",
         "src/doc-overlay.js",
+        "src/error-telemetry.js",
         "src/exam-context.js",
         "src/exam-data-boot.js",
         "src/exam-viewer.js",

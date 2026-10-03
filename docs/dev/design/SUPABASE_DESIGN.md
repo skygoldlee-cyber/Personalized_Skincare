@@ -214,6 +214,20 @@ create policy "own profile read" on profiles
 create policy "own snapshots" on sync_snapshots
   for all using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+-- 런타임 오류 텔레메트리 — src/error-telemetry.js, feedback과 같은 익명 insert 패턴
+create table if not exists client_errors (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  kind text not null check (kind in ('error','unhandledrejection')),
+  message text not null check (char_length(message) between 1 and 500),
+  stack text, view text, exam_id text, app_version text, url text,
+  user_agent text, meta jsonb
+);
+alter table client_errors enable row level security;
+create policy "public insert" on client_errors
+  for insert to anon, authenticated with check (true);
+-- 조회 정책 없음 = 클라이언트 읽기 차단, 대시보드(service role)에서만 확인
 ```
 
 ### 3.1 스냅샷 vs 엔티티 테이블 — 선택: 스냅샷 우선

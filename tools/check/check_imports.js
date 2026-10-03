@@ -280,6 +280,28 @@ function main() {
 
             const relResolved = path.relative(ROOT, resolved).replace(/\\/g, '/');
 
+            // --- 도메인 경계 규칙 ---
+            // platform(src/exams/ 외부) 파일은 도메인 모듈을 정적 import할 수 없다 —
+            // 활성 시험 해석이 필요하므로 _domainImport()/`./exams/${getActiveExamId()}/`
+            // 템플릿 동적 import만 허용 (런타임이 시험 id를 주입).
+            // 도메인 파일은 다른 시험 디렉터리를 직접 import할 수 없다 (시험 간 격리).
+            const importerExam = (relFile.match(/^src\/exams\/([^/]+)\//) || [])[1] || null;
+            const targetExam = (relResolved.match(/^src\/exams\/([^/]+)\//) || [])[1] || null;
+            if (targetExam && !importerExam) {
+                errors.push(
+                    `${relFile}: 플랫폼 파일이 도메인 모듈을 정적 import — '${imp.modulePath}' ` +
+                    `(규약: _domainImport() 또는 exams/\${활성시험}/ 템플릿 동적 import)`
+                );
+                continue;
+            }
+            if (importerExam && targetExam && importerExam !== targetExam) {
+                errors.push(
+                    `${relFile}: 다른 시험 도메인 모듈 참조 — '${relResolved}' ` +
+                    `(src/exams/${importerExam}/ → src/exams/${targetExam}/ 직접 import 금지)`
+                );
+                continue;
+            }
+
             // side-effect import는 이름 검증 제외
             if (imp.isSideEffect || imp.names.length === 0) continue;
 
@@ -508,7 +530,18 @@ function main() {
         }
         while ((dtm = DYN_IMPORT_RE.exec(src)) !== null) {
             // ${} 보존 — resolveModuleMulti가 시험 디렉터리 확장 후 쿼리스트링 제거
-            for (const resolved of resolveModuleMulti(importerDir, dtm[1].split('?')[0])) {
+            const dynPath = dtm[1].split('?')[0];
+            // 플랫폼 파일의 시험 id 하드코딩 동적 import 금지 — ${} 템플릿만 허용
+            const dynRelFile = path.relative(ROOT, file).replace(/\\/g, '/');
+            const dynImporterExam = (dynRelFile.match(/^src\/exams\/([^/]+)\//) || [])[1] || null;
+            if (!dynImporterExam && !dynPath.includes('${')
+                && /(^|\/)exams\//.test(dynPath)) {
+                errors.push(
+                    `${dynRelFile}: 도메인 모듈을 하드코딩 경로로 동적 import — '${dtm[1]}' ` +
+                    `(규약: exams/\${getActiveExamId()}/ 템플릿)`
+                );
+            }
+            for (const resolved of resolveModuleMulti(importerDir, dynPath)) {
                 for (const name of (moduleExports.get(resolved) || [])) {
                     if (name === 'default' || allImports.has(resolved + '::' + name)) continue;
                     const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');

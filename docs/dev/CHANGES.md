@@ -23,6 +23,16 @@
 - domain-map `domain:cosmetic` 패턴 갱신(테스트·자산 경로), AGENTS·ARCHITECTURE 트리에 `html/exams/<id>/`·`css/exams/<id>/`·`tests/{unit,dom}/exams/<id>/` 노드 추가
 - 검증: unit 804/804 · DOM 510/510 · check:inventory(37개 디렉터리)·check:docs·check:domainmap(1053)·check:types·lint·check:imports·check:html·verify:assets·check:uitext 통과 · 파셜/CSS 서빙 200 확인
 
+## 2026-10-04 소프트웨어 공학 기법 6종 도입 — PBT·ADR·성능 예산·변이 테스트·도메인 경계 게이트·오류 텔레메트리
+
+- **속성 기반 테스트 (fast-check)**: `tests/unit/property-based.test.js` — `deriveComboAnswer` 유일성·순서 불변, `generateComboOptions` 멤버 부분집합·정답 유일·결정성, `weak-items` ID 문법 왕복·멱등, SM-2 스케줄러 단조성·하한 불변식 (localStorage 인메모리 스텁). 예제 기반이 놓치는 입력 공간 검증
+- **도메인 경계 게이트 (check:imports 확장)**: ① platform 파일의 `src/exams/` 정적 import 금지 ② platform 파일의 `import('./exams/<id>…')` 리터럴 동적 import 금지(`${}` 템플릿만) ③ `src/exams/<a>/` → `src/exams/<b>/` 교차 시험 import 금지. 규약화(ADR-0002)의 회귀를 정적 차단 — 음성 테스트로 양 규칙 발화 확인
+- **성능 예산 게이트** (`tools/check/check_perf_budget.js`, `check:perf`): sw.js SHELL_ASSETS 총량·JS 합계·단일 파일·index.html 상한 — PWA 프리캐시=첫 다운로드량이라 셸 증가를 커밋 시점 차단. check:ci 체인 + ci.yml 양쪽 배선 (ciparity 유지). 기준선: 셸 10.7MB/예산 12.5MB
+- **변이 테스트** (`stryker.conf.mjs`, `mutate`): 명령 러너로 순수 핵심 4모듈 스코프, 수동 스팟 체크. 기준선 weak-items.js 스코어 16.8% — STUDY_DATA 인덱스 경로가 기존 테스트 공백으로 드러남 (백로그)
+- **오류 텔레메트리** (`src/error-telemetry.js`): window error·unhandledrejection 수집 → Supabase `client_errors` 익명 insert (feedback 패턴, RLS insert-only). 미설정 환경 no-op·세션 10건 상한·메시지 중복 억제. initApp 최초 단계 배치로 초기화 실패도 수집. schema.sql §5 + SUPABASE_DESIGN §3 스키마 추가 — **프로덕션 활성화는 스키마 재실행 필요**
+- **ADR 디렉터리** (`docs/dev/adr/`): 규약·템플릿 + 결정 3건 사후 문서화 — ADR-0001 document.write 부트(CSP·실행순서 제약), ADR-0002 규약 경로, ADR-0003 localStorage-1차 저장
+- 검증: unit 819(+14 신규) · check:imports(119파일)·domainmap·ciparity·types·lint 통과
+
 ## 2026-10-03 도구·테스트 디렉터리 정리 — tools 역할별 재배치 + 유닛 클러스터
 
 - **tools/ 역할별 재배치**: 루트 산재 9개 스크립트를 역할 디렉터리로 이동 — `tools/build/`(build_trace_matrix·trace·drill-utils·scaffold_exam), `tools/sync/`(sync_citation_lines·sync_textbook_files), `tools/deploy/`(deploy), `tools/check/`(impact_tests), `tools/_archive/`(migrate_ingredients_to_json — 완료된 일회성 이관). 내부 ROOT/`__dirname`·상대 require 전수 재작성, package.json·ci.yml·pre-push 훅·check_content.js 호출 경로 갱신

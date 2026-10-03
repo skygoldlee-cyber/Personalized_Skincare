@@ -128,7 +128,33 @@ create policy "public insert" on public.feedback
   for insert to anon, authenticated with check (true);
 
 -- ============================================================
--- 확인 쿼리 (선택): 실행 후 테이블 4개·정책 3개·함수 2개가 보이면 성공
+-- client_errors: 런타임 오류 텔레메트리 (src/error-telemetry.js)
+--   - 익명 insert 허용 (비로그인도 전송 — 관측성 목적)
+--   - select/update/delete 정책 없음 = 클라이언트 조회 전면 차단
+--   - 앱 측에서 세션당 상한·메시지 중복 억제로 폭주 방지
+-- ============================================================
+create table if not exists public.client_errors (
+  id          uuid primary key default gen_random_uuid(),
+  created_at  timestamptz not null default now(),
+  kind        text not null check (kind in ('error','unhandledrejection')),
+  message     text not null check (char_length(message) between 1 and 500),
+  stack       text,
+  view        text,
+  exam_id     text,
+  app_version text,
+  url         text,
+  user_agent  text,
+  meta        jsonb
+);
+
+alter table public.client_errors enable row level security;
+
+drop policy if exists "public insert" on public.client_errors;
+create policy "public insert" on public.client_errors
+  for insert to anon, authenticated with check (true);
+
+-- ============================================================
+-- 확인 쿼리 (선택): 실행 후 테이블 5개·정책 4개·함수 2개가 보이면 성공
 --   select table_name from information_schema.tables where table_schema='public';
 --   select polname, polrelid::regclass from pg_policy;
 -- ============================================================

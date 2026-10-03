@@ -104,6 +104,9 @@ jobs:
       - name: Run parser parity check
         run: npm run check:parser
 
+      - name: Performance budget (SHELL_ASSETS 크기 상한)
+        run: npm run check:perf
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 

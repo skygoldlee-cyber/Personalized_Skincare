@@ -174,6 +174,7 @@ import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword } from './auth-view.js';
 import { initSync, syncNow } from './sync.js';
+import { initErrorTelemetry } from './error-telemetry.js';
 import {
     populateSubjectSelects, populateExamCards, populateResourceCards, checkStorageWarning
 } from './app-dashboard.js';
@@ -205,6 +206,8 @@ function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
     const step = (label, fn) => { try { fn(); console.debug('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
+    // 런타임 오류 텔레메트리 — 가장 먼저 설치해 이후 초기화 실패도 수집 (미설정 시 no-op)
+    step('initErrorTelemetry', () => initErrorTelemetry());
     step('initViewportHeight', initViewportHeight);
     step('loadProgress', loadProgress);
     step('checkStorageWarning', checkStorageWarning);

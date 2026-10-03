@@ -49,6 +49,7 @@
     "check:secrets": "node tools/check/check_secrets.js",
     "check:notes": "node tools/check/check_release_notes.js",
     "check:specrefs": "node tools/check/check_spec_refs.js",
+    "check:perf": "node tools/check/check_perf_budget.js",
     "build:trace": "node tools/build/build_trace_matrix.js",
     "check:trace": "node tools/build/build_trace_matrix.js --check",
     "lint": "eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0",
@@ -78,11 +79,12 @@
     "check:content": "node tools/check/check_content.js",
     "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content",
     "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content -- --quick",
-    "check:ci": "npm run check:hooks && npm run check:secrets && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && node tools/check/check_doc_sync.js --ref origin/main && node tools/check/check_test_first.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser",
+    "check:ci": "npm run check:hooks && npm run check:secrets && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && node tools/check/check_doc_sync.js --ref origin/main && node tools/check/check_test_first.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser && npm run check:perf",
     "deploy": "node tools/deploy/deploy.js",
     "audit:combo": "node tools/check/audit_combo.js",
     "check:uitext": "node tools/check/check_uitext.js",
-    "scaffold:exam": "node tools/build/scaffold_exam.js"
+    "scaffold:exam": "node tools/build/scaffold_exam.js",
+    "mutate": "stryker run"
   },
   "keywords": [
     "cosmetics",
@@ -95,9 +97,11 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
+    "@stryker-mutator/core": "^10.0.0",
     "@vitest/coverage-v8": "^4.1.11",
     "c8": "^12.0.0",
     "eslint": "^10.11.0",
+    "fast-check": "^4.10.2",
     "globals": "^17.12.0",
     "istanbul-lib-coverage": "^3.2.2",
     "istanbul-lib-report": "^3.0.1",

@@ -26,7 +26,7 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 694 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 407 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/*.spec.js` | 65 |
 | **합계** | | | | **1166** |
@@ -111,6 +111,12 @@ npm run check:docsync     # 소스 변경 시 문서 갱신 강제 (작업 트�
 npm run check:testfirst   # 로직(src/*.js·ref-pipeline/*.py) 변경 시 테스트 동반 강제 — Docs-First 게이트 (pre-commit은 --staged+기커밋 인정, pre-push/CI는 --ref origin/main, 우회: [no-test]·SKIP_TESTFIRST=1)
 npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
+npm run check:perf        # 성능 예산 — SHELL_ASSETS 크기 상한 (check:ci·CI 게이트)
+
+# 변이 테스트 (수동 스팟 체크 — CI 게이트 아님)
+npm run mutate            # Stryker: 순수 핵심 모듈(questions·spaced-repetition·weak-items·statement-tracker) 변이
+#   대상 확장 시 stryker.conf.mjs의 mutate + commandRunner.command에 테스트 파일을 함께 추가할 것
+#   2026-10 기준선: weak-items.js 스코어 16.8% — STUDY_DATA 인덱스 캐시 경로가 기존 테스트 공백으로 드러남
 
 # 영향도 분석 — 변경 파일 → 영향 요구사항·권장 테스트
 node tools/check/impact_tests.js                      # 미커밋 변경 분석
@@ -127,20 +133,22 @@ npm run hooks:install
 
 | 스크립트 | 명령 | 비고 |
 |----------|------|------|
-| `test` | `node --test tests/unit/*.test.js` | Unit 테스트 |
-| `test:unit` | `node --test tests/unit/*.test.js` | `test`와 동일 |
+| `test` | `node --test tests/unit/**/*.test.js` | Unit 테스트 |
+| `test:unit` | `node --test tests/unit/**/*.test.js` | `test`와 동일 |
 | `test:dom` | `vitest run` | DOM 테스트 (jsdom) |
 | `coverage` | `vitest run --coverage` | DOM 테스트 + V8 커버리지 (src/ 대상, `coverage/` 출력) |
-| `coverage:unit` | `c8 ... node --test tests/unit/*.test.js` | 유닛 테스트 커버리지 (src/ 대상, `coverage-unit/` 출력) |
+| `coverage:unit` | `c8 ... node --test tests/unit/**/*.test.js` | 유닛 테스트 커버리지 (src/ 대상, `coverage-unit/` 출력) |
 | `coverage:all` | 두 커버리지 실행 + `tools/check/coverage_merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
-| `test:all` | `node --test tests/unit/*.test.js && node tools/check/check_parser_parity.js && vitest run` | 전체 |
-| `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
+| `test:all` | `node --test tests/unit/**/*.test.js && node tools/check/check_parser_parity.js && vitest run` | 전체 |
+| `test:watch` | `node --test --watch tests/unit/**/*.test.js` | Watch 모드 |
 | `test:e2e` | `playwright test` | E2E 테스트 (tests/e2e, serve.js webServer 자동 기동) |
 | `lint` | `eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0` | ESLint — 0 problems 필수 (경고도 차단) |
 | `check:types` | `tsc -p jsconfig.json --noEmit` | JSDoc 타입 진단 (checkJs) |
 | `check:specrefs` | `node tools/check/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
 | `check:trace` | `node tools/build/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
 | `build:trace` | `node tools/build/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
+| `check:perf` | `node tools/check/check_perf_budget.js` | 성능 예산 — SHELL_ASSETS 총량/JS/단일 파일/index.html 상한 |
+| `mutate` | `stryker run` | 변이 테스트 (Stryker 명령 러너 — 수동 스팟 체크, 리포트 reports/mutation/) |
 | `hooks:install` | `git config core.hooksPath .githooks` | pre-commit·pre-push 훅 활성화 (opt-in) |
 
 ### 커버리지 임계값
@@ -178,11 +186,11 @@ npm run hooks:install
 | 6 | `state.test.js` | 16 | `loadProgress()`, `saveProgress()`, `cleanOrphansForSubject()` | localStorage 모킹 |
 | 7 | `textbook-parser.test.js` | 20 | `parseMarkdownFile()`, `parseTextbookContent()`, `buildSubjectData()` | 교재 MD 파싱 |
 | 8 | `delegation-guard.test.js` | 2 | 인라인 `on*=` 속성 잔존, `window` 브리지 누락 | CSP 회귀 가드 |
-| 9 | `mermaid-parser.test.js` | 11 | `parseMarkdown()`의 Mermaid 코드블록 처리 | `<pre class="mermaid">` 변환, HTML 엔티티 보존 |
-| 10 | `mermaid-textcontent.test.js` | 5 | Mermaid 블록 `textContent` 시뮬레이션 | 브라우저 `textContent` 동작 재현 |
-| 11 | `mermaid-reader-format.test.js` | 4 | `formatSectionContentForReader()` 처리 후 Mermaid 블록 보존 | `<br/>` 엔티티, 페이지 참조/용어집 링크 간섭 |
-| 12 | `mermaid-pipeline.test.js` | 4 | 전체 파이프라인: MD → HTML → Mermaid 블록 | HTML 태그 미혼입, 볼드/이탤릭/링크 비적용 |
-| 13 | `mermaid-rendering.test.js` | 23 | 다이어그램 타입 감지, mindmap 들여쓰기, CSS 클래스 분리, 실제 교재 파일 검증 | 2026-09-02 추가 |
+| 9 | `mermaid/mermaid-parser.test.js` | 11 | `parseMarkdown()`의 Mermaid 코드블록 처리 | `<pre class="mermaid">` 변환, HTML 엔티티 보존 |
+| 10 | `mermaid/mermaid-textcontent.test.js` | 5 | Mermaid 블록 `textContent` 시뮬레이션 | 브라우저 `textContent` 동작 재현 |
+| 11 | `mermaid/mermaid-reader-format.test.js` | 4 | `formatSectionContentForReader()` 처리 후 Mermaid 블록 보존 | `<br/>` 엔티티, 페이지 참조/용어집 링크 간섭 |
+| 12 | `mermaid/mermaid-pipeline.test.js` | 4 | 전체 파이프라인: MD → HTML → Mermaid 블록 | HTML 태그 미혼입, 볼드/이탤릭/링크 비적용 |
+| 13 | `mermaid/mermaid-rendering.test.js` | 23 | 다이어그램 타입 감지, mindmap 들여쓰기, CSS 클래스 분리, 실제 교재 파일 검증 | 2026-09-02 추가 |
 | 14 | `study-aids.test.js` | 25 | `extractExamHighlights()`, `extractNumberDrills()`, `detectProcedureFlow()`, `detectAdminPenalty()`, `isKeySection()` | 합성 데이터, 교재 무관 |
 | 15 | `pdf-registry.test.js` | 21 | `resolveRefPath()`, `mapSourceToRef()`, `resolveKeywordRef()`, 데이터 구조 검증 | 합성 데이터, 교재 무관 |
 | 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
@@ -206,7 +214,7 @@ npm run hooks:install
 | 34 | `csv-import.test.js` | 17 | `src/csv-utils.js` 파서·EUC-KR 디코딩 + `importCustomers`/`importMaterials` 중복·한도·sanitize | Formula OS CSV |
 | 35 | `supabase-client.test.js` | 6 | `src/supabase-client.js` — lazy init, UMD 동적 로드, 미설정 폴백 | window 스텁 |
 | 36 | `sw-prune.test.js` | 5 | `sw.js` 캐시 프루닝 — 한글 경로 인코딩 오삭제 회귀 가드 | 서비스워커 로직 |
-| 37 | `mermaid-utils.test.js` | 8 | `src/mermaid-utils.js` — 다이어그램 타입 감지, CSS 클래스, init 옵션(테마 분기) | 순수 함수 |
+| 37 | `mermaid/mermaid-utils.test.js` | 8 | `src/mermaid-utils.js` — 다이어그램 타입 감지, CSS 클래스, init 옵션(테마 분기) | 순수 함수 |
 | 38 | `command-palette.test.js` | 11 | `src/command-palette.js` — `searchAll()` 통합 검색 순수 로직 | 2026-09-26 추가 |
 | 39 | `learning-pro.test.js` | 20 | `src/recommendations.js` — 추천·오답 원인·예상 점수 순수 로직 | 2026-09-26 추가 |
 | 40 | `storage.test.js` | 12 | `src/storage.js` — 스코프·JSON 헬퍼·쓰기 훅·백엔드 교체·`setMany` 롤백 | 저장소 추상화 |
@@ -226,7 +234,9 @@ npm run hooks:install
 | 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
 | 55 | `doc-sync.test.js` | 7 | `tools/check/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정, porcelain 파서 | 정적 패턴 검증, 2026-10-14 추가 |
 | 56 | `test-first.test.js` | 7 | `tools/check/check_test_first.js` — 로직 트리거/테스트 경로 분류, analyze 위반 판정 | 정적 패턴 검증, 2026-11-02 추가 |
-| | **합계** | **701** | | |
+| 57 | `property-based.test.js` | 8 | `deriveComboAnswer`·`generateComboOptions`·`weak-items` ID 문법·SM-2 불변식 | fast-check 속성 기반 테스트 (PBT), 2026-10-04 추가 |
+| 58 | `error-telemetry.test.js` | 6 | `src/error-telemetry.js` — 페이로드·중복 억제·세션 상한·disabled/failed 경로·리스너 | insert 주입식, 2026-10-04 추가 |
+| | **합계** | **715** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -332,30 +342,30 @@ npm run hooks:install
 
 ### 4.4 Mermaid 렌더링 (Mermaid Rendering)
 
-#### `mermaid-parser.test.js` (11개)
+#### `mermaid/mermaid-parser.test.js` (11개)
 - `parseMarkdown()`의 `allowMermaid: true` 옵션 동작
 - ```mermaid 코드블록 → `<pre class="mermaid">` 태그 변환
 - Mermaid 문법 요소 보존: 화살표(`→`), 따옴표, 괄호, `<br/>`, `subgraph`
 - HTML 태그로 오인 변환 방지 (`<a>`, `<strong>`, `<em>` 생성 차단)
 
-#### `mermaid-textcontent.test.js` (5개)
+#### `mermaid/mermaid-textcontent.test.js` (5개)
 - Mermaid 블록의 브라우저 `textContent` 동작 시뮬레이션
 - HTML 엔티티 디코딩 (`&lt;` → `<`, `&gt;` → `>`, `&quot;` → `"`)
 - mindmap과 flowchart 각각의 `textContent` 검증
 - 불필요한 HTML 속성 미포함 확인
 
-#### `mermaid-reader-format.test.js` (4개)
+#### `mermaid/mermaid-reader-format.test.js` (4개)
 - `formatSectionContentForReader()` 처리 후 Mermaid 블록 내용 보존
 - `<br/>` 엔티티가 reader-format 처리를 거쳐도 손상되지 않음
 - 페이지 참조(`L###`)와 용어집 링크가 Mermaid 블록 내부에 삽입되지 않음
 
-#### `mermaid-pipeline.test.js` (4개)
+#### `mermaid/mermaid-pipeline.test.js` (4개)
 - 전체 파이프라인: MD 원문 → `parseMarkdown()` → HTML 출력
 - Mermaid 블록 내에 실제 HTML 태그가 없어야 함 (엔티티만)
 - 볼드(`**`), 이탤릭(`*`), 링크(`[text](url)`)가 Mermaid 블록 내에 적용되지 않음
 - Mermaid + 일반 텍스트 + 표 혼합 콘텐츠 처리
 
-#### `mermaid-rendering.test.js` (23개) — 2026-09-02 추가
+#### `mermaid/mermaid-rendering.test.js` (23개) — 2026-09-02 추가
 - **다이어그램 타입 감지**: `textContent`가 `mindmap`으로 시작하면 mindmap, 그 외는 flowchart
 - **mindmap 들여쓰기 검증**: 각 레벨이 최소 1 space 증가해야 함 (동일 들여쓰기 → "There can be only one root" 에러)
 - **파서 출력 타입 감지**: `parseMarkdown()` 출력 HTML에서 Mermaid 블록 추출 후 타입 판별
@@ -695,7 +705,7 @@ function detectDiagramType(textContent) {
 |------|------|------|
 | `<모듈명>.test.js` | `tests/unit/` | `sanitize.test.js`, `state.test.js` |
 | `<모듈명>.dom.test.js` | `tests/dom/` | `backup.dom.test.js`, `router.dom.test.js` |
-| `<기능명>-<층위>.test.js` | `tests/unit/` | `mermaid-parser.test.js`, `mermaid-rendering.test.js` |
+| `<기능명>-<층위>.test.js` | `tests/unit/` | `mermaid/mermaid-parser.test.js`, `mermaid/mermaid-rendering.test.js` |
 
 ---
 
@@ -817,7 +827,7 @@ npm run verify:assets
 
 | 파일 | 경로 | 비고 |
 |------|------|------|
-| Unit 테스트 | `tests/unit/*.test.js` | Node.js `node:test` |
+| Unit 테스트 | `tests/unit/**/*.test.js` | Node.js `node:test` |
 | DOM 테스트 | `tests/dom/*.test.js` | Vitest + jsdom |
 | E2E 테스트 | `tests/e2e/*.spec.js` | Playwright 실브라우저 |
 | Playwright 설정 | `playwright.config.js` | webServer(serve.js)·chromium/mobile 프로젝트 |

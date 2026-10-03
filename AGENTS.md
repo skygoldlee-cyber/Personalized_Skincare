@@ -89,6 +89,8 @@ npm.cmd run scaffold:exam -- <id> --name "시험명"  # 새 시험 스캐폴딩 
 npm.cmd run lint                        # ESLint — 에러 0 필수 (기존 경고는 점진 정리 대상)
 npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSDoc 타입 진단)
 npm.cmd run check:specrefs              # SPEC↔@spec 스테일 참조 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
+npm.cmd run check:perf                  # 성능 예산 — sw.js SHELL_ASSETS 크기 계측 (총량·JS·단일파일·index.html 상한, check:ci/CI 게이트)
+npm.cmd run mutate                      # 변이 테스트 (Stryker, 수동 스팟 체크 — 순수 핵심 모듈 스코프: questions·spaced-repetition·weak-items·statement-tracker)
 npm.cmd run check:docsync               # 소스 변경 시 문서 갱신 강제 — src/tools/tests/설정 변경에 docs/·AGENTS·README 갱신 동반 필수. 우회: SKIP_DOCSYNC=1 (모든 단계) · 커밋 메시지 행 끝의 [no-docs] (pre-push --ref 단계에서만 인식 — 마크된 커밋의 파일만 면제되며 다른 커밋은 계속 검사. pre-commit은 메시지 미존재로 불가)
 npm.cmd run check:testfirst             # 로직(src/*.js·ref-pipeline/*.py) 변경 시 테스트(tests/·ref-pipeline/tests/) 동반 강제 — Docs-First 기계화. 우회: SKIP_TESTFIRST=1 · 커밋 메시지 행 끝 [no-test] (--ref 모드, 그 커밋만 면제)
 npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
@@ -179,6 +181,7 @@ src/                    # ES Modules
   types.js              # 중앙 JSDoc 타입 정의 모듈 (@spec none)
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
+  error-telemetry.js    # 런타임 오류 텔레메트리 — error/unhandledrejection 수집 → client_errors 익명 insert (미설정 시 no-op, 세션 상한·중복 억제)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)
   exam-data-boot.js     # 활성 시험 데이터 번들 부트 (클래식) — 파싱 중 {dataRoot}/registry.js·id_migration.js 동기 삽입, 비활성 시험 번들 미로드
   csv-utils.js          # CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화 (사전 내보내기 등 공용)
@@ -298,6 +301,7 @@ tests/                  # 테스트
   dom/                  # Vitest + jsdom DOM 테스트 (도메인 테스트는 dom/exams/<id>/ 하위)
 docs/                   # 개발 문서
   dev/                  # 아키텍처, 배포 가이드, 변경 이력
+    adr/                # 아키텍처 결정 기록 (ADR — 결정의 "왜" 보존, README.md 템플릿·규약)
   user/                 # 사용자 매뉴얼
 ```
 
