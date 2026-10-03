@@ -1,4 +1,4 @@
-// src/formula-check.js — Formula OS 규정 Check 엔진 (Phase 5-A)
+// src/exams/cosmetic/formula-check.js — Formula OS 규정 Check 엔진 (Phase 5-A)
 // @spec FO-02
 //
 // 원료 + 배합 농도(%) → 법정 한도 검증. 배합을 "생성"하지 않고 공식 고시

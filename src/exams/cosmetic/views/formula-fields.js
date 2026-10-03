@@ -1,4 +1,4 @@
-// src/views/formula-fields.js — 처방 작업대 고객·안정성 필드 블록 (formula.js에서 분리)
+// src/exams/cosmetic/views/formula-fields.js — 처방 작업대 고객·안정성 필드 블록 (formula.js에서 분리)
 // @spec FO-06~08
 // 고객 정보 선택지 채우기·고객 카드 불러오기/저장·안정성 확인 필드 읽기/쓰기·
 // 알레르기 칩·접이식 섹션 요약. 공유 상태(calc)·getEl·readCalcInputs는

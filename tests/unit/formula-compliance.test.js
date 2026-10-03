@@ -11,6 +11,17 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CONTENT_ROOT = join(ROOT, 'content', 'exams', 'cosmetic');
 const { COMPLIANCE_SECTIONS, LAW_DOCS } = await import(
     pathToFileURL(join(ROOT, 'src/exams/cosmetic/views/formula-compliance.js')).href);
+const { resolveRefPath } = await import(
+    pathToFileURL(join(ROOT, 'src/pdf-registry.js')).href);
+
+// file 선언 → 레지스트리 해석 절대 경로, path 선언 → contentRoot 상대 경로
+function docAbsPath(doc) {
+    if (doc.file) {
+        const abs = resolveRefPath(doc.file);
+        return abs ? join(ROOT, ...abs.split('/')) : '';
+    }
+    return join(CONTENT_ROOT, ...doc.path.split('/'));
+}
 
 test('모든 체크 항목 id가 고유하고 비어 있지 않다', () => {
     const ids = [];
@@ -38,11 +49,12 @@ test('모든 항목의 refs/app 참조가 유효하다', () => {
     }
 });
 
-test('LAW_DOCS의 모든 문서 경로가 content 파일로 존재한다', () => {
+test('LAW_DOCS의 모든 문서가 실존 파일로 해석된다 (file → ref_md 레지스트리 해석)', () => {
     for (const [key, doc] of Object.entries(LAW_DOCS)) {
-        assert.ok(doc.label && doc.desc && doc.path, `${key}에 label/desc/path 필요`);
-        const full = join(CONTENT_ROOT, ...doc.path.split('/'));
-        assert.ok(existsSync(full), `참조 문서 없음: ${doc.path}`);
+        assert.ok(doc.label && doc.desc && (doc.path || doc.file), `${key}에 label/desc/path|file 필요`);
+        const full = docAbsPath(doc);
+        assert.ok(full, `레지스트리 해석 실패: ${key} (${doc.file || doc.path})`);
+        assert.ok(existsSync(full), `참조 문서 없음: ${doc.file || doc.path} → ${full}`);
     }
 });
 

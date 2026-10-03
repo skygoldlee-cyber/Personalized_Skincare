@@ -1,4 +1,4 @@
-// src/store-utils.js — localStorage 엔티티 스토어 공통 헬퍼 (Formula OS)
+// src/exams/cosmetic/store-utils.js — localStorage 엔티티 스토어 공통 헬퍼 (Formula OS)
 // @spec FO-16~18
 //
 // formula-store·batch-store·customer-store·material-ledger가 공유하는

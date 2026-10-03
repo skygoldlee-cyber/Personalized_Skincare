@@ -501,7 +501,7 @@ if (typeof window !== 'undefined') {
     let swContent = fs.readFileSync(swPath, 'utf-8');
 
     // 모든 시험의 자산을 집계 (프리캐시는 앱 셸 차원이므로 전 시험 포함)
-    const { getExamTargets, getPrecacheMdAssets } = require('./exam_targets');
+    const { getExamTargets, getPrecacheMdAssets, getPrecacheMediaAssets } = require('./exam_targets');
     const allTargets = getExamTargets(WORKSPACE_DIR);
 
     const assetsToCache = [];
@@ -525,6 +525,10 @@ if (typeof window !== 'undefined') {
     // BEGIN/END 마커를 블록에 포함 — 재생성해도 sync_textbook_files.js의 마커가 유지됨
     const mdBlock = 'const MD_ASSETS = [\n  // MD_ASSETS:BEGIN\n' + mdAssets.map(a => `  '${a}',`).join('\n') + '\n  // MD_ASSETS:END\n];';
     swContent = swContent.replace(/const MD_ASSETS = \[[^\]]*\];?/s, mdBlock);
+    // 시험별 미디어 자산(교재 삽화)도 시험 레지스트리 스캔으로 재생성
+    const mediaAssets = getPrecacheMediaAssets(WORKSPACE_DIR);
+    const mediaBlock = 'const EXAM_MEDIA_ASSETS = [\n  // EXAM_MEDIA:BEGIN\n' + mediaAssets.map(a => `  '${a}',`).join('\n') + '\n  // EXAM_MEDIA:END\n];';
+    swContent = swContent.replace(/const EXAM_MEDIA_ASSETS = \[[^\]]*\];?/s, mediaBlock);
 
     fs.writeFileSync(swPath, swContent, 'utf-8');
     console.log('sw.js pre-cache assets updated (DATA_ASSETS + MD_ASSETS).');

@@ -1,4 +1,4 @@
-// src/views/formula-material.js — Formula OS 원료 장부 뷰 (Phase C)
+// src/exams/cosmetic/views/formula-material.js — Formula OS 원료 장부 뷰 (Phase C)
 // @spec FO-18
 //
 // 목록(formula-material-panel) + 폼(formula-material-form-panel).

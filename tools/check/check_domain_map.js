@@ -17,7 +17,7 @@
  *   - feature 규칙의 flag는 content/exams.json 의 features 에 존재해야 함
  *   - domain:<id> 의 id는 exams.json 에 등록된 시험이어야 함
  *   - 매칭 결과가 없는(=삭제·이동된 파일의) 스테일 패턴은 오류
- *   - platform 계층 src 하위 .js 에 시험 id 문자열 리터럴 금지
+ *   - platform 계층 src 하위 .js 에 시험 식별 리터럴 금지 (id·name·appName·shortName·title)
  *     (불가피한 폴백은 map.examLiteralAllow에 사유를 명시해 면제)
  *
  * 자동 도메인 규칙:
@@ -153,7 +153,8 @@ function main() {
     }
 
     // --- 미등록 시험 디렉터리 감지 ---
-    for (const base of ['content/exams', 'data/exams']) {
+    // src/exams/<id> 도 포함 — 도메인 실행 모듈 디렉터리는 등록 시험 id와 1:1 대응.
+    for (const base of ['content/exams', 'data/exams', 'src/exams']) {
         const abs = path.join(ROOT, base);
         if (!fs.existsSync(abs)) continue;
         for (const d of fs.readdirSync(abs, { withFileTypes: true })) {
@@ -205,7 +206,15 @@ function main() {
     // "레지스트리 자체가 부재한 저하 상태"에서만 쓰는 예외 명단이다.
     {
         const allow = new Set(Object.keys(map.examLiteralAllow || {}));
-        const idAlt = [...examIds].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        // 시험 식별 리터럴 = id + name/appName/shortName/title — 플랫폼 코드에
+        // '식품기사' 같은 브랜드 문자열이 박히는 것도 도메인 결합이다.
+        const litSet = new Set(examIds);
+        for (const e of examsData.exams || []) {
+            for (const k of ['name', 'appName', 'shortName', 'title']) {
+                if (typeof e[k] === 'string' && e[k].length >= 2) litSet.add(e[k]);
+            }
+        }
+        const idAlt = [...litSet].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
         if (idAlt.length > 0) {
             const idLiteralRe = new RegExp(`['"\`](?:${idAlt.join('|')})['"\`]`);
             for (const [file, layer] of layerOf) {
@@ -216,7 +225,7 @@ function main() {
                 const m = src.match(idLiteralRe);
                 if (m) {
                     errors.push(
-                        `${file}: platform 계층에 시험 id 리터럴 ${m[0]} — ` +
+                        `${file}: platform 계층에 시험 식별 리터럴 ${m[0]} — ` +
                         `EXAMS_LIST/getActiveExam() 해석으로 대체 (폴백 필요 시 domain-map.json examLiteralAllow에 사유 명시)`
                     );
                 }

@@ -94,4 +94,31 @@ function getPrecacheMdAssets(workspaceDir) {
     return list;
 }
 
-module.exports = { getExamTargets, getSubjectMaps, getDefaultExamRoots, getPrecacheMdAssets };
+/**
+ * 모든 시험의 프리캐시 미디어 자산 목록 ('./' 접두, 존재하는 파일만, 정렬).
+ * 대상: {contentRoot}/교재/<과목>/images/ 아래의 .webp 파일 전체.
+ * 교재 본문이 참조하는 서빙 포맷은 .webp — .png는 원본 보관용(수 MB)으로
+ * 프리캐시하면 설치 크기가 불필요하게 팽창하므로 제외한다.
+ * 시험이 늘어나도 수동 나열 없이 프리캐시 대칭이 유지된다.
+ */
+function getPrecacheMediaAssets(workspaceDir) {
+    const list = [];
+    const MEDIA_EXT = new Set(['.webp']);
+    for (const t of getExamTargets(workspaceDir)) {
+        const root = path.join(workspaceDir, t.contentRoot, '교재');
+        if (!fs.existsSync(root)) continue;
+        const walk = (d) => {
+            for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+                const p = path.join(d, e.name);
+                if (e.isDirectory()) walk(p);
+                else if (MEDIA_EXT.has(path.extname(e.name).toLowerCase())) {
+                    list.push('./' + path.relative(workspaceDir, p).split(path.sep).join('/'));
+                }
+            }
+        };
+        walk(root);
+    }
+    return list.sort();
+}
+
+module.exports = { getExamTargets, getSubjectMaps, getDefaultExamRoots, getPrecacheMdAssets, getPrecacheMediaAssets };

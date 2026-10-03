@@ -111,26 +111,19 @@ const SHELL_ASSETS = [
   './src/views/trainer.js',
   './src/views/trainer-drills.js',
   './src/views/trainer-calc-practice.js',
-  './src/exams/cosmetic/views/trainer-ingredients.js',
   './src/questions.js',
   './src/statement-tracker.js',
-  // 실무 피처(formula) 모듈은 프리캐시 제외 — 활성 시험만 쓰는 자산이므로
+  // 도메인 모듈(src/exams/<id>/)은 프리캐시 제외 — 활성 시험만 쓰는 자산이므로
   // 시험 간 프리캐시 비대화를 막는다. 지연 import 시 /src/ 규칙(cacheFirst)으로
   // 런타임 캐시되고, warmPracticeFeatures()의 유휴 예열이 오프라인 진입을 보장.
-  // (formula 스토어·도메인 모듈은 전부 지연 그래프 — pro-upgrade도 hasFeature 게이트 아래 지연 import)
+  // (formula 스토어·뷰·trainer-ingredients 등 전부 지연 그래프 — pro-upgrade도 hasFeature 게이트 아래 지연 import)
   './src/csv-utils.js',
   './src/study-tracker.js',
   './src/spaced-repetition.js',
   './src/recommendations.js',
   './src/command-palette.js',
   './src/views/dictionary.js',
-  './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.webp',
-  './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.webp',
-  './content/exams/cosmetic/교재/manufacturing/images/바코드의 종류 및 구성체계.webp',
-  './content/exams/cosmetic/교재/law/images/1과목_삽화.webp',
-  './content/exams/cosmetic/교재/manufacturing/images/2과목_삽화.webp',
-  './content/exams/cosmetic/교재/safety/images/3과목_삽화.webp',
-  './content/exams/cosmetic/교재/understanding/images/4과목_삽화.webp',
+  // 시험 콘텐츠 이미지는 EXAM_MEDIA_ASSETS로 분리 — 시험별 자산을 셸과 섞지 않는다.
   './src/views/backup.js',
   './src/views/textbook-search.js',
   './src/views/textbook-reader.js',
@@ -221,6 +214,22 @@ const MD_ASSETS = [
   // MD_ASSETS:END
 ];
 
+/** 설치 시 프리캐시할 시험별 미디어 자산 (교재 삽화 — 오프라인 보장)
+ *  EXAM_MEDIA:BEGIN/END 마커 안은 exam_targets.getPrecacheMediaAssets가
+ *  각 시험 {contentRoot}/교재/**(images) 의 .webp를 스캔해 재생성한다.
+ *  build:data(build:index.js)와 sync_textbook_files.js 양쪽에서 갱신. */
+const EXAM_MEDIA_ASSETS = [
+  // EXAM_MEDIA:BEGIN
+  './content/exams/cosmetic/교재/law/images/1과목_삽화.webp',
+  './content/exams/cosmetic/교재/manufacturing/images/2과목_삽화.webp',
+  './content/exams/cosmetic/교재/manufacturing/images/바코드의 종류 및 구성체계.webp',
+  './content/exams/cosmetic/교재/safety/images/3과목_삽화.webp',
+  './content/exams/cosmetic/교재/understanding/images/4과목_삽화.webp',
+  './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.webp',
+  './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.webp',
+  // EXAM_MEDIA:END
+];
+
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */
 const BYPASS_PATTERNS = [
   /\.mp3$/i,
@@ -274,7 +283,8 @@ self.addEventListener('install', (event) => {
     Promise.all([
       precacheResilient(SHELL_CACHE, SHELL_ASSETS),
       precacheResilient(DATA_CACHE, DATA_ASSETS),
-      precacheResilient(SHELL_CACHE, MD_ASSETS)
+      precacheResilient(SHELL_CACHE, MD_ASSETS),
+      precacheResilient(SHELL_CACHE, EXAM_MEDIA_ASSETS)
     ]).then(() => self.skipWaiting())
   );
 });

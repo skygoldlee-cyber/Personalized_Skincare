@@ -59,3 +59,50 @@ test.describe('비기본 시험(food) 부팅 — 도메인 격리', () => {
         }
     });
 });
+
+test.describe('시험 전환 실경로 — selectExam → 리로드 → 부팅', () => {
+    test('comingSoon 카드 클릭은 전환 없이 안내만 띄운다', async ({ page }) => {
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        // 피커를 직접 렌더링해 comingSoon 가드를 검증 (UI 도달 경로와 무관하게 계약 확인)
+        await page.evaluate(async () => {
+            const m = await import('./src/views/exam-select.js');
+            m.renderExamSelect();
+        });
+        const foodCard = page.locator('.exam-select-card[data-arg="food"]');
+        await expect(foodCard).toHaveClass(/coming-soon/);
+        // aria-disabled 카드라 Playwright 클릭은 거부 — 이벤트 위임 경로를 직접 디스패치
+        await foodCard.dispatchEvent('click');
+        await expect(page.getByText('시험은 현재 준비 중입니다', { exact: false })).toBeVisible();
+        const stored = await page.evaluate(() => localStorage.getItem('current_exam'));
+        expect(stored).not.toBe('food'); // 전환 미발생
+    });
+
+    test('selectExam(\'food\') 호출 → current_exam 저장 + 리로드 후 식품기사 부팅', async ({ page }) => {
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        // 실제 전환 계약: selectExam이 저장 후 location.reload() — 시드가 아닌 호출 경로 검증
+        await Promise.all([
+            page.waitForEvent('load', { timeout: 15_000 }),
+            page.evaluate(async () => {
+                const m = await import('./src/exam-context.js');
+                m.selectExam('food');
+            }),
+        ]);
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await expect(page).toHaveTitle('식품기사');
+        await expect(page.locator('[data-app-name]').first()).toHaveText('식품기사');
+        const stored = await page.evaluate(() => localStorage.getItem('current_exam'));
+        expect(stored).toBe('food');
+        // 복귀 — cosmetic으로 되돌려 후속 테스트 격리 유지
+        await Promise.all([
+            page.waitForEvent('load', { timeout: 15_000 }),
+            page.evaluate(async () => {
+                const m = await import('./src/exam-context.js');
+                m.selectExam('cosmetic');
+            }),
+        ]);
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await expect(page.locator('[data-app-name]').first()).toHaveText('Passmula');
+    });
+});

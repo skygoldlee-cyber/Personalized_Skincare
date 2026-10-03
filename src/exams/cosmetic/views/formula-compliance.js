@@ -13,12 +13,17 @@ import { safeGetItem, safeSetItem } from '../../../state.js';
 import { STORAGE_KEYS } from '../../../storage-keys.js';
 import { contentPath } from '../../../exam-context.js';
 import { lawUrlFor } from '../../../law-links.js';
+import { resolveRefPath } from '../../../pdf-registry.js';
 import { showPanel, formulaSubNav } from './formula.js';
 
 /* =======================================================
    참조 문서 테이블 — contentRoot 기준 상대 경로
    ======================================================= */
 
+/* ref_md 문서는 file(원본 파일명)만 선언 — 실제 MD 경로는 references.json 기반
+ * 생성 테이블(resolveRefPath)로 해석한다. 문서 추가·과목 재배치 시 레지스트리만
+ * 갱신하면 되며 이 코드는 건드리지 않는다. 과목 정리본(md 원작)은 레지스트리
+ * 미등록이라 path를 유지한다. */
 const LAW_DOCS = {
   law: {
     label: '화장품법 통합 정리',
@@ -38,39 +43,47 @@ const LAW_DOCS = {
   statute: {
     label: '화장품법(법률) 원문',
     desc: '제20901호 (2026-04-02 시행)',
-    path: '참조자료/ref_md/과목1/화장품법(법률)(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md',
+    file: '화장품법(법률)(제20901호)(20260402).pdf',
   },
   rule: {
     label: '화장품법 시행규칙 원문',
     desc: '총리령 제02109호 (2026-04-02 시행)',
-    path: '참조자료/ref_md/과목1/화장품법 시행규칙(총리령)(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md',
+    file: '화장품법 시행규칙(총리령)(제02109호)(20260402).pdf',
   },
   cgmp: {
     label: '우수화장품 제조·품질관리기준',
     desc: '식약처고시 제2024-46호',
-    path: '참조자료/ref_md/과목2/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md',
+    file: '우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).pdf',
   },
   safety: {
     label: '화장품 안전기준 등에 관한 규정',
     desc: '식약처고시 제2026-19호 — 사용불가·한도 원료',
-    path: '참조자료/ref_md/과목2/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md',
+    file: '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf',
   },
   caution: {
     label: '주의사항·알레르기 표시 규정',
     desc: '식약처고시 제2026-56호 — 유형별 주의사항·25종',
-    path: '참조자료/ref_md/과목4/화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805)/화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805).md',
+    file: '화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805).pdf',
   },
   labeling: {
     label: '포장 표시기준·방법 (별표4)',
     desc: '시행규칙 별표 — 기재사항·표시방법',
-    path: '참조자료/ref_md/과목3/시행규칙_별표4_포장표시기준및방법/시행규칙_별표4_포장표시기준및방법.md',
+    file: '시행규칙_별표4_포장표시기준및방법.pdf',
   },
   sanctions: {
     label: '행정처분 기준 (별표7)',
     desc: '시행규칙 별표 — 위반별 처분 기준',
-    path: '참조자료/ref_md/과목1/시행규칙_별표7_행정처분기준/시행규칙_별표7_행정처분기준.md',
+    file: '시행규칙_별표7_행정처분기준.pdf',
   },
 };
+
+/** 문서의 실제 MD 경로 — file 선언은 레지스트리 해석, path는 그대로 (contentRoot 상대) */
+function docPath(doc) {
+  if (doc.path) return doc.path;
+  const abs = resolveRefPath(doc.file); // 'content/exams/<id>/참조자료/ref_md/...' 절대형
+  const idx = abs.indexOf('참조자료/');
+  return idx >= 0 ? abs.slice(idx) : abs;
+}
 
 /* =======================================================
    체크리스트 정의 — 항목 id는 영구 안정 (체크 상태의 키)
@@ -176,7 +189,7 @@ function refLinks(refs) {
   return `<span class="comp-refs">${refs.map(key => {
     const doc = LAW_DOCS[key];
     if (!doc) return '';
-    const lawUrl = lawUrlFor(doc.path) || lawUrlFor(doc.label);
+    const lawUrl = lawUrlFor(doc.file || doc.path) || lawUrlFor(doc.label);
     const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext comp-law-ext-inline" title="${esc(doc.label)} — law.go.kr 공식 원문" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : '';
     return `<a href="#" class="comp-ref-link" data-click="compOpenLaw" data-arg="${esc(key)}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> ${esc(doc.label)}</a>${ext}`;
   }).join('')}</span>`;
@@ -206,7 +219,7 @@ function renderSections(checked) {
 function renderDocList() {
   return Object.keys(LAW_DOCS).map(key => {
     const doc = LAW_DOCS[key];
-    const lawUrl = lawUrlFor(doc.path) || lawUrlFor(doc.label);
+    const lawUrl = lawUrlFor(doc.file || doc.path) || lawUrlFor(doc.label);
     const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>` : '';
     return `<span class="comp-doc-row"><a href="#" class="comp-doc-link" data-click="compOpenLaw" data-arg="${esc(key)}">
       <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
@@ -266,7 +279,7 @@ export function compOpenLaw(key) {
   const doc = LAW_DOCS[key];
   if (!doc) return;
   if (window.ExamViewer && window.ExamViewer.openExam) {
-    window.ExamViewer.openExam(contentPath(doc.path));
+    window.ExamViewer.openExam(contentPath(docPath(doc)));
   } else {
     showToast('문서 뷰어를 사용할 수 없습니다.');
   }

@@ -1,4 +1,4 @@
-// src/views/formula.js — Formula OS 뷰 컨트롤러 (Phase 5-A)
+// src/exams/cosmetic/views/formula.js — Formula OS 뷰 컨트롤러 (Phase 5-A)
 // @spec FO-01~11,FO-15
 //
 // 허브(메뉴) + My 포뮬러 목록 + 배합 계산기 서브뷰.
@@ -8,6 +8,7 @@
 // "검증"만 한다. 검증 결과는 법정 한도 기준이며 제품 안전성·안정성·품질 보장이 아니다.
 
 import { esc } from '../../../sanitize.js';
+import { lawUrlFor } from '../../../law-links.js';
 import { showToast, showConfirm } from '../../../ui-utils.js';
 import { DataLoader } from '../../../data-loader.js';
 import { todayKey } from '../../../utils.js';
@@ -113,6 +114,13 @@ export function initFormulaView() {
   const usage = getFormulaUsage();
   const badge = getEl('formula-usage-badge');
   if (badge) badge.textContent = `저장 ${usage.count}/${usage.limit}`;
+  // data-law 정적 링크를 lawdb 생성 테이블로 수화 — URL SSOT는 law-links.js.
+  // 매칭 실패 시 마크업의 정적 href(최신 통합본 주소)가 그대로 동작한다.
+  document.querySelectorAll('#formula-view a[data-law]').forEach(a => {
+    const key = /** @type {HTMLElement} */(a).dataset.law;
+    const url = key ? lawUrlFor(key) : '';
+    if (url) /** @type {HTMLAnchorElement} */(a).href = url;
+  });
 }
 
 export function exitFormulaSubView() {

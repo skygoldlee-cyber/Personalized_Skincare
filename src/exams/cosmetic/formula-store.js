@@ -1,4 +1,4 @@
-// src/formula-store.js — Formula OS My Formula 영속성 계층 (Phase 5-A)
+// src/exams/cosmetic/formula-store.js — Formula OS My Formula 영속성 계층 (Phase 5-A)
 // @spec FO-08,FO-23
 //
 // 포뮬러 CRUD + Free 한도 + 백업 통합. localStorage `formula_items`

@@ -43,6 +43,13 @@ export const STORAGE_KEYS = {
   // 복수정답형/OX 진술 단위 오판 통계 (statement-tracker.js)
   STATEMENT_STATS: 'statement_stats',
 
+  /* ── domain:cosmetic 계약 키 ────────────────────────────────
+   * 아래 키는 src/exams/cosmetic/ 도메인 모듈이 소유한다.
+   * 이 파일에 두는 이유: BACKUP_KEYS/RESET_KEYS/SYNC_EXCLUDE가
+   * 플랫폼 계층에서 이 키들을 참조해야 하므로, platform → domain
+   * 정적 import를 피하기 위해 중앙 레지스트리에 유지한다.
+   * 시험 스코프는 scopedKey()가 <examId>: 접두사로 처리한다. ── */
+
   // Formula OS — My Formula 저장소 (formula-store.js)
   FORMULA_ITEMS: 'formula_items',
 
@@ -60,6 +67,7 @@ export const STORAGE_KEYS = {
 
   // Formula OS — 법규 준수 체크리스트 체크 상태 (formula-compliance.js)
   COMPLIANCE_CHECKS: 'formula_compliance',
+  /* ── domain:cosmetic 계약 키 끝 ── */
 
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
   PRO_NOTICE_SEEN: 'pro_notice_seen',

@@ -27,12 +27,14 @@
 // @spec none (콘텐츠 구조 동기화 도구)
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets, getPrecacheMdAssets } = require('./build/exam_targets.js');
+const { getExamTargets, getPrecacheMdAssets, getPrecacheMediaAssets } = require('./build/exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const SW_PATH = path.join(ROOT, 'sw.js');
 const MD_BEGIN = '// MD_ASSETS:BEGIN';
 const MD_END = '// MD_ASSETS:END';
+const MEDIA_BEGIN = '// EXAM_MEDIA:BEGIN';
+const MEDIA_END = '// EXAM_MEDIA:END';
 
 const CHECK_ONLY = process.argv.includes('--check');
 const renameIdx = process.argv.indexOf('--rename');
@@ -214,6 +216,29 @@ function syncSwAssets() {
     fs.writeFileSync(SW_PATH, src.slice(0, bi + MD_BEGIN.length) + block + src.slice(ei), 'utf-8');
 }
 
+/** EXAM_MEDIA_ASSETS 기대 목록 — 시험별 교재 미디어를 레지스트리 스캔으로 생성 */
+const expectedMediaAssets = () => getPrecacheMediaAssets(ROOT);
+
+function syncSwMediaAssets() {
+    const src = fs.readFileSync(SW_PATH, 'utf-8');
+    const bi = src.indexOf(MEDIA_BEGIN), ei = src.indexOf(MEDIA_END);
+    if (bi < 0 || ei < 0 || bi > ei) {
+        manual.push('[sw.js] EXAM_MEDIA:BEGIN/END 마커 없음 — 자동 동기화 불가, 수동 관리');
+        return;
+    }
+    const expected = expectedMediaAssets();
+    const inner = src.slice(bi + MEDIA_BEGIN.length, ei);
+    const current = [...inner.matchAll(/'(.*?)'/g)].map(m => m[1]);
+    const missing = expected.filter(p => !current.includes(p));
+    const stale = current.filter(p => !expected.includes(p));
+    for (const p of missing) report('sw.js', 'EXAM_MEDIA_ASSETS', `누락 ${p}`);
+    for (const p of stale) report('sw.js', 'EXAM_MEDIA_ASSETS', `스테일 ${p}`);
+    if (!missing.length && !stale.length) return;
+    if (CHECK_ONLY) return;
+    const block = '\n' + expected.map(p => `  '${p}',`).join('\n') + '\n  ';
+    fs.writeFileSync(SW_PATH, src.slice(0, bi + MEDIA_BEGIN.length) + block + src.slice(ei), 'utf-8');
+}
+
 /* ---------- --rename 전파 ---------- */
 
 function applyRename(target, from, to) {
@@ -313,6 +338,7 @@ for (const t of targets) {
     syncManifest(t);
 }
 syncSwAssets();
+syncSwMediaAssets();
 
 if (drift.length) {
     console.log('=== 불일치/변경 내역 ===');

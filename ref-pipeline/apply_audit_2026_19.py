@@ -16,9 +16,12 @@ import json
 import sys
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _exam_root import exam_root, utf8_stdio
+
+utf8_stdio()
 ROOT = Path(__file__).resolve().parent.parent
-DB_DIR = ROOT / 'content/exams/cosmetic/참조자료/원료'
+DB_DIR = exam_root() / '참조자료/원료'
 BANNED = DB_DIR / 'banned_ingredients.md'
 RESTR = DB_DIR / 'restricted_ingredients.md'
 

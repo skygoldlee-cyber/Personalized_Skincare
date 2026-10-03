@@ -48,6 +48,8 @@ flowchart LR
 | `callout_rules.json` | md2doc 콜아웃 패턴 규칙 (스크립트 옆 자동 인식) | 자동 |
 | `batch_convert.py` | 시험 교재·안내서·문제은행 MD → `html/` 일괄 변환 | **교재 MD 교체 후 HTML 재생성 시** (시나리오 B) |
 | `check_laws.py` | 국가법령정보센터 OPEN API로 시험 대상 법령 현행성 확인 → `report/` | **법령 개정 점검 시** (시나리오 C, `LAW_OC` 키 필요) |
+| `compare_ingredients_official.py` | 고시 ref_md 별표 원료 ↔ 원료 DB 전수 대조 리포트 | cosmetic 원료 DB 감사 시 (`_exam_root` 해석 — 기본 시험 대상) |
+| `apply_audit_2026_19.py` | 제2026-19호 대조 결과의 원료 DB 일괄 반영 (1회성) | cosmetic 전용 마이그레이션 — 재실행 불필요 |
 | `audiobook/` | 교재 MD → 청취용 원고 → TTS MP3 파이프라인 | **교재 교체 후 오디오북 재생성 시** (시나리오 B, `audiobook/README.md` 상세) |
 | `requirements.txt` | Python 의존성 | 설치 시 |
 

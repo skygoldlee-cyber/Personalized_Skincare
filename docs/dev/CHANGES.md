@@ -13,6 +13,18 @@
 - **README·AGENTS·ARCHITECTURE 헤더**: Cosmetic Pass Master → Passory 플랫폼 프레이밍 (Passmula는 cosmetic 팩의 appName으로 유지)
 - 후속 작업: 모듈 물리 이동·import 경로 수정·domain-map/sw.js 갱신·캐시 접두사 passory 전환·플랫폼 시험 id 리터럴 게이트·food 전환 E2E — 구현 시 본 항목에 결과 병기
 
+## 2026-10-03 멀티시험 Phase E 보완 — 잔여 결합 9개 항목 정리
+
+- **주석·헤더 정정**: 이동 18개 파일 헤더의 구 경로(`src/formula-*.js` 등)를 `src/exams/cosmetic/…`으로 갱신, `questions.js` 헤더의 "맞춤형화장품 조제관리사 문항 스키마"를 플랫폼 중립 표현으로 교체
+- **domain-map 게이트 확장** (`check_domain_map.js`): ① 미등록 시험 디렉터리 감지 범위에 `src/exams` 추가(기존 content/data만 감지) ② platform 파일의 시험 식별 리터럴을 id 외 `name`/`appName`/`shortName`/`title`까지 탐지 — 따옴표 감싼 완전 리터럴만 대상으로 해 주석 오탐 회피 (예외는 `examLiteralAllow` 동일)
+- **`storage-keys.js` 도메인 키 구획**: `FORMULA_*`·`BATCH_ITEMS`·`CUSTOMER_ITEMS`·`COMPLIANCE_CHECKS`를 `domain:cosmetic 계약 키` 블록으로 표시 — sync.js SYNC_EXCLUDE 참조 때문에 중앙 레지스트리 유지, 소유 도메인만 명시
+- **`sw.js` 프리캐시의 시험 자산 분리**: 교재 이미지(.webp)를 수동 나열에서 `EXAM_MEDIA_ASSETS` 생성 블록으로 이동 — `EXAM_MEDIA:BEGIN/END` 마커, `exam_targets.getPrecacheMediaAssets`가 각 시험 `{contentRoot}/교재/**/images/`의 .webp를 스캔해 재생성 (PNG 원본 ~8MB/장은 프리캐시 팽창 방지로 제외). 지연 import 도메인 모듈(`trainer-ingredients.js`)도 셸 목록에서 제외 — 런타임 `/src/` cacheFirst 규칙이 커버. `tools/build/index.js`·`sync_textbook_files.js` 양쪽 재생성 경로에 반영, `verify:assets` 154개 통과
+- **`formula-compliance.js` 법령 데이터 → 레지스트리**: `LAW_DOCS`의 ref_md 하드코딩 경로 7건을 `file`(원본 PDF 파일명) 선언으로 교체 — 실제 MD 경로는 `pdf-registry.resolveRefPath()`가 활성 시험 생성 테이블(`REF_FILE_TO_PATH`)에서 해석. 문서 추가·과목 재배치 시 레지스트리만 갱신. `compOpenLaw`는 `docPath()` 헬퍼로 path|file 양형을 contentRoot 상대로 정규화
+- **`formula.html` law.go.kr 정적 링크 수화**: 앵커에 `data-law` 키 부여 — `initFormulaView`가 `lawUrlFor`로 href를 생성 테이블 URL로 교체(매칭 실패 시 마크업 정적 href 폴백). URL SSOT를 `law-links.js`로 통일
+- **`ref-pipeline` cosmetic 일회성 스크립트 시험 인지화**: `apply_audit_2026_19.py`·`compare_ingredients_official.py`의 `content/exams/cosmetic` 하드코딩을 `_exam_root.exam_root()` 경유로 전환 — `EXAM_ID`/`EXAM_CONTENT_ROOT`/`--exam` 지원. `py_compile`+import로 기본 해석(cosmetic) 확인
+- **food E2E 실전환 경로 추가** (`exam-switch.spec.js` +2건): ④ comingSoon 카드 `dispatchEvent('click')` → '준비 중' 안내만 표시·`current_exam` 불변 (aria-disabled라 Playwright 클릭 거부 — 의도된 가드라 디스패치로 위임 경로 검증) ⑤ `selectExam('food')` 모듈 호출 → `current_exam` 저장 + `location.reload` → 식품기사 부팅, 왕복 복귀까지 — 시드가 아닌 실제 전환 계약 경로. 3 프로젝트 15/15 통과
+- 검증: unit(관련 19) · DOM(관련 27) · E2E exam-switch 15/15 · check:types · check:domainmap · verify:assets · check:html · eslint 통과
+
 ## 2026-10-03 멀티시험 Phase E 구현 — 모듈 격리 + passory 브랜딩 완료
 
 - **물리 이동 완료** (`git mv` 18개): 스토어·도메인 로직 9개(`formula-{store,rules,check,stability}`·`batch-store`·`customer-store`·`material-ledger`·`usage-guide`·`store-utils`) → `src/exams/cosmetic/`, 뷰 9개(`formula{,-batch,-compliance,-customer,-fields,-material,-print,-recommend}` + `trainer-ingredients`) → `src/exams/cosmetic/views/`. 이동 파일 내부 상대 import는 `../../../`로 재작성, 플랫폼 진입점(`app.js`·`practice-registry.js`·`pro-upgrade.js`)은 지연 import 문자열만 갱신 — 정적 import 유지 불가라 플래그 off 시험에서 모듈 로드 자체가 안 되는 게이팅 불변

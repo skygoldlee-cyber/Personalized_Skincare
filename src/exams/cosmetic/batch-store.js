@@ -1,4 +1,4 @@
-// src/batch-store.js — Formula OS 조제 기록(배치) 영속성 계층 (Phase A)
+// src/exams/cosmetic/batch-store.js — Formula OS 조제 기록(배치) 영속성 계층 (Phase A)
 // @spec FO-16,FO-23
 //
 // 처방(formula)과 조제 회차(batch) 분리: 같은 처방으로 여러 번 조제하며

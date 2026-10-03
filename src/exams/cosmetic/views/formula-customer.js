@@ -1,4 +1,4 @@
-// src/views/formula-customer.js — Formula OS 고객 관리 뷰 (Phase B)
+// src/exams/cosmetic/views/formula-customer.js — Formula OS 고객 관리 뷰 (Phase B)
 // @spec FO-17
 //
 // 목록(formula-customer-panel) + 폼(formula-customer-form-panel) +

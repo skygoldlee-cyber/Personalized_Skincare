@@ -14,13 +14,17 @@ import io
 from difflib import SequenceMatcher
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _exam_root import exam_root, utf8_stdio
+
+utf8_stdio()
 
 ROOT = Path(__file__).resolve().parent.parent
-OFFICIAL_MD = ROOT / 'content/exams/cosmetic/참조자료/ref_md/과목2' / \
+EXAM = exam_root()
+OFFICIAL_MD = EXAM / '참조자료/ref_md/과목2' / \
     '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)' / \
     '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md'
-DB_DIR = ROOT / 'content/exams/cosmetic/참조자료/원료'
+DB_DIR = EXAM / '참조자료/원료'
 BANNED_MD = DB_DIR / 'banned_ingredients.md'
 RESTRICTED_MD = DB_DIR / 'restricted_ingredients.md'
 

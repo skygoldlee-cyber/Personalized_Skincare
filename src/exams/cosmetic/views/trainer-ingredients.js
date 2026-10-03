@@ -1,4 +1,4 @@
-// views/trainer-ingredients.js — 지식DB 분류 안전성 챌린지 (trainer.js에서 추출)
+// src/exams/cosmetic/views/trainer-ingredients.js — 지식DB 분류 안전성 챌린지 (trainer.js에서 추출)
 // @spec T-02
 // 데이터셋은 registry.knowledge 스키마로 해석한다 (registryKey/global).
 // 문항 생성은 엔티티의 분류 필드(badge.field, 예: type=approved/restricted/banned)를

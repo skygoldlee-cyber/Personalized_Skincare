@@ -1,4 +1,4 @@
-// src/formula-rules.js — Formula OS 추천 엔진 (규칙 기반)
+// src/exams/cosmetic/formula-rules.js — Formula OS 추천 엔진 (규칙 기반)
 // @spec FO-05,FO-06
 //
 // 고객 조건(제형·고민·피부유형·나이) → 추천 베이스·원료.

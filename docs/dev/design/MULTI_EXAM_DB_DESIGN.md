@@ -305,8 +305,19 @@ const _EXAM_LAW_URLS = {
 - 이동 완료: 스토어·도메인 로직 9개 + 뷰 9개(Formula OS 8 + trainer-ingredients) → `src/exams/cosmetic/`(+`views/`). 정적 importers는 `app.js`·`practice-registry.js`·`pro-upgrade.js`의 지연 import 문자열 갱신만으로 커버 — 이동 파일 내부의 상대 import는 `../../../` 한 단계 상향으로 재작성.
 - `sw.js` 프리캐시 자산 경로 갱신(`src/exams/cosmetic/views/trainer-ingredients.js`) + 캐시 접두사 `passory-*` 전환(구 `cosmetic-pass-*`는 activate 필터에 양 접두사를 남겨 1회 정리).
 - `csv-utils.js`는 설계대로 platform 유지(feature:dictionary가 정적 import — 도메인 하위 이동 시 역방향 의존 발생).
-- 게이트 가동: `check:domainmap`의 platform 시험-id 리터럴 검사 + food 부팅 E2E 3건(`tests/e2e/exam-switch.spec.js`, chromium·mobile·tablet 프로젝트).
-- 잔여 과제(후속): `law-links.js`·`pdf-registry.js`·`keyword-index.js`의 `_DEFAULT_EXAM_ID` 생성 폴백을 빌드 시 exams.json 기본 시험에서 유도하도록 생성기 갱신 — 현재도 동작하지만 기본 시험 변경 시 재생성 필수. `formula-compliance.js`의 law.go.kr 링크·체크리스트는 아직 도메인 코드 내 데이터 — 콘텐츠 팩 이동은 별도 과제.
+- 게이트 가동: `check:domainmap`의 platform 시험 식별 리터럴 검사 + food 부팅 E2E(`tests/e2e/exam-switch.spec.js`, chromium·mobile·tablet 프로젝트).
+
+**Phase E 보완 (2026-10-03, 2차)**
+
+- 이동 18개 파일의 헤더 주석을 신 경로로 정정, `questions.js` 헤더의 시험명 표현을 플랫폼 중립으로 교체.
+- `check:domainmap` 게이트 확장 — ① 미등록 디렉터리 감지 범위에 `src/exams` 추가(등록되지 않은 오탈자 폴더 차단) ② platform 파일의 시험 식별 리터럴을 id뿐 아니라 `name`·`appName`·`shortName`·`title`(`'Passmula'`·`'식품기사'` 등)까지 탐지 — 따옴표로 감싼 완전 리터럴만 대상으로 해 주문(주석) 오탐 회피.
+- `storage-keys.js`에 `domain:cosmetic 계약 키` 구획을 명시 — `sync.js`의 `SYNC_EXCLUDE`가 참조하므로 중앙 레지스트리는 유지하되 소유 도메인을 주석으로 선언.
+- `sw.js` 프리캐시의 cosmetic 자산 분리 — 교재 이미지(webp)를 `EXAM_MEDIA_ASSETS` 생성 블록(`EXAM_MEDIA:BEGIN/END` 마커, `exam_targets.getPrecacheMediaAssets`이 각 시험 `교재/**/images/`의 .webp 스캔)으로 이동. `.webp`만 대상 — PNG 원본(개당 ~8MB)은 프리캐시 팽창 방지로 제외. 지연 import되는 도메인 모듈(`trainer-ingredients.js`)도 셸 목록에서 제외(공식 런타임 cache-first 규칙이 커버). `build`·`sync_textbook_files` 양쪽이 블록을 재생성.
+- `formula-compliance.js`의 `LAW_DOCS`에서 ref_md 하드코딩 경로를 `file`(원본 PDF명) 선언으로 교체 — 실제 MD 경로는 `resolveRefPath()`가 시험별 생성 테이블에서 해석(과목 재배치·문서 추가 시 레지스트리만 갱신). 외부 law.go.kr 링크는 기존처럼 `lawUrlFor` 경유.
+- `formula.html`의 law.go.kr 정적 링크에 `data-law` 키 부여 — `initFormulaView`가 `lawUrlFor`로 수화해 URL SSOT를 law-links 생성 테이블로 통일(매칭 실패 시 정적 href 폴백).
+- `ref-pipeline` cosmetic 일회성 스크립트(`apply_audit_2026_19.py`·`compare_ingredients_official.py`)를 `_exam_root.exam_root()` 경유로 전환 — `EXAM_ID`/`EXAM_CONTENT_ROOT` 지정 지원.
+- food E2E에 실전환 경로 추가 — `selectExam('food')` 호출→리로드→식품기사 부팅(시드가 아닌 계약 경로), comingSoon 카드 디스패치 시 안내만 표시·`current_exam` 불변 가드.
+- 잔여 과제(후속): `law-links.js`·`pdf-registry.js`·`keyword-index.js`의 `_DEFAULT_EXAM_ID` 생성 폴백을 빌드 시 exams.json 기본 시험에서 유도하도록 생성기 갱신 — 현재도 동작하지만 기본 시험 변경 시 재생성 필수.
 
 ### Phase C 파일럿 결과 (food, 2026-09-30)
 
