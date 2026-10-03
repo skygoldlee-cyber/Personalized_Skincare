@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 처방 작업대 필드 블록 분리 — src/views/formula-fields.js (R-2)
+
+- `formula.js` 1158→895줄 — 고객·안정성 필드 블록 ~275줄을 `formula-fields.js`로 분리: `populateCustomerFields`/`formulaCustLoad`/`formulaCustSaveAs`/`populateStabilityFields`/`readStabilityInputs`/`writeStabilityInputs`/`readCustomerInputs`/`writeCustomerInputs`/`formulaAllergyAdd`/`formulaAllergyRemove`/`updateFoldSummaries`
+- `calc`·`getEl`·`readCalcInputs`는 formula.js에서 런타임 호출 전용 순환 import (formula-recommend.js와 동일 패턴) — `readCalcInputs` export로 전환
+- 공개 핸들러는 formula.js가 재수출해 app.js 디스패치·formula-recommend.js 계약 불변
+- sw 프리캐시·AGENTS 등록 (domain-map은 `src/views/formula*.js` 글로브로 자동 포함)
+
 ## 2026-10-03 리더 목차 헬퍼 분리 — src/reader-toc.js (R-3)
 
 - `textbook-reader.js` 955→884줄 — 목차 추출 순수 함수군 6개를 `src/reader-toc.js`로 이동: `isStoryMetaSection`/`filterMetaSections`(이야기형 메타 섹션), `getTocLevel`/`hasOwnNumber`(번호 계층), `cleanRefTitle`(NN_ 접두사), `extractSubHeadings`(###/#### 추출)

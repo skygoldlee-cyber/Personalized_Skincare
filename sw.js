@@ -122,6 +122,7 @@ const SHELL_ASSETS = [
   './src/csv-utils.js',
   './src/usage-guide.js',
   './src/views/formula.js',
+  './src/views/formula-fields.js',
   './src/views/formula-batch.js',
   './src/views/formula-customer.js',
   './src/views/formula-material.js',

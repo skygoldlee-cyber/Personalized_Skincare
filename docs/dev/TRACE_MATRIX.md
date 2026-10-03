@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 9b49a9e1394b5fb1
+> 입력 해시: e87f68ac759f9ef7
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -281,9 +281,9 @@
 | FO-03 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-04 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-05 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DEV-05<br>DOC-DSN-02<br>…외 1개 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-06 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-07 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-08 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-store.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-06 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-rules.js<br>src/views/formula-fields.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-07 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula-fields.js<br>src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-08 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-store.js<br>src/views/formula-fields.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-09 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-10 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/formula.css<br>src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-11 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |

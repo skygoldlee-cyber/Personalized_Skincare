@@ -209,7 +209,7 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러 (35개)
+  views/                # 뷰 컨트롤러 (36개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-ref-links.js # 참조자료 링크 생성·프리뷰·클릭 위임 (textbook-reader.js에서 분리)
@@ -238,6 +238,7 @@ src/                    # ES Modules
     event-listeners.js  # 이벤트 리스너 일괄 바인딩
     formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
     formula-recommend.js # 추천 베이스·원료 패널 + 맞춤 규칙 UI (formula.js에서 분리)
+    formula-fields.js   # 처방 작업대 고객·안정성 필드 블록 (formula.js에서 분리)
     formula-batch.js    # Formula OS — 조제 기록(배치) 목록·폼·상세 패널
     formula-customer.js # Formula OS — 고객 관리 패널 (카드·상담 이력·역참조)
     formula-material.js # Formula OS — 원료 장부 패널 (기한 배지·경고)
