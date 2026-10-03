@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.10 (2026-10-03 기준 — 수주사 질의 대응: §2.1 브라우저 하한·PF-17·§4.5 검수 범위 신설, ES-02·§4.10.2·UM-01 정정, SA-01·RR-07 제거 반영)
+> **버전**: 1.12 (2026-10-03 기준 — §7.5 ROAD-Q8 맞춤학습 E2E 시뮬레이션 구현 반영)
 > **버전 규약**: 본문 요구사항의 추가·변경·제거 시 마이너 버전을 갱신하고 변경 내역은 `CHANGES.md`에 기록한다 — 기준선은 커밋 해시로 확정한다
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 > **문서 ID**: DOC-DEV-01
@@ -967,6 +967,7 @@ UI/UX 요구사양은 기능 요구사양과 달리 단위 테스트만으로는
 | ROAD-Q5 | **템플릿 이스케이프 자동화**: 수작업 `esc()` 의존(224곳) → tagged template 자동 이스케이프로 누락을 구조적으로 불가능하게 | 대규모 마이그레이션 | 미구현 |
 | ROAD-Q6 | **JSON.parse → `storage.getJSON` 이관**: 18개 파일의 개별 try-catch 파싱을 한 줄 헬퍼로 통일 | 파싱 정책 중앙화 | 미착수 |
 | ROAD-Q7 | **조용한 예외 가시화**: 영속성 경로의 `catch {}` 삼켜짐을 쿼터 배너·진단 로그로 연결 | 47곳 중 영속성 관련 우선 | 부분 (`_storageUnavailable` 플래그) |
+| ROAD-Q8 | **맞춤학습 E2E 시뮬레이션**: `tests/e2e/analysis-view.spec.js` — 합성 학습 이력 시드 팩토리 `tests/fixtures/analysis-seed.js`(`quiz_results`·`quiz_wrong_causes`·`statement_stats`·`sim_results_history`·`study_calendar`의 `h` 버킷·`study_goals`·`exam_date`·`fc_weak`·`fc_memorized`·`fc_spaced_repetition`·`actual_exam_result`·`ingredients_db_notified`)로 AN-01~09 렌더를 실브라우저에서 검증하고, 실제 퀴즈 완주 1회로 기록→분석 반영 경로를 연결. AN-04 온보딩 게이트 양방향(표본 미달→힌트 카드 / 충족→자동 제거)과 AN-09 주간 리포트 클립보드 폴백을 단언한다 | AN-계열은 UX-VFY-03의 E2E 강제 접두사(UX-·TR-·R-·TH-·A-) 대상이 아닌 자발적 커버리지. 시드 스키마는 `state.js`·`exam-simulator.js` 실저장 형태와 정합 — fixtures 팩토리가 단일 원본. 시드 이력이 `app-shell.js` RETURNING_USER_KEYS를 채우므로 지식DB 갱신 모달 억제 키 포함 (해시는 registry.js에서 동적 추출). 시드 키 목록: `storage-keys.js` STORAGE_KEYS | 구현 (2026-10-03) |
 
 ### 7.6 우선순위 원칙
 

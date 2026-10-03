@@ -351,10 +351,12 @@ npm.cmd run test:all      # unit + parser parity + imports + dom
 ## 9. 한계 및 E2E 계층 (Playwright — 구현 완료)
 
 jsdom이 커버 못 하는 영역 — 앱 부트스트랩(`__APP_INITIALIZED`), SW 등록·
-PWA 자산 서빙, 실제 데스크톱/모바일 네비게이션 — 은 `tests/e2e/app.spec.js`의
-Playwright 계층이 커버한다 (16개 = 8 시나리오 × chromium + Pixel 7 프로젝트).
-`playwright.config.js`가 `serve.js`를 webServer로 자동 기동하며 CI 파이프라인에도
-연결돼 있다(`playwright install --with-deps chromium` + `npm run test:e2e`).
+PWA 자산 서빙, 실제 데스크톱/모바일 네비게이션, 맞춤학습 진단 렌더
+(`tests/e2e/analysis-view.spec.js` — 합성 이력 시드로 AN-01~09 브라우저 통합
+검증, SPEC §7.5 ROAD-Q8) — 은 `tests/e2e/`의 Playwright 계층이 커버한다
+(chromium + Pixel 7 + tablet 프로젝트). `playwright.config.js`가 `serve.js`를
+webServer로 자동 기동하며 CI 파이프라인에도 연결돼 있다
+(`playwright install --with-deps chromium` + `npm run test:e2e`).
 
 로컬 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium`).
 미커버 잔여 — 실제 다운로드/인쇄·CSV 업로드·오프라인 차단 시나리오 — 는

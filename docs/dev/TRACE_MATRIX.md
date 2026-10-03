@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 9525c22e478f2063
+> 입력 해시: 4a1e8e2b0d759c38
 > 생성: 2026-10-03 · 원천: SPEC.md(389개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -45,15 +45,15 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| AN-01 | ✅ | 테스트 | DOC-DSN-03 | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
-| AN-02 | ✅ | 테스트 | DOC-DSN-03 | src/analysis-engine.js<br>src/views/dashboard.js<br>src/views/quiz-wrong-cause.js | tests/dom/study-dashboard.dom.test.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
-| AN-03 | ✅ | 테스트 | DOC-DSN-03 | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-09 | — |
-| AN-04 | ✅ | 테스트 | — | src/views/dashboard.js | tests/unit/reader-analysis-gates.test.js | — | — |
-| AN-05 | ✅ | 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-01 | ✅ | E2E 테스트 | DOC-DSN-03 | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js<br>tests/e2e/analysis-view.spec.js<br>tests/fixtures/analysis-seed.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
+| AN-02 | ✅ | E2E 테스트 | DOC-DSN-03 | src/analysis-engine.js<br>src/views/dashboard.js<br>src/views/quiz-wrong-cause.js | tests/dom/study-dashboard.dom.test.js<br>tests/e2e/analysis-view.spec.js<br>tests/fixtures/analysis-seed.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
+| AN-03 | ✅ | E2E 테스트 | DOC-DSN-03 | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js<br>tests/e2e/analysis-view.spec.js<br>tests/fixtures/analysis-seed.js | DOC-ARC-09 | — |
+| AN-04 | ✅ | E2E 테스트 | — | src/views/dashboard.js | tests/e2e/analysis-view.spec.js<br>tests/fixtures/analysis-seed.js<br>tests/unit/reader-analysis-gates.test.js | — | — |
+| AN-05 | ✅ | E2E 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/e2e/analysis-view.spec.js<br>tests/fixtures/analysis-seed.js<br>tests/unit/analysis-deepening.test.js | — | — |
 | AN-06 | ✅ | 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
 | AN-07 | ✅ | 테스트 | — | src/analysis-engine.js<br>src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
-| AN-08 | ✅ | 테스트 | — | src/analysis-engine.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
-| AN-09 | ✅ | 테스트 | — | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-08 | ✅ | 테스트 | — | src/analysis-engine.js<br>src/views/dashboard.js | tests/fixtures/analysis-seed.js<br>tests/unit/analysis-deepening.test.js | — | — |
+| AN-09 | ✅ | E2E 테스트 | — | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/e2e/analysis-view.spec.js<br>tests/unit/analysis-deepening.test.js | — | — |
 
 ## 3.2 플래시카드
 

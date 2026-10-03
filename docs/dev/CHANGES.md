@@ -6,6 +6,23 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 맞춤학습 E2E 시뮬레이션 구현 — ROAD-Q8 완료
+
+- **신규 `tests/e2e/analysis-view.spec.js` (4 시나리오)**: ① 합성 이력 → 진단 카드 5종(오답 패턴·취약 진술·학습 리듬·단원별 취약·합격 갭)·히트맵·성적 추이/레이더 SVG·합격 진단·예상 점수(실제결과 보정 +10점) 렌더 ② 빈 이력 → AN-04 온보딩 카드 + '지금 퀴즈 풀기' CTA 내비게이션 ③ 실제 퀴즈 10문 완주 → 온보딩 해제·과목 카드 (10문) 반영 — 기록→분석 파이프라인 (chromium 전용, 나머지 프로젝트는 시드 테스트가 커버) ④ AN-09 주간 리포트 — `navigator.share` 제거로 클립보드 폴백 강제 + `writeText` 스파이로 본문 검증
+- **신규 `tests/fixtures/analysis-seed.js`**: 실저장 스키마 합성 이력 팩토리 — 날짜 상대 생성(주간 비교·D-day·최근 7일 윈도우가 "오늘" 기준), `cosmetic:` 네임스페이스, 졸업 진술(streak≥3)·같은 cid 개념 클러스터·이상 진술(j≥5·오판율≥0.8) 등 카드 분기를 결정론적으로 자극
+- **발견된 함정 — 지식DB 갱신 모달**: 시드 이력이 `app-shell.js` RETURNING_USER_KEYS(quiz_results·study_calendar·fc_memorized 등)를 채우면 "원료 DB 갱신" 모달이 떠서 클릭을 가로막음 → `ingredients_db_notified`를 `data/exams/<examId>/registry.js`의 `version:contentHash`에서 동적 추출해 시드 (빌드마다 해시 변동 — 하드코딩 불가)
+- **Playwright 제약**: 픽스처 모듈은 CJS로 로드돼 `import.meta` 사용 불가 → `process.cwd()` 기준 경로 사용
+- **문서 후속**: SPEC ROAD-Q8 상태 미구현→구현 (버전 1.12), DOM_TEST_DESIGN §9·TESTING §4.14 미커버 기술을 구현 내용으로 갱신, docs_paths_allowlist의 계획 경로 항목 제거 (실파일 생성됨)
+- 검증: `npx playwright test tests/e2e/analysis-view.spec.js` — 3 프로젝트 10 passed + 2 skipped(의도 — 실경로는 chromium만)
+
+## 2026-10-03 맞춤학습 E2E 시뮬레이션 요구사양 등록 — ROAD-Q8 (문서 선행)
+
+- **검토 결과**: 맞춤학습(`analysis-view`, AN-01~09)은 unit(analysis-engine·analysis-deepening·reader-analysis-gates) + DOM(study-dashboard) 커버이나 Playwright E2E는 0건 — 기존 spec의 시드가 온보딩 플래그 + 빈 `quiz_results`뿐이라 AN-04 온보딩 힌트 카드 외 렌더 검증 불가
+- **SPEC §7.5 ROAD-Q8 신설**: `tests/e2e/analysis-view.spec.js` 계획 — 합성 학습 이력 시드(`quiz_results`·`quiz_wrong_causes`·`statement_stats`·`sim_results_history`·`study_calendar` `h` 버킷·`study_goals`·`exam_date`·`fc_weak`·`rec_snapshot`) + 실제 퀴즈 완주 1회 혼합 시뮬레이션. AN-04 온보딩 양방향·진단 카드·예상 점수·AN-09 클립보드 폴백 단언
+- **게이트 판정**: AN-계열은 UX-VFY-03의 E2E 강제 접두사 대상이 아니라 자발적 커버리지 영역 — 로드맵 등록으로 트리거 관리. 시드 스키마는 `state.js`·`exam-simulator.js` 실저장 형태와 정합 유지 필요 (가짜 그린 방지)
+- **DOM_TEST_DESIGN §9·TESTING §4.14**: 미커버 영역에 맞춤학습 명시. 계획 파일명은 docs_paths_allowlist에 등록
+- SPEC 버전 1.10 → 1.11
+
 ## 2026-10-03 교재리더 TOC 하단 잘림 (이야기형) — absolute 탈출 + sticky 오프셋 제거
 
 - **결함**: 2~4과목 **이야기형**에서 TOC 스크롤을 끝까지 내려도 마지막 항목이 레이아웃 밖으로 잘려 도달 불가 (표준형 정상)

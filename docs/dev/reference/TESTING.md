@@ -28,8 +28,8 @@
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 407 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 22 |
-| **합계** | | | | **1123** |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/*.spec.js` | 65 |
+| **합계** | | | | **1166** |
 
 ### 설계 원칙
 
@@ -556,9 +556,8 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 ### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
 
-`tests/e2e/app.spec.js` (스모크 8 시나리오) + `tests/e2e/flows.spec.js` (플로우 3 시나리오)
-= 11 시나리오 × chromium + Pixel 7 프로젝트 = **22 실행**.
-jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
+`tests/e2e/` 11개 spec 파일 · **65 시나리오** × chromium + Pixel 7 + tablet
+프로젝트. jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
 webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
 `serve.js`는 vercel.json의 프로덕션 헤더(CSP 포함)를 미러링하므로 E2E는
 배포 환경과 동일한 보안 헤더 하에서 실행된다.
@@ -576,6 +575,27 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
 - **퀴즈 완주**: 과목 선택 → 10문 응답(객관식/OX/단답 유형 자동 분기) → 결과 패널 + `cosmetic:quiz_results` localStorage 저장 검증
 - **오프라인 배너**: `context.setOffline(true)` → 유예(15s)·연속 실패 3회 후 `#offline-banner.show` (보수적 판정 자체를 검증)
 - **프로덕션 CSP**: 응답 헤더에 `script-src 'self'`·`unsafe-eval` 부재 확인 + 학습안내서 매뉴얼에서 Mermaid 지연 로딩 → SVG 렌더 검증 (eval 의존 시 즉시 실패)
+
+**analysis-view.spec.js — 맞춤학습 시뮬레이션 (ROAD-Q8, 2026-10-03 추가)**
+
+- **시드 팩토리 `tests/fixtures/analysis-seed.js`**: 실저장 스키마(`state.js`·
+  `exam-simulator.js`·`statement-tracker.js`·`study-tracker.js`와 정합)의 합성
+  학습 이력을 생성한다 — `quiz_results` 25문·`quiz_wrong_causes` 최근 7일 3건·
+  `statement_stats`(같은 cid 클러스터 + streak≥3 졸업 진술)·`sim_results_history`
+  상승 4회·`study_calendar` `h` 시간대 버킷·`study_goals`·`exam_date`·`fc_weak`/
+  `fc_memorized`·`fc_spaced_repetition`·`actual_exam_result`. 날짜는 호출 시점
+  상대 생성 — 주간 비교·D-day·최근 7일 집계가 "오늘" 기준이므로 고정 날짜는 깨진다.
+  진도 키는 `cosmetic:` 네임스페이스로 시드한다.
+- **지식DB 모달 억제**: 시드 이력이 `app-shell.js` RETURNING_USER_KEYS를 채우면
+  "원료 DB 갱신" 모달이 떠서 클릭을 가로막으므로 `ingredients_db_notified`를
+  `data/exams/<examId>/registry.js`의 `version:contentHash`에서 동적 추출해 시드한다
+  (빌드마다 해시가 바뀌므로 하드코딩 불가).
+- **커버 시나리오**: ① `#/analysis` 딥링크 → 진단 카드 5종(오답 패턴·취약 진술·
+  학습 리듬·단원별 취약·합격 갭)·히트맵·성적 추이/레이더 차트·합격 진단·
+  예상 점수(실제결과 보정 포함) 렌더 ② 빈 이력 → AN-04 온보딩 카드 +
+  '지금 퀴즈 풀기' CTA 내비게이션 ③ 실제 퀴즈 10문 완주 → 온보딩 해제·
+  정답률 반영 (기록→분석 파이프라인, chromium 전용) ④ AN-09 주간 리포트 —
+  `navigator.share` 제거로 클립보드 폴백을 강제하고 복사 본문을 검증한다.
 
 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium` 필요).
 확장 시 시나리오 단위로 `tests/e2e/*.spec.js`에 추가 — 인증 경로는 별도 spec 권장.
