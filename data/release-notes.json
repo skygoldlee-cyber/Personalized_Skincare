@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-23f36a1",
+    "date": "2026-10-03",
+    "notes": [
+      "[수정·reader] 이야기형 TOC 하단 잘림 — absolute 탈출 차단 + dead sticky 제거"
+    ]
+  },
+  {
     "version": "v20261003-423cf88",
     "date": "2026-10-03",
     "notes": [
@@ -145,13 +152,6 @@
     "date": "2026-10-02",
     "notes": [
       "[수정·story] 이야기형 목차 챕터 중복 — 패치의 @insert 헤딩 재삽입을 @suffix로 교정"
-    ]
-  },
-  {
-    "version": "v20261002-871ab08",
-    "date": "2026-10-02",
-    "notes": [
-      "[content·textbook] 1과목 표지 삽화 재교체 및 webp 재생성"
     ]
   }
 ]
