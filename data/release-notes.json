@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20261003-daa2ee9",
+    "date": "2026-10-03",
+    "notes": [
+      "[리팩터링·exams] Phase E 보완 — 레지스트리 경유 법령 해석 + 시험 자산 프리캐시 생성화 + 전환 E2E",
+      "[리팩터링·exams] 멀티시험 Phase E — cosmetic 도메인 모듈 격리 + 플랫폼 브랜드 passory (DA-13)"
+    ]
+  },
+  {
     "version": "v20261003-1ca3a02",
     "date": "2026-10-03",
     "notes": [
@@ -145,13 +153,6 @@
     "date": "2026-10-02",
     "notes": [
       "[수정·reader] TOC 사이드바 하단 잘림 — flex 높이 배분으로 뷰포트 내부 고정"
-    ]
-  },
-  {
-    "version": "v20261002-e933a94",
-    "date": "2026-10-02",
-    "notes": [
-      "[content·textbook] 4과목 Ch07 중복 마인드맵 헤딩 구분 — 공정 흐름도로 교정"
     ]
   }
 ]
