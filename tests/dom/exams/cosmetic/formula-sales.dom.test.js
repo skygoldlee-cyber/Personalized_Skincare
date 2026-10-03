@@ -96,6 +96,14 @@ describe('Formula OS — 사업 유형 프로파일 (FO-33)', () => {
         expect(numericBadges()).toEqual(['1', '2', '3', '4', '5']);
     });
 
+    it('법규 준수 카드는 전 유형에서 항상 마지막 배치 (FO-33)', () => {
+        for (const biz of ['custom', 'mfg', 'sales']) {
+            formulaSetBizType(biz);
+            const clicks = hubCards().map(c => c.dataset.click);
+            expect(clicks[clicks.length - 1]).toBe('openCompliancePanel');
+        }
+    });
+
     it('서브내비도 유형별 게이트 — sales는 표시사항·광고 칩, 제조 칩 없음 (FO-33)', () => {
         setBizType('sales');
         const nav = formulaSubNav('label');
