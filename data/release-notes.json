@@ -1,5 +1,15 @@
 [
   {
+    "version": "v20261003-3e79e5d",
+    "date": "2026-10-03",
+    "notes": [
+      "[리팩터링] extract formula customer/stability fields into formula-fields.js",
+      "[리팩터링] extract reader TOC helpers into src/reader-toc.js",
+      "[리팩터링] share LRU session cache via doc-overlay in html-viewer",
+      "[수정] unify date bucket keys to local time + consolidate shared utils"
+    ]
+  },
+  {
     "version": "v20261003-3d45897",
     "date": "2026-10-03",
     "notes": [
@@ -144,14 +154,6 @@
     "date": "2026-10-02",
     "notes": [
       "[문서·agents] 소스 수정 전 설계 문서·테스트 선행 절차 명문화"
-    ]
-  },
-  {
-    "version": "v20261002-8cef5e5",
-    "date": "2026-10-02",
-    "notes": [
-      "[수정·router] 뷰 간 뒤로가기를 종료 가드가 오인하지 않도록 판정 지연",
-      "[정리] .vercel projectName을 passory로 갱신 — 배포 스모크가 신 도메인을 프로브하도록"
     ]
   }
 ]
