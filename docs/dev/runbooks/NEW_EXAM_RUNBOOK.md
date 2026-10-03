@@ -99,7 +99,7 @@ cosmetic의 모든 파일을 복사할 필요는 없다 — food가 최소 구�
 | 도메인 모듈·스토어 | `src/exams/<id>/` | `src/exams/cosmetic/formula-store.js` |
 | 실무 뷰 모듈 | `src/exams/<id>/views/` | `src/exams/cosmetic/views/formula.js` |
 | 뷰 마크업 파셜 (지연 주입) | `html/exams/<id>/` | `html/exams/cosmetic/formula.html` |
-| 도메인 스타일 | `css/exams/<id>/` + `style.css` @import | `css/exams/cosmetic/formula.css` |
+| 도메인 스타일 | `css/exams/<id>/` — 레지스트리 `styles` 필드로 `<link>` 지연 주입 | `css/exams/cosmetic/formula.css` |
 | 도메인 테스트 | `tests/{unit,dom}/exams/<id>/` | `tests/unit/exams/cosmetic/formula-os.test.js` |
 
 - **기존 피처 재사용** (예: 새 시험에서 `formula` 활성화): 위 경로에 같은 파일명으로 자산을 배치하고 `features.formula`를 선언하면 끝 — `_domainImport`/`_domainMarkup`이 활성 시험으로 해석하고, 유닛 테스트(`practice-registry.test.js` 규약 검증)가 feature 선언 시험마다 파일 실존을 강제한다

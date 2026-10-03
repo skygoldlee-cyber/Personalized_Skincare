@@ -126,6 +126,12 @@ test('도메인 경로 규약 — feature를 켠 시험마다 뷰 모듈·마크
                     `${exam.id}: html/exams/${exam.id}/${decl.markup} 없음 (features.${featKey} 활성)`
                 );
             }
+            if (decl.styles) {
+                assert.ok(
+                    fs.existsSync(path.join(ROOT, 'css', 'exams', exam.id, decl.styles)),
+                    `${exam.id}: css/exams/${exam.id}/${decl.styles} 없음 (features.${featKey} 활성)`
+                );
+            }
         }
     }
 });

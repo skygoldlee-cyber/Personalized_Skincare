@@ -180,6 +180,7 @@ src/                    # ES Modules
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)
+  exam-data-boot.js     # 활성 시험 데이터 번들 부트 (클래식) — 파싱 중 {dataRoot}/registry.js·id_migration.js 동기 삽입, 비활성 시험 번들 미로드
   csv-utils.js          # CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화 (사전 내보내기 등 공용)
   pwa-install.js        # PWA 설치 프롬프트 설정
   pwa-install-capture.js # beforeinstallprompt 조기 캡처 + SW 조기 등록 (<head> 즉시 실행, 클래식 스크립트)
@@ -258,7 +259,7 @@ src/                    # ES Modules
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
 css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)
-  exams/<id>/           # 시험 도메인 스타일 (cosmetic/formula.css 등) — style.css @import에 포함
+  exams/<id>/           # 시험 도메인 스타일 (cosmetic/formula.css 등) — 피처 진입 시 practice-registry가 <link> 지연 주입 (style.css @import 아님 — 비활성 시험 미로드)
 content/                # 시험 콘텐츠 컨테이너
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
   lawdb.json            # 공용 법령DB — law.go.kr 메타데이터 SSOT (id·slug·type·matchKeys·watch). 시험별 사용 목록은 references.json.lawRefs가 지정 → build:pdf-registry가 src/law-links.js 생성

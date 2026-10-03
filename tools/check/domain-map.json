@@ -59,6 +59,7 @@
         "src/data-loader.js",
         "src/doc-overlay.js",
         "src/exam-context.js",
+        "src/exam-data-boot.js",
         "src/exam-viewer.js",
         "src/feedback.js",
         "src/globals.d.ts",

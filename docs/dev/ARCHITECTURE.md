@@ -620,17 +620,18 @@ passory/
 
 <body> 하단
   3. data/exams.js                    (클래식 — window.EXAMS_LIST 시험 레지스트리, file:// 호환)
-  4. data/exams/cosmetic/id_migration.js (클래식 — 레거시→안정 ID 이관 맵)
+  4. src/exam-data-boot.js            (클래식 — 활성 시험 해석 후 {dataRoot}/id_migration.js +
+                                      {dataRoot}/registry.js를 파서 위치에 동기 삽입. 비활성 시험
+                                      데이터 번들은 요청하지 않는다 — 도메인 네트워크 격리)
   5. src/pwa-manifest.js              (클래식 — 활성 시험 기준 동적 manifest 링크 교체)
-  6. data/exams/cosmetic/registry.js  (type=module — 기본 시험 메타, window.DATA_REGISTRY 할당)
-  7. data/audio_manifest.js           (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
-  8. src/app.js                       (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
-  9. src/app-fallback.js              (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
+  6. data/audio_manifest.js           (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
+  7. src/app.js                       (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
+  8. src/app-fallback.js              (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
 
 지연 로드 (초기 로드에서 제외):
   - vendor/mermaid/mermaid.min.js (3.3MB) — mermaid 블록이 있는 문서를 열 때만 주입
   - vendor/supabase/supabase.js     — 로그인/동기화 첫 사용 시에만 주입 (supabase-client.js)
-  - 비기본 시험 registry.js        — 시험 전환 시 {dataRoot}/registry.js를 클래식 스크립트로 주입
+  - 도메인 스타일 (css/exams/<id>/) — 실무 피처 진입·예열 시 practice-registry가 <link> 주입
 ```
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
@@ -822,8 +823,8 @@ const state = {
 - `selectExam()`은 활성 시험과 같은 id 선택 시 리로드를 생략하되 **`current_exam` 저장은 항상 수행** — 미선택 상태의 기본 시험 선택도 저장되어야 다음 진입에서 피커가 다시 뜨지 않는다 (저장 생략 시 매번 피커 표시 회귀)
 
 ### 레지스트리 로딩
-- 기본 시험: `data/exams/cosmetic/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
-- 비기본 시험: `DataLoader.ensureRegistry()`가 `{dataRoot}/registry.js`를 클래식 스크립트로 동적 주입 (`DATA_REGISTRY_<examId>` 전역 — ESM export 불가라 `var` + `window` 할당 형태로 생성)
+- 부트: `src/exam-data-boot.js`(클래식)가 활성 시험을 해석해 `{dataRoot}/registry.js` + `id_migration.js`를 파서 위치에 동기 삽입 — 활성 시험 번들만 로드된다 (도메인 격리; 기본 시험은 `window.DATA_REGISTRY`)
+- 폴백·재진입: `DataLoader.ensureRegistry()`가 누락 시 `{dataRoot}/registry.js`를 클래식 스크립트로 동적 주입 (`DATA_REGISTRY_<examId>` 전역 — ESM export 불가라 `var` + `window` 할당 형태로 생성). 비기본 시험에서 레지스트리 확보 실패 시 기본 레지스트리를 명시적으로 비워 콘텐츠 혼선을 차단
 
 ### 빌드 순회
 - `tools/build/exam_targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
@@ -969,7 +970,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
   1. `content/exams.json` — 해당 시험에 `features.<키>` 선언 (check:featflags가 미선언 키 사용을 차단)
   2. `src/practice-registry.js` — 엔트리 추가 (viewId·slug·title·`markup` 파일명·`loaders`의 `_domainImport('<rel>')`·`handlers`·`enter`·필요 시 `priority`) — **엔트리에는 시험 무관 상대 경로(`views/<피처>.js`·`<피처>.html`)만 선언**, 시험 id는 규약이 주입
   3. `html/exams/<시험id>/<피처>.html` — 자체 `<section id>`를 포함하는 자기완결 파셜 + `index.template.html`에 `<section id data-lazy-view="<피처>.html">` 스텁 + nav 버튼(`data-feature="<키>"`) → `build:html` 재생성 (스텁의 `data-lazy-view` 값은 파일명만 — `html/exams/<활성시험>/` 접두는 런타임 해석)
-  4. 피처 뷰 모듈 — `src/exams/<시험id>/views/<피처>.js`에 두고 `loaders`의 `_domainImport` 경로로만 참조 (SHELL_ASSETS 프리캐시·app.js 정적 import 모두 금지 — 자산 격리 정책). 도메인 스타일은 `css/exams/<시험id>/<피처>.css` + `style.css` @import
+  4. 피처 뷰 모듈 — `src/exams/<시험id>/views/<피처>.js`에 두고 `loaders`의 `_domainImport` 경로로만 참조 (SHELL_ASSETS 프리캐시·app.js 정적 import 모두 금지 — 자산 격리 정책). 도메인 스타일은 `css/exams/<시험id>/<피처>.css`에 두고 엔트리 `styles` 필드에 선언 — `<link>` 지연 주입 (style.css @import 금지 — 비활성 시험 미로드)
   5. `storage-keys.js` — 피처 저장 키 + BACKUP/RESET 등록 (스코프 키라 시험별 자동 격리) + `domain:<시험id> 계약 키` 구획 주석
   6. `tools/check/domain-map.json` — `feature:<피처>` 레이어 + 파일 글로브 선언 (check:domainmap이 미등록 파일을 차단)
   7. 테스트 — 도메인 테스트는 `tests/{unit,dom}/exams/<시험id>/`에 배치. testfirst 게이트가 로직 변경의 테스트 동반을 강제

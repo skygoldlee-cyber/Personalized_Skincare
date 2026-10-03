@@ -58,6 +58,18 @@ test.describe('비기본 시험(food) 부팅 — 도메인 격리', () => {
             await expect(page.locator('[data-click="startIngredientsChallenge"]')).toHaveClass(/is-hidden/);
         }
     });
+
+    test('네트워크 격리 — food 부팅 중 exams/cosmetic/ 자산 요청이 없다', async ({ page }) => {
+        const examReqs = [];
+        page.on('request', r => { if (/exams\/(cosmetic|food)\//.test(r.url())) examReqs.push(r.url()); });
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        // 도메인 경로 규약 — 비활성 시험의 모듈·마크업·콘텐츠를 요청하지 않아야 한다
+        // (warmPracticeFeatures는 food가 formula 미보유로 발화하지 않음)
+        expect(examReqs.filter(u => u.includes('exams/cosmetic/'))).toEqual([]);
+        // 대조: food 자산은 실제로 요청됐어야 한다 (격리가 아닌 미부팅 오탐 방지)
+        expect(examReqs.some(u => u.includes('exams/food/'))).toBe(true);
+    });
 });
 
 test.describe('시험 전환 실경로 — selectExam → 리로드 → 부팅', () => {

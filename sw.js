@@ -46,7 +46,6 @@ const SHELL_ASSETS = [
   './css/html-viewer.css',
   './css/ui-overlay.css',
   './css/study-calendar.css',
-  './css/exams/cosmetic/formula.css',
   './manifest.webmanifest',
   './feature-plan.json',
   './ping.txt',

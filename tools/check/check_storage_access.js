@@ -13,6 +13,9 @@
  *   - src/theme-init.js           — 모듈 로드 전 FOUC 방지 부트 스크립트
  *   - src/pwa-manifest.js         — 클래식 스크립트(ESM 아님), 모듈 로딩 불가
  *   - src/pwa-install-capture.js  — 설치 프롬프트 캡처의 원샷 플래그
+ *   - src/exam-data-boot.js       — 클래식 부트 스크립트(ESM 아님), 활성 시험
+ *                                   dataRoot의 registry·id_migration을 파싱 중
+ *                                   동기 삽입 — 모듈 로딩·storage 추상화 불가
  *
  * 사용법:
  *   npm.cmd run check:storage   # 단독 실행
@@ -31,6 +34,7 @@ const ALLOWED_FILES = new Set([
   'theme-init.js',
   'pwa-manifest.js',
   'pwa-install-capture.js',
+  'exam-data-boot.js',
 ]);
 
 function* walk(dir) {

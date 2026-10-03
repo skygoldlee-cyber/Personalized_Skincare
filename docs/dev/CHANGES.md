@@ -23,6 +23,14 @@
 - domain-map `domain:cosmetic` 패턴 갱신(테스트·자산 경로), AGENTS·ARCHITECTURE 트리에 `html/exams/<id>/`·`css/exams/<id>/`·`tests/{unit,dom}/exams/<id>/` 노드 추가
 - 검증: unit 804/804 · DOM 510/510 · check:inventory(37개 디렉터리)·check:docs·check:domainmap(1053)·check:types·lint·check:imports·check:html·verify:assets·check:uitext 통과 · 파셜/CSS 서빙 200 확인
 
+## 2026-10-03 도메인 네트워크 격리 — 비활성 시험 자산 미로드
+
+- **신규 E2E가 실결함 발견**: food 부팅 중 `data/exams/cosmetic/registry.js`·`id_migration.js`·`css/exams/cosmetic/formula.css` 요청 — 셸의 `__EXAM_DATA_ROOT__` 태그가 빌드 시 기본 시험으로 고정되고 CSS가 정적 @import였던 결합
+- **`src/exam-data-boot.js` 신설** (클래식 부트): 파싱 중 활성 시험(선택→default→첫)을 해석해 `{dataRoot}/id_migration.js` + `registry.js`를 `document.write`로 동기 삽입 — 활성 시험 번들만 로드, 순서 규칙 보존 (module = 문서 순서 deferred). CSP `script-src 'self'` 대응으로 외부 파일, storage 우회는 ALLOWED_FILES에 사유 등록
+- **도메인 CSS 지연 주입**: `practice-registry` 엔트리 `styles` 필드 + `ensureDomainStyles()`가 `css/exams/<활성시험>/<rel>`을 `<link>` 주입 — `style.css` @import·`sw.js` 프리캐시에서 제거. 규약 테스트가 `css/exams/<id>/` 실존도 검증
+- `check:domainmap`에 `src/exam-data-boot.js` platform 등록
+- 검증: unit 805 · DOM 510 · E2E 21/21 (신규 네트워크 격리 테스트 — food 부팅 시 `exams/cosmetic/` 요청 0건·`exams/food/` 요청 존재 대조)
+
 ## 2026-10-03 도메인 경로 규약화 — 활성 시험 id로 자산 해석
 
 - **플랫폼 레지스트리의 하드코딩 도메인 경로 제거**: `practice-registry.js`·`app.js`·`pro-upgrade.js`의 지연 import가 `` `./exams/${getActiveExamId()}/…` `` 규약 경로로 전환 — 시험 추가 시 `src/exams/<id>/`·`html/exams/<id>/`·`css/exams/<id>/` 규약 배치만으로 동작

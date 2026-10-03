@@ -33,6 +33,7 @@ const _domainImport = (rel) => Object.assign(
     { rel }
 );
 const _domainMarkup = (rel) => `./html/exams/${getActiveExamId()}/${rel}`;
+const _domainCss = (rel) => `./css/exams/${getActiveExamId()}/${rel}`;
 
 const formula = {
     viewId: 'formula-view',
@@ -47,6 +48,10 @@ const formula = {
     // enter()/예열 시 fetch로 주입된다. 파셜은 자체 <section>을 포함하므로
     // 스텁을 outerHTML 교체한다. 상대 경로는 html/exams/<활성시험>/ 규약.
     markup: 'formula.html',
+    // 도메인 스타일 — css/exams/<활성시험>/ 규약. style.css의 정적 @import가
+    // 아니라 피처 진입·예열 시 <link> 주입 — 비활성 시험은 도메인 CSS를
+    // 요청하지 않는다 (네트워크 격리).
+    styles: 'formula.css',
     // 도메인 뷰 모듈 — src/exams/<활성시험>/views/ 규약. 플랫폼 공용 모듈은
     // (notice-check) 시험 무관 단일 경로라 리터럴을 유지한다.
     loaders: {
@@ -129,7 +134,23 @@ const formula = {
  * (DOM 테스트는 helpers가 동일 파셜을 미리 주입하므로 이 경로는
  *  실제 런타임 최초 진입에서만 실행된다)
  */
+/**
+ * 도메인 스타일 지연 주입 — feat.styles를 활성 시험 css/exams/<id>/ 규약으로
+ * 해석해 <link>를 1회 삽입한다. style.css의 정적 @import는 모든 시험에
+ * 로드되므로 도메인 CSS는 이 경로만 거친다.
+ */
+function ensureDomainStyles(feat) {
+    if (!feat.styles || typeof document === 'undefined') return;
+    const href = _domainCss(feat.styles);
+    if (document.querySelector(`link[href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
 async function ensureViewMarkup(feat) {
+    ensureDomainStyles(feat);
     if (!feat.markup) return;
     const el = document.getElementById(feat.viewId);
     if (!el || !el.hasAttribute('data-lazy-view')) return;
@@ -232,6 +253,7 @@ export function getPracticeDomainSpec() {
     for (const [key, f] of Object.entries(PRACTICE_FEATURES)) {
         out[key] = {
             markup: f.markup || null,
+            styles: f.styles || null,
             modules: Object.values(f.loaders)
                 .map(l => /** @type {any} */ (l).rel)
                 .filter(Boolean),

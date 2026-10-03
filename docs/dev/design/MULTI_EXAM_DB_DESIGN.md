@@ -317,7 +317,7 @@ const _EXAM_LAW_URLS = {
 - `formula.html`의 law.go.kr 정적 링크에 `data-law` 키 부여 — `initFormulaView`가 `lawUrlFor`로 수화해 URL SSOT를 law-links 생성 테이블로 통일(매칭 실패 시 정적 href 폴백).
 - `ref-pipeline` cosmetic 일회성 스크립트(`apply_audit_2026_19.py`·`compare_ingredients_official.py`)를 `_exam_root.exam_root()` 경유로 전환 — `EXAM_ID`/`EXAM_CONTENT_ROOT` 지정 지원.
 - food E2E에 실전환 경로 추가 — `selectExam('food')` 호출→리로드→식품기사 부팅(시드가 아닌 계약 경로), comingSoon 카드 디스패치 시 안내만 표시·`current_exam` 불변 가드.
-- 잔여 과제(후속): `law-links.js`·`pdf-registry.js`·`keyword-index.js`의 `_DEFAULT_EXAM_ID` 생성 폴백을 빌드 시 exams.json 기본 시험에서 유도하도록 생성기 갱신 — 현재도 동작하지만 기본 시험 변경 시 재생성 필수.
+- ~~잔여 과제~~ (해소 확인): `law-links.js`·`pdf-registry.js`·`keyword-index.js`의 `_DEFAULT_EXAM_ID`는 이미 생성기가 exams.json 기본 시험(`targets.find(t => t.isDefault)`)에서 유도해 출력 — `build_pdf_registry.js:300`·`build_keyword_index.js:341`. 기본 시험 변경 시 빌드 재실행으로 자동 추적된다.
 
 **Phase E 보완 (2026-10-03, 3차) — 도메인 경로 규약화**
 
@@ -328,6 +328,7 @@ const _EXAM_LAW_URLS = {
 - `delegation-guard`·`security` 테스트의 파셜 스캔을 `html/views/` 단층 → 재귀(`html/exams/` 포함)로 확장 — 지연 주입 파셜의 위임 핸들러·CSP 커버리지 복구
 - 유닛 `practice-registry.test.js`에 규약 검증 추가 — feature 선언 시험마다 `src/exams/<id>/`·`html/exams/<id>/` 자산 실존 확인
 - E2E `exam-switch.spec.js`에 규약 경로 검증 추가 — cosmetic 부팅 시 `/html/exams/cosmetic/formula.html` 요청 발생 + 네비 클릭으로 실제 뷰 주입(온보딩 오버레이는 `onboarding_seen_v1` 시드로 우회)
+- **네트워크 격리 결함 수정 (E2E 신규 단언이 발견)**: food 부팅이 `data/exams/cosmetic/{registry,id_migration}.js`·`css/exams/cosmetic/formula.css`를 요청하던 결합 해소 — ① 셸의 `__EXAM_DATA_ROOT__` 정적 태그를 `src/exam-data-boot.js`(클래식 부트가 활성 시험 dataRoot를 파싱 중 동기 삽입)로 대체 ② 도메인 CSS를 `styles` 필드 + `<link>` 지연 주입으로 전환(style.css @import 제거). food 부팅 시 `exams/cosmetic/` 요청 0건을 E2E가 단언
 
 ### Phase C 파일럿 결과 (food, 2026-09-30)
 

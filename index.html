@@ -1744,11 +1744,12 @@
     <!-- 앱 버전 + 변경 이력 (배포 시 stamp_release_notes.js가 갱신 — whats-new.js가 소비) -->
     <script src="data/version.js"></script>
     <script src="data/release-notes.js"></script>
-    <!-- 카드/퀴즈 ID 이관 맵 (콘텐츠 갱신 시 진도 보존 — build_id_migration.js 생성) -->
-    <script src="data/exams/cosmetic/id_migration.js"></script>
+    <!-- 활성 시험 데이터 번들 — exam-data-boot.js가 활성 시험 dataRoot의
+         id_migration.js(카드/퀴즈 ID 이관 맵)·registry.js를 동기 삽입.
+         비기본 시험 부팅 시 기본 시험 번들을 로드하지 않는다 (도메인 격리) -->
+    <script src="src/exam-data-boot.js"></script>
     <!-- 활성 시험 기준 동적 PWA 매니페스트 (실패 시 정적 manifest.webmanifest 폴백) -->
     <script src="src/pwa-manifest.js"></script>
-    <script type="module" src="data/exams/cosmetic/registry.js"></script>
     <script type="module" src="data/audio_manifest.js"></script>
     <!-- mermaid(3.3MB)는 매뉴얼/문서 뷰에서만 쓰이므로 즉시 로드하지 않는다.
          src/manual-viewer.js 가 실제 다이어그램이 있을 때만 온디맨드로 주입한다.
