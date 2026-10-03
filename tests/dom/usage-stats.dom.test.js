@@ -22,6 +22,7 @@ import {
 } from '../../src/usage-stats.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 import { scopedKey } from '../../src/exam-context.js';
+import { todayKey } from '../../src/utils.js';
 
 function overlay() { return document.getElementById('usage-stats-overlay'); }
 
@@ -100,6 +101,15 @@ describe('내 사용 통계 모달 (showUsageStats)', () => {
         await showUsageStats();
         expect(overlay().textContent).toContain(`${PRO_VALUE_THRESHOLD}/${PRO_VALUE_THRESHOLD}회`);
         expect(overlay().textContent).toContain('충족');
+    });
+
+    it('첫 사용·최근 사용 날짜는 로컬 오늘로 표시한다', async () => {
+        // 저장값은 ISO(UTC) 타임스탬프 — UTC 날짜로 자르면 KST 00~09시에
+        // 하루 전으로 표시되므로 로컬 날짜(todayKey)와 일치해야 한다
+        trackView('quiz-view');
+        await showUsageStats();
+        expect(overlay().textContent).toContain(`첫 사용: ${todayKey()}`);
+        expect(overlay().textContent).toContain(`최근 사용: ${todayKey()}`);
     });
 
     it('사용 기록이 없으면 빈 상태 문구를 표시한다', async () => {

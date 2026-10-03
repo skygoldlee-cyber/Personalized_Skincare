@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-19 시간대 전수 재점검 — 사용 통계 표시일 UTC→로컬 추가 교정
+
+- `toISOString`·`new Date(문자열)`·일수 차이 패턴 전수 감사 결과 추가 위반 1곳: `usage-stats.js` `_fmtDate`가 ISO 타임스탬프를 UTC 날짜로 잘라 '첫 사용·최근 사용'을 표시 — 해당 시간대에 하루 전으로 표시되는 표시 전용 오류. `todayKey(new Date(iso))` 로컬 변환 + DOM 테스트 추가(로컬 오늘 일치 단언)
+- 정합 확인된 패턴: ISO 타임스탬프 저장값(savedAt·updatedAt·firstUse) 유지, 'YYYY-MM-DD' 문자열 파싱은 양쪽 모두 UTC 자정이라 일수 차이 정확(daily-challenge), `T00:00:00` 접미 로컬 파싱·`localDateKey`·`toLocaleDateString('ko-KR')` 전부 로컬 정합
+
 ## 2026-10-19 날짜 키 UTC→로컬 교정 — KST 00~09시 시간대 오류 수정
 
 - pre-push 영향 테스트가 `study-challenge` 5건 실패로 차단 — 원인은 테스트·프로덕션 코드가 `toISOString()`(UTC)로 날짜 키를 만들어 앱의 로컬 날짜(`localDateKey`)와 KST 00~09시에 하루 어긋나는 잠복 결함

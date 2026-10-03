@@ -107,7 +107,10 @@ function getValueActionTotal() {
 }
 
 function _fmtDate(iso) {
-    return iso ? String(iso).slice(0, 10) : '—';
+    // 저장값은 ISO(UTC) 타임스탬프 — slice(0,10)은 UTC 날짜라 KST 00~09시에
+    // 하루 전으로 표시되므로 로컬 날짜로 변환한다
+    const d = iso ? new Date(iso) : null;
+    return d && !Number.isNaN(d.getTime()) ? todayKey(d) : '—';
 }
 
 /**
