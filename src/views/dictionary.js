@@ -1,5 +1,5 @@
 // src/views/dictionary.js - 지식DB(엔티티) 검색 사전 뷰 로직 및 그리드 스페이서 가상 스크롤 구현
-// @spec DI-01~08,PF-09
+// @spec DI-01~08,DI-10,PF-09
 // 스키마 드리븐 — manifest.knowledge → registry.knowledge가 엔티티 필드·필터·CSV를 선언한다.
 // registry.knowledge 미선언 시험은 사전 뷰가 "데이터셋 미설정" 안내로 처리된다 (화장품 폴백 없음).
 // 자가 등록: schema.customKey(STORAGE_KEYS 멤버명) 선언 시 로컬 등록 항목을 병합한다 —
@@ -421,14 +421,17 @@ export function clearDictSearch() {
 
 /**
  * 지식DB CSV보내기 — 현재 검색어·필터가 적용된 목록을 저장한다.
+ * scope === 'all'이면 검색어·필터 무관하게 전체 DB를 저장한다 (DI-10).
  * csv.fields 항목이 {"badgeLabel": "<field>"}이면 배지 라벨로 치환된다.
+ * @param {string} [scope] 'all'이면 전체 DB
  */
-export function dictExportCsv() {
+export function dictExportCsv(scope) {
     const schema = dictSchema();
     if (!schema) { showToast('사전 데이터가 없습니다.', 'warning'); return; }
     const db = dictDb(schema);
     // 렌더된 목록 대신 현재 검색어·필터로 재계산 — 렌더 순서와 무관하게 정확
-    const rows = filterItems(db, dictState.query, dictState.filter, schema);
+    const all = scope === 'all';
+    const rows = all ? db : filterItems(db, dictState.query, dictState.filter, schema);
     const unit = schema.entityUnit || '항목';
     if (!rows.length) { showToast(`보낼 ${unit} 데이터가 없습니다.`, 'warning'); return; }
     const reg = /** @type {any} */ (DataLoader.registry) || {};
@@ -441,7 +444,7 @@ export function dictExportCsv() {
             typeof spec === 'string'
                 ? (item[spec] || '')
                 : (spec && spec.badgeLabel ? badgeLabel(schema, item[spec.badgeLabel]) : ''))),
-        `${csv.filename || 'knowledge'}${ver}_${todayKey()}.csv`
+        `${csv.filename || 'knowledge'}${ver}${all ? '_all' : ''}_${todayKey()}.csv`
     );
-    showToast(`${unit} ${rows.length}종을 CSV로 저장했습니다.`, 'success');
+    showToast(`${unit} ${all ? '전체 ' : ''}${rows.length}종을 CSV로 저장했습니다.`, 'success');
 }

@@ -1,5 +1,5 @@
 // tests/dom/study-dictionary.dom.test.js — 성분 사전 시나리오
-// @spec DI-01~03
+// @spec DI-01~03,DI-10
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 원료 카드 렌더·배지(H) · 검색(이름/영문/초성)·필터(H) · 빈 DB(E)
 //       · 결과 없음(B) · 카드 펼침(H) · 검색 초기화(H)
@@ -181,6 +181,25 @@ describe('성분 사전 — 검색·필터·카드', () => {
 
         expect(dl.clicks.length).toBe(1);
         expect(lastToast()[0]).toContain('1종');
+    });
+
+    it('전체 CSV보내기 — 검색·필터 적용 중에도 전체 DB 저장 (DI-10)', () => {
+        setDictFilter('banned');
+        el('dict-search-input').value = '살리실산';
+        filterDictionary();
+        const dl = spyAnchorDownload();
+        dictExportCsv('all');
+        dl.restore();
+
+        expect(dl.clicks.length).toBe(1);
+        expect(dl.clicks[0].download).toMatch(/^ingredients.*_all_.*\.csv$/);
+        expect(lastToast()[0]).toContain('전체 3종');
+    });
+
+    it('전체 CSV보내기 — 버튼 존재 + data-arg 연결 (DI-10)', () => {
+        const btn = document.querySelector('[data-click="dictExportCsv"][data-arg="all"]');
+        expect(btn).toBeTruthy();
+        expect(btn.textContent).toContain('전체');
     });
 
     it('CSV보내기 — 검색 결과 0건이면 warning 토스트, 다운로드 없음', () => {
