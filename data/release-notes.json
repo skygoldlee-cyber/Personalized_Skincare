@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-1674d4f",
+    "date": "2026-10-03",
+    "notes": [
+      "[content·textbook] 전 과목 표지 삽화 교체 및 webp 재생성"
+    ]
+  },
+  {
     "version": "v20261003-d9308a1",
     "date": "2026-10-03",
     "notes": [
@@ -145,13 +152,6 @@
     "date": "2026-10-02",
     "notes": [
       "[content·textbook] 1·2·4과목 표지 삽화 교체 및 webp 재생성"
-    ]
-  },
-  {
-    "version": "v20261002-a21c5e1",
-    "date": "2026-10-02",
-    "notes": [
-      "[수정·exam] 미선택 상태에서 기본 시험 선택 시 current_exam 미저장 수정"
     ]
   }
 ]
