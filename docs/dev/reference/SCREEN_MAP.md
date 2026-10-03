@@ -26,7 +26,7 @@
 | 교재검색 | `textbook-view` | textbook.html | `#/textbook` | 사이드바 / 더보기 시트 | §3.9 | 학습 전용 |
 | 사전 | `dictionary-view` | dictionary.html | `#/ingredients` | 사이드바 / 탭바 | §3.10 | 공통 (`data-feature="dictionary"`) |
 | 학습 캘린더 | `calendar-view` | calendar.html | `#/calendar` | 사이드바 / 더보기 시트 | §3.20 | 학습 전용 |
-| 시험 선택 | `exam-select-view` | exam-select.html | `#/exams` | nav 없음 — 설정 패널·더보기 시트 '시험 전환' (`data-feature="examSwitch"`, 등록 시험 ≥2개일 때만 표시) | §3.22 | 공통 |
+| 시험 선택 | `exam-select-view` | exam-select.html | `#/exams` | nav 없음 — 설정 패널(전 대역)·더보기 시트(모바일) '시험 전환' (`data-feature="examSwitch"`, 등록 시험 ≥2개일 때만 표시) | §3.22 | 공통 |
 
 - **모바일 탭바 순서**: 대시보드 · 플래시카드 · 퀴즈 · (실무 모드: Formula OS·매뉴얼) · 사전 · **더보기**(시트에 나머지 전부 + 시험 전환·사용자 매뉴얼)
 - **`nav-study-only`**: 실무 모드(`ui_mode=practice`)에서 숨김. 현재 뷰가 학습 전용이면 실무 전환 시 `formula-view`로 자동 랜딩 (`src/ui-mode.js`)
