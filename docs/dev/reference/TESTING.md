@@ -26,10 +26,10 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 694 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 407 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/*.spec.js` | 65 |
-| **합계** | | | | **1166** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/**/*.test.js` | 819 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/**/*.test.js` | 518 |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일 + 태블릿) | `tests/e2e/**/*.spec.js` | 69 |
+| **합계** | | | | **1406** |
 
 ### 설계 원칙
 
@@ -249,9 +249,9 @@ npm run hooks:install
 | 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
 | 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
 | 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 27항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
-| 7 | `formula-calc.dom.test.js` | 12 | 배합 계산기·포뮬러 목록 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복 | 2026-09-23 추가 |
+| 7 | `formula-calc.dom.test.js` | 18 | 배합 계산기·포뮬러 목록 + 태블릿 현장 작업 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복, 배합률 스테퍼·진행 표시, 계량 모드 순회·종료, 드래프트 자동저장·복원, 고대비 토글 (FO-27~31) | 2026-09-23 추가 |
 | 8 | `formula-batch.dom.test.js` | 22 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
-| 9 | `formula-print.dom.test.js` | 8 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스 | 2026-09-23 추가 |
+| 9 | `formula-print.dom.test.js` | 10 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스, 작업지시서 단계 그룹·체크란·LOT·서명란 (FO-29) | 2026-09-23 추가 |
 | 10 | `study-quiz.dom.test.js` | 14 | 기출 퀴즈·오답 복습 | 출제·단답/객관식/OX 채점·결과 화면·오답 영속·재시작·약점 퀴즈·복습 필터/제외 | 2026-09-23 추가 |
 | 11 | `study-flashcard.dom.test.js` | 8 | 플래시카드 | 중요도 정렬·뒤집기·순환 이동·빈 과목·기출/난이도 필터·외움/헷갈림 영속·재진입 복원 | 2026-09-23 추가 |
 | 12 | `study-dashboard.dom.test.js` | 6 | 대시보드 | 0건 통계·시딩 통계·과목 카드·히트맵·약점 추천(3문 조건)·헷갈림 추천 | 2026-09-23 추가 |
@@ -566,9 +566,10 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 ### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
 
-`tests/e2e/` 11개 spec 파일 · **65 시나리오** × chromium + Pixel 7 + tablet
+`tests/e2e/` 12개 spec 파일 · **69 시나리오** × chromium + Pixel 7 + tablet
 프로젝트. jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
 webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
+시험 도메인 기능의 스펙은 도메인 격리 규약대로 `tests/e2e/exams/<id>/`에 둔다.
 `serve.js`는 vercel.json의 프로덕션 헤더(CSP 포함)를 미러링하므로 E2E는
 배포 환경과 동일한 보안 헤더 하에서 실행된다.
 
@@ -607,8 +608,22 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
   정답률 반영 (기록→분석 파이프라인, chromium 전용) ④ AN-09 주간 리포트 —
   `navigator.share` 제거로 클립보드 폴백을 강제하고 복사 본문을 검증한다.
 
+**exams/cosmetic/formula-tablet.spec.js — Formula OS 태블릿 현장 작업 (FO-26~31, 2026-10-04 추가)**
+
+- **뷰포트 834×1112**(iPad Air 세로)에서 `#/formula` 딥링크 부팅 → 배합 계산 진입.
+  `current_exam=cosmetic` + 온보딩 플래그를 `addInitScript`로 시드해 시험 선택 뷰
+  리다이렉트를 우회한다 — 딥링크 시드 패턴은 다른 도메인 E2E에도 재사용.
+- **커버 시나리오**: ① 터치 타깃 ≥44px·입력 폰트 ≥16px·`inputmode` (FO-26)
+  ② ±0.1 스테퍼 증감·"원료 입력→한도 검증→저장" 진행 표시 (FO-27)
+  ③ 계량 모드 대형 표시 순회·종료 (FO-28) ④ 작업지시서 버튼 노출·드래프트
+  자동저장·재진입 복원·고대비 토글 (FO-29~31)
+- **실결함 회귀 가드**: 딥링크 부팅 시 `ensureViewMarkup`의 `outerHTML` 스텁 교체가
+  `navigateToView`가 부여한 `active`를 소실시켜 지연 뷰가 숨던 결함을 이 스펙이
+  발견했고, `practice-registry.js`가 주입 후 `active`를 보존하도록 수정됨 — 전체
+  지연 뷰 딥링크의 회귀 가드 역할을 겸한다.
+
 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium` 필요).
-확장 시 시나리오 단위로 `tests/e2e/*.spec.js`에 추가 — 인증 경로는 별도 spec 권장.
+확장 시 시나리오 단위로 `tests/e2e/**/*.spec.js`에 추가 — 인증 경로는 별도 spec 권장.
 
 ---
 
@@ -828,8 +843,8 @@ npm run verify:assets
 | 파일 | 경로 | 비고 |
 |------|------|------|
 | Unit 테스트 | `tests/unit/**/*.test.js` | Node.js `node:test` |
-| DOM 테스트 | `tests/dom/*.test.js` | Vitest + jsdom |
-| E2E 테스트 | `tests/e2e/*.spec.js` | Playwright 실브라우저 |
+| DOM 테스트 | `tests/dom/**/*.test.js` | Vitest + jsdom |
+| E2E 테스트 | `tests/e2e/**/*.spec.js` | Playwright 실브라우저 |
 | Playwright 설정 | `playwright.config.js` | webServer(serve.js)·chromium/mobile 프로젝트 |
 | Vitest 설정 | `vitest.config.mjs` | `environment: 'jsdom'` |
 | 테스트용 package.json | `tests/unit/package.json` | (있을 경우) |

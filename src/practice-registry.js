@@ -74,6 +74,8 @@ const formula = {
             'formulaRuleExport', 'formulaRuleImport',
             'formulaSortPhase', 'formulaStepAdd', 'formulaStepRemove',
             'formulaPrint', 'formulaExportJson', 'formulaCardExport', 'formulaImportJson',
+            'formulaWeighOpen', 'formulaWeighNext', 'formulaWeighPrev', 'formulaWeighClose',
+            'formulaToggleContrast', 'formulaPrintWorkOrder',
             'formulaAllergyAdd', 'formulaAllergyRemove', 'formulaCustLoad', 'formulaCustSaveAs',
         ]],
         ['batch', [
@@ -157,7 +159,15 @@ async function ensureViewMarkup(feat) {
     const url = _domainMarkup(feat.markup);
     const res = await fetch(url);
     if (!res.ok) throw new Error(`view markup ${res.status}: ${url}`);
+    // 스텁의 런타임 상태 보존 — 딥링크로 navigateToView가 먼저 'active'를
+    // 부여한 뒤 enter()의 본 주입이 스텁을 통째 교체하면 클래스가 소실돼
+    // 뷰가 숨는다 (부팅 딥링크 → 지연 뷰 경로의 실결함).
+    const wasActive = el.classList.contains('active');
     el.outerHTML = await res.text();
+    if (wasActive) {
+        const injected = document.getElementById(feat.viewId);
+        if (injected) injected.classList.add('active');
+    }
 }
 
 /**

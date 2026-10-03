@@ -1,5 +1,5 @@
 // src/exams/cosmetic/views/formula.js — Formula OS 뷰 컨트롤러 (Phase 5-A)
-// @spec FO-01~11,FO-15
+// @spec FO-01~11,FO-15,FO-27,FO-28,FO-29,FO-30,FO-31
 //
 // 허브(메뉴) + My 포뮬러 목록 + 배합 계산기 서브뷰.
 // 트레이너와 동일한 패턴: 하나의 view-section 안에서 패널을 is-hidden으로 전환.
@@ -29,6 +29,9 @@ import {
 } from './formula-recommend.js';
 import { findMaterialByName, materialStatus, daysUntilExpiry } from '../material-ledger.js';
 import { localDateTimeNow } from '../store-utils.js';
+import { getJSON, setJSON } from '../../../storage.js';
+import { STORAGE_KEYS } from '../../../storage-keys.js';
+import { buildWorkOrderHtml, printHtml } from './formula-print.js';
 // 추천·맞춤 규칙 액션은 formula-recommend.js 구현 — app.js 디스패치 호환을 위해 재수출
 export {
   formulaRecAdd, formulaRecAddBase, formulaLoadBase,
@@ -111,6 +114,7 @@ export function formulaSubNav(active) {
 
 export function initFormulaView() {
   showPanel('formula-menu-panel');
+  applyFormulaContrast();
   const usage = getFormulaUsage();
   const badge = getEl('formula-usage-badge');
   if (badge) badge.textContent = `저장 ${usage.count}/${usage.limit}`;
@@ -430,7 +434,160 @@ function updateCalcComputed() {
       .map(p => `${p} ${Math.round(phaseSums[p] * 100) / 100}%`);
     phaseEl.textContent = parts.length ? `단계별: ${parts.join(' · ')}` : '';
   }
+  // 진행 단계 표시 (FO-27) — 원료 입력 → 한도 검증 → 저장
+  renderCalcProgress(checkCounts);
+  scheduleDraftSave();
   renderStability();
+}
+
+/** 진행 단계 스트립 — 서서 작업하는 현장에서 현재 위치를 상시 표시 */
+function renderCalcProgress(checkCounts) {
+  const el = getEl('formula-progress');
+  if (!el) return;
+  const named = calc.rows.filter(r => r.name).length;
+  const verified = named > 0 && !checkCounts.banned && !checkCounts.warn && !checkCounts.unknown;
+  const steps = [
+    { label: '원료 입력', done: named > 0 },
+    { label: '한도 검증', done: verified },
+    { label: '저장', done: !!calc.editingId },
+  ];
+  el.innerHTML = steps.map((s, i) => `
+    <span class="f-prog-step ${s.done ? 'is-done' : ''}">
+      ${s.done ? '<i class="fa-solid fa-check" aria-hidden="true"></i>' : `${i + 1}`} ${s.label}
+    </span>`).join('');
+}
+
+/* =======================================================
+   작업 드래프트 자동 저장·복원 (FO-30) — 현장 중단 대응
+   신규 작성(editingId 없음)만 대상 — 저장본 편집은 드래프트를 쓰지 않는다.
+   ======================================================= */
+let _draftTimer = null;
+
+function readCalcDraft() {
+  const nameEl = getEl('formula-name-input');
+  const notesEl = getEl('formula-notes-input');
+  const { targetVolume, unit, phTarget, phActual } = readCalcInputs();
+  return {
+    rows: calc.rows.map(r => ({ name: r.name, concentration: r.concentration, phase: r.phase || '' })),
+    steps: calc.steps.slice(),
+    targetVolume, unit, phTarget, phActual,
+    name: nameEl ? nameEl.value.trim() : '',
+    notes: notesEl ? notesEl.value.trim() : '',
+    savedAt: new Date().toISOString(),
+  };
+}
+
+function scheduleDraftSave() {
+  if (calc.editingId) return;
+  clearTimeout(_draftTimer);
+  _draftTimer = setTimeout(() => {
+    const d = readCalcDraft();
+    if (!d.rows.some(r => r.name) && !d.name && !d.steps.length) return; // 빈 작업은 저장 안 함
+    if (setJSON(STORAGE_KEYS.FORMULA_CALC_DRAFT, d)) showDraftStatus(d.savedAt);
+  }, 600);
+}
+
+function clearCalcDraft() {
+  clearTimeout(_draftTimer);
+  setJSON(STORAGE_KEYS.FORMULA_CALC_DRAFT, null);
+}
+
+function showDraftStatus(savedAt, prefix = '자동 저장') {
+  const el = getEl('formula-draft-status');
+  if (!el) return;
+  const t = typeof savedAt === 'string' && savedAt.length >= 16 ? savedAt.slice(11, 16) : '';
+  el.textContent = `— ${prefix} ${t}`.trimEnd();
+  el.classList.add('is-saved');
+}
+
+/* =======================================================
+   계량 모드 (FO-28) — 원료별 투입량 대형 순회 표시
+   ======================================================= */
+let _weighList = [];
+let _weighIdx = 0;
+
+function weighItems() {
+  const { targetVolume, unit } = readCalcInputs();
+  return calc.rows.filter(r => r.name).map(r => ({
+    name: r.name,
+    phase: r.phase || '',
+    amount: targetVolume != null && r.concentration != null
+      ? Math.round(targetVolume * r.concentration) / 100
+      : null,
+    unit,
+  }));
+}
+
+function renderWeigh() {
+  const it = _weighList[_weighIdx];
+  if (!it) { formulaWeighClose(); return; }
+  const posEl = getEl('formula-weigh-pos');
+  const phaseEl = getEl('formula-weigh-phase');
+  const nameEl = getEl('formula-weigh-name');
+  const amtEl = getEl('formula-weigh-amount');
+  if (posEl) posEl.textContent = `${_weighIdx + 1} / ${_weighList.length}`;
+  if (phaseEl) phaseEl.textContent = it.phase;
+  if (nameEl) nameEl.textContent = it.name;
+  if (amtEl) {
+    const ok = it.amount != null;
+    amtEl.textContent = ok ? `${it.amount.toFixed(2)}${it.unit}` : '배합률·총량을 먼저 입력하세요';
+    amtEl.classList.toggle('is-null', !ok);
+  }
+}
+
+export function formulaWeighOpen() {
+  _weighList = weighItems();
+  if (!_weighList.length) { showToast('원료명이 입력된 행이 없습니다.', 'info'); return; }
+  _weighIdx = 0;
+  const ov = getEl('formula-weigh-overlay');
+  if (ov) ov.classList.remove('is-hidden');
+  renderWeigh();
+}
+
+export function formulaWeighNext() {
+  if (_weighIdx < _weighList.length - 1) { _weighIdx++; renderWeigh(); return; }
+  formulaWeighClose();
+}
+
+export function formulaWeighPrev() {
+  if (_weighIdx > 0) { _weighIdx--; renderWeigh(); }
+}
+
+export function formulaWeighClose() {
+  const ov = getEl('formula-weigh-overlay');
+  if (ov) ov.classList.add('is-hidden');
+}
+
+/* =======================================================
+   고대비 모드 (FO-31) — 조명 반사·습한 화면 대응 (#formula-view 스코프)
+   ======================================================= */
+export function applyFormulaContrast() {
+  const view = document.getElementById('formula-view');
+  const btn = getEl('formula-contrast-btn');
+  const on = getJSON(STORAGE_KEYS.FORMULA_HIGH_CONTRAST) === true;
+  if (view) view.classList.toggle('formula-hc', on);
+  if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+
+export function formulaToggleContrast() {
+  const on = !(getJSON(STORAGE_KEYS.FORMULA_HIGH_CONTRAST) === true);
+  setJSON(STORAGE_KEYS.FORMULA_HIGH_CONTRAST, on);
+  applyFormulaContrast();
+  showToast(on ? '고대비 모드를 켰습니다.' : '고대비 모드를 껐습니다.', 'info');
+}
+
+/** 작업지시서 인쇄 (FO-29) — 계량 체크란·LOT 기입란·단계 그룹 A4 */
+export function formulaPrintWorkOrder() {
+  const named = calc.rows.filter(r => r.name);
+  if (!named.length) { showToast('원료명이 입력된 행이 없습니다.', 'info'); return; }
+  const { targetVolume, unit } = readCalcInputs();
+  const nameEl = getEl('formula-name-input');
+  printHtml(buildWorkOrderHtml({
+    name: nameEl ? nameEl.value.trim() : '',
+    targetVolume, unit,
+    ingredients: named.map(r => ({ name: r.name, concentration: r.concentration, phase: r.phase || '기타' })),
+    steps: calc.steps,
+  }));
 }
 
 /** 제형 안정성 패널 — 배합비·투입 단계·절차·pH 규칙 기반 경고 (법규 검증과 별개 축) */
@@ -495,8 +652,12 @@ export function renderCalcRows() {
                 aria-label="원료 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
       </div>
       <div class="f-row-bottom">
-        <input type="number" class="f-conc" min="0" step="0.01" value="${item.concentration != null ? item.concentration : ''}"
-               placeholder="%" aria-label="원료 ${i + 1} 배합률(%)">
+        <span class="f-stepper">
+          <button type="button" class="f-step-btn" data-dir="-1" aria-label="원료 ${i + 1} 배합률 0.1 감소">−</button>
+          <input type="number" class="f-conc" inputmode="decimal" min="0" step="0.01" value="${item.concentration != null ? item.concentration : ''}"
+                 placeholder="%" aria-label="원료 ${i + 1} 배합률(%)">
+          <button type="button" class="f-step-btn" data-dir="1" aria-label="원료 ${i + 1} 배합률 0.1 증가">+</button>
+        </span>
         <span class="f-amount"></span>
         <select class="f-phase" aria-label="원료 ${i + 1} 제조 단계">
           <option value="">단계</option>
@@ -520,6 +681,17 @@ export function renderCalcRows() {
     phaseEl.addEventListener('change', () => {
       calc.rows[i].phase = phaseEl.value;
       updateCalcComputed();
+    });
+    // 배합률 스테퍼 (FO-27) — 태블릿·장갑 환경에서 ±0.1 터치 증감
+    row.querySelectorAll('.f-step-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = parseFloat(/** @type {HTMLElement} */ (btn).dataset.dir || '0');
+        const cur = calc.rows[i].concentration;
+        const next = Math.max(0, Math.round(((cur != null ? cur : 0) + dir * 0.1) * 100) / 100);
+        calc.rows[i].concentration = next;
+        concEl.value = String(next);
+        updateCalcComputed();
+      });
     });
     container.appendChild(row);
   });
@@ -567,6 +739,25 @@ export function openFormulaCalc(sourceFormula) {
     if (phAEl) phAEl.value = '';
     if (nameEl) nameEl.value = '';
     if (notesEl) notesEl.value = '';
+    // 작업 드래프트 복원 (FO-30) — 현장 중단 후 재진입 시 자동 저장분 이어쓰기
+    const draft = getJSON(STORAGE_KEYS.FORMULA_CALC_DRAFT);
+    if (draft && Array.isArray(draft.rows)
+        && (draft.rows.some(r => r && r.name) || draft.name || (draft.steps || []).length)) {
+      calc.rows = draft.rows.map(r => ({
+        name: (r && r.name) || '',
+        concentration: r && r.concentration != null ? r.concentration : null,
+        phase: (r && r.phase) || '',
+      }));
+      if (!calc.rows.length) calc.rows = [{ name: '', concentration: null, phase: '' }];
+      calc.steps = Array.isArray(draft.steps) ? draft.steps.slice() : [];
+      if (volEl && draft.targetVolume != null) volEl.value = String(draft.targetVolume);
+      if (unitEl && draft.unit) unitEl.value = draft.unit;
+      if (phTEl && draft.phTarget != null) phTEl.value = String(draft.phTarget);
+      if (phAEl && draft.phActual != null) phAEl.value = String(draft.phActual);
+      if (nameEl && draft.name) nameEl.value = draft.name;
+      if (notesEl && draft.notes) notesEl.value = draft.notes;
+      showDraftStatus(draft.savedAt, '임시 저장 복원');
+    }
   }
   renderSteps();
   writeCustomerInputs(sourceFormula ? sourceFormula.customer : null,
@@ -585,12 +776,12 @@ export function openFormulaCalc(sourceFormula) {
     unitEl.addEventListener('change', updateCalcComputed);
   }
   // pH·메모·안정성 확인 필드 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
-  ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input',
+  ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input', 'formula-name-input',
     'formula-stab-method', 'formula-stab-result', 'formula-stab-note'].forEach(id => {
     const el = getEl(id);
     if (el && !el.dataset.foldBound) {
       el.dataset.foldBound = '1';
-      el.addEventListener('input', () => { updateFoldSummaries(); renderStability(); });
+      el.addEventListener('input', () => { updateFoldSummaries(); renderStability(); scheduleDraftSave(); });
     }
   });
 
@@ -745,6 +936,7 @@ export function formulaCalcSave() {
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
   if (!r.ok) { showStoreError(r, 'My 포뮬러', showToast); return; }
+  clearCalcDraft();
   calc.editingId = r.formula.id;
   calc.stabRecordedAt = r.formula.stability ? r.formula.stability.recordedAt : null;
   showToast(`"${r.formula.name}" 포뮬러가 저장되었습니다.`, 'success');

@@ -67,6 +67,12 @@ export const STORAGE_KEYS = {
 
   // Formula OS — 법규 준수 체크리스트 체크 상태 (formula-compliance.js)
   COMPLIANCE_CHECKS: 'formula_compliance',
+
+  // Formula OS — 계산기 작업 드래프트 자동 저장 (FO-30, 세션성 — 백업·동기화 제외)
+  FORMULA_CALC_DRAFT: 'formula_calc_draft',
+
+  // Formula OS — 고대비 모드 토글 상태 (FO-31, 기기 로컬 — 백업·동기화 제외)
+  FORMULA_HIGH_CONTRAST: 'formula_high_contrast',
   /* ── domain:cosmetic 계약 키 끝 ── */
 
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
@@ -148,6 +154,7 @@ export const RESET_KEYS = [
   STORAGE_KEYS.READER_LAST_POSITION,
   STORAGE_KEYS.EXAM_VIEW_POS,
   STORAGE_KEYS.USAGE_STATS,
+  STORAGE_KEYS.FORMULA_CALC_DRAFT,  // 전체 초기화 시 미저장 작업도 함께 제거
 ];
 
 // 동적 키 생성 헬퍼: daily_completed_YYYY-MM-DD

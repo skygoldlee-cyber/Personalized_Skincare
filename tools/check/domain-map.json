@@ -255,7 +255,8 @@
         "css/exams/cosmetic/*.css",
         "html/exams/cosmetic/*.html",
         "tests/dom/exams/cosmetic/*.dom.test.js",
-        "tests/unit/exams/cosmetic/*.test.js"
+        "tests/unit/exams/cosmetic/*.test.js",
+        "tests/e2e/exams/cosmetic/*.spec.js"
       ]
     },
     {

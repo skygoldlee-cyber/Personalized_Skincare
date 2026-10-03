@@ -33,5 +33,20 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "배합 계산기",
+      "short_name": "배합 계산",
+      "description": "Formula OS 배합 계산기로 바로 이동",
+      "url": "./index.html#/formula",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }

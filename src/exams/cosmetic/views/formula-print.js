@@ -1,12 +1,13 @@
 // src/exams/cosmetic/views/formula-print.js — Formula OS 인쇄 산출물 빌더 (Phase A)
-// @spec FO-14,FO-21
+// @spec FO-14,FO-21,FO-29
 //
-// 조제 기록지(배치)·제품 라벨·사용 안내문 HTML 생성 + 공용 인쇄 트리거.
+// 조제 기록지(배치)·제품 라벨·사용 안내문·작업지시서 HTML 생성 + 공용 인쇄 트리거.
 // 기존 formula.js의 조제 기록지와 같은 #formula-print-area + body.formula-printing
 // 메커니즘을 재사용한다 (print.css의 fp-* 규칙 + fp-label 신설).
 
 import { esc } from '../../../sanitize.js';
 import { QC_FIELDS, HYGIENE_FIELDS } from '../batch-store.js';
+import { PHASE_OPTIONS } from '../formula-store.js';
 import { buildUsageGuideFromBatch } from '../usage-guide.js';
 
 const QC_BADGE = { '정상': '○', '이상': '✕', '미확인': '—' };
@@ -101,6 +102,49 @@ export function buildGuideHtml(b) {
       <h3>보관 방법</h3><p class="fp-notes">${esc(g.storage)}</p>
       <h3>주의사항</h3>
       <ul class="fp-steps">${g.cautions.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+    </div>`;
+}
+
+/**
+ * 작업지시서 (FO-29) — 계량 현장용 A4 문서.
+ * 제조 단계(PHASE_OPTIONS)별로 원료를 묶고, 계량 체크란(☐)·LOT 기입란·확인란을 둔다.
+ * @param {object} f - {name, targetVolume, unit, ingredients:[{name,concentration,phase}], steps[]}
+ */
+export function buildWorkOrderHtml(f) {
+  const unit = f.unit || 'g';
+  const ings = Array.isArray(f.ingredients) ? f.ingredients.filter(i => i && i.name) : [];
+  const amount = c => (f.targetVolume != null && c != null)
+    ? `${(Math.round(f.targetVolume * c) / 100).toFixed(2)}${unit}` : '—';
+  const groups = PHASE_OPTIONS
+    .map(phase => ({ phase, items: ings.filter(i => (i.phase || '기타') === phase) }))
+    .filter(g => g.items.length);
+  const rows = groups.map(g => `
+      <tr><td colspan="5" class="fp-phase-head">${esc(g.phase)}</td></tr>
+      ${g.items.map(i => `
+      <tr>
+        <td class="fp-check-cell">☐</td>
+        <td>${esc(i.name)}</td>
+        <td class="fp-num">${i.concentration != null ? `${i.concentration}%` : '—'}</td>
+        <td class="fp-num">${esc(amount(i.concentration))}</td>
+        <td class="fp-lot-cell"></td>
+      </tr>`).join('')}`).join('');
+  const steps = (Array.isArray(f.steps) ? f.steps : []).filter(Boolean);
+  return `
+    <div class="fp-doc">
+      <h1>작업지시서 — ${esc(f.name || '(이름 없음)')}</h1>
+      <p class="fp-meta-line">총 제조량: ${f.targetVolume != null ? `${f.targetVolume}${unit}` : '—'} · 발행일: ${esc(new Date().toISOString().slice(0, 10))}</p>
+      <h3>계량표</h3>
+      <table class="fp-table">
+        <thead><tr><th class="fp-check-cell">✓</th><th>원료</th><th class="fp-num">배합률</th><th class="fp-num">투입량</th><th>LOT</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${steps.length ? `<h3>제조 절차</h3><ol class="fp-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+      <div class="fp-sign-row">
+        <span class="fp-sign">계량자: ______________</span>
+        <span class="fp-sign">확인자: ______________</span>
+        <span class="fp-sign">확인일: ________</span>
+      </div>
+      <p class="fp-disclaimer">배합률은 작업자 입력값이며 검증 결과는 법정 한도 기준입니다. 계량 후 체크란에 표시하고 사용 원료의 LOT를 기입하세요.</p>
     </div>`;
 }
 

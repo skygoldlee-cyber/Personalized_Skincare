@@ -297,6 +297,23 @@
     #formula-print-area .fp-qc-ok { color: var(--print-text); }
     #formula-print-area .fp-qc-bad { color: var(--print-warning); font-weight: 700; }
 
+    /* 작업지시서 (FO-29) — 계량 체크란·LOT 기입란·단계 구분 행 */
+    #formula-print-area .fp-check-cell {
+        width: 24pt;
+        text-align: center;
+        font-size: 11pt;
+        color: var(--print-fg);
+    }
+    #formula-print-area .fp-lot-cell {
+        width: 90pt;
+        border-bottom: 2px solid var(--print-fg);
+    }
+    #formula-print-area .fp-phase-head {
+        background: var(--print-bg-subtle);
+        font-weight: 700;
+        font-size: 9.5pt;
+    }
+
     /* 제품 라벨 — 소형 라벨지 레이아웃 */
     #formula-print-area .fp-label {
         width: 70mm;

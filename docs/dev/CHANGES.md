@@ -6,6 +6,17 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-04 Formula OS 태블릿 현장 작업 대응 — FO-26~31 + UX-PWA-06 (문서 선행)
+
+- **SPEC 선행 선언**: FO-26(태블릿 터치 대역)·FO-27(배합 스테퍼·진행 표시)·FO-28(계량 모드 대형 뷰)·FO-29(작업지시서 인쇄)·FO-30(드래프트 자동저장·복원)·FO-31(고대비 모드) + UX-PWA-06(manifest shortcuts) — §4.10 기기 매트릭스에 Formula OS 행 추가
+- **터치 대역 CSS** (`css/exams/cosmetic/formula.css`): `≤900px` 미디어 쿼리로 버튼·칩·셀렉트·서브내비 min-height 44px·폰트 16px — 장갑·한손 조작 대응. 데스크톱 밀도 유지
+- **계산 표 재구성** (`formula.js`·`formula.html`): 원료 행에 ±0.1 스테퍼 버튼·`inputmode="decimal"` 전수 부여, "원료 입력→한도 검증→저장" 3단계 진행 표시, 계량 모드 풀스크린 오버레이(1원료씩 대형 표시·순회·완료), 드래프트 디바운스 자동저장(`FORMULA_CALC_DRAFT`)·복원·마지막 저장 시각 표시, 고대비 토글(`#formula-view` 스코프 `.formula-hc`, `FORMULA_HIGH_CONTRAST` 영속)
+- **작업지시서 인쇄** (`formula-print.js`): 단계별 그룹·원료 계량 체크란(☐)·LOT 기입란 A4 작업지시서 빌더 — 기존 `printHtml` 경로 재사용, `print.css`에 체크란 스타일 추가
+- **PWA 직행**: `manifest.cosmetic.webmanifest`에 '배합 계산기' shortcut(`./index.html#/formula`) — 플랫폼 공통 매니페스트는 시험 기능이라 미선언 (UX-PWA-06 명문)
+- **지연 뷰 딥링크 실결함 수정** (`practice-registry.js`): `ensureViewMarkup`의 `outerHTML` 스텁 교체가 `navigateToView`가 부여한 `active` 클래스를 소실시켜 `#/formula` 등 부팅 딥링크에서 뷰가 숨던 결함 — 주입 후 `active` 보존으로 수정, 태블릿 E2E가 발견
+- **테스트**: DOM +6(스테퍼·진행·계량·드래프트·고대비), E2E 신규 `tests/e2e/exams/cosmetic/formula-tablet.spec.js` 4시나리오(834×1112) — 최초 실패 원인은 `current_exam` 미시드로 `#/exams` 리다이렉트, 시드 패턴 문서화
+- 검증: unit 819 · DOM 516(+6) · tablet E2E 4/4 · types·lint·html·imports·domainmap·specrefs 통과
+
 ## 2026-10-03 멀티시험 Phase E — 도메인 모듈 격리 + 플랫폼 브랜드 passory (문서 선행)
 
 - **결정 3건 확정** (MULTI_EXAM_DB_DESIGN Phase E): 플랫폼 브랜드 `passory` · 시험별 PWA 개별 설치 유지(동적 매니페스트 불변, cosmetic의 `id: "cosmetic-pass"`는 설치 정체성이라 변경 금지) · 시험 도메인 모듈은 `src/exams/<id>/` 물리 격리 (domain-map `domain:<examId>` 레이어)

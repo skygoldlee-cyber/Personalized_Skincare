@@ -1,5 +1,5 @@
 // tests/dom/formula-calc.dom.test.js — 배합 계산기 + 포뮬러 목록 시나리오
-// @spec FO-01
+// @spec FO-01,FO-27,FO-28,FO-30,FO-31
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2a)
 // 검증: 배합률→투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지,
 //       고객 카드 불러오기, 저장→목록 반영, 삭제 confirm, JSON보내기/가져오기,
@@ -20,7 +20,10 @@ import {
     formulaNew, openFormulaList, formulaCalcAddRow,
     formulaCalcSave, formulaDelete, formulaCustLoad, formulaOpen,
     formulaExportJson, formulaImportJson,
+    formulaWeighOpen, formulaWeighNext, formulaToggleContrast,
 } from '../../../../src/exams/cosmetic/views/formula.js';
+import { getJSON } from '../../../../src/storage.js';
+import { STORAGE_KEYS } from '../../../../src/storage-keys.js';
 import { listFormulas, createFormula, serializeFormula } from '../../../../src/exams/cosmetic/formula-store.js';
 import { createCustomer } from '../../../../src/exams/cosmetic/customer-store.js';
 
@@ -245,5 +248,98 @@ describe('배합 계산기 — 입력·검증·저장 시나리오', () => {
 
         formulaOpen(formula.id);
         expect(el('formula-std-warn').classList.contains('is-hidden')).toBe(true);
+    });
+});
+
+describe('배합 계산기 — 태블릿·현장 작업 (FO-27~31)', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        loadIndexHtml();
+        window.INGREDIENTS_DATA = INGREDIENTS_STUB;
+        vi.mocked(showToast).mockClear();
+        vi.mocked(showConfirm).mockClear();
+        vi.mocked(showConfirm).mockResolvedValue(true);
+    });
+
+    it('배합률 스테퍼 — + 버튼으로 0.1 증감하고 투입량·합계 갱신 (FO-27)', () => {
+        formulaNew();
+        el('formula-target-volume').value = '200';
+        el('formula-target-volume').dispatchEvent(new Event('input'));
+        setRow(0, '글리세린', 5);
+        const inc = rowEl(0).querySelector('.f-step-btn[data-dir="1"]');
+        const dec = rowEl(0).querySelector('.f-step-btn[data-dir="-1"]');
+        inc.dispatchEvent(new Event('click'));
+        expect(rowEl(0).querySelector('.f-conc').value).toBe('5.1');
+        expect(rowEl(0).querySelector('.f-amount').textContent).toBe('= 10.20g');
+        dec.dispatchEvent(new Event('click'));
+        dec.dispatchEvent(new Event('click'));
+        expect(rowEl(0).querySelector('.f-conc').value).toBe('4.9');
+    });
+
+    it('진행 단계 표시 — 원료 입력·검증 완료에 따라 단계 활성 (FO-27)', () => {
+        formulaNew();
+        const steps = () => el('formula-progress').querySelectorAll('.f-prog-step.is-done');
+        expect(steps().length).toBe(0);
+        setRow(0, '글리세린', 5);       // 한도 없는 일반 원료 → 검증 통과
+        expect(steps().length).toBe(2); // 원료 입력 + 한도 검증
+        expect(steps()[0].textContent).toContain('원료 입력');
+        expect(steps()[1].textContent).toContain('한도 검증');
+    });
+
+    it('계량 모드 — 원료별 투입량 대형 표시 순회·종료 (FO-28)', () => {
+        formulaNew();
+        el('formula-target-volume').value = '200';
+        el('formula-target-volume').dispatchEvent(new Event('input'));
+        setRow(0, '글리세린', 5);
+        formulaCalcAddRow();
+        setRow(1, '정제수', 95);
+
+        formulaWeighOpen();
+        expect(el('formula-weigh-overlay').classList.contains('is-hidden')).toBe(false);
+        expect(el('formula-weigh-name').textContent).toBe('글리세린');
+        expect(el('formula-weigh-amount').textContent).toBe('10.00g');
+        expect(el('formula-weigh-pos').textContent).toBe('1 / 2');
+
+        formulaWeighNext();
+        expect(el('formula-weigh-name').textContent).toBe('정제수');
+        formulaWeighNext(); // 마지막 → 자동 종료
+        expect(el('formula-weigh-overlay').classList.contains('is-hidden')).toBe(true);
+    });
+
+    it('계량 모드 — 이름 없는 행만 있으면 안내하고 미오픈 (FO-28)', () => {
+        formulaNew();
+        formulaWeighOpen();
+        expect(el('formula-weigh-overlay').classList.contains('is-hidden')).toBe(true);
+    });
+
+    it('작업 드래프트 자동 저장·재진입 복원 (FO-30)', () => {
+        vi.useFakeTimers();
+        try {
+            formulaNew();
+            el('formula-name-input').value = '수분 세럼';
+            el('formula-name-input').dispatchEvent(new Event('input'));
+            setRow(0, '글리세린', 5);
+            vi.advanceTimersByTime(700);
+            const draft = getJSON(STORAGE_KEYS.FORMULA_CALC_DRAFT);
+            expect(draft.rows[0].name).toBe('글리세린');
+            expect(draft.name).toBe('수분 세럼');
+
+            formulaNew(); // 재진입 → 드래프트 복원
+            expect(rowEl(0).querySelector('.f-name').value).toBe('글리세린');
+            expect(el('formula-name-input').value).toBe('수분 세럼');
+            expect(el('formula-draft-status').textContent).toContain('복원');
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('고대비 토글 — #formula-view 스코프 클래스·영속 (FO-31)', () => {
+        const view = document.getElementById('formula-view');
+        expect(view.classList.contains('formula-hc')).toBe(false);
+        formulaToggleContrast();
+        expect(view.classList.contains('formula-hc')).toBe(true);
+        expect(getJSON(STORAGE_KEYS.FORMULA_HIGH_CONTRAST)).toBe(true);
+        formulaToggleContrast();
+        expect(view.classList.contains('formula-hc')).toBe(false);
     });
 });

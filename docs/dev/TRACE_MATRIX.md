@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 492f8c08309c2ef8
-> 생성: 2026-10-03 · 원천: SPEC.md(390개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 00eceee5543a51ac
+> 생성: 2026-10-03 · 원천: SPEC.md(397개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 390개 — 문서 연결 252 · 소스 연결 362 · 테스트 연결 378 · 보고서 연결 109
+**커버리지 요약**: 요구사항 397개 — 문서 연결 252 · 소스 연결 368 · 테스트 연결 385 · 보고서 연결 109
 
 ---
 
@@ -301,6 +301,12 @@
 | FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/exams/cosmetic/batch-store.js<br>src/exams/cosmetic/formula-store.js | tests/unit/exams/cosmetic/batch-store.test.js<br>tests/unit/exams/cosmetic/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
 | FO-24 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | html/exams/cosmetic/formula.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/exams/cosmetic/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
 | FO-25 | ✅ | 테스트 | — | html/exams/cosmetic/formula.html | tests/dom/exams/cosmetic/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
+| FO-26 | ✅ | E2E 테스트 | — | css/exams/cosmetic/formula.css<br>html/exams/cosmetic/formula.html | tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-27 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-28 | ✅ | E2E 테스트 | — | css/exams/cosmetic/formula.css<br>html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-29 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula-print.js<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-print.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-30 | ✅ | E2E 테스트 | — | html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
+| FO-31 | ✅ | E2E 테스트 | — | css/exams/cosmetic/formula.css<br>html/exams/cosmetic/formula.html<br>src/exams/cosmetic/views/formula.js | tests/dom/exams/cosmetic/formula-calc.dom.test.js<br>tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 
 ## 3.19 계정·클라우드 동기화
 
@@ -495,6 +501,7 @@
 | UX-PWA-03 | "배포했는데 안 바뀐다" 보고의 대부분이 이 패턴. 사용자 안내 문구와 업데이트 토스트 필수 | 테스트 | — | sw.js<br>tools/check/check_perf_budget.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-04 | 미설치 상태에서만 노출, 설치 후 자동 숨김 — 헤더 공간 절약 | 테스트 | — | src/pwa-install.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-05 | PWA 콜드 스타트에서 `dvh`가 실제 화면보다 크게 측정되면 `.main-content` 끝이 화면 밖으로 밀려 스크롤 끝 콘텐츠가 탭 바에 가려짐(대시보드 '내 학습 분석·도구' 실제 장애). JS 미실행 시 `100dvh` 폴백 | E2E 테스트 | — | src/app.js | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
+| UX-PWA-06 | 현장(실습·조제실)에서 대시보드 경유 탭을 생략. 시험 도메인 기능이라 플랫폼 공통 `manifest.webmanifest`가 아닌 시험별 매니페스트에만 선언 | E2E 테스트 | — | — | tests/e2e/exams/cosmetic/formula-tablet.spec.js | — | — |
 | UX-SCR-01 | `@media (pointer: coarse), (max-width: 900px) { * { scrollbar-width: none } ::-webkit-scrollbar { width:0; height:0 } }` — `pointer: coarse`만 믿지 말고 폭 기준을 병기할 것(일부 기기에서 pointer 감지 실패 사례 있음). 모바일 스크롤바는 드래그용이 아니므로 위치 표시도 불필요 | E2E 테스트 | — | css/reader.css<br>src/views/reader-toolbar.js | tests/e2e/responsive-flow.spec.js<br>tests/unit/ux-invariants.test.js | — | — |
 | UX-SCR-02 | `*` 또는 개별 컨테이너에 지정 | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SCR-03 | 하드코딩 색상은 다크/라이트 한쪽에서 묻힘 (실제로 미정의 변수 폴백으로 라이트 배경에 흰 카드가 되는 사고 있었음 — `.comp-item` 사례) | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |

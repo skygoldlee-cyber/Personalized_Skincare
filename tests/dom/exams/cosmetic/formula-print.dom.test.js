@@ -1,9 +1,9 @@
 // tests/dom/formula-print.dom.test.js — Formula OS 인쇄 산출물 시나리오
-// @spec FO-21
+// @spec FO-21,FO-29
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2c)
 // 검증: formulaPrint 빈 드래프트 거부·기록지 렌더, 배치 기록지 QC·위생·스냅샷,
 //       라벨 전성분·폴백, 안내문 제형 템플릿·원료 주의, afterprint 정리,
-//       미존재 배치 에러
+//       미존재 배치 에러, 작업지시서 단계 그룹·체크란·LOT 기입란·서명란
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
@@ -14,7 +14,7 @@ vi.mock('../../../../src/ui-utils.js', () => ({
 
 import { showToast } from '../../../../src/ui-utils.js';
 import { loadIndexHtml, el, lastToast } from '../../helpers.js';
-import { formulaNew, formulaOpen, formulaPrint } from '../../../../src/exams/cosmetic/views/formula.js';
+import { formulaNew, formulaOpen, formulaPrint, formulaPrintWorkOrder } from '../../../../src/exams/cosmetic/views/formula.js';
 import {
     batchPrintRecord, batchPrintLabel, batchPrintGuide,
 } from '../../../../src/exams/cosmetic/views/formula-batch.js';
@@ -150,6 +150,45 @@ describe('인쇄 산출물 — 기록지·라벨·안내문', () => {
     it('미존재 배치 인쇄 → 에러 토스트·미렌더', () => {
         batchPrintRecord('bat_none');
         expect(lastToast()[1]).toBe('error');
+        expect(printArea().innerHTML).toBe('');
+        expect(window.print).not.toHaveBeenCalled();
+    });
+
+    it('작업지시서 — 단계 그룹·계량 체크란·LOT 기입란·서명란 (FO-29)', () => {
+        const { formula } = createFormula({
+            name: '계량 지시 세럼', targetVolume: 200, unit: 'g',
+            ingredients: [
+                { name: '정제수', concentration: 95, phase: '수상부' },
+                { name: '살리실산', concentration: 5, phase: '후첨부' },
+            ],
+            steps: ['수상부 가열', '후첨부 투입'],
+        });
+        formulaOpen(formula.id);
+        formulaPrintWorkOrder();
+
+        const html = printArea().innerHTML;
+        expect(html).toContain('작업지시서 — 계량 지시 세럼');
+        expect(html).toContain('총 제조량: 200g');
+        // 단계별 그룹 헤더
+        expect(html).toContain('fp-phase-head');
+        expect(html).toContain('수상부');
+        expect(html).toContain('후첨부');
+        // 계량 체크란·투입량 환산(200g 기준)·LOT 기입란
+        expect(html).toContain('☐');
+        expect(html).toContain('190.00g');
+        expect(html).toContain('10.00g');
+        expect(html).toContain('fp-lot-cell');
+        // 제조 절차·서명란
+        expect(html).toContain('후첨부 투입');
+        expect(html).toContain('계량자:');
+        expect(html).toContain('확인자:');
+        expect(window.print).toHaveBeenCalledTimes(1);
+    });
+
+    it('작업지시서 — 빈 드래프트 → info 토스트·미렌더 (FO-29)', () => {
+        formulaNew();
+        formulaPrintWorkOrder();
+        expect(lastToast()[1]).toBe('info');
         expect(printArea().innerHTML).toBe('');
         expect(window.print).not.toHaveBeenCalled();
     });

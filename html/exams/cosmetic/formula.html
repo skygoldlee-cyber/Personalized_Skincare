@@ -1,4 +1,4 @@
-            <!-- @spec FO-15,FO-24,FO-25 -->
+            <!-- @spec FO-15,FO-24,FO-25,FO-26~31 -->
             <section id="formula-view" class="view-section" data-feature="formula">
                 <!-- 1. 허브 메뉴 -->
                 <div id="formula-menu-panel">
@@ -9,6 +9,9 @@
                         </button>
                         <button type="button" class="btn btn-secondary btn-sm" data-click="viewMfdsNoticeStatus">
                             <i class="fa-solid fa-file-lines" aria-hidden="true"></i> 고시 정보 보기
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="formula-contrast-btn" data-click="formulaToggleContrast" aria-pressed="false" title="조명 반사·습한 화면 등 현장 환경에서 판독성 강화">
+                            <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> 고대비
                         </button>
                         <span id="notice-check-result" class="notice-check-result" aria-live="polite"></span>
                     </div>
@@ -112,11 +115,12 @@
                         </div>
                     </div>
                     <div id="formula-calc-subnav"></div>
+                    <div id="formula-progress" class="f-progress" aria-label="작업 진행 단계"></div>
 
                     <!-- 상단 고정 요약바: 총량·합계·검증 요약 상시 표시 -->
                     <div class="formula-calc-bar fcb-top">
                         <div class="fcb-volume" role="group" aria-label="총 제조량">
-                            <input type="number" id="formula-target-volume" class="form-input fcb-vol" min="0" step="0.1" value="100" aria-label="총 제조량">
+                            <input type="number" id="formula-target-volume" class="form-input fcb-vol" min="0" step="0.1" value="100" inputmode="decimal" aria-label="총 제조량">
                             <select id="formula-unit" class="form-select fcb-unit" aria-label="제조량 단위">
                                 <option value="g">g</option>
                                 <option value="ml">ml</option>
@@ -147,6 +151,8 @@
                             <div class="formula-foot-actions">
                                 <button class="btn btn-secondary btn-sm" data-click="formulaCalcAddRow"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 추가</button>
                                 <button class="btn btn-secondary btn-sm" data-click="formulaSortPhase" title="제조 단계 순서로 행 정렬"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> 단계별 정렬</button>
+                                <button class="btn btn-secondary btn-sm" data-click="formulaWeighOpen" title="원료별 투입량을 화면 가득 크게 표시하며 계량"><i class="fa-solid fa-weight-scale" aria-hidden="true"></i> 계량 모드</button>
+                                <button class="btn btn-secondary btn-sm" data-click="formulaPrintWorkOrder" title="계량 체크란·LOT 기입란이 있는 A4 작업지시서 인쇄"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 작업지시서</button>
                             </div>
                             <div id="formula-phase-sums" class="formula-phase-sums"></div>
                         </div>
@@ -179,7 +185,7 @@
                                 </label>
                                 <label class="formula-field formula-field-unit">
                                     <span class="formula-field-label">나이</span>
-                                    <input type="number" id="formula-cust-age" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
+                                    <input type="number" id="formula-cust-age" inputmode="decimal" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
                                 </label>
                                 <label class="formula-field formula-field-gender">
                                     <span class="formula-field-label">성별</span>
@@ -270,11 +276,11 @@
                                 <div class="formula-field-row">
                                     <label class="formula-field formula-field-unit">
                                         <span class="formula-field-label">목표 pH</span>
-                                        <input type="number" id="formula-ph-target" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="목표 pH">
+                                        <input type="number" id="formula-ph-target" inputmode="decimal" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="목표 pH">
                                     </label>
                                     <label class="formula-field formula-field-unit">
                                         <span class="formula-field-label">실측 pH</span>
-                                        <input type="number" id="formula-ph-actual" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="실측 pH">
+                                        <input type="number" id="formula-ph-actual" inputmode="decimal" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="실측 pH">
                                     </label>
                                 </div>
                                 <div class="formula-field">
@@ -316,7 +322,26 @@
                         <button type="button" class="btn btn-secondary btn-sm" data-click="formulaPrint" title="조제 기록지 인쇄"><i class="fa-solid fa-print" aria-hidden="true"></i><span class="fcb-btn-text"> 인쇄</span></button>
                         <button type="button" class="btn btn-secondary btn-sm" data-click="formulaExportJson" title="JSON 파일로 보내기"><i class="fa-solid fa-download" aria-hidden="true"></i><span class="fcb-btn-text"> JSON</span></button>
                     </div>
-                    <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 보낼 수 있습니다.</p>
+                    <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 보낼 수 있습니다. <span id="formula-draft-status" class="f-draft-status"></span></p>
+
+                    <!-- 계량 모드 오버레이 (FO-28) — 원료별 투입량 대형 순회 표시 -->
+                    <div id="formula-weigh-overlay" class="f-weigh-overlay is-hidden" role="dialog" aria-modal="true" aria-label="계량 모드">
+                        <div class="f-weigh-card">
+                            <div class="f-weigh-head">
+                                <span id="formula-weigh-pos" class="f-weigh-pos"></span>
+                                <button type="button" class="f-weigh-close" data-click="formulaWeighClose" aria-label="계량 모드 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="f-weigh-body">
+                                <div id="formula-weigh-phase" class="f-weigh-phase"></div>
+                                <div id="formula-weigh-name" class="f-weigh-name"></div>
+                                <div id="formula-weigh-amount" class="f-weigh-amount"></div>
+                            </div>
+                            <div class="f-weigh-foot">
+                                <button type="button" class="btn btn-secondary" id="formula-weigh-prev" data-click="formulaWeighPrev"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> 이전</button>
+                                <button type="button" class="btn btn-primary" id="formula-weigh-next" data-click="formulaWeighNext">다음 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -356,7 +381,7 @@
                         <div class="formula-field-row">
                             <label class="formula-field">
                                 <span class="formula-field-label">총 제조량</span>
-                                <input type="number" id="batch-target-volume" class="form-input" min="0" step="0.1" placeholder="100" aria-label="총 제조량">
+                                <input type="number" id="batch-target-volume" inputmode="decimal" class="form-input" min="0" step="0.1" placeholder="100" aria-label="총 제조량">
                             </label>
                             <label class="formula-field formula-field-unit">
                                 <span class="formula-field-label">단위</span>
@@ -396,7 +421,7 @@
                             <div class="batch-qc-form" id="batch-qc-fields"></div>
                             <div class="batch-qc-row">
                                 <span class="batch-qc-label">실측 pH</span>
-                                <input type="number" id="batch-ph" class="form-input batch-ph-input" min="0" max="14" step="0.1" placeholder="예: 5.5" aria-label="실측 pH">
+                                <input type="number" id="batch-ph" inputmode="decimal" class="form-input batch-ph-input" min="0" max="14" step="0.1" placeholder="예: 5.5" aria-label="실측 pH">
                             </div>
                         </div>
                         <div id="batch-allergy-warn" class="is-hidden" role="status" aria-live="polite"></div>
@@ -476,7 +501,7 @@
                             </label>
                             <label class="formula-field formula-field-unit">
                                 <span class="formula-field-label">나이</span>
-                                <input type="number" id="cust-age" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
+                                <input type="number" id="cust-age" inputmode="decimal" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
                             </label>
                             <label class="formula-field formula-field-gender">
                                 <span class="formula-field-label">성별</span>
@@ -599,7 +624,7 @@
                         <div class="formula-field-row">
                             <label class="formula-field">
                                 <span class="formula-field-label">잔량</span>
-                                <input type="number" id="mat-qty" class="form-input" min="0" step="0.1" placeholder="500" aria-label="잔량">
+                                <input type="number" id="mat-qty" inputmode="decimal" class="form-input" min="0" step="0.1" placeholder="500" aria-label="잔량">
                             </label>
                             <label class="formula-field formula-field-unit">
                                 <span class="formula-field-label">단위</span>
