@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-03T12:18:14.063Z",
+  "generatedAt": "2026-10-03T13:33:06.860Z",
   "subjects": [
     {
       "key": "law",
@@ -288,7 +288,7 @@ var DATA_REGISTRY = {
         "approved": "사용 가능",
         "restricted": "사용 제한",
         "banned": "사용 금지",
-        "custom": "사용자 등록"
+        "custom": "사용자 등록 원료"
       }
     },
     "filters": [
@@ -316,7 +316,7 @@ var DATA_REGISTRY = {
       },
       {
         "key": "custom",
-        "label": "사용자 등록",
+        "label": "사용자 등록 원료",
         "icon": "fa-user-pen",
         "color": "var(--color-info)"
       }

@@ -1,6 +1,6 @@
 // tests/dom/dictionary-custom.dom.test.js — 자가 등록 성분 사전 병합 검증
 // @spec DI-06,DI-08
-// 검증: schema.customKey 선언 시 로컬 등록 항목 병합·'사용자 등록' 배지·필터·
+// 검증: schema.customKey 선언 시 로컬 등록 항목 병합·'사용자 등록 원료' 배지·필터·
 //       '성분 추가' 버튼 노출·'공식 등록됨' superseded·카드 '수정' 액션,
 //       customKey 미선언 스키마는 버튼·병합 모두 없음.
 
@@ -40,11 +40,11 @@ const COSMETIC_SCHEMA = {
     badge: {
         field: 'type',
         defaultLabel: '사용 가능',
-        labels: { approved: '사용 가능', restricted: '사용 제한', banned: '사용 금지', custom: '사용자 등록' },
+        labels: { approved: '사용 가능', restricted: '사용 제한', banned: '사용 금지', custom: '사용자 등록 원료' },
     },
     filters: [
         { key: 'all', label: '전체 성분' },
-        { key: 'custom', label: '사용자 등록' },
+        { key: 'custom', label: '사용자 등록 원료' },
     ],
     details: [{ key: 'category', label: '카테고리', empty: '기타' }],
 };
@@ -81,7 +81,7 @@ describe('지식DB 사전 — 자가 등록 성분 병합 (DI-06·08)', () => {
         expect(cards.length).toBe(3);
         const customCard = cards[2];
         expect(customCard.querySelector('.dict-card-title').textContent).toBe('자체 베이스 A');
-        expect(customCard.querySelector('.dict-badge').textContent).toBe('사용자 등록');
+        expect(customCard.querySelector('.dict-badge').textContent).toBe('사용자 등록 원료');
         expect(customCard.querySelector('.dict-badge').className).toContain('custom');
     });
 
@@ -96,7 +96,7 @@ describe('지식DB 사전 — 자가 등록 성분 병합 (DI-06·08)', () => {
     it('"성분 추가" 툴팁 — 자가 등록 성격(사용자 등록 배지·법정 판정 아님) 명시', () => {
         renderDictionary();
         const btn = document.getElementById('dict-custom-add');
-        expect(btn.title).toContain('사용자 등록');
+        expect(btn.title).toContain('사용자 등록 원료');
         expect(btn.title).toContain('법정 판정');
     });
 

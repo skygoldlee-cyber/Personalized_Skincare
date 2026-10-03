@@ -161,14 +161,14 @@
     "badge": {
       "field": "type",
       "defaultLabel": "사용 가능",
-      "labels": { "approved": "사용 가능", "restricted": "사용 제한", "banned": "사용 금지", "custom": "사용자 등록" }
+      "labels": { "approved": "사용 가능", "restricted": "사용 제한", "banned": "사용 금지", "custom": "사용자 등록 원료" }
     },
     "filters": [
       { "key": "all", "label": "전체 성분" },
       { "key": "approved", "label": "사용 가능 원료", "icon": "fa-circle-check", "color": "var(--color-success)" },
       { "key": "restricted", "label": "사용 제한 원료", "icon": "fa-triangle-exclamation", "color": "var(--color-warning)" },
       { "key": "banned", "label": "사용 금지 원료", "icon": "fa-ban", "color": "var(--color-danger)" },
-      { "key": "custom", "label": "사용자 등록", "icon": "fa-user-pen", "color": "var(--color-info)" }
+      { "key": "custom", "label": "사용자 등록 원료", "icon": "fa-user-pen", "color": "var(--color-info)" }
     ],
     "details": [
       { "key": "category", "label": "카테고리", "empty": "기타" },

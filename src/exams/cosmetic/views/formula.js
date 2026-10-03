@@ -703,7 +703,7 @@ function cingOverlay() {
           <span class="cing-hint">입력 시 배합률 초과를 경고합니다. 법정 한도가 아닌 자가 선언값입니다.</span></label>
         <label class="formula-field"><span class="formula-field-label">설명·메모</span>
           <textarea id="cing-desc" class="form-input" rows="2" maxlength="500"></textarea></label>
-        <p class="cing-note">자가 등록 성분은 '사용자 등록' 배지로 표시되며 법정 판정과 구분됩니다. 공식 DB 동명은 등록할 수 없습니다.</p>
+        <p class="cing-note">자가 등록 성분은 '사용자 등록 원료' 배지로 표시되며 법정 판정과 구분됩니다. 공식 DB 동명은 등록할 수 없습니다.</p>
       </div>
       <div class="f-weigh-foot cing-foot">
         <button type="button" class="btn btn-secondary is-hidden" id="cing-delete" data-click="customIngDelete"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
